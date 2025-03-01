@@ -25,7 +25,8 @@
   --color-secondary-foreground: var(--color-black);
   --color-danger: var(--color-red-500);
   --color-danger-foreground: var(--color-white);
-
+  --color-muted: var(--color-gray-200);
+  --color-muted-foreground: var(--color-gray-800);
   
 }
 

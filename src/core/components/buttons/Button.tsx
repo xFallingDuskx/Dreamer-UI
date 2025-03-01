@@ -6,8 +6,6 @@ import { ButtonVariants, buttonDefaults, buttonVariants, roundedVariants, sizeVa
 interface ButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttributes<HTMLButtonElement> {}
 
 /* TASK:
-  - useFullWidth
-  - disabled state
   - loading state
   - icon button
 */
@@ -20,12 +18,16 @@ function Button({
   className,
   ...rest
 }: ButtonProps) {
-  const baseClass = 'appearance-none focus:outline-none hover:cursor-pointer transition-all';
-  const variantClasses = variant ? buttonVariants[variant] : '';
-  const sizeClasses = size ? sizeVariants[size] : '';
-  const roundedClasses = rounded ? roundedVariants[rounded] : '';
+  const baseClass =
+    'appearance-none focus:outline-none not-disabled:hover:cursor-pointer disabled:opacity-50 transition-all';
 
-  const buttonClasses = join(baseClass, variantClasses, sizeClasses, roundedClasses, className);
+  const buttonClasses = join(
+    baseClass,
+    buttonVariants[variant],
+    sizeVariants[size],
+    roundedVariants[rounded],
+    className
+  );
 
   return (
     <button type={type} {...rest} className={buttonClasses}>

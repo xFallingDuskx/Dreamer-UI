@@ -1,6 +1,6 @@
 export const buttonVariants = {
   base: '',
-  primary: 'bg-primary text-primary-foreground hover:bg-primary/85',
+  primary: 'bg-primary text-primary-foreground hover:bg-primary/85 disabled:bg-muted disabled:text-muted-foreground',
   secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/85',
   tertiary: 'text-primary hover:text-primary-foreground',
   outline: 'border border-primary text-primary hover:border-primary-foreground hover:text-primary-foreground',
@@ -14,7 +14,8 @@ export const sizeVariants = {
   sm: 'px-2 py-1 text-sm',
   md: 'px-4 py-2 text-base',
   lg: 'px-6 py-3 text-lg',
-  icon: 'p-2',
+  icon: 'p-2 aspect-square',
+  full: 'p-2 w-full',
 } as const;
 export type ButtonSize = keyof typeof sizeVariants;
 
