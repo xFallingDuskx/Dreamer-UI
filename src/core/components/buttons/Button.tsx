@@ -1,10 +1,11 @@
 // Button.tsx
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, Ref } from 'react';
 import { join } from '../../util/join';
 import LoadingDots from './LoadingDots';
 import { ButtonVariants, buttonDefaults, buttonVariants, roundedVariants, sizeVariants } from './variants';
 
 interface ButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttributes<HTMLButtonElement> {
+  ref?: Ref<HTMLButtonElement>;
   loading?: boolean;
 }
 
@@ -17,11 +18,11 @@ export default function Button({
   className,
   ...rest
 }: ButtonProps) {
-  const baseClass =
+  const baseClasses =
     'appearance-none focus:outline-none not-disabled:hover:cursor-pointer disabled:opacity-50 transition-all';
 
   const buttonClasses = join(
-    baseClass,
+    baseClasses,
     buttonVariants[variant],
     sizeVariants[size],
     roundedVariants[rounded],
