@@ -5,6 +5,9 @@
  * @param args - The strings to join.
  * @returns The joined string.
  */
-export function join(...args: Array<string | undefined | null>): string {
-  return args.filter(Boolean).join(' ').trim();
+export function join(...args: Array<string | boolean | undefined | null>): string {
+  return args
+    .filter((arg) => typeof arg === 'string' && arg)
+    .join(' ')
+    .trim();
 }

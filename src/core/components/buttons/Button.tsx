@@ -1,19 +1,18 @@
 // Button.tsx
 import { ButtonHTMLAttributes } from 'react';
 import { join } from '../../util/join';
+import LoadingDots from './LoadingDots';
 import { ButtonVariants, buttonDefaults, buttonVariants, roundedVariants, sizeVariants } from './variants';
 
-interface ButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttributes<HTMLButtonElement> {}
+interface ButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttributes<HTMLButtonElement> {
+  loading?: boolean;
+}
 
-/* TASK:
-  - loading state
-  - icon button
-*/
-
-function Button({
+export default function Button({
   variant = buttonDefaults.variant,
   size = buttonDefaults.size,
   rounded = buttonDefaults.rounded,
+  loading,
   type = 'button',
   className,
   ...rest
@@ -26,14 +25,14 @@ function Button({
     buttonVariants[variant],
     sizeVariants[size],
     roundedVariants[rounded],
+    loading && 'relative pointer-events-none',
     className
   );
 
   return (
-    <button type={type} {...rest} className={buttonClasses}>
-      {rest.children}
+    <button {...rest} aria-disabled={rest.disabled} aria-busy={loading} type={type} className={buttonClasses}>
+      {loading && <LoadingDots />}
+      <span className={join(loading && 'invisible')}>{rest.children}</span>
     </button>
   );
 }
-
-export default Button;
