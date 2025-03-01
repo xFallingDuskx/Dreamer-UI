@@ -1,7 +1,18 @@
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
+import Button from './core/components/buttons/Button';
+
+const Components: Record<string, ReactElement> = {
+  button: <Button>Click Me</Button>,
+};
+
+type ComponentOption = keyof typeof Components;
 
 function App() {
-  const [component, setComponent] = useState('');
+  const [component, setComponent] = useState<ComponentOption>('button');
+
+  const selectComponent = (comp: ComponentOption) => {
+    setComponent(comp);
+  };
 
   return (
     <div className='min-h-screen w-screen bg-slate-900'>
@@ -11,8 +22,12 @@ function App() {
       </div>
 
       <div className='text-center'>
-        <h2 className=''>Selected Component</h2>
-        <p>{component ? component : 'No component selected'}</p>
+        <h2>Select Component</h2>
+        <select className='block mx-auto my-2 focus:outline-none' onChange={(e) => selectComponent(e.target.value as ComponentOption)}>
+          <option value='button'>Button</option>
+        </select>
+
+        {component && Components[component]}
       </div>
     </div>
   );
