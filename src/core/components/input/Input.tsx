@@ -50,7 +50,7 @@ export default function Input({
 
   return (
     <div className='text-left' style={{ height: rest.height, width: rest.width }}>
-      <div className={join('relative')}>
+      <div className={join(type === 'password' && 'relative')}>
         <input
           {...rest}
           id={id}
