@@ -1,10 +1,9 @@
 import { Ref, useId, useState } from 'react';
 import { EyeClosed, EyeOpened } from '../../symbols';
 import { join } from '../../util/join';
-import DisplayText from './DisplayText';
-import HelpMessage from './HelpMessage';
 import './styles.css';
 import { inputDefaults, inputVariants, InputVariants, roundedVariants } from './variants';
+import { StatusHelpMessage } from '../../shared/forms';
 
 interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<HTMLInputElement> {
   ref?: Ref<HTMLInputElement>;
@@ -34,29 +33,32 @@ export default function Input({
   adjustedRound = adjustedRound || inputDefaults.rounded;
 
   const baseClasses =
-    'appearance-none w-full px-2 py-1 focus:outline-none disabled:opacity-50 placeholder:text-muted/70 hide-number-input-arrows transition-all';
+    'appearance-none w-full focus:outline-none disabled:opacity-50 placeholder:text-muted/70 hide-number-input-arrows transition-all';
   const fileClasses =
     'file:mr-2 file:border-0 file:rounded-md file:px-1.5 file:py-1 file:bg-primary hover:file:bg-primary/85 file:text-sm file:font-medium file:text-foreground file:transition-colors';
 
   const inputClasses = join(
     baseClasses,
     fileClasses,
-    inputVariants[variant],
-    roundedVariants[adjustedRound],
+    !displayOnlyMode && inputVariants[variant],
+    !displayOnlyMode && roundedVariants[adjustedRound],
     type === 'password' && 'pr-10',
+    !displayOnlyMode && 'px-2 py-1',
+    displayOnlyMode && 'pointer-events-none',
     className
   );
 
   return (
     <div className='text-left' style={{ height: rest.height, width: rest.width }}>
-      <div className={join('relative', displayOnlyMode && 'invisible size-0')}>
+      <div className={join('relative')}>
         <input
           {...rest}
           id={id}
           type={type === 'password' && showPassword ? 'text' : type}
           aria-disabled={rest.disabled}
+          readOnly={displayOnlyMode}
+          aria-readonly={displayOnlyMode || rest['aria-readonly']}
           aria-invalid={errorMessage ? true : successMessage ? false : undefined}
-          aria-describedby={errorMessage ? `${id}-error-message` : successMessage ? `${id}-success-message` : undefined}
           data-error={errorMessage ? true : undefined}
           data-success={successMessage ? true : undefined}
           className={inputClasses}
@@ -70,9 +72,8 @@ export default function Input({
           </button>
         )}
       </div>
-      <DisplayText inputId={id} displayOnlyMode={displayOnlyMode} value={rest.value} placeholder={rest.placeholder} />
-      {!displayOnlyMode && errorMessage && <HelpMessage inputId={id} type='error' message={errorMessage} />}
-      {!displayOnlyMode && successMessage && <HelpMessage inputId={id} type='success' message={successMessage} />}
+      {!displayOnlyMode && <StatusHelpMessage elementId={id} type='error' message={errorMessage} />}
+      {!displayOnlyMode && <StatusHelpMessage elementId={id} type='success' message={successMessage} />}
     </div>
   );
 }
