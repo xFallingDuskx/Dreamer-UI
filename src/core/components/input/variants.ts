@@ -1,5 +1,7 @@
 export const inputVariants = {
-  base: 'ring ring-transparent focus:ring-primary-foreground not-disabled:data-error:ring-danger not-disabled:data-success:ring-success',
+  base: '',
+  default:
+    'ring ring-transparent focus:ring-primary-foreground not-disabled:data-error:ring-danger not-disabled:data-success:ring-success',
   underline:
     'border-b border-primary focus:border-primary-foreground disabled:border-muted not-disabled:data-error:border-danger not-disabled:data-success:border-success',
   outline:
@@ -22,6 +24,6 @@ export interface InputVariants {
 }
 
 export const inputDefaults: InputVariants = {
-  variant: 'base',
+  variant: 'default',
   rounded: 'none',
 } as const;

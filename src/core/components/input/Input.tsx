@@ -3,6 +3,7 @@ import { EyeClosed, EyeOpened } from '../../symbols';
 import { join } from '../../util/join';
 import DisplayText from './DisplayText';
 import HelpMessage from './HelpMessage';
+import './styles.css';
 import { inputDefaults, inputVariants, InputVariants, roundedVariants } from './variants';
 
 interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<HTMLInputElement> {
@@ -11,12 +12,6 @@ interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<H
   errorMessage?: string;
   successMessage?: string;
 }
-
-/* TASK:
-  - label (?)
-  - file input
-
-*/
 
 export default function Input({
   variant = inputDefaults.variant,
@@ -39,8 +34,9 @@ export default function Input({
   adjustedRound = adjustedRound || inputDefaults.rounded;
 
   const baseClasses =
-    'appearance-none w-full px-2 py-1 focus:outline-none disabled:opacity-50 placeholder:text-muted/70 transition-all';
-  const fileClasses = 'file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground';
+    'appearance-none w-full px-2 py-1 focus:outline-none disabled:opacity-50 placeholder:text-muted/70 hide-number-input-arrows transition-all';
+  const fileClasses =
+    'file:mr-2 file:border-0 file:rounded-md file:px-1.5 file:py-1 file:bg-primary hover:file:bg-primary/85 file:text-sm file:font-medium file:text-foreground file:transition-colors';
 
   const inputClasses = join(
     baseClasses,
@@ -52,7 +48,7 @@ export default function Input({
   );
 
   return (
-    <div className='text-left'>
+    <div className='text-left' style={{ height: rest.height, width: rest.width }}>
       <div className={join('relative', displayOnlyMode && 'invisible size-0')}>
         <input
           {...rest}
