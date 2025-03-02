@@ -1,7 +1,8 @@
-import { Ref, useId } from 'react';
+import { Ref, useId, useState } from 'react';
 import { join } from '../../util/join';
 import HelpMessage from './HelpMessage';
 import { inputDefaults, inputVariants, InputVariants, roundedVariants } from './variants';
+import { EyeClosed, EyeOpened } from '../../symbols';
 
 interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<HTMLInputElement> {
   ref?: Ref<HTMLInputElement>;
@@ -10,7 +11,8 @@ interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<H
 }
 
 /* TASK:
-  - hide content
+  - label (?)
+  - file input
 
 */
 
@@ -24,6 +26,7 @@ export default function Input({
   ...rest
 }: InputProps) {
   const id = useId();
+  const [showPassword, setShowPassword] = useState(false);
 
   // Default `round` of `md` for `outline` variant
   let adjustedRound = rounded;
@@ -41,21 +44,32 @@ export default function Input({
     fileClasses,
     inputVariants[variant],
     roundedVariants[adjustedRound],
+    type === 'password' && 'pr-10',
     className
   );
 
   return (
     <div className='text-left'>
-      <input
-        {...rest}
-        type={type}
-        aria-disabled={rest.disabled}
-        aria-invalid={errorMessage ? true : successMessage ? false : undefined}
-        aria-describedby={errorMessage ? `${id}-error-message` : successMessage ? `${id}-success-message` : undefined}
-        data-error={errorMessage ? true : undefined}
-        data-success={successMessage ? true : undefined}
-        className={inputClasses}
-      />
+      <div className='relative'>
+        <input
+          {...rest}
+          type={type === 'password' && showPassword ? 'text' : type}
+          aria-disabled={rest.disabled}
+          aria-invalid={errorMessage ? true : successMessage ? false : undefined}
+          aria-describedby={errorMessage ? `${id}-error-message` : successMessage ? `${id}-success-message` : undefined}
+          data-error={errorMessage ? true : undefined}
+          data-success={successMessage ? true : undefined}
+          className={inputClasses}
+        />
+        {type === 'password' && (
+          <button
+            onClick={() => setShowPassword(!showPassword)}
+            className='absolute inset-y-0 right-0 px-2 hover:cursor-pointer'
+          >
+            {showPassword ? <EyeOpened size={20} /> : <EyeClosed size={20} />}
+          </button>
+        )}
+      </div>
       {errorMessage && <HelpMessage id={id} type='error' message={errorMessage} />}
       {successMessage && <HelpMessage id={id} type='success' message={successMessage} />}
     </div>
