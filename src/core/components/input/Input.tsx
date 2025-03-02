@@ -5,6 +5,7 @@ import { inputDefaults, inputVariants, InputVariants, roundedVariants } from './
 interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<HTMLInputElement> {
   ref?: Ref<HTMLInputElement>;
   errorMessage?: string;
+  successMessage?: string;
 }
 
 /* TASK:
@@ -16,6 +17,7 @@ export default function Input({
   variant = inputDefaults.variant,
   rounded,
   errorMessage,
+  successMessage,
   type = 'text',
   className,
   ...rest
@@ -47,14 +49,20 @@ export default function Input({
         {...rest}
         type={type}
         aria-disabled={rest.disabled}
-        aria-invalid={errorMessage ? true : undefined}
-        aria-describedby={errorMessage ? `${id}-error-message` : undefined}
+        aria-invalid={errorMessage ? true : successMessage ? false : undefined}
+        aria-describedby={errorMessage ? `${id}-error-message` : successMessage ? `${id}-success-message` : undefined}
         data-error={errorMessage ? true : undefined}
+        data-success={successMessage ? true : undefined}
         className={inputClasses}
       />
       {errorMessage && (
         <small id={`${id}-error-message`} className='text-sm text-danger' role='alert'>
           {errorMessage}
+        </small>
+      )}
+      {successMessage && (
+        <small id={`${id}-success-message`} className='text-sm text-success' role='status'>
+          {successMessage}
         </small>
       )}
     </div>
