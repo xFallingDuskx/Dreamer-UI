@@ -1,5 +1,6 @@
 import { Ref, useId } from 'react';
 import { join } from '../../util/join';
+import HelpMessage from './HelpMessage';
 import { inputDefaults, inputVariants, InputVariants, roundedVariants } from './variants';
 
 interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<HTMLInputElement> {
@@ -55,16 +56,8 @@ export default function Input({
         data-success={successMessage ? true : undefined}
         className={inputClasses}
       />
-      {errorMessage && (
-        <small id={`${id}-error-message`} className='text-sm text-danger' role='alert'>
-          {errorMessage}
-        </small>
-      )}
-      {successMessage && (
-        <small id={`${id}-success-message`} className='text-sm text-success' role='status'>
-          {successMessage}
-        </small>
-      )}
+      {errorMessage && <HelpMessage id={id} type='error' message={errorMessage} />}
+      {successMessage && <HelpMessage id={id} type='success' message={successMessage} />}
     </div>
   );
 }
