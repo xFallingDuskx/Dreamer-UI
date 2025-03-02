@@ -1,11 +1,13 @@
 import { Ref, useId, useState } from 'react';
+import { EyeClosed, EyeOpened } from '../../symbols';
 import { join } from '../../util/join';
+import DisplayText from './DisplayText';
 import HelpMessage from './HelpMessage';
 import { inputDefaults, inputVariants, InputVariants, roundedVariants } from './variants';
-import { EyeClosed, EyeOpened } from '../../symbols';
 
 interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<HTMLInputElement> {
   ref?: Ref<HTMLInputElement>;
+  displayOnlyMode?: boolean;
   errorMessage?: string;
   successMessage?: string;
 }
@@ -19,6 +21,7 @@ interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<H
 export default function Input({
   variant = inputDefaults.variant,
   rounded,
+  displayOnlyMode = false,
   errorMessage,
   successMessage,
   type = 'text',
@@ -50,9 +53,10 @@ export default function Input({
 
   return (
     <div className='text-left'>
-      <div className='relative'>
+      <div className={join('relative', displayOnlyMode && 'invisible size-0')}>
         <input
           {...rest}
+          id={id}
           type={type === 'password' && showPassword ? 'text' : type}
           aria-disabled={rest.disabled}
           aria-invalid={errorMessage ? true : successMessage ? false : undefined}
@@ -70,8 +74,9 @@ export default function Input({
           </button>
         )}
       </div>
-      {errorMessage && <HelpMessage id={id} type='error' message={errorMessage} />}
-      {successMessage && <HelpMessage id={id} type='success' message={successMessage} />}
+      <DisplayText id={id} displayOnlyMode={displayOnlyMode} value={rest.value} placeholder={rest.placeholder} />
+      {!displayOnlyMode && errorMessage && <HelpMessage id={id} type='error' message={errorMessage} />}
+      {!displayOnlyMode && successMessage && <HelpMessage id={id} type='success' message={successMessage} />}
     </div>
   );
 }
