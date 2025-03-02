@@ -1,18 +1,27 @@
-import { Ref } from 'react';
+import { Ref, useId } from 'react';
 import { join } from '../../util/join';
 import { inputDefaults, inputVariants, InputVariants, roundedVariants } from './variants';
 
 interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<HTMLInputElement> {
   ref?: Ref<HTMLInputElement>;
+  errorMessage?: string;
 }
+
+/* TASK:
+  - hide content
+
+*/
 
 export default function Input({
   variant = inputDefaults.variant,
   rounded,
+  errorMessage,
   type = 'text',
   className,
   ...rest
 }: InputProps) {
+  const id = useId();
+
   // Default `round` of `md` for `outline` variant
   let adjustedRound = rounded;
   if (variant === 'outline' && !rounded) {
@@ -20,7 +29,8 @@ export default function Input({
   }
   adjustedRound = adjustedRound || inputDefaults.rounded;
 
-  const baseClasses = 'appearance-none px-2 py-1 focus:outline-none disabled:opacity-50 placeholder:text-muted/70 transition-all';
+  const baseClasses =
+    'appearance-none w-full px-2 py-1 focus:outline-none disabled:opacity-50 placeholder:text-muted/70 transition-all';
   const fileClasses = 'file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground';
 
   const inputClasses = join(
@@ -31,5 +41,22 @@ export default function Input({
     className
   );
 
-  return <input {...rest} className={inputClasses} type={type} />;
+  return (
+    <div className='text-left'>
+      <input
+        {...rest}
+        type={type}
+        aria-disabled={rest.disabled}
+        aria-invalid={errorMessage ? true : undefined}
+        aria-describedby={errorMessage ? `${id}-error-message` : undefined}
+        data-error={errorMessage ? true : undefined}
+        className={inputClasses}
+      />
+      {errorMessage && (
+        <small id={`${id}-error-message`} className='text-sm text-danger' role='alert'>
+          {errorMessage}
+        </small>
+      )}
+    </div>
+  );
 }

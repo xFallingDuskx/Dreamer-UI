@@ -1,7 +1,9 @@
 export const inputVariants = {
-  base: 'ring ring-transparent focus:ring-primary-foreground',
-  underline: 'border-b border-primary focus:border-primary-foreground disabled:border-muted',
-  outline: 'border border-primary focus:border-primary-foreground disabled:border-muted',
+  base: 'ring ring-transparent focus:ring-primary-foreground not-disabled:data-[error=true]:ring-danger',
+  underline:
+    'border-b border-primary focus:border-primary-foreground disabled:border-muted not-disabled:data-[error=true]:border-danger',
+  outline:
+    'border border-primary focus:border-primary-foreground disabled:border-muted not-disabled:data-[error=true]:border-danger',
 } as const;
 export type InputVariant = keyof typeof inputVariants;
 
