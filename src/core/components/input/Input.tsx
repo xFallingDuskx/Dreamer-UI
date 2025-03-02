@@ -70,9 +70,9 @@ export default function Input({
           </button>
         )}
       </div>
-      <DisplayText id={id} displayOnlyMode={displayOnlyMode} value={rest.value} placeholder={rest.placeholder} />
-      {!displayOnlyMode && errorMessage && <HelpMessage id={id} type='error' message={errorMessage} />}
-      {!displayOnlyMode && successMessage && <HelpMessage id={id} type='success' message={successMessage} />}
+      <DisplayText inputId={id} displayOnlyMode={displayOnlyMode} value={rest.value} placeholder={rest.placeholder} />
+      {!displayOnlyMode && errorMessage && <HelpMessage inputId={id} type='error' message={errorMessage} />}
+      {!displayOnlyMode && successMessage && <HelpMessage inputId={id} type='success' message={successMessage} />}
     </div>
   );
 }

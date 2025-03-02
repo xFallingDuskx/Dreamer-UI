@@ -2,13 +2,13 @@ import { join } from '../../util/join';
 import { useDisplay } from './hooks';
 
 interface DisplayTextProps extends Partial<React.InputHTMLAttributes<HTMLInputElement>> {
-  id: string;
+  inputId: string;
   displayOnlyMode: boolean;
   displayPlaceholder?: string;
 }
 
-export default function DisplayText({ id, displayOnlyMode, ...rest }: DisplayTextProps) {
-  const { inputtedText, font, color } = useDisplay(id);
+export default function DisplayText({ inputId, displayOnlyMode, ...rest }: DisplayTextProps) {
+  const { inputtedText, font, color } = useDisplay(inputId);
 
   if (!displayOnlyMode) {
     return null;
