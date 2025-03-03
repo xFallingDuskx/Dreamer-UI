@@ -10,11 +10,12 @@ export const buttonVariants = {
 export type ButtonVariant = keyof typeof buttonVariants;
 
 export const sizeVariants = {
-  stripped: 'p-0',
+  stripped: '',
+  fitted: 'w-fit',
   sm: 'px-2 py-1 text-sm',
   md: 'px-4 py-2 text-base',
   lg: 'px-6 py-3 text-lg',
-  icon: 'p-2 aspect-square',
+  icon: 'p-1 w-fit aspect-square',
   full: 'p-2 w-full',
 } as const;
 export type ButtonSize = keyof typeof sizeVariants;
