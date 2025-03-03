@@ -1,6 +1,7 @@
 import { Ref, useId } from 'react';
 import { StatusHelpMessage } from '../../shared/forms';
 import { join } from '../../util/join';
+import { useAutoExpand } from './hooks';
 import './styles.css';
 import { roundedVariants, textareaDefaults, textareaVariants, TextareaVariants } from './variants';
 
@@ -10,6 +11,7 @@ interface TextareaProps extends Partial<TextareaVariants>, React.TextareaHTMLAtt
   errorMessage?: string;
   successMessage?: string;
   hideResizeHandle?: boolean; // only works for Webkit browsers
+  autoExpand?: boolean;
 }
 
 export default function Textarea({
@@ -19,10 +21,12 @@ export default function Textarea({
   errorMessage,
   successMessage,
   hideResizeHandle = false,
+  autoExpand = false,
   className,
   ...rest
 }: TextareaProps) {
   const id = useId();
+  useAutoExpand(id, autoExpand);
 
   // Default `round` of `md` for `outline` variant
   let adjustedRound = rounded;
@@ -30,6 +34,11 @@ export default function Textarea({
     adjustedRound = 'md';
   }
   adjustedRound = adjustedRound || textareaDefaults.rounded;
+
+  let adjustedHideResizeHandle = hideResizeHandle;
+  if (variant === 'left-line' && !hideResizeHandle) {
+    adjustedHideResizeHandle = true;
+  }
 
   const baseClasses =
     'appearance-none w-full focus:outline-none disabled:opacity-50 placeholder:text-muted/70 hide-number-input-arrows transition-all';
@@ -40,7 +49,8 @@ export default function Textarea({
     !displayOnlyMode && roundedVariants[adjustedRound],
     !displayOnlyMode && 'px-2 py-1',
     displayOnlyMode && 'pointer-events-none',
-    hideResizeHandle && 'no-resize-handle',
+    adjustedHideResizeHandle && 'no-resize-handle',
+
     className
   );
 
@@ -55,6 +65,9 @@ export default function Textarea({
         aria-invalid={errorMessage ? true : successMessage ? false : undefined}
         data-error={errorMessage ? true : undefined}
         data-success={successMessage ? true : undefined}
+        style={{
+          resize: autoExpand ? 'none' : undefined,
+        }}
         className={inputClasses}
       />
       {!displayOnlyMode && <StatusHelpMessage elementId={id} type='error' message={errorMessage} />}
