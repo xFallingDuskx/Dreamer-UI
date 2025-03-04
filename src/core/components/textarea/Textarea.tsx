@@ -26,7 +26,7 @@ export default function Textarea({
   ...rest
 }: TextareaProps) {
   const id = useId();
-  useAutoExpand(id, autoExpand);
+  useAutoExpand(id, autoExpand || displayOnlyMode);
 
   // Default `round` of `md` for `outline` variant
   let adjustedRound = rounded;
@@ -36,7 +36,7 @@ export default function Textarea({
   adjustedRound = adjustedRound || textareaDefaults.rounded;
 
   let adjustedHideResizeHandle = hideResizeHandle;
-  if (variant === 'left-line' && !hideResizeHandle) {
+  if (displayOnlyMode || (variant === 'left-line' && !hideResizeHandle)) {
     adjustedHideResizeHandle = true;
   }
 
