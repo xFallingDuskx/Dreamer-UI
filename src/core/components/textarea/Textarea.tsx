@@ -4,6 +4,7 @@ import { join } from '../../util/join';
 import { useAutoExpand } from './hooks';
 import './styles.css';
 import { roundedVariants, textareaDefaults, textareaVariants, TextareaVariants } from './variants';
+import CharacterCount from './CharacterCount';
 
 interface TextareaProps extends Partial<TextareaVariants>, React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   ref?: Ref<HTMLTextAreaElement>;
@@ -12,6 +13,7 @@ interface TextareaProps extends Partial<TextareaVariants>, React.TextareaHTMLAtt
   successMessage?: string;
   hideResizeHandle?: boolean; // only works for Webkit browsers
   autoExpand?: boolean;
+  characterLimit?: number;
 }
 
 export default function Textarea({
@@ -22,6 +24,7 @@ export default function Textarea({
   successMessage,
   hideResizeHandle = false,
   autoExpand = false,
+  characterLimit = 0,
   className,
   ...rest
 }: TextareaProps) {
@@ -55,21 +58,19 @@ export default function Textarea({
   );
 
   return (
-    <div className='text-left -space-y-1.5'>
+    <div className='-space-y-1.5'>
       <textarea
         {...rest}
         id={id}
         aria-disabled={rest.disabled}
         readOnly={displayOnlyMode}
         aria-readonly={displayOnlyMode || rest['aria-readonly']}
-        aria-invalid={errorMessage ? true : successMessage ? false : undefined}
-        data-error={errorMessage ? true : undefined}
-        data-success={successMessage ? true : undefined}
         style={{
           resize: autoExpand ? 'none' : undefined,
         }}
         className={inputClasses}
       />
+      {characterLimit > 0 && <CharacterCount elementId={id} maxLength={characterLimit} />}
       {!displayOnlyMode && <StatusHelpMessage elementId={id} type='error' message={errorMessage} />}
       {!displayOnlyMode && <StatusHelpMessage elementId={id} type='success' message={successMessage} />}
     </div>
