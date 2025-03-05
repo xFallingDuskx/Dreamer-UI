@@ -7,6 +7,8 @@ import { ButtonVariants, buttonDefaults, buttonVariants, roundedVariants, sizeVa
 interface ButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttributes<HTMLButtonElement> {
   ref?: Ref<HTMLButtonElement>;
   loading?: boolean;
+  linkTo?: string;
+  linkProps?: React.AnchorHTMLAttributes<HTMLAnchorElement>;
 }
 
 export default function Button({
@@ -14,6 +16,8 @@ export default function Button({
   size = buttonDefaults.size,
   rounded = buttonDefaults.rounded,
   loading,
+  linkTo,
+  linkProps,
   type = 'button',
   className,
   ...rest
@@ -27,6 +31,7 @@ export default function Button({
     sizeVariants[size],
     roundedVariants[rounded],
     loading && 'relative pointer-events-none',
+    linkTo && 'relative',
     className
   );
 
@@ -34,6 +39,16 @@ export default function Button({
     <button {...rest} aria-disabled={rest.disabled} aria-busy={loading} type={type} className={buttonClasses}>
       {loading && <LoadingDots />}
       <span className={join(loading && 'invisible')}>{rest.children}</span>
+
+      {linkTo && (
+        <a
+          {...linkProps}
+          href={linkTo}
+          target={linkProps?.target || '_blank'}
+          rel={linkProps?.rel || 'noreferrer'}
+          className='absolute inset-0'
+        />
+      )}
     </button>
   );
 }
