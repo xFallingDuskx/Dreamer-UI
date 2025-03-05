@@ -58,7 +58,6 @@ export default function Input({
           aria-disabled={rest.disabled}
           readOnly={displayOnlyMode}
           aria-readonly={displayOnlyMode || rest['aria-readonly']}
-          aria-invalid={errorMessage ? true : successMessage ? false : undefined}
           data-error={errorMessage ? true : undefined}
           data-success={successMessage ? true : undefined}
           className={inputClasses}
@@ -67,6 +66,8 @@ export default function Input({
           <button
             onClick={() => setShowPassword(!showPassword)}
             className='absolute inset-y-0 right-0 px-2 hover:cursor-pointer'
+            aria-label='Toggle password visibility'
+            data-state={showPassword ? 'visible' : 'hidden'}
           >
             {showPassword ? <EyeOpened size={20} /> : <EyeClosed size={20} />}
           </button>
