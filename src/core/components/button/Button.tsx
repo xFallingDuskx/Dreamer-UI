@@ -19,7 +19,7 @@ export default function Button({
   ...rest
 }: ButtonProps) {
   const baseClasses =
-    'appearance-none focus:outline-none focus:ring not-disabled:hover:cursor-pointer disabled:opacity-50 transition-all';
+    'appearance-none focus:outline-none focus:ring not-disabled:hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-all';
 
   const buttonClasses = join(
     baseClasses,
