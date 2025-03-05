@@ -47,6 +47,9 @@ function App() {
                 Click Me
               </Button>
               <Button linkTo='https://google.com'>Link to Google</Button>
+              <Button linkTo='https://google.com' disabled={true}>
+                Link to Google
+              </Button>
             </div>
           </div>
 

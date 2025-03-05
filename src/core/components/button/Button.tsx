@@ -23,7 +23,8 @@ export default function Button({
   ...rest
 }: ButtonProps) {
   let adjustedSize: ButtonSize;
-  if (variant === 'link' && !size) { // default links to fitted size
+  if (variant === 'link' && !size) {
+    // default links to fitted size
     adjustedSize = 'fitted';
   } else {
     adjustedSize = size || buttonDefaults.size;
@@ -56,7 +57,7 @@ export default function Button({
       {loading && <LoadingDots />}
       <span className={join(loading && 'invisible')}>{rest.children}</span>
 
-      {linkTo && (
+      {linkTo && !rest.disabled && (
         <a
           {...linkProps}
           aria-hidden={true} // Hide from screen readers since the button is already accessible
