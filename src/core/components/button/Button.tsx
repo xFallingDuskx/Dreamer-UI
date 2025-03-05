@@ -48,7 +48,7 @@ export default function Button({
       role={linkTo ? 'link' : rest.role}
       aria-label={rest['aria-label'] || linkProps?.['aria-label']}
       aria-description={rest['aria-description'] || linkProps?.['aria-description']}
-      aria-disabled={rest.disabled}
+      aria-disabled={rest.disabled || loading}
       aria-busy={loading}
       type={type}
       className={buttonClasses}
