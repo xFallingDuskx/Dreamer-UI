@@ -3,9 +3,9 @@ export const inputVariants = {
   default:
     'ring ring-transparent focus:ring-primary-foreground not-disabled:data-error:ring-danger not-disabled:data-success:ring-success',
   underline:
-    'border-b border-primary focus:border-primary-foreground disabled:border-muted not-disabled:data-error:border-danger not-disabled:data-success:border-success',
+    'border-b border-border focus:border-primary-foreground disabled:border-muted not-disabled:data-error:border-danger not-disabled:data-success:border-success',
   outline:
-    'border border-primary focus:border-primary-foreground disabled:border-muted not-disabled:data-error:border-danger not-disabled:data-success:border-success',
+    'border border-border focus:border-primary-foreground disabled:border-muted not-disabled:data-error:border-danger not-disabled:data-success:border-success',
 } as const;
 export type InputVariant = keyof typeof inputVariants;
 
