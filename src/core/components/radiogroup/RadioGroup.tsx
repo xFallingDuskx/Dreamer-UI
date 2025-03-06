@@ -1,29 +1,26 @@
 import React, { useId, useMemo } from 'react';
 import { RadioGroupItem, RadioGroupItemProps } from './RadioGroupItem';
+import { useRadioFocus } from './hooks';
+import { join } from '../../util/join';
 
 export type RadioOption = string | { label: string; value: string };
 
 export type RadioGroupProps = {
   options?: RadioOption[];
-  value: string;
+  value: string | undefined;
   onChange: (value: string) => void;
   name?: string;
   children?: React.ReactElement<RadioGroupItemProps>[] | React.ReactElement<RadioGroupItemProps>;
   className?: string;
-  hideInput?: boolean;
 };
 
-export function RadioGroup({
-  options = [],
-  value,
-  onChange,
-  name,
-  children,
-  className = '',
-  hideInput = false,
-}: RadioGroupProps) {
+export function RadioGroup({ options = [], value, onChange, name, children, className = '' }: RadioGroupProps) {
   const groupId = useId();
   const groupName = name || `radio-group-${groupId}`;
+  useRadioFocus(
+    groupName,
+    options.findIndex((option) => option === value)
+  );
 
   // Check for duplicates if string options are provided
   const processedOptions = useMemo(() => {
@@ -41,7 +38,7 @@ export function RadioGroup({
   }, [options]);
 
   return (
-    <div role='radiogroup' className={className}>
+    <div id={groupName} role='radiogroup' tabIndex={0} className={join(className, 'focus:outline-none')}>
       {/* Render from options prop */}
       {processedOptions.length > 0 &&
         processedOptions.map((option, index) => (
@@ -58,7 +55,8 @@ export function RadioGroup({
         ))}
 
       {/* Render RadioGroupItem components */}
-      {children &&
+      {processedOptions.length === 0 &&
+        children &&
         React.Children.map(children, (child) => {
           // TypeScript enforces that child is a RadioGroupItem
           if (React.isValidElement<RadioGroupItemProps>(child)) {
@@ -67,7 +65,6 @@ export function RadioGroup({
                 {...child.props}
                 isSelected={value === child.props.value}
                 onChange={onChange}
-                hideInput={hideInput}
                 name={groupName}
               >
                 {child.props.children}
