@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 
 export function useRadioFocus(id: string, selectedOptionIndex: number) {
-  const [focused, setFocused] = useState(false);
+  // manage state locally to avoid race conditions, which can result in
+  // the an option failing to be selected or incorrectly selected
   const [selectedIndex, setSelectedIndex] = useState<number>(selectedOptionIndex);
 
   const setInitialFocus = useCallback(
@@ -10,18 +11,42 @@ export function useRadioFocus(id: string, selectedOptionIndex: number) {
       if (!options.length) return;
 
       const indexToFocus = selectedOptionIndex !== -1 ? selectedOptionIndex : 0;
-      console.log('indexToFocus', indexToFocus); // REMOVE
       options[indexToFocus]?.focus();
       options[indexToFocus]?.click();
-      setFocused(true);
       setSelectedIndex(indexToFocus);
     },
     [selectedOptionIndex]
   );
 
+  /* Focus preceding element when Shift + Tab is pressed */
+  const handleFocusPreceding = useCallback(
+    (e: KeyboardEvent) => {
+      // If the Shift key is not pressed while tab is entered, do nothing
+      if (!e.shiftKey) {
+        return;
+      }
+
+      e.preventDefault();
+      const focusableElements = Array.from(
+        document.querySelectorAll<HTMLElement>(
+          'a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => !el.hasAttribute('disabled') && el.tabIndex >= 0);
+      const currentIndex = focusableElements.findIndex((el) => el.id === id);
+      const previousIndex = currentIndex > 0 ? currentIndex - 1 : focusableElements.length - 1;
+      focusableElements[previousIndex]?.focus();
+    },
+    [id]
+  );
+
   const handleKeyboardNavigation = useCallback(
     (e: KeyboardEvent, options: HTMLElement[]) => {
       if (!options.length) return;
+
+      // Ensure we only toggle options part of radio group
+      const target = e.target as HTMLElement;
+      const isGroupOption = options.some((option) => option.id === target.id);
+      if (!isGroupOption) return;
 
       const currentIndex = selectedIndex !== -1 ? selectedIndex : 0;
       let newIndex = currentIndex;
@@ -40,8 +65,7 @@ export function useRadioFocus(id: string, selectedOptionIndex: number) {
           break;
 
         case 'Tab':
-          // Let default tab behavior handle focus movement
-          setFocused(false);
+          handleFocusPreceding(e);
           return;
 
         default:
@@ -50,10 +74,9 @@ export function useRadioFocus(id: string, selectedOptionIndex: number) {
 
       options[newIndex]?.focus();
       options[newIndex]?.click();
-      setFocused(true);
       setSelectedIndex(newIndex);
     },
-    [selectedIndex]
+    [selectedIndex, handleFocusPreceding]
   );
 
   const getRadioOptions = useCallback((): HTMLElement[] => {
@@ -78,9 +101,4 @@ export function useRadioFocus(id: string, selectedOptionIndex: number) {
       radioGroup.removeEventListener('focus', handleFocus);
     };
   }, [id, getRadioOptions, setInitialFocus, handleKeyboardNavigation]);
-
-  return {
-    focused,
-    selectedIndex,
-  };
 }

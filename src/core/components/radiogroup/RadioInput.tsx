@@ -11,7 +11,7 @@ export type RadioInputProps = {
 
 // Custom RadioInput Component
 export function RadioInput({ itemId, checked, onChange, name, disabled = false, className = '' }: RadioInputProps) {
-  const baseClasses = 'relative inline-flex items-center justify-center rounded-full focus:ring';
+  const baseClasses = 'relative inline-flex items-center justify-center rounded-full';
   const disabledClasses = 'border-gray-300 bg-gray-100 cursor-not-allowed';
 
   const radioClasses = join(
@@ -25,12 +25,12 @@ export function RadioInput({ itemId, checked, onChange, name, disabled = false, 
     <div
       id={itemId}
       role='radio'
+      tabIndex={-1} // necessary so that the radio button can be focused as div is not a focusable element
       aria-checked={checked}
       aria-disabled={disabled}
       aria-description={`Radio button for ${name}`}
       aria-labelledby={`${itemId}-label`}
       onClick={disabled ? undefined : onChange}
-      onFocus={e => console.log(e)}
       className={radioClasses}
       style={{
         width: '1em',
