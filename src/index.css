@@ -15,6 +15,22 @@
 
   /* Accent */
   --color-accent-medium: var(--color-violet-400); /* default tone */
+
+
+  /* Dreamer UI */
+  /* colors */
+  --color-primary: var(--color-violet-400);
+  --color-primary-foreground: var(--color-white);
+  --color-secondary: var(--color-violet-200);
+  --color-secondary-foreground: var(--color-black);
+  --color-danger: var(--color-red-500);
+  --color-danger-foreground: var(--color-white);
+  --color-muted: var(--color-gray-200);
+  --color-muted-foreground: var(--color-gray-800);
+
+  --color-success: var(--color-green-500);
+  --color-border: var(--color-slate-600); /* for input/textarea borders and dividers — could use primary, secondary, or muted color for simplicity */
+  
 }
 
 @layer base {
