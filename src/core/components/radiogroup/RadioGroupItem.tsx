@@ -40,7 +40,11 @@ export function RadioGroupItem({
       className={join(
         'relative flex items-center',
         className,
-        hideInput && `p-2 border-2 focus-within:${disabled ? 'border-current/50' : 'border-current/80'}`,
+        // Uses text color for borders
+        hideInput &&
+          `p-2 border-2 focus-within:border-dashed focus-within:${
+            disabled ? 'border-current/50' : 'border-current/80'
+          }`,
         hideInput && !isSelected && `border-transparent ${disabled ? '' : 'not-focus-within:hover:border-border/60'}`,
         hideInput && isSelected && 'border-border',
         disabled && 'opacity-60 cursor-not-allowed'
