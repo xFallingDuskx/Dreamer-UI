@@ -2,31 +2,19 @@ import { useId } from 'react';
 import { join } from '../../util/join';
 import { RadioInput } from './RadioInput';
 
-interface BaseProps {
-  option: string;
+export interface RadioGroupItemProps {
   value: string;
   children: React.ReactNode;
   className?: string;
   isSelected?: boolean;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   disabled?: boolean;
   name?: string;
+  hideInput?: boolean;
+  ariaDescription?: string;
 }
-
-interface WithInputProps extends BaseProps {
-  hideInput?: false;
-  ariaDescription?: never;
-}
-
-interface WithoutInputProps extends BaseProps {
-  hideInput: true;
-  ariaDescription: string;
-}
-
-export type RadioGroupItemProps = WithInputProps | WithoutInputProps;
 
 export function RadioGroupItem({
-  option,
   value,
   children,
   className = '',
@@ -38,12 +26,10 @@ export function RadioGroupItem({
   name,
 }: RadioGroupItemProps) {
   const id = useId();
-  const itemId = `radio-${id}-${option}`;
+  const itemId = `radio-${id}-${value}`;
 
   const handleChange = () => {
-    if (!hideInput) {
-      onChange(value);
-    }
+    onChange?.(value);
   };
 
   return (
@@ -51,9 +37,9 @@ export function RadioGroupItem({
       className={join(
         'relative flex items-center',
         className,
-        hideInput && 'p-2 border-2 focus-within:border-border/60',
-        hideInput && !isSelected && 'border-transparent hover:border-border/60',
-        isSelected && hideInput && 'border-border'
+        hideInput && 'p-2 border-2 focus-within:border-current/80',
+        hideInput && !isSelected && 'border-transparent not-focus-within:hover:border-border/60',
+        hideInput && isSelected && 'border-border'
       )}
       style={{
         gap: '0.5em',
@@ -66,19 +52,23 @@ export function RadioGroupItem({
           checked={isSelected}
           onChange={handleChange}
           disabled={disabled}
+          className={join(hideInput && '')}
         />
       )}
       <div
+        id={hideInput ? itemId : undefined}
+        tabIndex={hideInput ? -1 : undefined}
         role={hideInput ? 'radio' : undefined}
+        onClick={hideInput ? handleChange : undefined}
         aria-checked={!hideInput ? undefined : isSelected ? 'true' : 'false'}
         aria-disabled={hideInput ? disabled : undefined}
         aria-description={!hideInput ? undefined : ariaDescription || `Radio button for ${name}`}
         aria-labelledby={hideInput ? `${itemId}-label` : undefined}
-        className={join(hideInput && 'w-full')}
+        className={join(hideInput && 'w-full', typeof children === 'object' && 'grow focus:outline-none')}
       >
         <label
           id={`${itemId}-label`}
-          onClick={handleChange}
+          onClick={hideInput ? handleChange : undefined}
           className={join(disabled && 'cursor-not-allowed', !disabled && 'cursor-pointer')}
         >
           {children}

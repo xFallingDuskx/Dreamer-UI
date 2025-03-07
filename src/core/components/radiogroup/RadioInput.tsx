@@ -12,7 +12,12 @@ export type RadioInputProps = {
 // Custom RadioInput Component
 export function RadioInput({ itemId, checked, onChange, name, disabled = false, className = '' }: RadioInputProps) {
   const baseClasses = 'relative inline-flex items-center justify-center rounded-full';
-  const disabledClasses = 'border-gray-300 bg-gray-100 cursor-not-allowed';
+  const disabledClasses = 'bg-muted/60 cursor-not-allowed';
+
+  const handleClick = () => {
+    if (disabled) return;
+    onChange();
+  };
 
   const radioClasses = join(
     baseClasses,
@@ -30,7 +35,7 @@ export function RadioInput({ itemId, checked, onChange, name, disabled = false, 
       aria-disabled={disabled}
       aria-description={`Radio button for ${name}`}
       aria-labelledby={`${itemId}-label`}
-      onClick={disabled ? undefined : onChange}
+      onClick={handleClick}
       className={radioClasses}
       style={{
         width: '1em',
@@ -41,8 +46,8 @@ export function RadioInput({ itemId, checked, onChange, name, disabled = false, 
     >
       {checked && (
         <div
-          className={join(`size-full aspect-square rounded-full`, disabled && 'bg-muted', !disabled && 'bg-current')}
-        ></div>
+          className={join(`size-full aspect-square rounded-full`, disabled && 'bg-muted/60', !disabled && 'bg-current')}
+        />
       )}
     </div>
   );

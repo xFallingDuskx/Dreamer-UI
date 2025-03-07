@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 
 export function useRadioFocus(id: string, selectedOptionIndex: number) {
-  // manage state locally to avoid race conditions, which can result in
+  // Manage state locally to avoid race conditions, which can result in
   // the an option failing to be selected or incorrectly selected
   const [selectedIndex, setSelectedIndex] = useState<number>(selectedOptionIndex);
+  // Prevent onClicks from triggering focus events and automatically selecting the first option
+  const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
 
   const setInitialFocus = useCallback(
     (e: Event, options: HTMLElement[]) => {
       e.preventDefault();
+      if (isMouseDown) return;
       if (!options.length) return;
 
       const indexToFocus = selectedOptionIndex !== -1 ? selectedOptionIndex : 0;
@@ -15,7 +18,7 @@ export function useRadioFocus(id: string, selectedOptionIndex: number) {
       options[indexToFocus]?.click();
       setSelectedIndex(indexToFocus);
     },
-    [selectedOptionIndex]
+    [selectedOptionIndex, isMouseDown]
   );
 
   /* Focus preceding element when Shift + Tab is pressed */
@@ -93,12 +96,18 @@ export function useRadioFocus(id: string, selectedOptionIndex: number) {
     const options = getRadioOptions();
     const handleFocus = (e: Event) => setInitialFocus(e, options);
     const handleKeyDown = (e: KeyboardEvent) => handleKeyboardNavigation(e, options);
+    const handleMouseDown = () => setIsMouseDown(true);
+    const handleMouseUp = () => setIsMouseDown(false);
 
     document.addEventListener('keydown', handleKeyDown);
     radioGroup.addEventListener('focus', handleFocus);
+    radioGroup.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mouseup', handleMouseUp); // place on document since mouseup event can occur outside of radio group
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       radioGroup.removeEventListener('focus', handleFocus);
+      radioGroup.removeEventListener('mousedown', handleMouseDown);
+      document.removeEventListener('mouseup', handleMouseUp);
     };
   }, [id, getRadioOptions, setInitialFocus, handleKeyboardNavigation]);
 }
