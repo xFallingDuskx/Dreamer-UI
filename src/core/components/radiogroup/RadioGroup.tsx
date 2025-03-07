@@ -3,17 +3,16 @@ import { join } from '../../util/join';
 import { RadioGroupItem, RadioGroupItemProps } from './RadioGroupItem';
 import { useRadioFocus } from './hooks';
 
-export type RadioOption = string | { label: string; value: string };
+export type RadioOption = { label: string; value: string; disabled?: boolean; description?: string };
 
 export type RadioGroupProps = {
-  options?: RadioOption[];
+  options?: (string | RadioOption)[];
   value: string | undefined;
   onChange: (value: string) => void;
   name?: string;
   children?: React.ReactElement<RadioGroupItemProps>[] | React.ReactElement<RadioGroupItemProps>;
   className?: string;
   hideInputs?: boolean;
-  excludeDescription?: boolean;
 };
 
 export function RadioGroup({
@@ -24,7 +23,6 @@ export function RadioGroup({
   children,
   className = '',
   hideInputs = false,
-  excludeDescription = false,
 }: RadioGroupProps) {
   const groupId = useId();
   const groupName = name || `radio-group-${groupId}`;
@@ -35,7 +33,7 @@ export function RadioGroup({
 
   // Check for duplicates if string options are provided
   const processedOptions = useMemo(() => {
-    return options.reduce<{ label: string; value: string }[]>((acc, option) => {
+    return options.reduce<RadioOption[]>((acc, option) => {
       if (typeof option === 'string') {
         // Check if we already have this string option
         if (!acc.some((item) => item.value === option)) {
@@ -59,6 +57,8 @@ export function RadioGroup({
             isSelected={value === option.value}
             onChange={onChange}
             name={groupName}
+            disabled={option.disabled}
+            description={option.description}
             hideInput={hideInputs}
           >
             {option.label}
@@ -71,17 +71,10 @@ export function RadioGroup({
         React.Children.map(children, (child) => {
           // TypeScript enforces that child is a RadioGroupItem
           if (React.isValidElement(child) && child.type === RadioGroupItem) {
-            let hideProps: Partial<RadioGroupItemProps> = {};
-            if (hideInputs) {
-              hideProps = { hideInput: true, ariaDescription: excludeDescription ? '' : child.props.ariaDescription };
-            } else {
-              hideProps = { hideInput: false };
-            }
-
             return (
               <RadioGroupItem
                 {...child.props}
-                {...hideProps}
+                hideInput={child.props.hideInput || hideInputs}
                 isSelected={value === child.props.value}
                 onChange={onChange}
                 name={groupName}

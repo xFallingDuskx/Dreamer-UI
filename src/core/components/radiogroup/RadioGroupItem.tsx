@@ -11,7 +11,7 @@ export interface RadioGroupItemProps {
   disabled?: boolean;
   name?: string;
   hideInput?: boolean;
-  ariaDescription?: string;
+  description?: string;
 }
 
 export function RadioGroupItem({
@@ -22,24 +22,28 @@ export function RadioGroupItem({
   onChange,
   disabled = false,
   hideInput = false,
-  ariaDescription,
+  description,
   name,
 }: RadioGroupItemProps) {
   const id = useId();
   const itemId = `radio-${id}-${value}`;
 
   const handleChange = () => {
-    onChange?.(value);
+    if (!disabled) {
+      onChange?.(value);
+    }
   };
 
   return (
     <div
+      title={description}
       className={join(
         'relative flex items-center',
         className,
-        hideInput && 'p-2 border-2 focus-within:border-current/80',
-        hideInput && !isSelected && 'border-transparent not-focus-within:hover:border-border/60',
-        hideInput && isSelected && 'border-border'
+        hideInput && `p-2 border-2 focus-within:${disabled ? 'border-current/50' : 'border-current/80'}`,
+        hideInput && !isSelected && `border-transparent ${disabled ? '' : 'not-focus-within:hover:border-border/60'}`,
+        hideInput && isSelected && 'border-border',
+        disabled && 'opacity-60 cursor-not-allowed'
       )}
       style={{
         gap: '0.5em',
@@ -62,13 +66,13 @@ export function RadioGroupItem({
         onClick={hideInput ? handleChange : undefined}
         aria-checked={!hideInput ? undefined : isSelected ? 'true' : 'false'}
         aria-disabled={hideInput ? disabled : undefined}
-        aria-description={!hideInput ? undefined : ariaDescription || `Radio button for ${name}`}
+        aria-description={!hideInput ? undefined : description || `Radio button for ${name}`}
         aria-labelledby={hideInput ? `${itemId}-label` : undefined}
         className={join(hideInput && 'w-full', typeof children === 'object' && 'grow focus:outline-none')}
       >
         <label
           id={`${itemId}-label`}
-          onClick={hideInput ? handleChange : undefined}
+          onClick={hideInput ? undefined : handleChange}
           className={join(disabled && 'cursor-not-allowed', !disabled && 'cursor-pointer')}
         >
           {children}

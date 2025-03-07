@@ -12,7 +12,6 @@ export type RadioInputProps = {
 // Custom RadioInput Component
 export function RadioInput({ itemId, checked, onChange, name, disabled = false, className = '' }: RadioInputProps) {
   const baseClasses = 'relative inline-flex items-center justify-center rounded-full';
-  const disabledClasses = 'bg-muted/60 cursor-not-allowed';
 
   const handleClick = () => {
     if (disabled) return;
@@ -23,7 +22,7 @@ export function RadioInput({ itemId, checked, onChange, name, disabled = false, 
     baseClasses,
     !checked && 'hover:border-current/60',
     !disabled && 'border-current cursor-pointer',
-    disabled && disabledClasses,
+    disabled && 'border-muted/60 cursor-not-allowed',
     className
   );
   return (
