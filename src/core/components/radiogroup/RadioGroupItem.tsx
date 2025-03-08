@@ -72,7 +72,7 @@ export function RadioGroupItem({
         aria-disabled={hideInput ? disabled : undefined}
         aria-description={!hideInput ? undefined : description || `Radio button for ${name}`}
         aria-labelledby={hideInput ? `${itemId}-label` : undefined}
-        className={join(hideInput && 'w-full', typeof children === 'object' && 'grow focus:outline-none')}
+        className={join(hideInput && 'size-full', typeof children === 'object' && 'grow focus:outline-none')}
       >
         <label
           id={`${itemId}-label`}

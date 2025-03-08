@@ -12,6 +12,7 @@ export type RadioGroupProps = {
   name?: string;
   children?: React.ReactElement<RadioGroupItemProps>[] | React.ReactElement<RadioGroupItemProps>;
   className?: string;
+  childrenClassName?: string;
   hideInputs?: boolean;
 };
 
@@ -22,6 +23,7 @@ export function RadioGroup({
   name,
   children,
   className = '',
+  childrenClassName = '',
   hideInputs = false,
 }: RadioGroupProps) {
   const groupId = useId();
@@ -60,6 +62,7 @@ export function RadioGroup({
             disabled={option.disabled}
             description={option.description}
             hideInput={hideInputs}
+            className={childrenClassName}
           >
             {option.label}
           </RadioGroupItem>
@@ -74,6 +77,7 @@ export function RadioGroup({
             return (
               <RadioGroupItem
                 {...child.props}
+                className={join(childrenClassName, child.props.className)}
                 hideInput={child.props.hideInput || hideInputs}
                 isSelected={value === child.props.value}
                 onChange={onChange}
