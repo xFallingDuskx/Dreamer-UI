@@ -3,9 +3,22 @@ import { useCallback, useEffect, useState } from 'react';
 export function useRadioFocus(id: string, selectedOptionIndex: number) {
   // Manage state locally to avoid race conditions, which can result in
   // the an option failing to be selected or incorrectly selected
-  const [selectedIndex, setSelectedIndex] = useState<number>(selectedOptionIndex);
+  const [focusedIndex, setFocusedIndex] = useState<number>(selectedOptionIndex);
+  const [clickedIndex, setClickedIndex] = useState<number>(-1);
   // Prevent onClicks from triggering focus events and automatically selecting the first option
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
+
+  const handleClicked = useCallback((options: HTMLElement[], index: number) => {
+    const target = options[index] as HTMLElement;
+
+    // Check if the target element is disabled
+    const isDisabled = target.hasAttribute('disabled') || target.getAttribute('aria-disabled') === 'true';
+    if (isDisabled) return;
+
+    // Update the selected index
+    options[index]?.click();
+    setClickedIndex(index);
+  }, []);
 
   const setInitialFocus = useCallback(
     (e: Event, options: HTMLElement[]) => {
@@ -15,10 +28,14 @@ export function useRadioFocus(id: string, selectedOptionIndex: number) {
 
       const indexToFocus = selectedOptionIndex !== -1 ? selectedOptionIndex : 0;
       options[indexToFocus]?.focus();
-      options[indexToFocus]?.click();
-      setSelectedIndex(indexToFocus);
+      setFocusedIndex(indexToFocus);
+
+      // Only update the selected index if one is already set
+      if (selectedOptionIndex !== -1) {
+        handleClicked(options, indexToFocus);
+      }
     },
-    [selectedOptionIndex, isMouseDown]
+    [selectedOptionIndex, isMouseDown, handleClicked]
   );
 
   /* Focus preceding element when Shift + Tab is pressed */
@@ -51,7 +68,7 @@ export function useRadioFocus(id: string, selectedOptionIndex: number) {
       const isGroupOption = options.some((option) => option.id === target.id);
       if (!isGroupOption) return;
 
-      const currentIndex = selectedIndex !== -1 ? selectedIndex : 0;
+      const currentIndex = focusedIndex !== -1 ? focusedIndex : 0;
       let newIndex = currentIndex;
 
       switch (e.key) {
@@ -67,6 +84,12 @@ export function useRadioFocus(id: string, selectedOptionIndex: number) {
           newIndex = (currentIndex + 1) % options.length;
           break;
 
+        // Select the option when the space key is pressed
+        case ' ':
+          e.preventDefault();
+          handleClicked(options, currentIndex);
+          return;
+
         case 'Tab':
           handleFocusPreceding(e);
           return;
@@ -76,10 +99,13 @@ export function useRadioFocus(id: string, selectedOptionIndex: number) {
       }
 
       options[newIndex]?.focus();
-      options[newIndex]?.click();
-      setSelectedIndex(newIndex);
+      setFocusedIndex(newIndex);
+      // Only update the selected index if one is already set
+      if (clickedIndex !== -1) {
+        handleClicked(options, newIndex);
+      }
     },
-    [selectedIndex, handleFocusPreceding]
+    [focusedIndex, clickedIndex, handleFocusPreceding, handleClicked]
   );
 
   const getRadioOptions = useCallback((): HTMLElement[] => {
