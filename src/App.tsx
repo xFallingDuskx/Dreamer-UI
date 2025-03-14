@@ -1,8 +1,27 @@
+import { useState } from 'react';
 import { Button } from './core/components/button';
 import { Input } from './core/components/input';
+import { RadioGroup, RadioGroupItem } from './core/components/radiogroup';
 import { Textarea } from './core/components/textarea';
 
+const TestComponent = ({ index }: { index: number }) => {
+  return (
+    <div className='bg-slate-700 rounded-md p-2 h-full'>
+      <h4>Some text for option {index}</h4>
+      <p>Some description for option {index}</p>
+    </div>
+  );
+};
+
 function App() {
+  const [radioGroupSelections, setRadioGroupSelections] = useState<Record<number, string>>({});
+
+  const handleRadioGroupChange = (value: string, index: number) => {
+    const newSelections = { ...radioGroupSelections };
+    newSelections[index] = value;
+    setRadioGroupSelections(newSelections);
+  };
+
   const handleSelectOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
     const section = document.getElementById(selectedValue);
@@ -24,6 +43,7 @@ function App() {
           <option value='buttons-section'>Button</option>
           <option value='inputs-section'>Input</option>
           <option value='textarea-section'>Textarea</option>
+          <option value='radiogroup-section'>Radio Group</option>
         </select>
 
         <div className='mt-12 max-w-2xl mx-auto px-10 space-y-20'>
@@ -87,6 +107,70 @@ function App() {
             <Textarea placeholder='Enter your message' successMessage='Looks good!' />
             <Textarea displayOnlyMode={true} placeholder='Enter your message' />
             <Textarea characterLimit={50} placeholder='Enter your message' />
+          </div>
+
+          <div id='radiogroup-section'>
+            <h3 className='mb-2'>Radio Group</h3>
+            <div className='grid grid-cols-2 gap-4'>
+              <RadioGroup
+                options={['Option 1', 'Option 2', 'Option 3']}
+                value={radioGroupSelections[0]}
+                onChange={(value) => handleRadioGroupChange(value, 0)}
+                name='simple-example'
+              />
+              <RadioGroup
+                options={[
+                  { value: 'i1', label: 'Item 1' },
+                  { value: 'i2', label: 'Item 2', disabled: true },
+                  { value: 'i3', label: 'Item 3', description: 'Description for Item 3' },
+                ]}
+                value={radioGroupSelections[1]}
+                onChange={(value) => handleRadioGroupChange(value, 1)}
+                name='simple-example-2'
+              />
+              <RadioGroup value={radioGroupSelections[2]} onChange={(value) => handleRadioGroupChange(value, 2)}>
+                <RadioGroupItem value='e1'>Entity 1</RadioGroupItem>
+                <RadioGroupItem value='e2'>Entity 2</RadioGroupItem>
+                <RadioGroupItem value='e3'>Entity 3</RadioGroupItem>
+              </RadioGroup>
+
+              <RadioGroup
+                value={radioGroupSelections[3]}
+                onChange={(value) => handleRadioGroupChange(value, 3)}
+                className='space-y-2'
+              >
+                <RadioGroupItem value='t1'>
+                  <TestComponent index={1} />
+                </RadioGroupItem>
+                <RadioGroupItem value='t2' disabled={true}>
+                  <TestComponent index={2} />
+                </RadioGroupItem>
+                <RadioGroupItem value='t3'>
+                  <TestComponent index={3} />
+                </RadioGroupItem>
+              </RadioGroup>
+
+              <RadioGroup
+                value={radioGroupSelections[4]}
+                onChange={(value) => handleRadioGroupChange(value, 4)}
+                className='col-span-2 grid grid-cols-2 gap-2'
+                childrenClassName='rounded-md'
+                hideInputs={true}
+              >
+                <RadioGroupItem value='t4'>
+                  <TestComponent index={4} />
+                </RadioGroupItem>
+                <RadioGroupItem value='t5' disabled={true} description='Disabled option'>
+                  <TestComponent index={5} />
+                </RadioGroupItem>
+                <RadioGroupItem value='t6'>
+                  <TestComponent index={6} />
+                </RadioGroupItem>
+                <RadioGroupItem value='t7'>
+                  <TestComponent index={7} />
+                </RadioGroupItem>
+              </RadioGroup>
+            </div>
           </div>
         </div>
       </div>
