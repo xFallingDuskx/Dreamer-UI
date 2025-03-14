@@ -3,8 +3,8 @@ import Check from '../../symbols/Check';
 import { join } from '../../util/join';
 import { useFilledBackgroundColor } from './hooks';
 
-export interface CheckboxProps extends React.HTMLProps<HTMLDivElement> {
-  ref?: Ref<HTMLDivElement>;
+export interface CheckboxProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  ref?: Ref<HTMLButtonElement>;
   size?: number;
   textColor?: string;
   filled?: boolean;
@@ -42,7 +42,7 @@ export default function Checkbox({
     }
   };
 
-  const handleOnKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleOnKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       handleChange();
@@ -58,15 +58,16 @@ export default function Checkbox({
   );
 
   return (
-    <div
+    <button
       id={checkboxId}
+      type='button'
       ref={ref}
       tabIndex={0}
       role='checkbox'
       onClick={handleChange}
       aria-checked={isChecked}
       aria-disabled={disabled}
-      onKeyDown={handleOnKeyDown}
+      onKeyDownCapture={handleOnKeyDown}
       style={{
         width: size,
         height: size,
@@ -77,6 +78,6 @@ export default function Checkbox({
       {...props}
     >
       {isChecked && <Check size={size} color={filled ? parentBackgroundColor : undefined} />}
-    </div>
+    </button>
   );
 }
