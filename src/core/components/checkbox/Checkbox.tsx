@@ -22,7 +22,7 @@ export default function Checkbox({
   rounded = true,
   checked = false,
   onCheckedChange,
-  disabled = false,
+  disabled,
   className = '',
   ...props
 }: CheckboxProps) {
@@ -43,16 +43,16 @@ export default function Checkbox({
   };
 
   const handleOnKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === ' ') {
       e.preventDefault();
       handleChange();
     }
   };
 
   const checkboxClasses = join(
-    'flex items-center justify-center border',
+    'flex items-center justify-center border outline outline-transparent focus:outline-current focus:outline-offset-2',
     rounded && 'rounded',
-    disabled && 'opacity-50 cursor-not-allowed',
+    disabled && 'opacity-40 cursor-not-allowed',
     !disabled && 'cursor-pointer',
     className
   );
