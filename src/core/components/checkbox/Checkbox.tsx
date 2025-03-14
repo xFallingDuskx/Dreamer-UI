@@ -6,7 +6,7 @@ import { useFilledBackgroundColor } from './hooks';
 export interface CheckboxProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   ref?: Ref<HTMLButtonElement>;
   size?: number;
-  textColor?: string;
+  color?: string; // can be adjusted with tailwindcss by using `text-<color>`
   filled?: boolean;
   rounded?: boolean;
   checked?: boolean;
@@ -17,7 +17,7 @@ export default function Checkbox({
   ref,
   id,
   size = 20,
-  textColor,
+  color,
   filled = false,
   rounded = true,
   checked = false,
@@ -71,7 +71,7 @@ export default function Checkbox({
       style={{
         width: size,
         height: size,
-        color: textColor,
+        color: color,
         backgroundColor: isChecked && filled ? 'currentcolor' : 'transparent',
       }}
       className={checkboxClasses}
