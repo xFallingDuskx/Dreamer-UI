@@ -8,6 +8,7 @@ export interface CheckboxProps extends React.HTMLProps<HTMLDivElement> {
   size?: number;
   textColor?: string;
   filled?: boolean;
+  rounded?: boolean;
   checked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
 }
@@ -18,6 +19,7 @@ export default function Checkbox({
   size = 20,
   textColor,
   filled = false,
+  rounded = true,
   checked = false,
   onCheckedChange,
   disabled = false,
@@ -48,7 +50,8 @@ export default function Checkbox({
   };
 
   const checkboxClasses = join(
-    'flex items-center justify-center rounded border',
+    'flex items-center justify-center border',
+    rounded && 'rounded',
     disabled && 'opacity-50 cursor-not-allowed',
     !disabled && 'cursor-pointer',
     className
