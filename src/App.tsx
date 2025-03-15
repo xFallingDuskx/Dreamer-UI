@@ -3,6 +3,7 @@ import { Button } from './core/components/button';
 import { Input } from './core/components/input';
 import { RadioGroup, RadioGroupItem } from './core/components/radiogroup';
 import { Textarea } from './core/components/textarea';
+import { Checkbox } from './core/components/checkbox';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
@@ -44,6 +45,7 @@ function App() {
           <option value='inputs-section'>Input</option>
           <option value='textarea-section'>Textarea</option>
           <option value='radiogroup-section'>Radio Group</option>
+          <option value='checkbox-section'>Checkbox</option>
         </select>
 
         <div className='mt-12 max-w-2xl mx-auto px-10 space-y-20'>
@@ -170,6 +172,20 @@ function App() {
                   <TestComponent index={7} />
                 </RadioGroupItem>
               </RadioGroup>
+            </div>
+          </div>
+
+          <div id='checkbox-section'>
+            <h3 className='mb-2'>Checkbox</h3>
+            <div className='grid grid-cols-4 justify-items-center items-center gap-4'>
+              <Checkbox rounded={false} />
+              <Checkbox checked={true} />
+              <Checkbox checked={true} className='text-accent-medium' filled={true} />
+              <Checkbox filled={true} color='red' />
+              <Checkbox disabled={true} />
+              <Checkbox checked={true} disabled={true} />
+              <Checkbox size={30} />
+              <Checkbox color='red' />
             </div>
           </div>
         </div>
