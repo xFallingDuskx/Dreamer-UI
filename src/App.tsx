@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Button } from './core/components/button';
+import { Checkbox } from './core/components/checkbox';
 import { Input } from './core/components/input';
+import { Label } from './core/components/label';
 import { RadioGroup, RadioGroupItem } from './core/components/radiogroup';
 import { Textarea } from './core/components/textarea';
-import { Checkbox } from './core/components/checkbox';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
@@ -46,6 +47,7 @@ function App() {
           <option value='textarea-section'>Textarea</option>
           <option value='radiogroup-section'>Radio Group</option>
           <option value='checkbox-section'>Checkbox</option>
+          <option value='labels-section'>Label</option>
         </select>
 
         <div className='mt-12 max-w-2xl mx-auto px-10 space-y-20'>
@@ -186,6 +188,21 @@ function App() {
               <Checkbox checked={true} disabled={true} />
               <Checkbox size={30} />
               <Checkbox color='red' />
+            </div>
+          </div>
+
+          <div id='label-section'>
+            <h3 className='mb-2'>Label</h3>
+            <div className='grid grid-cols-2 gap-4'>
+              <Label htmlFor='input-1'>
+                First Label
+              </Label>
+              <Label htmlFor='input-2' display='block'>
+                Second Label
+              </Label>
+              <Label htmlFor='input-2' required={true}>
+                Third Label
+              </Label>
             </div>
           </div>
         </div>
