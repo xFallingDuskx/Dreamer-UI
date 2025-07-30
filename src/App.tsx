@@ -197,11 +197,14 @@ function App() {
               <Label htmlFor='input-1'>
                 First Label
               </Label>
-              <Label htmlFor='input-2' display='block'>
+              <Label display='block'>
                 Second Label
               </Label>
-              <Label htmlFor='input-2' required={true}>
+              <Label required={true}>
                 Third Label
+              </Label>
+              <Label helpMessage='This is a help message for the label'>
+                Label w/ Help
               </Label>
             </div>
           </div>
