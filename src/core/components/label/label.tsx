@@ -23,7 +23,7 @@ export function Label({
 }: LabelProps) {
   const id = useId();
   const labelClasses = join('font-medium', display, className);
-  const helpId = helpMessage ? `${htmlFor}-help` : id;
+  const helpId = helpMessage ? `${htmlFor ?? id}-help` : undefined;
 
   return (
     <div style={{ display: display === 'inline' ? 'inline-flex' : 'flex', width }} className='relative'>
@@ -46,7 +46,7 @@ export function Label({
         </span>
       )}
       {helpMessage && (
-        <div id={helpId} className='sr-only' role='tooltip'>
+        <div id={helpId} className='sr-only'>
           {helpMessage}
         </div>
       )}
