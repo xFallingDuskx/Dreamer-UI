@@ -1,6 +1,6 @@
-import React from 'react';
-import { join } from '../../util/join';
+import React, { useId } from 'react';
 import QuestionMarkCircled from '../../symbols/QuestionMarkCircled';
+import { join } from '../../util/join';
 
 export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   display?: 'block' | 'inline';
@@ -17,25 +17,38 @@ export function Label({
   required,
   helpMessage,
   suffix,
+  htmlFor,
+  children,
   ...props
 }: LabelProps) {
+  const id = useId();
   const labelClasses = join('font-medium', display, className);
+  const helpId = helpMessage ? `${htmlFor}-help` : id;
 
   return (
     <div style={{ display: display === 'inline' ? 'inline-flex' : 'flex', width }} className='relative'>
-      <label className={labelClasses} aria-required={required} {...props} />
-      {required && (
-        <span className='text-red-500 font-medium ml-1' title='Required field'>
-          *
-        </span>
-      )}
+      <label className={labelClasses} htmlFor={htmlFor} {...props}>
+        {children}
+        {required && (
+          <span className='text-red-500 font-medium ml-1' aria-label='required'>
+            *
+          </span>
+        )}
+      </label>
       {helpMessage && (
         <span
-          className='text-gray-500 ml-1 absolute top-0 right-0 translate-x-full -translate-y-1/2'
+          className='text-gray-500 ml-1 p-1'
+          aria-describedby={helpId}
+          aria-label='Help information'
           title={helpMessage}
         >
           <QuestionMarkCircled />
         </span>
+      )}
+      {helpMessage && (
+        <div id={helpId} className='sr-only' role='tooltip'>
+          {helpMessage}
+        </div>
       )}
       {suffix && <span className='ml-1'>{suffix}</span>}
     </div>
