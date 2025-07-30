@@ -1,55 +1,52 @@
-# React + TypeScript + Vite
+# Dreamer UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A collection of beautifully designed, accessible React components built with Tailwind CSS.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm install @moondreamsdev/dreamer-ui
+# or
+yarn add @moondreamsdev/dreamer-ui
+# or
+pnpm add @moondreamsdev/dreamer-ui
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Usage
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```tsx
+import { Button, Input, Textarea } from 'dreamer-ui';
+import 'dreamer-ui/styles';
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+function App() {
+  return (
+    <div>
+      <Button variant="primary">Click me</Button>
+      <Input placeholder="Enter text" />
+      <Textarea placeholder="Enter message" />
+    </div>
+  );
+}
 ```
-# Dreamer-UI
+
+## Requirements
+
+- React 18+
+- Tailwind CSS 3+
+
+## Components
+
+- **Button** - Various button styles with loading states
+- **Input** - Text inputs with validation states
+- **Textarea** - Multi-line text inputs with auto-expand
+- **RadioGroup** - Accessible radio button groups
+- **Checkbox** - Customizable checkboxes
+- **Label** - Form labels with help text
+
+## Contributing
+
+Contributions are welcome! Please read our contributing guidelines.
+
+## License
+
+MIT

@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+@import './core/components/input/styles.css';
+@import './core/components/textarea/styles.css';
 
 @utility page {
   @apply min-h-screen w-screen;

@@ -1,0 +1,14 @@
+src/
+public/
+.vscode/
+.git/
+.gitignore
+vite.config.ts
+vite.config.lib.ts
+tsconfig.*.json
+eslint.config.js
+index.html
+.env*
+*.log
+node_modules/
+.DS_Store
