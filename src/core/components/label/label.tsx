@@ -1,5 +1,5 @@
 import React, { useId } from 'react';
-import QuestionMarkCircled from '../../symbols/QuestionMarkCircled';
+import { QuestionMarkCircled } from '../../symbols';
 import { join } from '../../util/join';
 
 export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
