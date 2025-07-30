@@ -37,7 +37,7 @@ export function Label({
       </label>
       {helpMessage && (
         <span
-          className='text-gray-500 ml-1 p-1'
+          className='text-gray-500 ml-1 size-fit -translate-y-1/3'
           aria-describedby={helpId}
           aria-label='Help information'
           title={helpMessage}
