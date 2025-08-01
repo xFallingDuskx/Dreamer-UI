@@ -4,6 +4,8 @@ A collection of beautifully designed, accessible React components built with Tai
 
 ## Installation
 
+Install the library:
+
 ```bash
 npm install @moondreamsdev/dreamer-ui
 # or
@@ -12,11 +14,25 @@ yarn add @moondreamsdev/dreamer-ui
 pnpm add @moondreamsdev/dreamer-ui
 ```
 
+Then run the init script:
+
+```bash
+./node_modules/@moondreamsdev/dreamer-ui/dist/init.js
+```
+
+And, finally, install the stylesheets in main CSS file (recommended):
+
+```css
+@import "@moondreamsdev/dreamer-ui/styles";
+@import './dreamer-ui.css';
+
+/* other styles */
+```
+
 ## Usage
 
 ```tsx
 import { Button, Input, Textarea } from 'dreamer-ui';
-import 'dreamer-ui/styles';
 
 function App() {
   return (
@@ -32,7 +48,7 @@ function App() {
 ## Requirements
 
 - React 18+
-- Tailwind CSS 3+
+- Tailwind CSS 4+
 
 ## Components
 
