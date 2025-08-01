@@ -1,5 +1,3 @@
-import './styles.lib.css';
-
 // Symbols
 export * from './core/symbols';
 

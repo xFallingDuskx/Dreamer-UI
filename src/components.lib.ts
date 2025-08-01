@@ -4,3 +4,4 @@ export * from './core/components/input';
 export * from './core/components/label';
 export * from './core/components/radiogroup';
 export * from './core/components/textarea';
+export * from './core/components/TestButton';

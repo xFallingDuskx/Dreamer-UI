@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
+import tailwindcss from '@tailwindcss/vite'; // Add this import
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   build: {
     lib: {
       entry: {
@@ -12,7 +13,6 @@ export default defineConfig({
       name: 'DreamerUI',
       fileName: (format, entryName) => `${entryName}.${format === 'es' ? 'esm' : format}.js`,
       formats: ['es', 'cjs'],
-      cssFileName: 'style.css',
     },
     rollupOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime'],
@@ -23,7 +23,6 @@ export default defineConfig({
           'react/jsx-runtime': 'react/jsx-runtime',
         },
         assetFileNames: (assetInfo) => {
-          console.log('assetInfo.names[0]', assetInfo.names[0]); // REMOVE
           if (assetInfo.names[0]?.endsWith('.css')) {
             return 'styles.css';
           }
@@ -31,7 +30,9 @@ export default defineConfig({
         },
       },
     },
+    cssCodeSplit: false, // Add this to bundle CSS together
     sourcemap: true,
     emptyOutDir: true,
+    copyPublicDir: false,
   },
 });
