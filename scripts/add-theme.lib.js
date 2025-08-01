@@ -30,15 +30,15 @@ function createThemeColorsFile() {
       const __filename = fileURLToPath(import.meta.url);
       const __dirname = dirname(__filename);
       
-      // Read the source styles.lib.css file
-      const sourceFile = join(__dirname, '../src/styles.lib.css');
+      // Read the source theme.lib.css file
+      const sourceFile = join(__dirname, '../src/theme.lib.css');
       const sourceContent = readFileSync(sourceFile, 'utf8');
 
       // Extract only the @theme colors block
       const themeMatch = sourceContent.match(/@theme colors\s*\{([\s\S]*?)\}/);
 
       if (!themeMatch) {
-        throw new Error('Could not find @theme colors block in styles.lib.css');
+        throw new Error('Could not find @theme colors block in theme.lib.css');
       }
 
       const themeContent = themeMatch[1].trim();

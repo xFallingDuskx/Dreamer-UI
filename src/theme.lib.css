@@ -1,10 +1,6 @@
 @import './core/components/input/styles.css';
 @import './core/components/textarea/styles.css';
 
-@utility page {
-  @apply min-h-screen w-screen;
-}
-
 @theme colors {
   /* Background */
   --color-background-light: var(--color-slate-100);
