@@ -1,6 +1,9 @@
 {
   "name": "@moondreamsdev/dreamer-ui",
-  "version": "1.5.9",
+  "version": "1.6.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "description": "A collection of Tailwind CSS components for React",
   "main": "dist/index.js",
@@ -44,8 +47,7 @@
     "build:setup": "cp scripts/init.lib.js dist/init.js && node scripts/add-theme.lib.js",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepublishOnly": "npm run build",
-    "publish": "npm publish --access public"
+    "prepublishOnly": "npm run build"
   },
   "bin": {
     "mdd-dreamer-ui-init": "./dist/init.js"
