@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { join } from '../../util/join';
+import { join } from '../../utils';
 import { RadioInput } from './RadioInput';
 
 export interface RadioGroupItemProps {

@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "./dist",
+    "outDir": "./dist",
+    "emitDeclarationOnly": true,
+    "noEmit": false
+  },
+  "include": ["src/**/*", "scripts/**/*"],
+  "exclude": ["src/App.tsx", "src/main.tsx", "**/*.test.*", "**/*.spec.*"]
+}

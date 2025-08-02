@@ -1,6 +1,6 @@
 // Button.tsx
 import { ButtonHTMLAttributes, Ref } from 'react';
-import { join } from '../../util/join';
+import { join } from '../../utils';
 import LoadingDots from './LoadingDots';
 import { ButtonSize, ButtonVariants, buttonDefaults, buttonVariants, roundedVariants, sizeVariants } from './variants';
 

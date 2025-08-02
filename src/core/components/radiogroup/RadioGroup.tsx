@@ -1,5 +1,5 @@
 import React, { useId, useMemo } from 'react';
-import { join } from '../../util/join';
+import { join } from '../../utils';
 import { RadioGroupItem, RadioGroupItemProps } from './RadioGroupItem';
 import { useRadioFocus } from './hooks';
 

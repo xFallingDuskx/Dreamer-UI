@@ -1,6 +1,6 @@
 import { Ref, useId, useState } from 'react';
 import { EyeClosed, EyeOpened } from '../../symbols';
-import { join } from '../../util/join';
+import { join } from '../../utils';
 import './styles.css';
 import { inputDefaults, inputVariants, InputVariants, roundedVariants } from './variants';
 import { StatusHelpMessage } from '../../shared/forms';

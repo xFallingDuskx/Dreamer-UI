@@ -1,4 +1,4 @@
-import { join } from '../../util/join';
+import { join } from '../../utils';
 
 export type RadioInputProps = {
   itemId: string;

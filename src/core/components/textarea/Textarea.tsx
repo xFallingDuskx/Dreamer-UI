@@ -1,6 +1,6 @@
 import { Ref, useId } from 'react';
 import { StatusHelpMessage } from '../../shared/forms';
-import { join } from '../../util/join';
+import { join } from '../../utils';
 import { useAutoExpand } from './hooks';
 import './styles.css';
 import { roundedVariants, textareaDefaults, textareaVariants, TextareaVariants } from './variants';
