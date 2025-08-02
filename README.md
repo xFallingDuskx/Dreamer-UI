@@ -25,6 +25,8 @@ And, finally, install the stylesheets in main CSS file (recommended):
 ```css
 @import "@moondreamsdev/dreamer-ui/styles";
 @import './dreamer-ui.css';
+/* below line is necessary for TailwindCSS styles in library to be processed */
+@source "../node_modules/@moondreamsdev/dreamer-ui/dist/**/*.{js,jsx,ts,tsx}";
 
 /* other styles */
 ```
