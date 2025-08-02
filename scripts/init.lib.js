@@ -18,13 +18,13 @@ function extractColorsFromSource() {
     if (themeMatch) {
       const topLevelComment = '/** Necessary theme styles for Dreamer UI library - Customize as desired! */\n';
       const themeContent = themeMatch[1].trim();
-      
+
       // Add proper indentation to each line of theme content
       const indentedThemeContent = themeContent
         .split('\n')
-        .map(line => line.trim() ? `  ${line.trim()}` : line)
+        .map((line) => (line.trim() ? `  ${line.trim()}` : line))
         .join('\n');
-      
+
       return `${topLevelComment}\n@theme dreamer-ui {\n${indentedThemeContent}\n}`;
     } else {
       throw new Error('Could not find @theme library block in source file');
@@ -40,23 +40,23 @@ async function createCSSFile(targetPath, cssContent) {
     // Check if file already exists
     if (existsSync(targetPath)) {
       console.log(`📄 CSS file already exists at: ${targetPath}`);
-      
+
       // Ask user if they want to overwrite (only in interactive mode)
       const isCI = process.env.CI || process.env.NODE_ENV === 'production' || !process.stdin.isTTY;
-      
+
       if (!isCI) {
         const rl = createInterface({
           input: process.stdin,
-          output: process.stdout
+          output: process.stdout,
         });
-        
+
         // Handle Ctrl+C interruption
         rl.on('SIGINT', () => {
           console.log('\n🛑 Operation cancelled by user.');
           rl.close();
           process.exit(0);
         });
-        
+
         return new Promise((resolve) => {
           rl.question('Do you want to overwrite it? (y/N): ', (answer) => {
             rl.close();
@@ -75,7 +75,7 @@ async function createCSSFile(targetPath, cssContent) {
         return false;
       }
     }
-    
+
     writeFile();
     return true; // Indicate file was written
 
@@ -103,7 +103,7 @@ function getDefaultPath() {
     './styles/dreamer-ui.css',
     './css/dreamer-ui.css',
     './src/dreamer-ui.css',
-    './dreamer-ui.css'
+    './dreamer-ui.css',
   ];
 
   for (const p of possiblePaths) {
@@ -119,7 +119,7 @@ function getDefaultPath() {
 async function promptUserForPath() {
   const rl = createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
   });
 
   const defaultPath = getDefaultPath();
@@ -169,7 +169,7 @@ async function main() {
 
 // Run if called directly
 // ES module-compatible entrypoint check
-if (process.argv[1] === new URL(import.meta.url).pathname) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   main().catch(console.error);
 }
 

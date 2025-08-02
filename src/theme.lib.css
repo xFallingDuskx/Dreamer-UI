@@ -14,5 +14,3 @@
   --color-success: var(--color-green-500);
   --color-border: var(--color-slate-600); /* for input/textarea borders and dividers */
 }
-
-@source "./**/*.{js,jsx,ts,tsx}" "../dist/**/*.{js,jsx}";
