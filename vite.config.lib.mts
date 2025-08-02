@@ -9,6 +9,8 @@ export default defineConfig({
       entry: {
         index: 'src/index.lib.ts',
         components: 'src/components.lib.ts',
+        symbols: 'src/symbols.lib.ts',
+        utils: 'src/utils.lib.ts',
       },
       name: 'DreamerUI',
       fileName: (format, entryName) => `${entryName}.${format === 'es' ? 'esm' : format}.js`,

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { CheckCircled, ExclamationTriangle } from '../../symbols';
-import { join } from '../../util/join';
+import { join } from '../../utils';
 
 interface StatusHelpMessageProps {
   elementId: string;

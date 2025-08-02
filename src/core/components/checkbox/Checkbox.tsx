@@ -1,6 +1,6 @@
 import React, { Ref, useEffect, useId, useMemo, useState } from 'react';
 import Check from '../../symbols/Check';
-import { join } from '../../util/join';
+import { join } from '../../utils';
 import { useFilledBackgroundColor } from './hooks';
 
 export interface CheckboxProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

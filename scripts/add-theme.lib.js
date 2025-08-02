@@ -66,14 +66,7 @@ ${themeContent}
       }
 
       // Write the clean theme colors file
-      writeFileSync(outputFile, cleanThemeCSS);
-
-      console.log(`✅ Created clean theme colors file: ${outputFile}`);
-      console.log('📖 To use the colors, import the CSS file in your project:');
-      console.log('   @import \'./dist/theme-colors.css\';');
-      console.log('   or');
-      console.log('   import \'./dist/theme-colors.css\';');
-      
+      writeFileSync(outputFile, cleanThemeCSS);      
       resolve();
     } catch (error) {
       console.error('❌ Error creating theme colors file:', error.message);

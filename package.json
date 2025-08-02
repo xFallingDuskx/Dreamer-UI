@@ -1,6 +1,6 @@
 {
   "name": "@moondreamsdev/dreamer-ui",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "publishConfig": {
     "access": "public"
   },
@@ -22,6 +22,16 @@
       "types": "./dist/components.lib.d.ts",
       "import": "./dist/components.esm.js",
       "require": "./dist/components.js"
+    },
+    "./symbols": {
+      "types": "./dist/symbols.lib.d.ts",
+      "import": "./dist/symbols.esm.js",
+      "require": "./dist/symbols.js"
+    },
+    "./utils": {
+      "types": "./dist/utils.lib.d.ts",
+      "import": "./dist/utils.esm.js",
+      "require": "./dist/utils.js"
     },
     "./styles": "./dist/styles.css"
   },
