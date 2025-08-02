@@ -5,6 +5,19 @@
   @apply min-h-screen w-screen;
 }
 
+@theme app-colors {
+  /* Background */
+  --color-background-light: var(--color-slate-100);
+  --color-background-dark: var(--color-slate-900);
+
+  /* Foreground */
+  --color-foreground-light: var(--color-slate-900);
+  --color-foreground-dark: var(--color-slate-100);
+
+  /* Accent */
+  --color-accent-medium: var(--color-violet-400); /* default tone */
+}
+
 @layer base {
   body {
     text-rendering: optimizeLegibility;

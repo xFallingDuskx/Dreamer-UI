@@ -9,17 +9,25 @@ function extractColorsFromSource() {
   try {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(__filename);
-    const sourceFile = join(__dirname, 'theme-colors.css');
+    const sourceFile = join(__dirname, 'theme.css');
     const sourceContent = readFileSync(sourceFile, 'utf8');
 
-    // Extract the @theme colors block content only
-    const themeMatch = sourceContent.match(/@theme colors\s*\{([\s\S]*?)\}/);
+    // Extract the @theme library block content only
+    const themeMatch = sourceContent.match(/@theme library\s*\{([\s\S]*?)\}/);
 
     if (themeMatch) {
+      const topLevelComment = '/** Necessary theme styles for Dreamer UI library - Customize as desired! */\n';
       const themeContent = themeMatch[1].trim();
-      return `@theme {\n${themeContent}\n}`;
+      
+      // Add proper indentation to each line of theme content
+      const indentedThemeContent = themeContent
+        .split('\n')
+        .map(line => line.trim() ? `  ${line.trim()}` : line)
+        .join('\n');
+      
+      return `${topLevelComment}\n@theme dreamer-ui {\n${indentedThemeContent}\n}`;
     } else {
-      throw new Error('Could not find @theme colors block in source file');
+      throw new Error('Could not find @theme library block in source file');
     }
   } catch (error) {
     console.error('❌ Error reading source file:', error.message);

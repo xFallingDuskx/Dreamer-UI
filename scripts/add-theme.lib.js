@@ -34,18 +34,24 @@ function createThemeColorsFile() {
       const sourceFile = join(__dirname, '../src/theme.lib.css');
       const sourceContent = readFileSync(sourceFile, 'utf8');
 
-      // Extract only the @theme colors block
-      const themeMatch = sourceContent.match(/@theme colors\s*\{([\s\S]*?)\}/);
+      // Extract only the @theme library block
+      const themeMatch = sourceContent.match(/@theme library\s*\{([\s\S]*?)\}/);
 
       if (!themeMatch) {
-        throw new Error('Could not find @theme colors block in theme.lib.css');
+        throw new Error('Could not find @theme library block in theme.lib.css');
       }
 
       const themeContent = themeMatch[1].trim();
+
+            // Add proper indentation to each line of theme content
+      const indentedThemeContent = themeContent
+        .split('\n')
+        .map(line => line.trim() ? `  ${line.trim()}` : line)
+        .join('\n');
       
       // Create the clean theme colors CSS content
-      const cleanThemeCSS = `@theme colors {
-${themeContent}
+      const cleanThemeCSS = `@theme library {
+${indentedThemeContent}
 }`;
 
       // Ensure dist directory exists
@@ -55,7 +61,7 @@ ${themeContent}
       }
 
       // Check if output file already exists
-      const outputFile = join(distDir, 'theme-colors.css');
+      const outputFile = join(distDir, 'theme.css');
       if (existsSync(outputFile)) {
         const answer = await promptUser('Do you want to overwrite it? (y/N): ');
         if (answer !== 'y' && answer !== 'yes') {
