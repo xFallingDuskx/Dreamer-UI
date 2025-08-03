@@ -1,5 +1,5 @@
-@import './core/components/input/styles.css';
-@import './core/components/textarea/styles.css';
+@import './components/input/styles.css';
+@import './components/textarea/styles.css';
 
 @theme library {
   --color-primary: var(--color-violet-400);

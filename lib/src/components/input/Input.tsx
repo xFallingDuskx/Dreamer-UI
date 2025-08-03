@@ -1,9 +1,9 @@
 import { Ref, useId, useState } from 'react';
+import { StatusHelpMessage } from '../../shared/forms';
 import { EyeClosed, EyeOpened } from '../../symbols';
 import { join } from '../../utils';
 import './styles.css';
 import { inputDefaults, inputVariants, InputVariants, roundedVariants } from './variants';
-import { StatusHelpMessage } from '../../shared/forms';
 
 interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<HTMLInputElement> {
   ref?: Ref<HTMLInputElement>;

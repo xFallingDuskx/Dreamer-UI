@@ -1,6 +1,6 @@
 {
   "name": "@moondreamsdev/dreamer-ui",
-  "version": "1.6.5",
+  "version": "1.7.0",
   "publishConfig": {
     "access": "public"
   },
@@ -8,28 +8,31 @@
   "description": "A collection of Tailwind CSS components for React",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "types": "dist/index.lib.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "bin": {
+    "dreamer-ui-init": "./dist/init.js"
+  },
   "exports": {
     ".": {
-      "types": "./dist/index.lib.d.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.js",
       "require": "./dist/index.js"
     },
     "./components": {
-      "types": "./dist/components.lib.d.ts",
+      "types": "./dist/src/components/index.d.ts",
       "import": "./dist/components.esm.js",
       "require": "./dist/components.js"
     },
     "./symbols": {
-      "types": "./dist/symbols.lib.d.ts",
+      "types": "./dist/symbols/index.d.ts",
       "import": "./dist/symbols.esm.js",
       "require": "./dist/symbols.js"
     },
     "./utils": {
-      "types": "./dist/utils.lib.d.ts",
+      "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils.esm.js",
       "require": "./dist/utils.js"
     },
@@ -50,17 +53,15 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:lib && npm run build:types && npm run build:setup",
+    "build": "npm run build:lib && npm run build:setup && npm run build:types",
     "build:lib": "vite build --config vite.config.lib.mts",
     "build:types": "tsc --project tsconfig.lib.json",
     "build:demo": "tsc -b && vite build",
-    "build:setup": "cp scripts/init.lib.js dist/init.js && node scripts/add-theme.lib.js",
+    "build:setup": "cp scripts/init.js dist/init.js && node scripts/add-theme.js",
+    "postbuild": "chmod +x dist/init.js && npm run build:types",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepublishOnly": "npm run build"
-  },
-  "bin": {
-    "mdd-dreamer-ui-init": "./dist/init.js"
+    "publish:test": "npm version prerelease --preid=test && npm publish --tag test"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

@@ -1,16 +1,16 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
-import tailwindcss from '@tailwindcss/vite'; // Add this import
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
     lib: {
       entry: {
-        index: 'src/index.lib.ts',
-        components: 'src/components.lib.ts',
-        symbols: 'src/symbols.lib.ts',
-        utils: 'src/utils.lib.ts',
+        index: 'src/index.ts',
+        components: 'src/components/index.ts',
+        symbols: 'src/symbols/index.ts',
+        utils: 'src/utils/index.ts',
       },
       name: 'DreamerUI',
       fileName: (format, entryName) => `${entryName}.${format === 'es' ? 'esm' : format}.js`,
@@ -32,7 +32,7 @@ export default defineConfig({
         },
       },
     },
-    cssCodeSplit: false, // Add this to bundle CSS together
+    cssCodeSplit: false,
     sourcemap: true,
     emptyOutDir: true,
     copyPublicDir: false,

@@ -1,10 +1,13 @@
+import {
+  Button,
+  Checkbox,
+  Input,
+  Label,
+  RadioGroup,
+  RadioGroupItem,
+  Textarea,
+} from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
-import { Button } from './core/components/button';
-import { Checkbox } from './core/components/checkbox';
-import { Input } from './core/components/input';
-import { Label } from './core/components/label';
-import { RadioGroup, RadioGroupItem } from './core/components/radiogroup';
-import { Textarea } from './core/components/textarea';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
@@ -194,18 +197,10 @@ function App() {
           <div id='label-section'>
             <h3 className='mb-2'>Label</h3>
             <div className='grid grid-cols-2 gap-4'>
-              <Label htmlFor='input-1'>
-                First Label
-              </Label>
-              <Label display='block'>
-                Second Label
-              </Label>
-              <Label required={true}>
-                Third Label
-              </Label>
-              <Label helpMessage='This is a help message for the label'>
-                Label w/ Help
-              </Label>
+              <Label htmlFor='input-1'>First Label</Label>
+              <Label display='block'>Second Label</Label>
+              <Label required={true}>Third Label</Label>
+              <Label helpMessage='This is a help message for the label'>Label w/ Help</Label>
             </div>
           </div>
         </div>
