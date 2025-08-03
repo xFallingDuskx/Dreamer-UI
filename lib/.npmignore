@@ -3,8 +3,7 @@ public/
 .vscode/
 .git/
 .gitignore
-vite.config.ts
-vite.config.lib.ts
+vite.config.*
 tsconfig.*.json
 eslint.config.js
 index.html

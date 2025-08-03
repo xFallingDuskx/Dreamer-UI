@@ -5,8 +5,9 @@
     "declarationDir": "./dist",
     "outDir": "./dist",
     "emitDeclarationOnly": true,
-    "noEmit": false
+    "noEmit": false,
+    "composite": true
   },
   "include": ["src/**/*", "scripts/**/*"],
-  "exclude": ["src/App.tsx", "src/main.tsx", "**/*.test.*", "**/*.spec.*"]
+  "exclude": ["**/*.test.*", "**/*.spec.*"]
 }

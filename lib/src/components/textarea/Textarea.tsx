@@ -1,10 +1,10 @@
 import { Ref, useId } from 'react';
 import { StatusHelpMessage } from '../../shared/forms';
 import { join } from '../../utils';
+import CharacterCount from './CharacterCount';
 import { useAutoExpand } from './hooks';
 import './styles.css';
 import { roundedVariants, textareaDefaults, textareaVariants, TextareaVariants } from './variants';
-import CharacterCount from './CharacterCount';
 
 interface TextareaProps extends Partial<TextareaVariants>, React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   ref?: Ref<HTMLTextAreaElement>;
