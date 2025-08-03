@@ -1,6 +1,6 @@
 {
   "name": "@moondreamsdev/dreamer-ui",
-  "version": "1.6.6-test.6",
+  "version": "1.7.0",
   "publishConfig": {
     "access": "public"
   },
@@ -53,15 +53,14 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:lib && npm run build:types && npm run build:setup",
+    "build": "npm run build:lib && npm run build:setup && npm run build:types",
     "build:lib": "vite build --config vite.config.lib.mts",
     "build:types": "tsc --project tsconfig.lib.json",
     "build:demo": "tsc -b && vite build",
     "build:setup": "cp scripts/init.js dist/init.js && node scripts/add-theme.js",
-    "postbuild": "chmod +x dist/init.js",
+    "postbuild": "chmod +x dist/init.js && npm run build:types",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepublishOnly": "npm run build",
     "publish:test": "npm version prerelease --preid=test && npm publish --tag test"
   },
   "peerDependencies": {
