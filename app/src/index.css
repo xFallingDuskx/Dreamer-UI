@@ -50,5 +50,4 @@
   }
 }
 
-@source '@moondreamsdev/dreamer-ui/components/**/*.{js,jsx,ts,tsx}';
 @source "../node_modules/@moondreamsdev/dreamer-ui/dist/**/*.{js,jsx,ts,tsx}";

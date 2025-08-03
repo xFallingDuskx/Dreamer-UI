@@ -1,5 +1,0 @@
-{
-  "name": "@moondreamsdev/dreamer-ui-monorepo",
-  "private": true,
-  "workspaces": ["lib", "app"]
-}
