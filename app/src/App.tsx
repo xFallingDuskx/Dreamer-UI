@@ -211,7 +211,12 @@ function App() {
             <h3 className='mb-2'>Accordion</h3>
             <Accordion
               items={[
-                { id: 'item-1', title: 'Item 1', content: 'Content for Item 1' },
+                {
+                  id: 'item-1',
+                  title: 'A super long title that should wrap to the next line if it is too long. It still should be readable. This is a test of the accordion component.',
+                  content:
+                    'Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.\n\nLorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.\n\nLorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.\n\nLorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.',
+                },
                 { id: 'item-2', title: 'Item 2', content: 'Content for Item 2' },
                 { id: 'item-3', title: 'Item 3', content: 'Content for Item 3' },
               ]}
@@ -221,7 +226,11 @@ function App() {
             />
             <Accordion
               items={[
-                { title: 'Item 1', content: 'Content for Item 1' },
+                {
+                  title: 'Item 1',
+                  content:
+                    'Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.',
+                },
                 { title: 'Item 2', content: 'Content for Item 2', disabled: true },
                 { title: 'Item 3', content: 'Content for Item 3' },
               ]}
@@ -230,14 +239,21 @@ function App() {
             />
             <Accordion
               items={[
-                { title: 'Item 1', content: 'Content for Item 1' },
+                {
+                  title: 'Item 1',
+                  content:
+                    'Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.',
+                },
                 { title: 'Item 2', content: 'Content for Item 2', disabled: true },
                 { title: 'Item 3', content: 'Content for Item 3' },
               ]}
               className='mb-5'
             />
             <Accordion>
-              <AccordionItem title='Item 1' content='Content for Item 1' />
+              <AccordionItem
+                title='Item 1'
+                content='Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.'
+              />
               <AccordionItem title='Item 2' content='Content for Item 2' disabled={true} />
               <AccordionItem title='Item 3' content='Content for Item 3' />
             </Accordion>
