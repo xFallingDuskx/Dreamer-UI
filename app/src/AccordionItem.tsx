@@ -39,20 +39,13 @@ export function AccordionItem({
   };
 
   return (
-    <div
-      className={join(
-        'accordion-item border-b border-gray-200',
-        disabled && 'opacity-60 cursor-not-allowed',
-        className
-      )}
-    >
+    <div className={join('border-b border-gray-200', disabled && 'opacity-60 cursor-not-allowed', className)}>
       <button
         id={headerId}
         type='button'
         className={join(
-          'accordion-header w-full text-left py-3 px-4 flex justify-between items-center',
-          'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset',
-          disabled ? 'cursor-not-allowed' : 'hover:bg-gray-50 cursor-pointer'
+          'w-full text-left py-3 px-4 flex justify-between items-center focus:outline focus:outline-secondary',
+          disabled ? 'cursor-not-allowed' : 'hover:bg-gray-50/10 cursor-pointer'
         )}
         aria-expanded={isOpen}
         aria-controls={panelId}
@@ -60,10 +53,10 @@ export function AccordionItem({
         onClick={handleToggle}
         onKeyDown={handleKeyDown}
       >
-        <span className='accordion-title'>{title}</span>
+        <span>{title}</span>
         <span
           className={join(
-            'accordion-icon transform transition-transform duration-200',
+            'transform transition-transform duration-300 ease-out',
             isOpen ? 'rotate-180' : 'rotate-0'
           )}
           aria-hidden='true'
@@ -77,7 +70,7 @@ export function AccordionItem({
         role='region'
         aria-labelledby={headerId}
         className={join(
-          'accordion-content overflow-hidden transition-all duration-200 ease-in-out',
+          'overflow-hidden transition-all duration-300 ease-out',
           isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         )}
       >
