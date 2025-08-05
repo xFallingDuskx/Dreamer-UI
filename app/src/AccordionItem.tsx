@@ -2,6 +2,7 @@
 import { useId } from 'react';
 import { join } from './join';
 import { AccordionOption } from './Accordion';
+import ChevronDown from './ChevronDown';
 
 export interface AccordionItemProps extends Omit<AccordionOption, 'defaultOpen'> {
   children?: React.ReactNode;
@@ -61,7 +62,7 @@ export function AccordionItem({
           )}
           aria-hidden='true'
         >
-          ▼
+          <ChevronDown size={18} />
         </span>
       </button>
 
