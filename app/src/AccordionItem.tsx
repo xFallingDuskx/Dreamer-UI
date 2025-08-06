@@ -68,8 +68,8 @@ export function AccordionItem({
         role='region'
         aria-labelledby={headerId}
         className={join(
-          'transition-all duration-300 ease-out py-3 px-4',
-          isOpen ? 'max-h-96 opacity-100 overflow-auto' : 'max-h-0 opacity-0 overflow-hidden'
+          'transition-all duration-300 ease-out px-4',
+          isOpen ? 'max-h-96 opacity-100 overflow-auto py-3' : 'max-h-0 opacity-0 overflow-hidden'
         )}
       >
         {content || children}
