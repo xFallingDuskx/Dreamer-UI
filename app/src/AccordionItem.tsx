@@ -9,6 +9,8 @@ export interface AccordionItemProps extends Omit<AccordionOption, 'defaultOpen'>
   className?: string;
   isOpen?: boolean;
   onToggle?: () => void;
+  triggerClassName?: string;
+  bodyClassName?: string;
 }
 
 export function AccordionItem({
@@ -20,6 +22,8 @@ export function AccordionItem({
   disabled = false,
   isOpen = false,
   onToggle,
+  triggerClassName = '',
+  bodyClassName = '',
 }: AccordionItemProps) {
   const fallbackId = useId();
   const itemId = id || `accordion-item-${fallbackId}`;
@@ -46,7 +50,8 @@ export function AccordionItem({
         type='button'
         className={join(
           'w-full text-left py-3 px-4 flex justify-between items-center focus:outline focus:outline-secondary',
-          disabled ? 'cursor-not-allowed' : 'hover:bg-gray-50/10 cursor-pointer'
+          disabled ? 'cursor-not-allowed' : 'hover:bg-gray-50/10 cursor-pointer',
+          triggerClassName
         )}
         aria-expanded={isOpen}
         aria-controls={panelId}
@@ -71,7 +76,8 @@ export function AccordionItem({
           'transition-all duration-300 ease-linear px-4',
           isOpen
             ? 'max-h-96 opacity-100 overflow-auto py-3'
-            : 'max-h-0 opacity-0 overflow-hidden'
+            : 'max-h-0 opacity-0 overflow-hidden',
+          bodyClassName
         )}
       >
         {isOpen && (children || content)}

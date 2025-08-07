@@ -256,12 +256,25 @@ function App() {
             />
 
             <p className='mb-2'>Using AccordionItem components directly</p>
-            <Accordion>
+            <Accordion className='mb-5'>
               <AccordionItem
                 title='Item 1'
                 content='Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.'
               />
               <AccordionItem title='Item 2' content='Content for Item 2' disabled={true} />
+              <AccordionItem title='Item 3' content='Content for Item 3' />
+            </Accordion>
+
+            <p className='mb-2'>Setting custom class names</p>
+            <Accordion
+              triggersClassName='underline'
+              bodiesClassName='bg-gray-50/5'
+            >
+              <AccordionItem
+                title='Item 1'
+                content='Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.'
+              />
+              <AccordionItem title='Item 2' content='Content for Item 2' triggerClassName='text-red-300 hover:!bg-red-900/50' bodyClassName='bg-red-500/10' />
               <AccordionItem title='Item 3' content='Content for Item 3' />
             </Accordion>
           </div>

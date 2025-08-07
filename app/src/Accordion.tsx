@@ -19,6 +19,8 @@ export interface AccordionProps {
   itemClassName?: string;
   allowMultiple?: boolean;
   defaultOpenItems?: string[];
+  triggersClassName?: string;
+  bodiesClassName?: string;
 }
 
 export function Accordion({
@@ -29,6 +31,8 @@ export function Accordion({
   itemClassName = '',
   allowMultiple = false,
   defaultOpenItems = [],
+  triggersClassName = '',
+  bodiesClassName = '',
 }: AccordionProps) {
   const groupId = useId();
   const groupName = name || `accordion-group-${groupId}`;
@@ -70,6 +74,8 @@ export function Accordion({
               isOpen={isItemOpen(itemId)}
               onToggle={() => toggleItem(itemId)}
               className={itemClassName}
+              triggerClassName={triggersClassName}
+              bodyClassName={bodiesClassName}
             />
           );
         })}
@@ -88,6 +94,8 @@ export function Accordion({
                 className={join(itemClassName, child.props.className)}
                 isOpen={isItemOpen(itemId)}
                 onToggle={() => toggleItem(itemId)}
+                triggerClassName={join(triggersClassName, child.props.triggerClassName)}
+                bodyClassName={join(bodiesClassName, child.props.bodyClassName)}
               />
             );
           }
