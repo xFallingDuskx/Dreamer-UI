@@ -209,6 +209,7 @@ function App() {
 
           <div id='accordion-section'>
             <h3 className='mb-2'>Accordion</h3>
+            <p className='mb-2'>Passing in items w/ default and allow multiple</p>
             <Accordion
               items={[
                 {
@@ -224,6 +225,8 @@ function App() {
               allowMultiple={true}
               defaultOpenItems={['item-2']}
             />
+
+            <p className='mb-2'>Passing in items w/o default and allow multiple</p>
             <Accordion
               items={[
                 {
@@ -237,6 +240,8 @@ function App() {
               className='mb-5'
               allowMultiple={true}
             />
+
+            <p className='mb-2'>Passing in items w/o default and single</p>
             <Accordion
               items={[
                 {
@@ -249,6 +254,8 @@ function App() {
               ]}
               className='mb-5'
             />
+
+            <p className='mb-2'>Using AccordionItem components directly</p>
             <Accordion>
               <AccordionItem
                 title='Item 1'
@@ -257,12 +264,6 @@ function App() {
               <AccordionItem title='Item 2' content='Content for Item 2' disabled={true} />
               <AccordionItem title='Item 3' content='Content for Item 3' />
             </Accordion>
-            <div className='grid grid-cols-2 gap-4'>
-              <Label htmlFor='input-1'>First Label</Label>
-              <Label display='block'>Second Label</Label>
-              <Label required={true}>Third Label</Label>
-              <Label helpMessage='This is a help message for the label'>Label w/ Help</Label>
-            </div>
           </div>
         </div>
       </div>
