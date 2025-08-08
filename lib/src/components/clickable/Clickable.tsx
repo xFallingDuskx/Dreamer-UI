@@ -31,7 +31,6 @@ export default function Clickable({
           {...linkProps}
           href={linkTo}
           className={join('absolute inset-0', linkProps?.className)}
-          aria-label={linkProps?.['aria-label'] || 'Navigate to link'}
         />
       )}
 
