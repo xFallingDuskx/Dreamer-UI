@@ -29,6 +29,9 @@ function App() {
     withTitle: false,
     contentOnly: false,
     withForm: false,
+    withActions: false,
+    noCloseButton: false,
+    confirmDialog: false,
   });
 
   const handleRadioGroupChange = (value: string, index: number) => {
@@ -330,6 +333,8 @@ function App() {
               <Button onClick={() => openModal('withTitle')}>Modal with Title</Button>
               <Button onClick={() => openModal('contentOnly')}>Content Only Modal</Button>
               <Button onClick={() => openModal('withForm')}>Modal with Form</Button>
+              <Button onClick={() => openModal('withActions')}>Modal with Actions</Button>
+              <Button onClick={() => openModal('noCloseButton')}>Modal without Close Button</Button>
             </div>
 
             {/* Basic Modal */}
@@ -367,12 +372,14 @@ function App() {
                   This modal uses the contentOnly prop, so it has no default background or header. You have complete
                   control over the styling.
                 </p>
-                <Button
-                  onClick={() => closeModal('contentOnly')}
-                  className='bg-white text-purple-500 hover:bg-gray-100'
-                >
-                  Close
-                </Button>
+                <div className='flex justify-end'>
+                  <Button
+                    onClick={() => closeModal('contentOnly')}
+                    className='bg-white text-purple-500 hover:bg-gray-100'
+                  >
+                    Close
+                  </Button>
+                </div>
               </div>
             </Modal>
 
@@ -416,6 +423,106 @@ function App() {
                     <Button type='submit'>Send Message</Button>
                   </div>
                 </form>
+              </div>
+            </Modal>
+
+            {/* Modal with Actions */}
+            <Modal
+              isOpen={modalsOpen.withActions}
+              onClose={() => closeModal('withActions')}
+              title='Save Changes?'
+              actions={[
+                {
+                  label: 'Publish',
+                  onClick: () => {
+                    alert('Published successfully!');
+                    closeModal('withActions');
+                  },
+                  variant: 'primary',
+                },
+                {
+                  label: 'Save Draft',
+                  onClick: () => {
+                    alert('Saved as draft!');
+                    closeModal('withActions');
+                  },
+                  variant: 'outline',
+                },
+
+                {
+                  label: 'Cancel',
+                  onClick: () => closeModal('withActions'),
+                  variant: 'outline',
+                },
+              ]}
+              className='bg-white dark:bg-gray-800 rounded-lg'
+            >
+              <p>You have unsaved changes. Would you like to save them before leaving?</p>
+              <div className='mt-4 p-3 bg-gray-50 dark:bg-gray-700 rounded'>
+                <p className='text-sm text-gray-600 dark:text-gray-300'>
+                  <strong>Last saved:</strong> 2 minutes ago
+                </p>
+              </div>
+            </Modal>
+
+            {/* Modal without Close Button */}
+            <Modal
+              isOpen={modalsOpen.noCloseButton}
+              onClose={() => closeModal('noCloseButton')}
+              title='Processing...'
+              hideCloseButton={true}
+              actions={[
+                {
+                  label: 'Cancel',
+                  onClick: () => closeModal('noCloseButton'),
+                  variant: 'outline',
+                },
+              ]}
+              className='bg-white dark:bg-gray-800 rounded-lg'
+              disableCloseOnOverlayClick={true}
+            >
+              <div className='text-center py-4'>
+                <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4'></div>
+                <p>Please wait while we process your request...</p>
+                <p className='text-sm text-gray-500 mt-2'>This may take a few moments.</p>
+              </div>
+            </Modal>
+
+            {/* Confirm Dialog */}
+            <Modal
+              isOpen={modalsOpen.confirmDialog}
+              onClose={() => closeModal('confirmDialog')}
+              title='Delete Account'
+              actions={[
+                {
+                  label: 'Cancel',
+                  onClick: () => closeModal('confirmDialog'),
+                  variant: 'outline',
+                },
+                {
+                  label: 'Delete Account',
+                  onClick: () => {
+                    alert('Account deleted!');
+                    closeModal('confirmDialog');
+                  },
+                  variant: 'danger',
+                  disabled: false,
+                },
+              ]}
+              className='bg-white dark:bg-gray-800 rounded-lg'
+            >
+              <div className='space-y-3'>
+                <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                <div className='bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-3'>
+                  <p className='text-sm text-red-800 dark:text-red-200'>
+                    <strong>Warning:</strong> This will permanently delete:
+                  </p>
+                  <ul className='text-sm text-red-700 dark:text-red-300 mt-2 list-disc list-inside'>
+                    <li>All your data and files</li>
+                    <li>Your subscription and billing history</li>
+                    <li>Access to all connected services</li>
+                  </ul>
+                </div>
               </div>
             </Modal>
           </div>
