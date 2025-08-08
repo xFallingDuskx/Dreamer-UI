@@ -1,8 +1,8 @@
 // REMOVE this file
 import { useId } from 'react';
+import { ChevronDown } from '../../symbols';
+import { join } from '../../utils';
 import { AccordionOption } from './Accordion';
-import ChevronDown from './ChevronDown';
-import { join } from './join';
 
 export interface AccordionItemProps extends Omit<AccordionOption, 'defaultOpen'> {
   children?: React.ReactNode;
@@ -61,7 +61,10 @@ export function AccordionItem({
       >
         <span>{title}</span>
         <span
-          className={join('transform transition-transform duration-300 ease-linear', isOpen ? 'rotate-180' : 'rotate-0')}
+          className={join(
+            'transform transition-transform duration-300 ease-linear',
+            isOpen ? 'rotate-180' : 'rotate-0'
+          )}
           aria-hidden='true'
         >
           <ChevronDown size={18} />
@@ -74,9 +77,7 @@ export function AccordionItem({
         aria-labelledby={headerId}
         className={join(
           'transition-all duration-300 ease-linear px-4',
-          isOpen
-            ? 'max-h-96 opacity-100 overflow-auto py-3'
-            : 'max-h-0 opacity-0 overflow-hidden',
+          isOpen ? 'max-h-96 opacity-100 overflow-auto py-3' : 'max-h-0 opacity-0 overflow-hidden',
           bodyClassName
         )}
       >

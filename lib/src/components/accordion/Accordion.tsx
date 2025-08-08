@@ -1,7 +1,7 @@
 // REMOVE this file
 import React, { useId, useState } from 'react';
+import { join } from '../../utils';
 import { AccordionItem, AccordionItemProps } from './AccordionItem';
-import { join } from './join';
 
 export interface AccordionOption {
   id?: string;

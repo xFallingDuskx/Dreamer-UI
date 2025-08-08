@@ -6,10 +6,10 @@ import {
   RadioGroup,
   RadioGroupItem,
   Textarea,
+  Accordion,
+  AccordionItem,
 } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
-import { Accordion } from './Accordion';
-import { AccordionItem } from './AccordionItem';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
