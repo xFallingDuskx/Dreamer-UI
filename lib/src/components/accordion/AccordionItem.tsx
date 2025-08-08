@@ -1,4 +1,3 @@
-// REMOVE this file
 import { useId } from 'react';
 import { ChevronDown } from '../../symbols';
 import { join } from '../../utils';
