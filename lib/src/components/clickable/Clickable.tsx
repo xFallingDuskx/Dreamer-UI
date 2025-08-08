@@ -1,4 +1,4 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
+import { join } from '../../utils';
 
 interface ClickableProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onClick'> {
   children: React.ReactNode;

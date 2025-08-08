@@ -3,6 +3,7 @@ import {
   AccordionItem,
   Button,
   Checkbox,
+  Clickable,
   Input,
   Label,
   RadioGroup,
@@ -10,7 +11,6 @@ import {
   Textarea,
 } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
-import Clickable from './temp/Clickable';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
