@@ -1,13 +1,14 @@
 import {
+  Accordion,
+  AccordionItem,
   Button,
   Checkbox,
+  Clickable,
   Input,
   Label,
   RadioGroup,
   RadioGroupItem,
   Textarea,
-  Accordion,
-  AccordionItem,
 } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
 
@@ -54,6 +55,7 @@ function App() {
           <option value='checkbox-section'>Checkbox</option>
           <option value='labels-section'>Label</option>
           <option value='accordion-section'>Accordion</option>
+          <option value='clickable-section'>Clickable</option>
         </select>
 
         <div className='mt-12 max-w-2xl mx-auto px-10 space-y-20'>
@@ -214,7 +216,8 @@ function App() {
               items={[
                 {
                   id: 'item-1',
-                  title: 'A super long title that should wrap to the next line if it is too long. It still should be readable. This is a test of the accordion component.',
+                  title:
+                    'A super long title that should wrap to the next line if it is too long. It still should be readable. This is a test of the accordion component.',
                   content:
                     'Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.\n\nLorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.\n\nLorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.\n\nLorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.',
                 },
@@ -266,17 +269,42 @@ function App() {
             </Accordion>
 
             <p className='mb-2'>Setting custom class names</p>
-            <Accordion
-              triggersClassName='underline'
-              bodiesClassName='bg-gray-50/5'
-            >
+            <Accordion triggersClassName='underline' bodiesClassName='bg-gray-50/5'>
               <AccordionItem
                 title='Item 1'
                 content='Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.'
               />
-              <AccordionItem title='Item 2' content='Content for Item 2' triggerClassName='text-red-300 hover:!bg-red-900/50' bodyClassName='bg-red-500/10' />
+              <AccordionItem
+                title='Item 2'
+                content='Content for Item 2'
+                triggerClassName='text-red-300 hover:!bg-red-900/50'
+                bodyClassName='bg-red-500/10'
+              />
               <AccordionItem title='Item 3' content='Content for Item 3' />
             </Accordion>
+          </div>
+
+          <div id='clickable-section'>
+            <h3 className='mb-2'>Clickable</h3>
+            <div className='grid grid-cols-2 gap-4'>
+              <Clickable linkTo='https://www.example.com' className='p-4 border border-gray-200 rounded'>
+                Open page!
+              </Clickable>
+              <Clickable
+                onButtonClick={() => alert('You clicked the button!')}
+                className='p-4 border border-gray-200 rounded'
+              >
+                Trigger alert!
+              </Clickable>
+              <Clickable
+                linkTo='https://google.com'
+                linkProps={{
+                  target: '_blank',
+                }}
+              >
+                <img src='https://storage.needpix.com/rsynced_images/logo-google-1991840_1280.png' />
+              </Clickable>
+            </div>
           </div>
         </div>
       </div>
