@@ -6,6 +6,8 @@ import {
   RadioGroup,
   RadioGroupItem,
   Textarea,
+  Accordion,
+  AccordionItem,
 } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
 
@@ -51,6 +53,7 @@ function App() {
           <option value='radiogroup-section'>Radio Group</option>
           <option value='checkbox-section'>Checkbox</option>
           <option value='labels-section'>Label</option>
+          <option value='accordion-section'>Accordion</option>
         </select>
 
         <div className='mt-12 max-w-2xl mx-auto px-10 space-y-20'>
@@ -202,6 +205,78 @@ function App() {
               <Label required={true}>Third Label</Label>
               <Label helpMessage='This is a help message for the label'>Label w/ Help</Label>
             </div>
+          </div>
+
+          <div id='accordion-section'>
+            <h3 className='mb-2'>Accordion</h3>
+            <p className='mb-2'>Passing in items w/ default and allow multiple</p>
+            <Accordion
+              items={[
+                {
+                  id: 'item-1',
+                  title: 'A super long title that should wrap to the next line if it is too long. It still should be readable. This is a test of the accordion component.',
+                  content:
+                    'Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.\n\nLorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.\n\nLorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.\n\nLorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.',
+                },
+                { id: 'item-2', title: 'Item 2', content: 'Content for Item 2' },
+                { id: 'item-3', title: 'Item 3', content: 'Content for Item 3' },
+              ]}
+              className='mb-5'
+              allowMultiple={true}
+              defaultOpenItems={['item-2']}
+            />
+
+            <p className='mb-2'>Passing in items w/o default and allow multiple</p>
+            <Accordion
+              items={[
+                {
+                  title: 'Item 1',
+                  content:
+                    'Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.',
+                },
+                { title: 'Item 2', content: 'Content for Item 2', disabled: true },
+                { title: 'Item 3', content: 'Content for Item 3' },
+              ]}
+              className='mb-5'
+              allowMultiple={true}
+            />
+
+            <p className='mb-2'>Passing in items w/o default and single</p>
+            <Accordion
+              items={[
+                {
+                  title: 'Item 1',
+                  content:
+                    'Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.',
+                },
+                { title: 'Item 2', content: 'Content for Item 2', disabled: true },
+                { title: 'Item 3', content: 'Content for Item 3' },
+              ]}
+              className='mb-5'
+            />
+
+            <p className='mb-2'>Using AccordionItem components directly</p>
+            <Accordion className='mb-5'>
+              <AccordionItem
+                title='Item 1'
+                content='Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.'
+              />
+              <AccordionItem title='Item 2' content='Content for Item 2' disabled={true} />
+              <AccordionItem title='Item 3' content='Content for Item 3' />
+            </Accordion>
+
+            <p className='mb-2'>Setting custom class names</p>
+            <Accordion
+              triggersClassName='underline'
+              bodiesClassName='bg-gray-50/5'
+            >
+              <AccordionItem
+                title='Item 1'
+                content='Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.\nVel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis. Eum illo omnis ut galisum excepturi et voluptatibus amet eos nemo obcaecati. 33 praesentium voluptatem non sequi culpa in esse animi est velit voluptas.'
+              />
+              <AccordionItem title='Item 2' content='Content for Item 2' triggerClassName='text-red-300 hover:!bg-red-900/50' bodyClassName='bg-red-500/10' />
+              <AccordionItem title='Item 3' content='Content for Item 3' />
+            </Accordion>
           </div>
         </div>
       </div>
