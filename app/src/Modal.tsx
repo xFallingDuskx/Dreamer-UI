@@ -20,7 +20,7 @@ export function Modal({ isOpen, onClose, title, children, contentOnly = false, c
       {createPortal(
         <div role='dialog' className='fixed inset-0 z-[100] overflow-y-auto'>
           <div className='flex min-h-screen items-center justify-center p-4'>
-            <div className='fixed inset-0 bg-black/10 transition-all' onClick={onClose} />
+            <div className='fixed inset-0 bg-black/20 transition-all' onClick={onClose} />
             <div
               className={join(
                 'relative w-full max-w-xl transform rounded-lg shadow-xl transition-all',
