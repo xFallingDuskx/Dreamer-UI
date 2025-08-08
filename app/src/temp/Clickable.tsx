@@ -4,8 +4,8 @@ interface ClickableProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onC
   children: React.ReactNode;
   to?: React.HTMLProps<HTMLAnchorElement>['href'];
   onClick?: React.HTMLAttributes<HTMLButtonElement>['onClick'];
-  linkProps?: React.HTMLProps<HTMLAnchorElement>;
-  buttonProps?: React.HTMLAttributes<HTMLButtonElement>;
+  linkProps?: Omit<React.HTMLProps<HTMLAnchorElement>, 'href'>;
+  buttonProps?: Omit<React.HTMLAttributes<HTMLButtonElement>, 'onClick'>;
 }
 
 export default function Clickable({
