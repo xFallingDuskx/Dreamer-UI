@@ -18,7 +18,7 @@ export default function Clickable({
   ...props
 }: ClickableProps) {
   return (
-    <div role='button' className={join('relative w-fit', className)} {...props}>
+    <div className={join('relative w-fit', className)} {...props}>
       {children}
 
       {/* Link */}
@@ -28,8 +28,9 @@ export default function Clickable({
       {onClick && (
         <button
           {...buttonProps}
+          type='button'
           onClick={onClick}
-          className={join('absolute inset-0 invisible', buttonProps?.className)}
+          className={join('absolute inset-0 cursor-pointer', buttonProps?.className)}
         />
       )}
     </div>

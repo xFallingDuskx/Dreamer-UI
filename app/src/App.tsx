@@ -290,8 +290,19 @@ function App() {
               <Clickable to='https://www.example.com' className='p-4 border border-gray-200 rounded'>
                 Open page!
               </Clickable>
-              <Clickable onClick={() => alert('Clickable div clicked!')} className='p-4 border border-gray-200 rounded'>
+              <Clickable
+                onClick={() => alert('You clicked the button!')}
+                className='p-4 border border-gray-200 rounded'
+              >
                 Trigger alert!
+              </Clickable>
+              <Clickable
+                to='https://google.com'
+                linkProps={{
+                  target: '_blank',
+                }}
+              >
+                <img src='https://storage.needpix.com/rsynced_images/logo-google-1991840_1280.png' />
               </Clickable>
             </div>
           </div>
