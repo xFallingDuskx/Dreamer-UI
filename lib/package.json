@@ -1,6 +1,6 @@
 {
   "name": "@moondreamsdev/dreamer-ui",
-  "version": "1.7.3-test.0",
+  "version": "1.7.3",
   "publishConfig": {
     "access": "public"
   },
