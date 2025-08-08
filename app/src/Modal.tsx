@@ -35,8 +35,11 @@ export function Modal({ isOpen, onClose, title, children, contentOnly = false, c
                 </div>
               )}
               {!contentOnly && (
-                <button onClick={onClose} className='rounded-md top-1 right-1 absolute focus:outline-none focus:ring aspect-square'>
-                  <X />
+                <button
+                  onClick={onClose}
+                  className='rounded-md p-0.5 top-3 right-3 absolute focus:outline-none focus:ring leading-0'
+                >
+                  <X size={16} />
                 </button>
               )}
               {children}
