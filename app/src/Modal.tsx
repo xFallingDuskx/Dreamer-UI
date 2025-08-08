@@ -25,13 +25,13 @@ export function Modal({ isOpen, onClose, title, children, contentOnly = false, c
               className={join(
                 'relative w-full max-w-xl transform rounded-lg shadow-xl transition-all',
                 contentOnly && 'bg-transparent',
-                !contentOnly && 'p-4',
+                !contentOnly && 'p-6',
                 className
               )}
             >
-              {!contentOnly && (
-                <div>
-                  {!title ? null : typeof title === 'object' ? title : <h1 className='text-2xl font-bold'>{title}</h1>}
+              {!contentOnly && title && (
+                <div className='mb-1'>
+                  {typeof title === 'object' ? title : <h1 className='text-2xl font-bold'>{title}</h1>}
                 </div>
               )}
               {!contentOnly && (
