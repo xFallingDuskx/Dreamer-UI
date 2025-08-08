@@ -17,15 +17,26 @@ export default function Clickable({
   buttonProps,
   ...props
 }: ClickableProps) {
+  if (to && onClick) {
+    console.warn('Clickable: Both "to" and "onClick" props are provided. Only "to" will be used.');
+  }
+
   return (
     <div className={join('relative w-fit', className)} {...props}>
       {children}
 
       {/* Link */}
-      {to && <a {...linkProps} href={to} className={join('absolute inset-0', linkProps?.className)} />}
+      {to && (
+        <a
+          {...linkProps}
+          href={to}
+          className={join('absolute inset-0', linkProps?.className)}
+          aria-label={linkProps?.['aria-label'] || 'Navigate to link'}
+        />
+      )}
 
       {/* Button */}
-      {onClick && (
+      {!to && onClick && (
         <button
           {...buttonProps}
           type='button'
