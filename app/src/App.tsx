@@ -287,17 +287,17 @@ function App() {
           <div id='clickable-section'>
             <h3 className='mb-2'>Clickable</h3>
             <div className='grid grid-cols-2 gap-4'>
-              <Clickable to='https://www.example.com' className='p-4 border border-gray-200 rounded'>
+              <Clickable linkTo='https://www.example.com' className='p-4 border border-gray-200 rounded'>
                 Open page!
               </Clickable>
               <Clickable
-                onClick={() => alert('You clicked the button!')}
+                onButtonClick={() => alert('You clicked the button!')}
                 className='p-4 border border-gray-200 rounded'
               >
                 Trigger alert!
               </Clickable>
               <Clickable
-                to='https://google.com'
+                linkTo='https://google.com'
                 linkProps={{
                   target: '_blank',
                 }}

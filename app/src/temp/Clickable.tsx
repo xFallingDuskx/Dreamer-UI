@@ -1,24 +1,24 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 
-interface ClickableProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onClick'> {
+interface ClickableProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onClick'> {
   children: React.ReactNode;
-  to?: React.HTMLProps<HTMLAnchorElement>['href'];
-  onClick?: React.HTMLAttributes<HTMLButtonElement>['onClick'];
+  linkTo?: React.HTMLProps<HTMLAnchorElement>['href'];
   linkProps?: Omit<React.HTMLProps<HTMLAnchorElement>, 'href'>;
-  buttonProps?: Omit<React.HTMLAttributes<HTMLButtonElement>, 'onClick'>;
+  onButtonClick?: React.HTMLProps<HTMLButtonElement>['onClick'];
+  buttonProps?: Omit<React.HTMLProps<HTMLButtonElement>, 'onClick'>;
 }
 
 export default function Clickable({
   children,
   className,
-  to,
-  onClick,
+  linkTo,
   linkProps,
+  onButtonClick,
   buttonProps,
   ...props
 }: ClickableProps) {
-  if (to && onClick) {
-    console.warn('Clickable: Both "to" and "onClick" props are provided. Only "to" will be used.');
+  if (linkTo && onButtonClick) {
+    console.warn('Clickable: Both "linkTo" and "onButtonClick" props are provided. Only "linkTo" will be used.');
   }
 
   return (
@@ -26,21 +26,21 @@ export default function Clickable({
       {children}
 
       {/* Link */}
-      {to && (
+      {linkTo && (
         <a
           {...linkProps}
-          href={to}
+          href={linkTo}
           className={join('absolute inset-0', linkProps?.className)}
           aria-label={linkProps?.['aria-label'] || 'Navigate to link'}
         />
       )}
 
       {/* Button */}
-      {!to && onClick && (
+      {!linkTo && onButtonClick && (
         <button
           {...buttonProps}
           type='button'
-          onClick={onClick}
+          onClick={onButtonClick}
           className={join('absolute inset-0 cursor-pointer', buttonProps?.className)}
         />
       )}
