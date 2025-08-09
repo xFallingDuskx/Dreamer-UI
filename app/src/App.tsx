@@ -6,12 +6,12 @@ import {
   Clickable,
   Input,
   Label,
+  Modal,
   RadioGroup,
   RadioGroupItem,
   Textarea,
 } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
-import { Modal } from './Modal';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
@@ -345,8 +345,8 @@ function App() {
             >
               <div>
                 <p>
-                  This is a basic modal with just content, along with a custom blur overlay. Click outside or the X button to
-                  close.
+                  This is a basic modal with just content, along with a custom blur overlay. Click outside or the X
+                  button to close.
                 </p>
               </div>
             </Modal>
