@@ -15,6 +15,7 @@ import {
 import { useActionModal } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
+import Tooltip from './tooltip/Tooltip';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
@@ -154,6 +155,7 @@ function AppContent() {
           <option value='clickable-section'>Clickable</option>
           <option value='modal-section'>Modal</option>
           <option value='actionmodal-section'>Action Modal</option>
+          <option value='tooltip-section'>Tooltip</option>
         </select>
 
         <div className='mt-12 max-w-2xl mx-auto px-10 space-y-20'>
@@ -685,6 +687,137 @@ function AppContent() {
               }}
               className='bg-white dark:bg-gray-800 rounded-lg'
             />
+          </div>
+
+          <div id='tooltip-section'>
+            <h3 className='mb-2'>Tooltip</h3>
+            <div className='grid grid-cols-2 gap-8 mb-8'>
+              <div className='space-y-4'>
+                <div className='text-center'>
+                  <Tooltip message='This tooltip appears on top!' placement='top'>
+                    <Button>Top Tooltip</Button>
+                  </Tooltip>
+                </div>
+                
+                <div className='text-center'>
+                  <Tooltip message='This tooltip appears on the bottom!' placement='bottom'>
+                    <Button variant='secondary'>Bottom Tooltip</Button>
+                  </Tooltip>
+                </div>
+              </div>
+              
+              <div className='space-y-4'>
+                <div className='text-center'>
+                  <Tooltip message='This tooltip appears on the left!' placement='left'>
+                    <Button variant='outline'>Left Tooltip</Button>
+                  </Tooltip>
+                </div>
+                
+                <div className='text-center'>
+                  <Tooltip message='This tooltip appears on the right!' placement='right'>
+                    <Button variant='tertiary'>Right Tooltip</Button>
+                  </Tooltip>
+                </div>
+              </div>
+            </div>
+
+            <h4 className='mb-2'>Advanced Examples</h4>
+            <div className='grid grid-cols-2 gap-8 mb-8'>
+              <div className='space-y-4'>
+                <div className='text-center'>
+                  <Tooltip 
+                    message={
+                      <div>
+                        <h4 className='font-semibold mb-1'>Rich Content Tooltip</h4>
+                        <p className='text-sm'>Tooltips can contain <strong>formatted text</strong> and other elements!</p>
+                        <div className='mt-2 text-xs opacity-75'>
+                          💡 This is a React.ReactNode
+                        </div>
+                      </div>
+                    }
+                    className='max-w-xs'
+                  >
+                    <Button>Rich Content</Button>
+                  </Tooltip>
+                </div>
+                
+                <div className='text-center'>
+                  <Tooltip message='This tooltip has a custom delay' delay={1000}>
+                    <Button variant='secondary'>Slow Tooltip (1s delay)</Button>
+                  </Tooltip>
+                </div>
+              </div>
+              
+              <div className='space-y-4'>
+                <div className='text-center'>
+                  <Tooltip message="I won't show up!" disabled>
+                    <Button variant='outline'>Disabled Tooltip</Button>
+                  </Tooltip>
+                </div>
+                
+                <div className='text-center'>
+                  <Tooltip 
+                    message='Custom styled tooltip!' 
+                    className='bg-purple-600 text-white border-2 border-purple-400'
+                    arrowClassName='border-t-purple-600'
+                  >
+                    <Button variant='tertiary'>Custom Style</Button>
+                  </Tooltip>
+                </div>
+              </div>
+            </div>
+
+            <h4 className='mb-2'>Smart Positioning</h4>
+            <div className='text-sm text-gray-400 mb-4'>
+              Try hovering these buttons near the edge of the viewport to see automatic repositioning:
+            </div>
+            <div className='grid grid-cols-4 gap-4'>
+              <div className='text-left'>
+                <Tooltip message='I will automatically move to stay visible!' placement='top'>
+                  <Button size='sm'>Edge Test 1</Button>
+                </Tooltip>
+              </div>
+              
+              <div className='text-center'>
+                <Tooltip message='Collision detection keeps me in view!' placement='left'>
+                  <Button size='sm'>Edge Test 2</Button>
+                </Tooltip>
+              </div>
+              
+              <div className='text-center'>
+                <Tooltip message='I will flip to the opposite side if needed!' placement='right'>
+                  <Button size='sm'>Edge Test 3</Button>
+                </Tooltip>
+              </div>
+              
+              <div className='text-right'>
+                <Tooltip message='Smart positioning in action!' placement='bottom'>
+                  <Button size='sm'>Edge Test 4</Button>
+                </Tooltip>
+              </div>
+            </div>
+
+            <div className='mt-8'>
+              <h4 className='mb-2'>Works with Any Element</h4>
+              <div className='grid grid-cols-3 gap-4'>
+                <Tooltip message='Tooltip on input field' placement='top'>
+                  <Input placeholder='Hover me' />
+                </Tooltip>
+                
+                <Tooltip message='Works with checkboxes too!' placement='top'>
+                  <div className='flex items-center gap-2'>
+                    <Checkbox />
+                    <Label>Hoverable checkbox</Label>
+                  </div>
+                </Tooltip>
+                
+                <Tooltip message='Even custom divs work!' placement='top'>
+                  <div className='bg-slate-700 hover:bg-slate-600 transition-colors p-3 rounded cursor-pointer text-center'>
+                    Custom Element
+                  </div>
+                </Tooltip>
+              </div>
+            </div>
           </div>
         </div>
       </div>
