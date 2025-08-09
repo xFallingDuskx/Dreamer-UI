@@ -12,6 +12,7 @@ import {
   Textarea,
 } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
+import { ActionModal } from './temp/ActionModal';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
@@ -32,6 +33,13 @@ function App() {
     withActions: false,
     noCloseButton: false,
   });
+  const [actionModalsOpen, setActionModalsOpen] = useState<Record<string, boolean>>({
+    alert: false,
+    confirm: false,
+    destructiveAlert: false,
+    destructiveConfirm: false,
+    customText: false,
+  });
 
   const handleRadioGroupChange = (value: string, index: number) => {
     const newSelections = { ...radioGroupSelections };
@@ -45,6 +53,14 @@ function App() {
 
   const closeModal = (modalId: string) => {
     setModalsOpen((prev) => ({ ...prev, [modalId]: false }));
+  };
+
+  const openActionModal = (modalId: string) => {
+    setActionModalsOpen((prev) => ({ ...prev, [modalId]: true }));
+  };
+
+  const closeActionModal = (modalId: string) => {
+    setActionModalsOpen((prev) => ({ ...prev, [modalId]: false }));
   };
 
   const handleSelectOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -74,6 +90,7 @@ function App() {
           <option value='accordion-section'>Accordion</option>
           <option value='clickable-section'>Clickable</option>
           <option value='modal-section'>Modal</option>
+          <option value='actionmodal-section'>Action Modal</option>
         </select>
 
         <div className='mt-12 max-w-2xl mx-auto px-10 space-y-20'>
@@ -490,6 +507,103 @@ function App() {
                 <p className='text-sm text-gray-500 mt-2'>This may take a few moments.</p>
               </div>
             </Modal>
+          </div>
+
+          <div id='actionmodal-section'>
+            <h3 className='mb-2'>Action Modal</h3>
+            <div className='grid grid-cols-2 gap-4'>
+              <Button onClick={() => openActionModal('alert')}>Open Alert</Button>
+              <Button onClick={() => openActionModal('confirm')}>Open Confirm</Button>
+              <Button onClick={() => openActionModal('destructiveAlert')}>Destructive Alert</Button>
+              <Button onClick={() => openActionModal('destructiveConfirm')}>Destructive Confirm</Button>
+              <Button onClick={() => openActionModal('customText')}>Custom Text Action Modal</Button>
+            </div>
+
+            {/* Basic Alert */}
+            <ActionModal
+              type="alert"
+              isOpen={actionModalsOpen.alert}
+              onClose={() => closeActionModal('alert')}
+              message="This is a simple alert message. Click OK to dismiss."
+              onConfirm={() => console.log('Alert confirmed')}
+              className='bg-white dark:bg-gray-800 rounded-lg'
+            />
+
+            {/* Basic Confirm */}
+            <ActionModal
+              type="confirm"
+              isOpen={actionModalsOpen.confirm}
+              onClose={() => closeActionModal('confirm')}
+              message="Are you sure you want to continue with this action?"
+              onConfirm={() => {
+                console.log('Action confirmed');
+                alert('Action confirmed!');
+              }}
+              className='bg-white dark:bg-gray-800 rounded-lg'
+            />
+
+            {/* Destructive Alert */}
+            <ActionModal
+              type="alert"
+              isOpen={actionModalsOpen.destructiveAlert}
+              onClose={() => closeActionModal('destructiveAlert')}
+              title="Error Occurred"
+              message={
+                <div>
+                  <p className="mb-2">An error occurred while processing your request:</p>
+                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded p-3">
+                    <code className="text-sm text-red-800 dark:text-red-200">
+                      NetworkError: Failed to fetch data from server
+                    </code>
+                  </div>
+                </div>
+              }
+              destructive
+              confirmText="Understood"
+              className='bg-white dark:bg-gray-800 rounded-lg'
+            />
+
+            {/* Destructive Confirm */}
+            <ActionModal
+              type="confirm"
+              isOpen={actionModalsOpen.destructiveConfirm}
+              onClose={() => closeActionModal('destructiveConfirm')}
+              title="Delete Account"
+              message={
+                <div>
+                  <p className="mb-3">This action cannot be undone. This will permanently delete your account and all associated data.</p>
+                  <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded p-3">
+                    <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                      <strong>Warning:</strong> All your projects, settings, and data will be permanently lost.
+                    </p>
+                  </div>
+                </div>
+              }
+              destructive
+              confirmText="Delete Account"
+              cancelText="Keep Account"
+              onConfirm={() => {
+                console.log('Account deletion confirmed');
+                alert('Account would be deleted (demo)');
+              }}
+              className='bg-white dark:bg-gray-800 rounded-lg'
+            />
+
+            {/* Custom Text Modal */}
+            <ActionModal
+              type="confirm"
+              isOpen={actionModalsOpen.customText}
+              onClose={() => closeActionModal('customText')}
+              title="Save Changes"
+              message="You have unsaved changes. Would you like to save them before leaving?"
+              confirmText="Save & Continue"
+              cancelText="Discard Changes"
+              onConfirm={() => {
+                console.log('Changes saved');
+                alert('Changes saved successfully!');
+              }}
+              className='bg-white dark:bg-gray-800 rounded-lg'
+            />
           </div>
         </div>
       </div>
