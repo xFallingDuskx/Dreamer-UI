@@ -359,7 +359,7 @@ function App() {
               className='bg-white dark:bg-gray-800 rounded-lg'
             >
               <div>
-                <p>This modal has a title in the header. The title is automatically styled as an h1 element.</p>
+                <p>This modal has a title in the header. The title is automatically styled as an h2 element.</p>
                 <div className='mt-4 flex gap-2'>
                   <Button onClick={() => closeModal('withTitle')}>Close</Button>
                   <Button variant='secondary'>Cancel</Button>
