@@ -345,7 +345,7 @@ function App() {
             >
               <div>
                 <p>
-                  This is a basic modal with just content, along with a custom overlay. Click outside or the X button to
+                  This is a basic modal with just content, along with a custom blur overlay. Click outside or the X button to
                   close.
                 </p>
               </div>

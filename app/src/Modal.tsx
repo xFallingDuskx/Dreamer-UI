@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from '@moondreamsdev/dreamer-ui/components';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import React, { useId, useRef } from 'react';
+import React, { useId } from 'react';
 import { createPortal } from 'react-dom';
 import X from './X';
 import { useDocumentChanges, useHandleFocus } from './hooks';
@@ -40,7 +40,6 @@ export function Modal({
   ariaLabelledBy,
   ariaDescribedBy,
 }: ModalProps) {
-  const modalRef = useRef<HTMLDivElement>(null);
   const generatedId = useId();
   const modalId = id || `modal-${generatedId}`;
   const titleId = id ? `${id}-title` : `modal-title-${generatedId}`;
@@ -58,11 +57,9 @@ export function Modal({
     }
 
     return (
-      <div className='mb-4'>
-        <h2 className='text-xl font-semibold' id={titleId}>
-          {title}
-        </h2>
-      </div>
+      <h2 className='mb-4 text-xl font-semibold' id={titleId}>
+        {title}
+      </h2>
     );
   };
 
@@ -70,7 +67,7 @@ export function Modal({
     if (actions.length === 0) return null;
 
     return (
-      <div className='pt-4 not-sm:grid gap-y-2 sm:flex sm:justify-start sm:flex-row-reverse sm:gap-x-3'>
+      <div className='mt-6 not-sm:grid gap-y-2 sm:flex sm:justify-start sm:flex-row-reverse sm:gap-x-3'>
         {actions.map((action, index) => {
           const { label, className, ...buttonProps } = action;
           return (
@@ -107,7 +104,6 @@ export function Modal({
 
             {!contentOnly && (
               <div
-                ref={modalRef}
                 id={modalId}
                 tabIndex={-1}
                 className={join(
@@ -127,7 +123,7 @@ export function Modal({
 
                 {renderTitle()}
 
-                <div className='text-gray-700 dark:text-gray-300'>{children}</div>
+                {children}
 
                 {renderActions()}
               </div>
