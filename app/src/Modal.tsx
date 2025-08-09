@@ -119,7 +119,7 @@ export function Modal({
                   <button
                     onClick={onClose}
                     data-modal-close-button='true'
-                    className='rounded-md p-0.5 top-3 right-3 absolute opacity-80 hover:opacity-100 transition-opacity focus:outline-none focus:ring-2 focus:ring-gray-500 leading-0'
+                    className='rounded-md p-0.5 top-2.5 right-2.5 absolute opacity-80 hover:opacity-100 transition-opacity focus:outline-none focus:ring-2 focus:ring-gray-500 leading-0'
                   >
                     <X size={18} />
                   </button>
