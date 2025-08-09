@@ -143,12 +143,13 @@ function App() {
             <h3 className='mb-2'>Radio Group</h3>
             <div className='grid grid-cols-2 gap-4'>
               <RadioGroup
+                id='simple-example'
                 options={['Option 1', 'Option 2', 'Option 3']}
                 value={radioGroupSelections[0]}
                 onChange={(value) => handleRadioGroupChange(value, 0)}
-                name='simple-example'
               />
               <RadioGroup
+                id='simple-example-2'
                 options={[
                   { value: 'i1', label: 'Item 1' },
                   { value: 'i2', label: 'Item 2', disabled: true },
@@ -156,7 +157,6 @@ function App() {
                 ]}
                 value={radioGroupSelections[1]}
                 onChange={(value) => handleRadioGroupChange(value, 1)}
-                name='simple-example-2'
               />
               <RadioGroup value={radioGroupSelections[2]} onChange={(value) => handleRadioGroupChange(value, 2)}>
                 <RadioGroupItem value='e1'>Entity 1</RadioGroupItem>

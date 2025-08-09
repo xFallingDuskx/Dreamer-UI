@@ -11,7 +11,7 @@ export interface AccordionOption {
 }
 
 export interface AccordionProps {
-  name?: string;
+  id?: string;
   items?: AccordionOption[];
   children?: React.ReactElement<AccordionItemProps>[] | React.ReactElement<AccordionItemProps>;
   className?: string;
@@ -23,7 +23,7 @@ export interface AccordionProps {
 }
 
 export function Accordion({
-  name,
+  id,
   items = [],
   children,
   className = '',
@@ -34,7 +34,7 @@ export function Accordion({
   bodiesClassName = '',
 }: AccordionProps) {
   const groupId = useId();
-  const groupName = name || `accordion-group-${groupId}`;
+  const groupName = id || `accordion-group-${groupId}`;
   const [openItems, setOpenItems] = useState<Set<string>>(new Set(defaultOpenItems));
 
   const toggleItem = (itemId: string) => {

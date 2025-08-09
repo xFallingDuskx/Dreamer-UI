@@ -9,7 +9,7 @@ export type RadioGroupProps = {
   options?: (string | RadioOption)[];
   value: string | undefined;
   onChange: (value: string) => void;
-  name?: string;
+  id?: string;
   children?: React.ReactElement<RadioGroupItemProps>[] | React.ReactElement<RadioGroupItemProps>;
   className?: string;
   childrenClassName?: string;
@@ -20,14 +20,14 @@ export function RadioGroup({
   options = [],
   value,
   onChange,
-  name,
+  id,
   children,
   className = '',
   childrenClassName = '',
   hideInputs = false,
 }: RadioGroupProps) {
   const groupId = useId();
-  const groupName = name || `radio-group-${groupId}`;
+  const groupName = id || `radio-group-${groupId}`;
   useRadioFocus(
     groupName,
     options.findIndex((option) => option === value)
