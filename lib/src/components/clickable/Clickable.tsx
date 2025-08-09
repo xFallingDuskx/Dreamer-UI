@@ -29,6 +29,7 @@ export default function Clickable({
       {linkTo && (
         <a
           {...linkProps}
+          rel={linkProps?.rel || 'noreferrer'}
           href={linkTo}
           className={join('absolute inset-0', linkProps?.className)}
         />

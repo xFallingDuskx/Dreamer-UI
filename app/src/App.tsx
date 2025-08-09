@@ -176,7 +176,9 @@ function AppContent() {
               <Button variant='base' size='fitted'>
                 Click Me
               </Button>
-              <Button linkTo='https://google.com'>Link to Google</Button>
+              <Button linkTo='https://google.com' linkProps={{ target: '_blank' }}>
+                Link to Google
+              </Button>
               <Button linkTo='https://google.com' disabled={true}>
                 Link to Google
               </Button>

@@ -62,7 +62,6 @@ export default function Button({
           {...linkProps}
           aria-hidden={true} // Hide from screen readers since the button is already accessible
           href={linkTo}
-          target={linkProps?.target || '_blank'}
           rel={linkProps?.rel || 'noreferrer'}
           className='absolute inset-0'
         />
