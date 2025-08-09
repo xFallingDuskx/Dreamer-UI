@@ -39,6 +39,8 @@ export function Tooltip({
   const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
   const [position, setPosition] = useState<TooltipPosition | null>(null);
+  const [isHoveringTrigger, setIsHoveringTrigger] = useState(false);
+  const [isHoveringTooltip, setIsHoveringTooltip] = useState(false);
   const triggerRef = useRef<HTMLElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<number | null>(null);
@@ -64,7 +66,7 @@ export function Tooltip({
         y: targetRect.top - tooltipRect.height - TOOLTIP_OFFSET,
         arrow: {
           x: tooltipRect.width / 2 - ARROW_SIZE,
-          y: tooltipRect.height,
+          y: tooltipRect.height - 1, // Position arrow just outside the bottom edge
         },
       },
       bottom: {
@@ -72,14 +74,14 @@ export function Tooltip({
         y: targetRect.bottom + TOOLTIP_OFFSET,
         arrow: {
           x: tooltipRect.width / 2 - ARROW_SIZE,
-          y: -ARROW_SIZE,
+          y: -ARROW_SIZE + 1, // Position arrow just outside the top edge
         },
       },
       left: {
         x: targetRect.left - tooltipRect.width - TOOLTIP_OFFSET,
         y: targetRect.top + targetRect.height / 2 - tooltipRect.height / 2,
         arrow: {
-          x: tooltipRect.width,
+          x: tooltipRect.width, // Position arrow just outside the right edge
           y: tooltipRect.height / 2 - ARROW_SIZE,
         },
       },
@@ -180,15 +182,31 @@ export function Tooltip({
     }, delay);
   }, [disabled, delay, updatePosition]);
 
-  const hideTooltip = useCallback(() => {
+  const hideTooltip = useCallback((forceHide = false) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
 
-    setIsVisible(false);
-    // Keep rendered for animation, then unmount
-    setTimeout(() => setShouldRender(false), 150);
+    if (forceHide) {
+      setIsVisible(false);
+      setTimeout(() => setShouldRender(false), 150);
+      return;
+    }
+
+    // Small delay to allow moving from trigger to tooltip
+    timeoutRef.current = window.setTimeout(() => {
+      setIsVisible(false);
+      setTimeout(() => setShouldRender(false), 150);
+    }, 100);
   }, []);
+
+  // Handle hover state changes
+  useEffect(() => {
+    if (!isHoveringTrigger && !isHoveringTooltip && isVisible) {
+      // Neither trigger nor tooltip is being hovered, hide the tooltip
+      hideTooltip();
+    }
+  }, [isHoveringTrigger, isHoveringTooltip, isVisible, hideTooltip]);
 
   // Update position on scroll/resize
   useEffect(() => {
@@ -196,11 +214,9 @@ export function Tooltip({
 
     const handleUpdate = () => updatePosition();
 
-    window.addEventListener('scroll', handleUpdate, true);
     window.addEventListener('resize', handleUpdate);
 
     return () => {
-      window.removeEventListener('scroll', handleUpdate, true);
       window.removeEventListener('resize', handleUpdate);
     };
   }, [shouldRender, updatePosition]);
@@ -217,10 +233,10 @@ export function Tooltip({
   const getArrowClasses = (arrowPlacement: TooltipPlacement) => {
     const baseArrow = 'absolute w-0 h-0';
     const arrowClasses = {
-      top: 'border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-gray-900',
-      bottom: 'border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-gray-900',
-      left: 'border-t-[6px] border-b-[6px] border-l-[6px] border-t-transparent border-b-transparent border-l-gray-900',
-      right: 'border-t-[6px] border-b-[6px] border-r-[6px] border-t-transparent border-b-transparent border-r-gray-900',
+      top: 'border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-border',
+      bottom: 'border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-border',
+      left: 'border-t-[6px] border-b-[6px] border-l-[6px] border-t-transparent border-b-transparent border-l-border',
+      right: 'border-t-[6px] border-b-[6px] border-r-[6px] border-t-transparent border-b-transparent border-r-border',
     };
 
     return join(baseArrow, arrowClasses[arrowPlacement], arrowClassName);
@@ -232,10 +248,16 @@ export function Tooltip({
         ref: (node: HTMLElement | null) => {
           triggerRef.current = node;
         },
-        onMouseEnter: () => showTooltip(),
-        onMouseLeave: () => hideTooltip(),
+        onMouseEnter: () => {
+          setIsHoveringTrigger(true);
+          showTooltip();
+        },
+        onMouseLeave: () => {
+          setIsHoveringTrigger(false);
+          // Don't call hideTooltip here, let the effect handle it
+        },
         onFocus: () => showTooltip(),
-        onBlur: () => hideTooltip(),
+        onBlur: () => hideTooltip(true), // Force hide on blur
         'aria-describedby': disabled ? undefined : tooltipId,
       } as Record<string, unknown>)}
       {shouldRender &&
@@ -245,16 +267,26 @@ export function Tooltip({
             id={tooltipId}
             role="tooltip"
             className={join(
-              'fixed z-50 px-2 py-1 text-sm text-white bg-gray-900 rounded shadow-lg pointer-events-none select-none transition-all duration-150 ease-out',
+              'fixed z-50 px-2 py-1 text-sm rounded shadow-lg pointer-events-auto transition-all duration-150 ease-out',
               isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95',
               className
             )}
             style={position ? { left: position.x, top: position.y } : { opacity: 0 }}
+            onMouseEnter={() => {
+              setIsHoveringTooltip(true);
+              if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+              }
+            }}
+            onMouseLeave={() => {
+              setIsHoveringTooltip(false);
+              // Don't call hideTooltip here, let the effect handle it
+            }}
           >
             {message}
             {position && (
               <div
-                className={getArrowClasses(position.placement)}
+                className={(getArrowClasses(position.placement))}
                 style={{ left: position.arrow.x, top: position.arrow.y }}
               />
             )}

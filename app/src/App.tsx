@@ -694,13 +694,13 @@ function AppContent() {
             <div className='grid grid-cols-2 gap-8 mb-8'>
               <div className='space-y-4'>
                 <div className='text-center'>
-                  <Tooltip message='This tooltip appears on top!' placement='top'>
+                  <Tooltip message='This tooltip appears on top!' placement='top' className='bg-white text-black'>
                     <Button>Top Tooltip</Button>
                   </Tooltip>
                 </div>
                 
                 <div className='text-center'>
-                  <Tooltip message='This tooltip appears on the bottom!' placement='bottom'>
+                  <Tooltip message='This tooltip appears on the bottom!' placement='bottom' className='bg-white text-black'>
                     <Button variant='secondary'>Bottom Tooltip</Button>
                   </Tooltip>
                 </div>
@@ -708,13 +708,13 @@ function AppContent() {
               
               <div className='space-y-4'>
                 <div className='text-center'>
-                  <Tooltip message='This tooltip appears on the left!' placement='left'>
+                  <Tooltip message='This tooltip appears on the left!' placement='left' className='bg-white text-black'>
                     <Button variant='outline'>Left Tooltip</Button>
                   </Tooltip>
                 </div>
                 
                 <div className='text-center'>
-                  <Tooltip message='This tooltip appears on the right!' placement='right'>
+                  <Tooltip message='This tooltip appears on the right!' placement='right' className='bg-white text-black'>
                     <Button variant='tertiary'>Right Tooltip</Button>
                   </Tooltip>
                 </div>
@@ -735,14 +735,14 @@ function AppContent() {
                         </div>
                       </div>
                     }
-                    className='max-w-xs'
+                    className='max-w-xs bg-white text-black'
                   >
                     <Button>Rich Content</Button>
                   </Tooltip>
                 </div>
                 
                 <div className='text-center'>
-                  <Tooltip message='This tooltip has a custom delay' delay={1000}>
+                  <Tooltip message='This tooltip has a custom delay' delay={1000} className='bg-white text-black'>
                     <Button variant='secondary'>Slow Tooltip (1s delay)</Button>
                   </Tooltip>
                 </div>
@@ -773,25 +773,25 @@ function AppContent() {
             </div>
             <div className='grid grid-cols-4 gap-4'>
               <div className='text-left'>
-                <Tooltip message='I will automatically move to stay visible!' placement='top'>
+                <Tooltip message='I will automatically move to stay visible!' placement='top' className='bg-white text-black'>
                   <Button size='sm'>Edge Test 1</Button>
                 </Tooltip>
               </div>
               
               <div className='text-center'>
-                <Tooltip message='Collision detection keeps me in view!' placement='left'>
+                <Tooltip message='Collision detection keeps me in view!' placement='left' className='bg-white text-black'>
                   <Button size='sm'>Edge Test 2</Button>
                 </Tooltip>
               </div>
               
               <div className='text-center'>
-                <Tooltip message='I will flip to the opposite side if needed!' placement='right'>
+                <Tooltip message='I will flip to the opposite side if needed!' placement='right' className='bg-white text-black'>
                   <Button size='sm'>Edge Test 3</Button>
                 </Tooltip>
               </div>
               
               <div className='text-right'>
-                <Tooltip message='Smart positioning in action!' placement='bottom'>
+                <Tooltip message='Smart positioning in action!' placement='bottom' className='bg-white text-black'>
                   <Button size='sm'>Edge Test 4</Button>
                 </Tooltip>
               </div>
@@ -800,18 +800,18 @@ function AppContent() {
             <div className='mt-8'>
               <h4 className='mb-2'>Works with Any Element</h4>
               <div className='grid grid-cols-3 gap-4'>
-                <Tooltip message='Tooltip on input field' placement='top'>
+                <Tooltip message='Tooltip on input field' placement='top' className='bg-white text-black'>
                   <Input placeholder='Hover me' />
                 </Tooltip>
-                
-                <Tooltip message='Works with checkboxes too!' placement='top'>
+
+                <Tooltip message='Works with checkboxes too!' placement='top' className='bg-white text-black'>
                   <div className='flex items-center gap-2'>
                     <Checkbox />
                     <Label>Hoverable checkbox</Label>
                   </div>
                 </Tooltip>
                 
-                <Tooltip message='Even custom divs work!' placement='top'>
+                <Tooltip message='Even custom divs work!' placement='top' className='bg-white text-black'>
                   <div className='bg-slate-700 hover:bg-slate-600 transition-colors p-3 rounded cursor-pointer text-center'>
                     Custom Element
                   </div>
