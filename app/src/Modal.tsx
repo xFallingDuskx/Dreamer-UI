@@ -10,6 +10,7 @@ interface ModalAction extends Omit<ButtonProps, 'children'> {
 }
 
 export interface ModalProps {
+  id?: string;
   isOpen: boolean;
   onClose: () => void;
   title?: React.ReactNode;
@@ -24,6 +25,7 @@ export interface ModalProps {
 }
 
 export function Modal({
+  id,
   isOpen,
   onClose,
   title,
@@ -37,10 +39,9 @@ export function Modal({
   ariaDescribedBy,
 }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
-
-  const id = useId();
-  const modalId = `modal-${id}`;
-  const titleId = `modal-title-${id}`;
+  const generatedId = useId();
+  const modalId = id || `modal-${generatedId}`;
+  const titleId = id ? `${id}-title` : `modal-title-${generatedId}`;
 
   useHandleFocus({ modalId, isOpen });
   useDocumentChanges({ isOpen, onClose });
