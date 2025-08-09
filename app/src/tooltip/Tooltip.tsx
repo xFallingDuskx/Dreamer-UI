@@ -70,7 +70,7 @@ export function Tooltip({
           y: targetRect.top - tooltipRect.height - TOOLTIP_OFFSET,
           arrow: {
             x: tooltipRect.width / 2 - ARROW_SIZE,
-            y: tooltipRect.height - 1, // Position arrow just outside the bottom edge
+            y: tooltipRect.height,
           },
         },
         bottom: {
@@ -78,14 +78,14 @@ export function Tooltip({
           y: targetRect.bottom + TOOLTIP_OFFSET,
           arrow: {
             x: tooltipRect.width / 2 - ARROW_SIZE,
-            y: -ARROW_SIZE + 1, // Position arrow just outside the top edge
+            y: -ARROW_SIZE,
           },
         },
         left: {
           x: targetRect.left - tooltipRect.width - TOOLTIP_OFFSET,
           y: targetRect.top + targetRect.height / 2 - tooltipRect.height / 2,
           arrow: {
-            x: tooltipRect.width, // Position arrow just outside the right edge
+            x: tooltipRect.width,
             y: tooltipRect.height / 2 - ARROW_SIZE,
           },
         },
@@ -214,7 +214,7 @@ export function Tooltip({
     }
   }, [isHoveringTrigger, isHoveringTooltip, isVisible, hideTooltip]);
 
-  // Update position on scroll/resize
+  // Update position on scroll
   useEffect(() => {
     if (!shouldRender) return;
 
@@ -273,7 +273,7 @@ export function Tooltip({
             role='tooltip'
             className={join(
               'fixed z-50 px-2 py-1 text-sm rounded shadow-lg pointer-events-auto transition-all duration-150 ease-out',
-              isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95',
+              isVisible ? 'opacity-100' : 'opacity-0',
               className
             )}
             style={position ? { left: position.x, top: position.y } : { opacity: 0 }}
