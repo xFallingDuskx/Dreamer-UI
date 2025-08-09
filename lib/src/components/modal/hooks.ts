@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ModalProps } from './Modal';
 
-export function useAnimationOpenClose({ isOpen }: Pick<ModalProps, 'isOpen'>) {
+export function useAnimationOpenClose(isOpen: boolean) {
   const [show, setShow] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
 
@@ -18,7 +17,7 @@ export function useAnimationOpenClose({ isOpen }: Pick<ModalProps, 'isOpen'>) {
   return { show, shouldRender };
 }
 
-export function useDocumentChanges({ isOpen, onClose }: Pick<ModalProps, 'isOpen' | 'onClose'>) {
+export function useDocumentChanges(isOpen: boolean, onClose: () => void) {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -39,7 +38,7 @@ export function useDocumentChanges({ isOpen, onClose }: Pick<ModalProps, 'isOpen
   }, [isOpen, onClose]);
 }
 
-export function useHandleFocus({ modalId, isOpen }: { modalId: string; isOpen: boolean }) {
+export function useHandleFocus(modalId: string, isOpen: boolean) {
   const previousActiveElement = useRef<Element | null>(null);
 
   const focusAppropriateElement = useCallback(() => {
