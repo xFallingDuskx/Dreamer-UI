@@ -12,7 +12,7 @@ import {
   Textarea,
 } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
-import { ActionModal } from './temp/ActionModal';
+import { ActionModal, ActionModalProvider, useActionModal } from './temp';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
@@ -23,7 +23,8 @@ const TestComponent = ({ index }: { index: number }) => {
   );
 };
 
-function App() {
+function AppContent() {
+  const { alert, confirm } = useActionModal();
   const [radioGroupSelections, setRadioGroupSelections] = useState<Record<number, string>>({});
   const [modalsOpen, setModalsOpen] = useState<Record<string, boolean>>({
     basic: false,
@@ -61,6 +62,69 @@ function App() {
 
   const closeActionModal = (modalId: string) => {
     setActionModalsOpen((prev) => ({ ...prev, [modalId]: false }));
+  };
+
+  // Provider-based action modal handlers
+  const handleProviderAlert = async () => {
+    await alert({
+      title: 'Success!',
+      message: 'This alert was triggered using the useActionModal hook.',
+    });
+    console.log('Alert dismissed');
+  };
+
+  const handleProviderConfirm = async () => {
+    const result = await confirm({
+      title: 'Confirm Action',
+      message: 'Do you want to proceed with this action?',
+    });
+    console.log('result', result); // REMOVE
+    if (result) {
+      await alert({ message: 'Action confirmed!' });
+    } else {
+      console.log('Action cancelled');
+    }
+  };
+
+  const handleDestructiveConfirm = async () => {
+    const result = await confirm({
+      title: 'Delete Item',
+      message: (
+        <div>
+          <p className="mb-2">This will permanently delete the selected item.</p>
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded p-2">
+            <p className="text-sm text-red-800 dark:text-red-200">This action cannot be undone.</p>
+          </div>
+        </div>
+      ),
+      destructive: true,
+      confirmText: 'Delete',
+      cancelText: 'Keep',
+    });
+    if (result) {
+      await alert({ 
+        message: 'Item deleted successfully!',
+        destructive: true,
+        confirmText: 'OK'
+      });
+    }
+  };
+
+  const handleCustomAlert = async () => {
+    await alert({
+      title: 'Custom Alert',
+      message: (
+        <div>
+          <p className="mb-3">This is a custom alert with React elements!</p>
+          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded p-3">
+            <p className="text-sm text-blue-800 dark:text-blue-200">
+              🎉 You can include any React content here.
+            </p>
+          </div>
+        </div>
+      ),
+      confirmText: 'Awesome!',
+    });
   };
 
   const handleSelectOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -326,7 +390,7 @@ function App() {
                 Open page!
               </Clickable>
               <Clickable
-                onButtonClick={() => alert('You clicked the button!')}
+                onButtonClick={() => window.alert('You clicked the button!')}
                 className='p-4 border border-gray-200 rounded'
               >
                 Trigger alert!
@@ -419,7 +483,7 @@ function App() {
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    alert('Form submitted!');
+                    window.alert('Form submitted!');
                     closeModal('withForm');
                   }}
                   className='space-y-4'
@@ -455,7 +519,7 @@ function App() {
                 {
                   label: 'Publish',
                   onClick: () => {
-                    alert('Published successfully!');
+                    window.alert('Published successfully!');
                     closeModal('withActions');
                   },
                   variant: 'primary',
@@ -463,7 +527,7 @@ function App() {
                 {
                   label: 'Save Draft',
                   onClick: () => {
-                    alert('Saved as draft!');
+                    window.alert('Saved as draft!');
                     closeModal('withActions');
                   },
                   variant: 'outline',
@@ -511,12 +575,22 @@ function App() {
 
           <div id='actionmodal-section'>
             <h3 className='mb-2'>Action Modal</h3>
-            <div className='grid grid-cols-2 gap-4'>
+            
+            <h4 className='mb-2 text-lg'>Component-based Examples</h4>
+            <div className='grid grid-cols-2 gap-4 mb-6'>
               <Button onClick={() => openActionModal('alert')}>Open Alert</Button>
               <Button onClick={() => openActionModal('confirm')}>Open Confirm</Button>
               <Button onClick={() => openActionModal('destructiveAlert')}>Destructive Alert</Button>
               <Button onClick={() => openActionModal('destructiveConfirm')}>Destructive Confirm</Button>
               <Button onClick={() => openActionModal('customText')}>Custom Text Action Modal</Button>
+            </div>
+
+            <h4 className='mb-2 text-lg'>Provider-based Examples (useActionModal)</h4>
+            <div className='grid grid-cols-2 gap-4'>
+              <Button onClick={handleProviderAlert}>Provider Alert</Button>
+              <Button onClick={handleProviderConfirm}>Provider Confirm</Button>
+              <Button onClick={handleDestructiveConfirm} variant='destructive'>Destructive Provider Confirm</Button>
+              <Button onClick={handleCustomAlert} variant='secondary'>Custom Provider Alert</Button>
             </div>
 
             {/* Basic Alert */}
@@ -537,7 +611,7 @@ function App() {
               message="Are you sure you want to continue with this action?"
               onConfirm={() => {
                 console.log('Action confirmed');
-                alert('Action confirmed!');
+                window.alert('Action confirmed!');
               }}
               className='bg-white dark:bg-gray-800 rounded-lg'
             />
@@ -584,7 +658,7 @@ function App() {
               cancelText="Keep Account"
               onConfirm={() => {
                 console.log('Account deletion confirmed');
-                alert('Account would be deleted (demo)');
+                window.alert('Account would be deleted (demo)');
               }}
               className='bg-white dark:bg-gray-800 rounded-lg'
             />
@@ -600,7 +674,7 @@ function App() {
               cancelText="Discard Changes"
               onConfirm={() => {
                 console.log('Changes saved');
-                alert('Changes saved successfully!');
+                window.alert('Changes saved successfully!');
               }}
               className='bg-white dark:bg-gray-800 rounded-lg'
             />
@@ -608,6 +682,14 @@ function App() {
         </div>
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <ActionModalProvider>
+      <AppContent />
+    </ActionModalProvider>
   );
 }
 
