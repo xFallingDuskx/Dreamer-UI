@@ -49,7 +49,7 @@ export default function StatusHelpMessage({ elementId, type, message }: StatusHe
     <small
       className={join(
         'mt-0.5 text-sm inline-flex items-center gap-1 w-full justify-start',
-        type === 'error' && 'text-danger',
+        type === 'error' && 'text-destructive',
         type === 'success' && 'text-success'
       )}
       role='status'

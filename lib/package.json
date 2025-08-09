@@ -1,6 +1,6 @@
 {
   "name": "@moondreamsdev/dreamer-ui",
-  "version": "1.7.4-test.9",
+  "version": "1.7.4-test.12",
   "publishConfig": {
     "access": "public"
   },
@@ -25,6 +25,16 @@
       "types": "./dist/src/components/index.d.ts",
       "import": "./dist/components.esm.js",
       "require": "./dist/components.js"
+    },
+    "./hooks": {
+      "types": "./dist/src/hooks/index.d.ts",
+      "import": "./dist/hooks.esm.js",
+      "require": "./dist/hooks.js"
+    },
+    "./providers": {
+      "types": "./dist/src/providers/index.d.ts",
+      "import": "./dist/providers.esm.js",
+      "require": "./dist/providers.js"
     },
     "./symbols": {
       "types": "./dist/src/symbols/index.d.ts",
