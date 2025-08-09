@@ -1,6 +1,8 @@
 import {
   Accordion,
   AccordionItem,
+  ActionModal,
+  ActionModalProvider,
   Button,
   Checkbox,
   Clickable,
@@ -10,9 +12,9 @@ import {
   RadioGroup,
   RadioGroupItem,
   Textarea,
+  useActionModal,
 } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
-import { ActionModal, ActionModalProvider, useActionModal } from './temp';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
@@ -91,9 +93,9 @@ function AppContent() {
       title: 'Delete Item',
       message: (
         <div>
-          <p className="mb-2">This will permanently delete the selected item.</p>
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded p-2">
-            <p className="text-sm text-red-800 dark:text-red-200">This action cannot be undone.</p>
+          <p className='mb-2'>This will permanently delete the selected item.</p>
+          <div className='bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded p-2'>
+            <p className='text-sm text-red-800 dark:text-red-200'>This action cannot be undone.</p>
           </div>
         </div>
       ),
@@ -102,10 +104,10 @@ function AppContent() {
       cancelText: 'Keep',
     });
     if (result) {
-      await alert({ 
+      await alert({
         message: 'Item deleted successfully!',
         destructive: true,
-        confirmText: 'OK'
+        confirmText: 'OK',
       });
     }
   };
@@ -115,11 +117,9 @@ function AppContent() {
       title: 'Custom Alert',
       message: (
         <div>
-          <p className="mb-3">This is a custom alert with React elements!</p>
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded p-3">
-            <p className="text-sm text-blue-800 dark:text-blue-200">
-              🎉 You can include any React content here.
-            </p>
+          <p className='mb-3'>This is a custom alert with React elements!</p>
+          <div className='bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded p-3'>
+            <p className='text-sm text-blue-800 dark:text-blue-200'>🎉 You can include any React content here.</p>
           </div>
         </div>
       ),
@@ -575,7 +575,7 @@ function AppContent() {
 
           <div id='actionmodal-section'>
             <h3 className='mb-2'>Action Modal</h3>
-            
+
             <h4 className='mb-2 text-lg'>Component-based Examples</h4>
             <div className='grid grid-cols-2 gap-4 mb-6'>
               <Button onClick={() => openActionModal('alert')}>Open Alert</Button>
@@ -589,26 +589,30 @@ function AppContent() {
             <div className='grid grid-cols-2 gap-4'>
               <Button onClick={handleProviderAlert}>Provider Alert</Button>
               <Button onClick={handleProviderConfirm}>Provider Confirm</Button>
-              <Button onClick={handleDestructiveConfirm} variant='destructive'>Destructive Provider Confirm</Button>
-              <Button onClick={handleCustomAlert} variant='secondary'>Custom Provider Alert</Button>
+              <Button onClick={handleDestructiveConfirm} variant='destructive'>
+                Destructive Provider Confirm
+              </Button>
+              <Button onClick={handleCustomAlert} variant='secondary'>
+                Custom Provider Alert
+              </Button>
             </div>
 
             {/* Basic Alert */}
             <ActionModal
-              type="alert"
+              type='alert'
               isOpen={actionModalsOpen.alert}
               onClose={() => closeActionModal('alert')}
-              message="This is a simple alert message. Click OK to dismiss."
+              message='This is a simple alert message. Click OK to dismiss.'
               onConfirm={() => console.log('Alert confirmed')}
               className='bg-white dark:bg-gray-800 rounded-lg'
             />
 
             {/* Basic Confirm */}
             <ActionModal
-              type="confirm"
+              type='confirm'
               isOpen={actionModalsOpen.confirm}
               onClose={() => closeActionModal('confirm')}
-              message="Are you sure you want to continue with this action?"
+              message='Are you sure you want to continue with this action?'
               onConfirm={() => {
                 console.log('Action confirmed');
                 window.alert('Action confirmed!');
@@ -618,44 +622,46 @@ function AppContent() {
 
             {/* Destructive Alert */}
             <ActionModal
-              type="alert"
+              type='alert'
               isOpen={actionModalsOpen.destructiveAlert}
               onClose={() => closeActionModal('destructiveAlert')}
-              title="Error Occurred"
+              title='Error Occurred'
               message={
                 <div>
-                  <p className="mb-2">An error occurred while processing your request:</p>
-                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded p-3">
-                    <code className="text-sm text-red-800 dark:text-red-200">
+                  <p className='mb-2'>An error occurred while processing your request:</p>
+                  <div className='bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded p-3'>
+                    <code className='text-sm text-red-800 dark:text-red-200'>
                       NetworkError: Failed to fetch data from server
                     </code>
                   </div>
                 </div>
               }
               destructive
-              confirmText="Understood"
+              confirmText='Understood'
               className='bg-white dark:bg-gray-800 rounded-lg'
             />
 
             {/* Destructive Confirm */}
             <ActionModal
-              type="confirm"
+              type='confirm'
               isOpen={actionModalsOpen.destructiveConfirm}
               onClose={() => closeActionModal('destructiveConfirm')}
-              title="Delete Account"
+              title='Delete Account'
               message={
                 <div>
-                  <p className="mb-3">This action cannot be undone. This will permanently delete your account and all associated data.</p>
-                  <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded p-3">
-                    <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                  <p className='mb-3'>
+                    This action cannot be undone. This will permanently delete your account and all associated data.
+                  </p>
+                  <div className='bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded p-3'>
+                    <p className='text-sm text-yellow-800 dark:text-yellow-200'>
                       <strong>Warning:</strong> All your projects, settings, and data will be permanently lost.
                     </p>
                   </div>
                 </div>
               }
               destructive
-              confirmText="Delete Account"
-              cancelText="Keep Account"
+              confirmText='Delete Account'
+              cancelText='Keep Account'
               onConfirm={() => {
                 console.log('Account deletion confirmed');
                 window.alert('Account would be deleted (demo)');
@@ -665,13 +671,13 @@ function AppContent() {
 
             {/* Custom Text Modal */}
             <ActionModal
-              type="confirm"
+              type='confirm'
               isOpen={actionModalsOpen.customText}
               onClose={() => closeActionModal('customText')}
-              title="Save Changes"
-              message="You have unsaved changes. Would you like to save them before leaving?"
-              confirmText="Save & Continue"
-              cancelText="Discard Changes"
+              title='Save Changes'
+              message='You have unsaved changes. Would you like to save them before leaving?'
+              confirmText='Save & Continue'
+              cancelText='Discard Changes'
               onConfirm={() => {
                 console.log('Changes saved');
                 window.alert('Changes saved successfully!');

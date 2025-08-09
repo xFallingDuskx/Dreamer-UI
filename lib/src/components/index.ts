@@ -1,4 +1,5 @@
 export * from './accordion';
+export * from './actionmodal';
 export * from './button';
 export * from './checkbox';
 export * from './clickable';
