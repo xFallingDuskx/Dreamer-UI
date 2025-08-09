@@ -80,7 +80,6 @@ function AppContent() {
       title: 'Confirm Action',
       message: 'Do you want to proceed with this action?',
     });
-    console.log('result', result); // REMOVE
     if (result) {
       await alert({ message: 'Action confirmed!' });
     } else {
