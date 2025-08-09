@@ -3,7 +3,7 @@ import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useId } from 'react';
 import { createPortal } from 'react-dom';
 import X from './X';
-import { useDocumentChanges, useHandleFocus } from './hooks';
+import { useAnimationOpenClose, useDocumentChanges, useHandleFocus } from './hooks';
 
 interface ModalAction extends Omit<ButtonProps, 'children'> {
   label: string;
@@ -44,10 +44,11 @@ export function Modal({
   const modalId = id || `modal-${generatedId}`;
   const titleId = id ? `${id}-title` : `modal-title-${generatedId}`;
 
-  useHandleFocus({ modalId, isOpen });
-  useDocumentChanges({ isOpen, onClose });
+  const { show, shouldRender } = useAnimationOpenClose({ isOpen });
+  useHandleFocus({ modalId, isOpen: shouldRender });
+  useDocumentChanges({ isOpen: shouldRender, onClose });
 
-  if (!isOpen) return null;
+  if (!shouldRender) return null;
 
   const renderTitle = () => {
     if (!title) return null;
@@ -107,7 +108,8 @@ export function Modal({
                 id={modalId}
                 tabIndex={-1}
                 className={join(
-                  'relative w-full max-w-xl transform rounded-lg shadow-xl transition-all p-6 bg-inherit focus:border',
+                  'relative w-full max-w-xl transform rounded-lg shadow-xl transition-all p-6 bg-inherit focus:border ease-in duration-75',
+                  show ? 'opacity-100 scale-100' : 'opacity-0 scale-90',
                   className
                 )}
               >

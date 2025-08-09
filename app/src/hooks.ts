@@ -1,5 +1,22 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ModalProps } from './Modal';
+
+export function useAnimationOpenClose({ isOpen }: Pick<ModalProps, 'isOpen'>) {
+  const [show, setShow] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setShouldRender(true);
+      setTimeout(() => setShow(true), 10);
+    } else {
+      setShow(false);
+      setTimeout(() => setShouldRender(false), 150);
+    }
+  }, [isOpen]);
+
+  return { show, shouldRender };
+}
 
 export function useDocumentChanges({ isOpen, onClose }: Pick<ModalProps, 'isOpen' | 'onClose'>) {
   useEffect(() => {
@@ -11,8 +28,10 @@ export function useDocumentChanges({ isOpen, onClose }: Pick<ModalProps, 'isOpen
 
     document.addEventListener('keydown', handleEscape);
     // Prevent background scrolling when modal is open
-    document.body.style.overflow = 'hidden';
-    
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'auto';
