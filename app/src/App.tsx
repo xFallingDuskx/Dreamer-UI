@@ -31,7 +31,6 @@ function App() {
     withForm: false,
     withActions: false,
     noCloseButton: false,
-    confirmDialog: false,
   });
 
   const handleRadioGroupChange = (value: string, index: number) => {
@@ -485,44 +484,6 @@ function App() {
                 <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4'></div>
                 <p>Please wait while we process your request...</p>
                 <p className='text-sm text-gray-500 mt-2'>This may take a few moments.</p>
-              </div>
-            </Modal>
-
-            {/* Confirm Dialog */}
-            <Modal
-              isOpen={modalsOpen.confirmDialog}
-              onClose={() => closeModal('confirmDialog')}
-              title='Delete Account'
-              actions={[
-                {
-                  label: 'Cancel',
-                  onClick: () => closeModal('confirmDialog'),
-                  variant: 'outline',
-                },
-                {
-                  label: 'Delete Account',
-                  onClick: () => {
-                    alert('Account deleted!');
-                    closeModal('confirmDialog');
-                  },
-                  variant: 'danger',
-                  disabled: false,
-                },
-              ]}
-              className='bg-white dark:bg-gray-800 rounded-lg'
-            >
-              <div className='space-y-3'>
-                <p>Are you sure you want to delete your account? This action cannot be undone.</p>
-                <div className='bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-3'>
-                  <p className='text-sm text-red-800 dark:text-red-200'>
-                    <strong>Warning:</strong> This will permanently delete:
-                  </p>
-                  <ul className='text-sm text-red-700 dark:text-red-300 mt-2 list-disc list-inside'>
-                    <li>All your data and files</li>
-                    <li>Your subscription and billing history</li>
-                    <li>Access to all connected services</li>
-                  </ul>
-                </div>
               </div>
             </Modal>
           </div>
