@@ -44,9 +44,9 @@ export function Modal({
   const modalId = id || `modal-${generatedId}`;
   const titleId = id ? `${id}-title` : `modal-title-${generatedId}`;
 
-  const { show, shouldRender } = useAnimationOpenClose({ isOpen });
-  useHandleFocus({ modalId, isOpen: shouldRender });
-  useDocumentChanges({ isOpen: shouldRender, onClose });
+  const { show, shouldRender } = useAnimationOpenClose(isOpen);
+  useHandleFocus(modalId, shouldRender);
+  useDocumentChanges(shouldRender, onClose);
 
   if (!shouldRender) return null;
 
