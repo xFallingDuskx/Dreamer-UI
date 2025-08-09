@@ -6,8 +6,8 @@
   --color-primary-foreground: var(--color-white);
   --color-secondary: var(--color-violet-200);
   --color-secondary-foreground: var(--color-black);
-  --color-danger: var(--color-red-500);
-  --color-danger-foreground: var(--color-white);
+  --color-destructive: var(--color-red-500);
+  --color-destructive-foreground: var(--color-white);
   --color-muted: var(--color-gray-200);
   --color-muted-foreground: var(--color-gray-800);
 

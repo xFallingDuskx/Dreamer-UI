@@ -46,7 +46,7 @@ export default function CharacterCount({ elementId, maxLength }: CharacterCountP
     <small
       className={join(
         'mt-0.5 text-sm inline-flex items-center gap-1 w-full justify-end',
-        characterCount >= maxLength && 'text-danger',
+        characterCount >= maxLength && 'text-destructive',
         characterCount < maxLength && 'text-current'
       )}
       role='status'

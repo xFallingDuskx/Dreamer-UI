@@ -83,7 +83,7 @@ function App() {
               <Button>Click Me</Button>
               <Button variant='secondary'>Click Me</Button>
               <Button variant='tertiary'>Click Me</Button>
-              <Button variant='danger'>Click Me</Button>
+              <Button variant='destructive'>Click Me</Button>
               <Button variant='outline'>Click Me</Button>
               <Button variant='link' size='md'>
                 Click Me
