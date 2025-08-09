@@ -2,7 +2,6 @@ import {
   Accordion,
   AccordionItem,
   ActionModal,
-  ActionModalProvider,
   Button,
   Checkbox,
   Clickable,
@@ -12,8 +11,9 @@ import {
   RadioGroup,
   RadioGroupItem,
   Textarea,
-  useActionModal,
 } from '@moondreamsdev/dreamer-ui/components';
+import { useActionModal } from '@moondreamsdev/dreamer-ui/hooks';
+import { ActionModalProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
 
 const TestComponent = ({ index }: { index: number }) => {

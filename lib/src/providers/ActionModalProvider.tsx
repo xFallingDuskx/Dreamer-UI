@@ -1,6 +1,6 @@
 import { ReactNode, useCallback, useState } from 'react';
-import { ActionModal } from './ActionModal';
-import { ActionModalContext } from './useActionModal';
+import { ActionModal } from '../components';
+import { ActionModalContext } from '../hooks';
 
 export interface ConfirmOptions {
   title?: string;

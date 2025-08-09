@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { ActionModalContextValue } from './ActionModalProvider';
+import { ActionModalContextValue } from '../providers';
 
 export const ActionModalContext = createContext<ActionModalContextValue | undefined>(undefined);
 
