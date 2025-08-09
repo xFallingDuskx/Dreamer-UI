@@ -328,7 +328,7 @@ function App() {
           <div id='modal-section'>
             <h3 className='mb-2'>Modal</h3>
             <div className='grid grid-cols-2 gap-4'>
-              <Button onClick={() => openModal('basic')}>Open Basic Modal</Button>
+              <Button onClick={() => openModal('basic')}>Open Basic Modal w/ Custom Overlay</Button>
               <Button onClick={() => openModal('withTitle')}>Modal with Title</Button>
               <Button onClick={() => openModal('contentOnly')}>Content Only Modal</Button>
               <Button onClick={() => openModal('withForm')}>Modal with Form</Button>
@@ -341,9 +341,13 @@ function App() {
               isOpen={modalsOpen.basic}
               onClose={() => closeModal('basic')}
               className='bg-white dark:bg-gray-800 rounded-lg'
+              overlayClassName='backdrop-blur-xs'
             >
               <div>
-                <p>This is a basic modal with just content. Click outside or the X button to close.</p>
+                <p>
+                  This is a basic modal with just content, along with a custom overlay. Click outside or the X button to
+                  close.
+                </p>
               </div>
             </Modal>
 

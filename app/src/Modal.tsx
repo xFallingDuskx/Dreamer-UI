@@ -17,6 +17,7 @@ export interface ModalProps {
   children: React.ReactNode;
   contentOnly?: boolean;
   className?: string;
+  overlayClassName?: string;
   hideCloseButton?: boolean;
   actions?: ModalAction[];
   disableCloseOnOverlayClick?: boolean;
@@ -32,6 +33,7 @@ export function Modal({
   children,
   contentOnly = false,
   className,
+  overlayClassName,
   hideCloseButton = false,
   actions = [],
   disableCloseOnOverlayClick = false,
@@ -93,7 +95,7 @@ export function Modal({
         >
           <div className='flex min-h-screen items-center justify-center p-4'>
             <div
-              className='fixed inset-0 bg-black/20 transition-all'
+              className={join('fixed inset-0 bg-black/20 transition-all', overlayClassName)}
               onClick={() => {
                 if (!disableCloseOnOverlayClick) {
                   onClose();
