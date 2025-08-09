@@ -56,7 +56,7 @@ export function Modal({
         {actions.map((action, index) => {
           const { label, className, ...buttonProps } = action;
           return (
-            <Button key={index} className={className} {...buttonProps}>
+            <Button key={index} className={className} type='button' {...buttonProps}>
               {label}
             </Button>
           );
