@@ -13,8 +13,8 @@ import {
   Textarea,
   Tooltip,
 } from '@moondreamsdev/dreamer-ui/components';
-import { useActionModal } from '@moondreamsdev/dreamer-ui/hooks';
-import { ActionModalProvider } from '@moondreamsdev/dreamer-ui/providers';
+import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
+import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
 
 const TestComponent = ({ index }: { index: number }) => {
@@ -28,6 +28,7 @@ const TestComponent = ({ index }: { index: number }) => {
 
 function AppContent() {
   const { alert, confirm } = useActionModal();
+  const { addToast } = useToast();
   const [radioGroupSelections, setRadioGroupSelections] = useState<Record<number, string>>({});
   const [modalsOpen, setModalsOpen] = useState<Record<string, boolean>>({
     basic: false,
@@ -155,6 +156,7 @@ function AppContent() {
           <option value='clickable-section'>Clickable</option>
           <option value='modal-section'>Modal</option>
           <option value='actionmodal-section'>Action Modal</option>
+          <option value='toast-section'>Toast</option>
           <option value='tooltip-section'>Tooltip</option>
         </select>
 
@@ -689,6 +691,82 @@ function AppContent() {
             />
           </div>
 
+          <div id='toast-section'>
+            <h3 className='mb-2'>Toast</h3>
+            <div className='grid grid-cols-2 gap-4'>
+              <Button
+                onClick={() =>
+                  addToast({
+                    title: 'Information',
+                    description: 'This is an info toast message.',
+                    type: 'info',
+                  })
+                }
+              >
+                Show Info Toast
+              </Button>
+              <Button
+                onClick={() =>
+                  addToast({
+                    title: 'Warning',
+                    description: 'This is a warning toast message.',
+                    type: 'warning',
+                  })
+                }
+              >
+                Show Warning Toast
+              </Button>
+              <Button
+                onClick={() =>
+                  addToast({
+                    title: 'Error',
+                    description: 'This is an error toast message.',
+                    type: 'error',
+                  })
+                }
+              >
+                Show Error Toast
+              </Button>
+              <Button
+                onClick={() =>
+                  addToast({
+                    title: 'Success',
+                    description: 'Operation completed successfully!',
+                    type: 'info',
+                    action: {
+                      label: 'Undo',
+                      onClick: () => console.log('Undo clicked'),
+                    },
+                  })
+                }
+              >
+                Toast with Action
+              </Button>
+              <Button
+                onClick={() =>
+                  addToast({
+                    title: 'Custom Duration',
+                    description: 'This toast will disappear in 10 seconds.',
+                    duration: 10000,
+                  })
+                }
+              >
+                Long Duration Toast
+              </Button>
+              <Button
+                onClick={() =>
+                  addToast({
+                    title: 'Persistent Toast',
+                    description: 'This toast will not auto-dismiss.',
+                    duration: 0,
+                  })
+                }
+              >
+                Persistent Toast
+              </Button>
+            </div>
+          </div>
+
           <div id='tooltip-section'>
             <h3 className='mb-2'>Tooltip</h3>
             <div className='grid grid-cols-2 gap-8 mb-8'>
@@ -848,7 +926,9 @@ function AppContent() {
 function App() {
   return (
     <ActionModalProvider>
-      <AppContent />
+      <ToastProvider position='top-center'>
+        <AppContent />
+      </ToastProvider>
     </ActionModalProvider>
   );
 }
