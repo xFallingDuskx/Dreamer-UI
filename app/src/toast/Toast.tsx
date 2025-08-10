@@ -92,6 +92,8 @@ export function Toast({
 
   return (
     <div
+      role={type === 'error' ? 'alert' : 'status'}
+      aria-live={type === 'error' ? undefined : 'polite'}
       className={join(
         'relative flex items-start p-4 rounded-lg border shadow-lg transition-all duration-150 ease-in-out',
         action && 'pb-3',

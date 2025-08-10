@@ -73,7 +73,6 @@ export function ToastProvider({
         className={join('fixed z-50 pointer-events-none  max-w-sm w-full space-y-2', positionClasses[position])}
         role='region'
         aria-label='Notifications'
-        aria-live='polite'
       >
         {toasts.map((toast) => (
           <div key={toast.id} className='pointer-events-auto'>
