@@ -26,9 +26,6 @@ export interface TooltipPosition {
   };
 }
 
-export const TOOLTIP_OFFSET = 4; // Distance from target element
-export const ARROW_SIZE = 6; // Size of the arrow
-
 export function Tooltip({
   id,
   children,
@@ -95,7 +92,7 @@ export function Tooltip({
           setIsFocused(false);
           hideTooltip(true);
         },
-        onKeyDown: (e: KeyboardEvent) => {
+        onKeyDown: (e: React.KeyboardEvent) => {
           if (e.key === 'Escape') {
             hideTooltip(true);
           }

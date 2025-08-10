@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { ARROW_SIZE, TOOLTIP_OFFSET, TooltipPlacement, TooltipPosition } from './Tooltip';
+import { TooltipPlacement, TooltipPosition } from './Tooltip';
+
+export const VIEWPORT_PADDING = 8; // Padding from viewport edges
+export const TOOLTIP_OFFSET = 4; // Distance from target element
+export const ARROW_SIZE = 6; // Size of the arrow
 
 /**
  * Calculates the optimal position for a tooltip based on the target element and viewport constraints.
@@ -91,8 +95,14 @@ export function useCalculatePosition(placement: TooltipPlacement) {
       }
 
       // Adjust position to stay within viewport bounds
-      bestPosition.x = Math.max(8, Math.min(bestPosition.x, viewport.width - tooltipRect.width - 8));
-      bestPosition.y = Math.max(8, Math.min(bestPosition.y, viewport.height - tooltipRect.height - 8));
+      bestPosition.x = Math.max(
+        VIEWPORT_PADDING,
+        Math.min(bestPosition.x, viewport.width - tooltipRect.width - VIEWPORT_PADDING)
+      );
+      bestPosition.y = Math.max(
+        VIEWPORT_PADDING,
+        Math.min(bestPosition.y, viewport.height - tooltipRect.height - VIEWPORT_PADDING)
+      );
 
       // Adjust arrow position based on the tooltip adjustment
       const targetCenter = {
