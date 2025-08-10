@@ -1,3 +1,4 @@
+import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { ReactNode, useCallback, useState } from 'react';
 import { Toast, ToastData, ToastType } from './Toast';
 import { AddToastOptions, ToastContext, ToastContextValue } from './useToast';
@@ -69,7 +70,7 @@ export function ToastProvider({
 
       {/* Toast Container */}
       <div
-        className={`fixed z-50 pointer-events-none ${positionClasses[position]} max-w-sm w-full space-y-2`}
+        className={join('fixed z-50 pointer-events-none  max-w-sm w-full space-y-2', positionClasses[position])}
         role='region'
         aria-label='Notifications'
         aria-live='polite'

@@ -927,7 +927,7 @@ function AppContent() {
 function App() {
   return (
     <ActionModalProvider>
-      <ToastProvider>
+      <ToastProvider position='top-center'>
         <AppContent />
       </ToastProvider>
     </ActionModalProvider>
