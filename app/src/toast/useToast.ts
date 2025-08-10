@@ -1,7 +1,8 @@
 import { createContext, useContext } from 'react';
-import { ToastData, ToastType, ToastAction } from './Toast';
+import { ToastAction, ToastData, ToastType } from './Toast';
 
 export interface AddToastOptions {
+  id?: string;
   title: string;
   description?: string;
   type?: ToastType | string;

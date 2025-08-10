@@ -1,6 +1,6 @@
-import { ReactNode, useState, useCallback } from 'react';
+import { ReactNode, useCallback, useState } from 'react';
 import { Toast, ToastData, ToastType } from './Toast';
-import { ToastContext, AddToastOptions, ToastContextValue } from './useToast';
+import { AddToastOptions, ToastContext, ToastContextValue } from './useToast';
 
 interface ToastProviderProps {
   children: ReactNode;
@@ -28,27 +28,33 @@ export function ToastProvider({
 }: ToastProviderProps) {
   const [toasts, setToasts] = useState<ToastData[]>([]);
 
-  const addToast = useCallback((options: AddToastOptions) => {
-    const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    
-    const newToast: ToastData = {
-      id,
-      title: options.title,
-      description: options.description,
-      type: options.type as ToastType || 'info',
-      action: options.action,
-      duration: options.duration ?? 5000,
-    };
+  const addToast = useCallback(
+    (options: AddToastOptions) => {
+      const generatedId = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const id = options.id || generatedId;
 
-    setToasts(prevToasts => {
-      const updatedToasts = [newToast, ...prevToasts];
-      // Keep only the most recent toasts if we exceed maxToasts
-      return updatedToasts.slice(0, maxToasts);
-    });
-  }, [maxToasts]);
+      const newToast: ToastData = {
+        id,
+        title: options.title,
+        description: options.description,
+        type: (options.type as ToastType) || 'info',
+        action: options.action,
+        duration: options.duration ?? 5000,
+      };
+
+      setToasts((prevToasts) => {
+        const updatedToasts = [newToast, ...prevToasts];
+        // Keep only the most recent toasts if we exceed maxToasts
+        return updatedToasts.slice(0, maxToasts);
+      });
+
+      return id;
+    },
+    [maxToasts]
+  );
 
   const removeToast = useCallback((id: string) => {
-    setToasts(prevToasts => prevToasts.filter(toast => toast.id !== id));
+    setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
   }, []);
 
   const contextValue: ToastContextValue = {
@@ -60,22 +66,17 @@ export function ToastProvider({
   return (
     <ToastContext.Provider value={contextValue}>
       {children}
-      
+
       {/* Toast Container */}
       <div
         className={`fixed z-50 pointer-events-none ${positionClasses[position]} max-w-sm w-full space-y-2`}
-        role="region"
-        aria-label="Notifications"
-        aria-live="polite"
+        role='region'
+        aria-label='Notifications'
+        aria-live='polite'
       >
-        {toasts.map(toast => (
-          <div key={toast.id} className="pointer-events-auto">
-            <Toast
-              {...toast}
-              onRemove={removeToast}
-              customTypes={customTypes}
-              customComponent={customComponent}
-            />
+        {toasts.map((toast) => (
+          <div key={toast.id} className='pointer-events-auto'>
+            <Toast {...toast} onRemove={removeToast} customTypes={customTypes} customComponent={customComponent} />
           </div>
         ))}
       </div>
