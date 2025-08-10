@@ -9,4 +9,5 @@ export * from './modal';
 export * from './radiogroup';
 export * from './slot';
 export * from './textarea';
+export * from './toast';
 export * from './tooltip';

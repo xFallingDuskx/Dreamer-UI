@@ -1,10 +1,6 @@
-import { ExclamationTriangle } from '@moondreamsdev/dreamer-ui/symbols';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
-import { X } from '../../../lib/src/symbols';
-import { CrossCircled } from '../symbols/CrossCircled';
-import InfoCircled from '../symbols/Info';
-
+import { CrossCircled, ExclamationTriangle, InfoCircled, X } from '../../symbols';
+import { join } from '../../utils';
 export type ToastType = 'info' | 'warning' | 'error';
 
 export interface ToastAction {

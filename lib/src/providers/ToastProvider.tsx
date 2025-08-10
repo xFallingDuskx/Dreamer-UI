@@ -1,7 +1,8 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { ReactNode, useCallback, useState } from 'react';
-import { Toast, ToastData, ToastType } from './Toast';
-import { AddToastOptions, ToastContext, ToastContextValue } from './useToast';
+import { Toast, ToastData, ToastType } from '../components/toast';
+import { AddToastOptions, ToastContextValue } from '../hooks/useToast';
+import { ToastContext } from '../hooks/useToast';
+import { join } from '../utils';
 
 interface ToastProviderProps {
   children: ReactNode;
@@ -68,7 +69,6 @@ export function ToastProvider({
     <ToastContext.Provider value={contextValue}>
       {children}
 
-      {/* Toast Container */}
       <div
         className={join('fixed z-50 pointer-events-none  max-w-sm w-full space-y-2', positionClasses[position])}
         role='region'

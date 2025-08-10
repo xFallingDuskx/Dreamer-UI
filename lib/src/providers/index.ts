@@ -4,3 +4,4 @@ export {
   type AlertOptions,
   type ConfirmOptions,
 } from './ActionModalProvider';
+export { ToastProvider } from './ToastProvider';

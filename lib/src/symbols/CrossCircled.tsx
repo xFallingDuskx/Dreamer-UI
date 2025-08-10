@@ -1,4 +1,4 @@
-export function CrossCircled({ size = 15, color = 'currentColor' }: { size?: number; color?: string }) {
+export default function CrossCircled({ size = 15, color = 'currentColor' }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} className={'inline'} viewBox='0 0 15 15' xmlns='http://www.w3.org/2000/svg'>
       <path

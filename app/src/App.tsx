@@ -13,10 +13,9 @@ import {
   Textarea,
   Tooltip,
 } from '@moondreamsdev/dreamer-ui/components';
-import { useActionModal } from '@moondreamsdev/dreamer-ui/hooks';
-import { ActionModalProvider } from '@moondreamsdev/dreamer-ui/providers';
+import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
+import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
-import { ToastProvider, useToast } from './toast';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
