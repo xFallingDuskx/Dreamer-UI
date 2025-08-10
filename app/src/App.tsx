@@ -758,7 +758,7 @@ function AppContent() {
                 <div className='text-center'>
                   <Tooltip 
                     message='Custom styled tooltip!' 
-                    className='bg-purple-600 text-white border-2 border-purple-400'
+                    className='bg-purple-600 text-white border-4 border-purple-400'
                     arrowClassName='border-t-purple-600'
                   >
                     <Button variant='tertiary'>Custom Style</Button>

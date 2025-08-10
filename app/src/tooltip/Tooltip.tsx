@@ -25,7 +25,7 @@ interface TooltipPosition {
   };
 }
 
-const TOOLTIP_OFFSET = 8; // Distance from target element
+const TOOLTIP_OFFSET = 4; // Distance from target element
 const ARROW_SIZE = 6; // Size of the arrow
 
 export function Tooltip({
@@ -36,7 +36,6 @@ export function Tooltip({
   disabled = false,
   delay = 200,
   className,
-  arrowClassName,
 }: TooltipProps) {
   // TASK: place logic in `hook.ts` file as separate hooks
   const [isVisible, setIsVisible] = useState(false);
@@ -236,17 +235,17 @@ export function Tooltip({
     };
   }, []);
 
-  const getArrowClasses = (arrowPlacement: TooltipPlacement) => {
-    const baseArrow = 'absolute w-0 h-0';
-    const arrowClasses = {
-      top: 'border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-border',
-      bottom: 'border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-border',
-      left: 'border-t-[6px] border-b-[6px] border-l-[6px] border-t-transparent border-b-transparent border-l-border',
-      right: 'border-t-[6px] border-b-[6px] border-r-[6px] border-t-transparent border-b-transparent border-r-border',
-    };
+  // const getArrowClasses = (arrowPlacement: TooltipPlacement) => {
+  //   const baseArrow = 'absolute w-0 h-0';
+  //   const arrowClasses = {
+  //     top: 'border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-border',
+  //     bottom: 'border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-border',
+  //     left: 'border-t-[6px] border-b-[6px] border-l-[6px] border-t-transparent border-b-transparent border-l-border',
+  //     right: 'border-t-[6px] border-b-[6px] border-r-[6px] border-t-transparent border-b-transparent border-r-border',
+  //   };
 
-    return join(baseArrow, arrowClasses[arrowPlacement], arrowClassName);
-  };
+  //   return join(baseArrow, arrowClasses[arrowPlacement], arrowClassName);
+  // };
 
   return (
     <>
@@ -288,12 +287,12 @@ export function Tooltip({
             }}
           >
             {message}
-            {position && (
+            {/* {position && (
               <div
                 className={getArrowClasses(position.placement)}
                 style={{ left: position.arrow.x, top: position.arrow.y }}
               />
-            )}
+            )} */}
           </div>,
           document.body
         )}
