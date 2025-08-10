@@ -1,6 +1,6 @@
 import React, { useId, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { join } from '../../../lib/src/utils';
+import { join } from '../../utils';
 import { useCalculatePosition, useTooltipEvents, useTooltipPosition } from './hooks';
 
 export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';

@@ -6,6 +6,7 @@ export * from './clickable';
 export * from './input';
 export * from './label';
 export * from './modal';
-export * from './slot';
 export * from './radiogroup';
+export * from './slot';
 export * from './textarea';
+export * from './tooltip';
