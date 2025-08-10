@@ -8,3 +8,8 @@ export { default as EyeOpened } from './EyeOpened';
 export { default as InfoCircled } from './InfoCircled';
 export { default as QuestionMarkCircled } from './QuestionMarkCircled';
 export { default as X } from './X';
+
+export interface SymbolProps extends React.HTMLAttributes<SVGElement> {
+  size?: number;
+  color?: string;
+}
