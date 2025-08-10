@@ -1,4 +1,4 @@
-import { SymbolProps } from './index';
+import { SymbolProps } from '.';
 
 export default function Check({ size = 15, color = 'currentColor', className = 'inline', ...props }: SymbolProps) {
   return (
