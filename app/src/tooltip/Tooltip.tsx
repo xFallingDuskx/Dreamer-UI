@@ -43,6 +43,7 @@ export function Tooltip({
   const [position, setPosition] = useState<TooltipPosition | null>(null);
   const [isHoveringTrigger, setIsHoveringTrigger] = useState(false);
   const [isHoveringTooltip, setIsHoveringTooltip] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const { calculatePosition } = useCalculatePosition(placement);
   const { triggerRef, tooltipRef, updatePosition } = useTooltipPosition(calculatePosition, shouldRender, setPosition);
@@ -54,6 +55,7 @@ export function Tooltip({
     updatePosition,
     isHoveringTrigger,
     isHoveringTooltip,
+    isFocused,
     isVisible
   );
 
@@ -85,8 +87,14 @@ export function Tooltip({
         onMouseLeave: () => {
           setIsHoveringTrigger(false);
         },
-        onFocus: () => showTooltip(),
-        onBlur: () => hideTooltip(true),
+        onFocus: () => {
+          setIsFocused(true);
+          showTooltip();
+        },
+        onBlur: () => {
+          setIsFocused(false);
+          hideTooltip(true);
+        },
         'aria-describedby': disabled ? undefined : tooltipId,
       } as Record<string, unknown>)}
       {shouldRender &&

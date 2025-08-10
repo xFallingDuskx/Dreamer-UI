@@ -175,6 +175,7 @@ export function useTooltipEvents(
   updatePosition: () => void,
   isHoveringTrigger: boolean,
   isHoveringTooltip: boolean,
+  isFocused: boolean,
   isVisible: boolean
 ) {
   const timeoutRef = useRef<number | null>(null);
@@ -219,11 +220,11 @@ export function useTooltipEvents(
 
   // Handle hover state changes
   useEffect(() => {
-    if (!isHoveringTrigger && !isHoveringTooltip && isVisible) {
-      // Neither trigger nor tooltip is being hovered, hide the tooltip
+    if (!isHoveringTrigger && !isHoveringTooltip && !isFocused && isVisible) {
+      // Neither trigger nor tooltip is being hovered/focused, hide the tooltip
       hideTooltip();
     }
-  }, [isHoveringTrigger, isHoveringTooltip, isVisible, hideTooltip]);
+  }, [isHoveringTrigger, isHoveringTooltip, isFocused, isVisible, hideTooltip]);
 
   // Cleanup timeout on unmount
   useEffect(() => {
