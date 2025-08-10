@@ -11,7 +11,7 @@ export interface AddToastOptions {
 }
 
 export interface ToastContextValue {
-  addToast: (options: AddToastOptions) => void;
+  addToast: (options: AddToastOptions) => string;
   removeToast: (id: string) => void;
   toasts: ToastData[];
 }

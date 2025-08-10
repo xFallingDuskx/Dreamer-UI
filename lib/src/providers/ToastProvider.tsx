@@ -32,7 +32,7 @@ export function ToastProvider({
 
   const addToast = useCallback(
     (options: AddToastOptions) => {
-      const generatedId = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const generatedId = `toast-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
       const id = options.id || generatedId;
 
       const newToast: ToastData = {
