@@ -95,6 +95,11 @@ export function Tooltip({
           setIsFocused(false);
           hideTooltip(true);
         },
+        onKeyDown: (e: KeyboardEvent) => {
+          if (e.key === 'Escape') {
+            hideTooltip(true);
+          }
+        },
         'aria-describedby': disabled ? undefined : tooltipId,
       } as Record<string, unknown>)}
       {shouldRender &&
