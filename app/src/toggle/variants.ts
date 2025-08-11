@@ -1,16 +1,16 @@
 export const sizeVariants = {
   sm: {
-    container: 'h-5 w-9',
+    container: 'h-5 min-w-9 w-9',
     thumb: 'h-4 w-4',
     translate: 'translate-x-4',
   },
   md: {
-    container: 'h-6 w-11',
+    container: 'h-6 min-w-11 w-11',
     thumb: 'h-5 w-5',
     translate: 'translate-x-5',
   },
   lg: {
-    container: 'h-7 w-13',
+    container: 'h-7 min-w-13 w-13',
     thumb: 'h-6 w-6',
     translate: 'translate-x-6',
   },
