@@ -259,6 +259,17 @@ function AppContent() {
                   <Label>Click to toggle (check console)</Label>
                 </div>
               </div>
+
+              <div>
+                <h4 className='mb-2 text-lg'>Custom Colors</h4>
+                <div className='flex items-center gap-2'>
+                  <Toggle
+                    thumbClassName='!bg-red-500'
+                    backgroundClassNames={{ checked: 'bg-red-200 focus:!ring-red-500' }}
+                  />
+                  <Label>I'm Red!</Label>
+                </div>
+              </div>
             </div>
           </div>
 

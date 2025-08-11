@@ -1,6 +1,6 @@
 import React, { Ref, useEffect, useId, useMemo, useState } from 'react';
 import { join } from '../../../lib/src/utils';
-import { sizeVariants, toggleDefaults, variantStyles } from './variants';
+import { sizeVariants, ToggleBackgroundClasses, toggleDefaults, variantStyles } from './variants';
 
 export interface ToggleProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'> {
   ref?: Ref<HTMLButtonElement>;
@@ -10,6 +10,7 @@ export interface ToggleProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonE
   onCheckedChange?: (checked: boolean) => void;
   disabled?: boolean;
   thumbClassName?: string;
+  backgroundClassNames?: ToggleBackgroundClasses;
 }
 
 export default function Toggle({
@@ -22,6 +23,7 @@ export default function Toggle({
   disabled = false,
   className,
   thumbClassName,
+  backgroundClassNames,
   ...props
 }: ToggleProps) {
   const generatedId = useId();
@@ -57,7 +59,9 @@ export default function Toggle({
     // Size
     sizeConfig.container,
     // Variant and state
-    isChecked ? variantConfig.checked : variantConfig.unchecked,
+    isChecked
+      ? backgroundClassNames?.checked || variantConfig.checked
+      : backgroundClassNames?.unchecked || variantConfig.unchecked,
     // Disabled state
     disabled && 'opacity-50 cursor-not-allowed',
     !disabled && 'cursor-pointer',

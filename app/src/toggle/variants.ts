@@ -17,7 +17,12 @@ export const sizeVariants = {
 };
 export type ToggleSize = keyof typeof sizeVariants;
 
-export const variantStyles = {
+export interface ToggleBackgroundClasses {
+  unchecked?: string;
+  checked?: string;
+}
+
+export const variantStyles: Record<ToggleVariant, ToggleBackgroundClasses> = {
   default: {
     unchecked: 'bg-muted',
     checked: 'bg-primary',
@@ -31,7 +36,7 @@ export const variantStyles = {
     checked: 'bg-destructive',
   },
 };
-export type ToggleVariant = keyof typeof variantStyles;
+export type ToggleVariant = 'default' | 'success' | 'destructive';
 
 export interface ToggleVariants {
   variant: ToggleVariant;
