@@ -1,11 +1,18 @@
 import React, { Ref, useEffect, useId, useMemo, useState } from 'react';
 import { join } from '../../../lib/src/utils';
-import { sizeVariants, ToggleBackgroundClasses, toggleDefaults, variantStyles } from './variants';
+import {
+  sizeVariants,
+  ToggleBackgroundClasses,
+  toggleDefaults,
+  ToggleSize,
+  ToggleVariant,
+  variantStyles,
+} from './variants';
 
 export interface ToggleProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'> {
   ref?: Ref<HTMLButtonElement>;
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'default' | 'success' | 'destructive';
+  size?: ToggleSize;
+  variant?: ToggleVariant;
   checked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
   disabled?: boolean;
