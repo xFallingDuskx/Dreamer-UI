@@ -10,4 +10,5 @@ export * from './radiogroup';
 export * from './slot';
 export * from './textarea';
 export * from './toast';
+export * from './toggle';
 export * from './tooltip';
