@@ -25,7 +25,7 @@ export default function Toggle({
   id,
   size = toggleDefaults.size,
   variant = toggleDefaults.variant,
-  checked = false,
+  checked,
   onCheckedChange,
   disabled = false,
   className,
@@ -44,7 +44,11 @@ export default function Toggle({
   const handleToggle = () => {
     if (!disabled) {
       const newChecked = !isChecked;
-      setIsChecked(newChecked);
+
+      if (checked === undefined) {
+        // Only update state if the toggle is uncontrolled
+        setIsChecked(newChecked);
+      }
       onCheckedChange?.(newChecked);
     }
   };

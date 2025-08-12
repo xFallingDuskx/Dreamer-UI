@@ -234,7 +234,7 @@ function AppContent() {
                 <h4 className='mb-2 text-lg'>States</h4>
                 <div className='flex items-center gap-6'>
                   <div className='flex items-center gap-2'>
-                    <Toggle />
+                    <Toggle checked={false} />
                     <Label>Unchecked</Label>
                   </div>
                   <div className='flex items-center gap-2'>
