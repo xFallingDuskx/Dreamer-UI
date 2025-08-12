@@ -11,6 +11,7 @@ import {
   RadioGroup,
   RadioGroupItem,
   Textarea,
+  Toggle,
   Tooltip,
 } from '@moondreamsdev/dreamer-ui/components';
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
@@ -147,6 +148,7 @@ function AppContent() {
         <h2>Select Component</h2>
         <select className='block mx-auto my-2 focus:outline-none' onChange={handleSelectOnChange}>
           <option value='buttons-section'>Button</option>
+          <option value='toggle-section'>Toggle</option>
           <option value='inputs-section'>Input</option>
           <option value='textarea-section'>Textarea</option>
           <option value='radiogroup-section'>Radio Group</option>
@@ -186,6 +188,88 @@ function AppContent() {
               <Button linkTo='https://google.com' disabled={true}>
                 Link to Google
               </Button>
+            </div>
+          </div>
+
+          <div id='toggle-section'>
+            <h3 className='mb-2'>Toggle</h3>
+            <div className='space-y-6'>
+              <div>
+                <h4 className='mb-2 text-lg'>Sizes</h4>
+                <div className='flex items-center gap-6'>
+                  <div className='flex items-center gap-2'>
+                    <Toggle size='sm' />
+                    <Label>Small</Label>
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    <Toggle size='md' />
+                    <Label>Medium (default)</Label>
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    <Toggle size='lg' />
+                    <Label>Large</Label>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 className='mb-2 text-lg'>Variants</h4>
+                <div className='flex items-center gap-6'>
+                  <div className='flex items-center gap-2'>
+                    <Toggle variant='default' checked />
+                    <Label>Default</Label>
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    <Toggle variant='success' checked />
+                    <Label>Success</Label>
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    <Toggle variant='destructive' checked />
+                    <Label>Destructive</Label>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 className='mb-2 text-lg'>States</h4>
+                <div className='flex items-center gap-6'>
+                  <div className='flex items-center gap-2'>
+                    <Toggle checked={false} />
+                    <Label>Unchecked</Label>
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    <Toggle checked />
+                    <Label>Checked</Label>
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    <Toggle disabled />
+                    <Label>Disabled Unchecked</Label>
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    <Toggle disabled checked />
+                    <Label>Disabled Checked</Label>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 className='mb-2 text-lg'>Interactive Example</h4>
+                <div className='flex items-center gap-2'>
+                  <Toggle onCheckedChange={(checked) => console.log('Toggle changed:', checked)} />
+                  <Label>Click to toggle (check console)</Label>
+                </div>
+              </div>
+
+              <div>
+                <h4 className='mb-2 text-lg'>Custom Colors</h4>
+                <div className='flex items-center gap-2'>
+                  <Toggle
+                    thumbClassName='!bg-red-500'
+                    backgroundClassNames={{ checked: 'bg-red-200 focus:!ring-red-500' }}
+                  />
+                  <Label>I'm Red!</Label>
+                </div>
+              </div>
             </div>
           </div>
 
