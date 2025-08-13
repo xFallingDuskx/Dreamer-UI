@@ -1,8 +1,8 @@
 export const skeletonVariants = {
   shape: {
-    rectangle: 'rounded-md h-6',
-    circle: 'rounded-full aspect-square w-6 h-6',
-    text: 'rounded-sm h-4',
+    rectangle: 'rounded-md min-h-1',
+    circle: 'rounded-full aspect-square min-h-1',
+    text: 'rounded-sm min-h-1 h-4',
   },
   lineSpacing: {
     xs: 'space-y-1',

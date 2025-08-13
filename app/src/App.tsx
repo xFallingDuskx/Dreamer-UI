@@ -215,12 +215,12 @@ function AppContent() {
 
           <div id='skeleton-section'>
             <h3 className='mb-2'>Skeleton</h3>
-            
+
             <h4 className='mb-2 text-lg'>Basic Shapes</h4>
             <div className='grid grid-cols-3 gap-6 mb-6'>
               <div className='space-y-2'>
                 <p className='text-sm text-gray-400'>Rectangle (default)</p>
-                <Skeleton shape='rectangle' />
+                <Skeleton shape='rectangle' className='h-6' />
               </div>
               <div className='space-y-2'>
                 <p className='text-sm text-gray-400'>Circle</p>
@@ -274,18 +274,18 @@ function AppContent() {
             <div className='grid grid-cols-2 gap-6 mb-6'>
               <div className='space-y-2'>
                 <p className='text-sm text-gray-400'>With animation (default)</p>
-                <Skeleton shape='rectangle' animate={true} />
+                <Skeleton shape='rectangle' animate={true} className='h-6' />
               </div>
               <div className='space-y-2'>
                 <p className='text-sm text-gray-400'>Without animation</p>
-                <Skeleton shape='rectangle' animate={false} />
+                <Skeleton shape='rectangle' animate={false} className='h-6' />
               </div>
             </div>
 
             <h4 className='mb-2 text-lg'>Card Layout Example</h4>
             <div className='bg-slate-800 p-6 rounded-lg max-w-md'>
               <div className='flex items-center gap-4 mb-4'>
-                <Skeleton shape='circle' className='!size-16' />
+                <Skeleton shape='circle' className='size-16' />
                 <div className='flex-1'>
                   <Skeleton shape='text' className='w-24 mb-2' />
                   <Skeleton shape='text' className='w-16' />
