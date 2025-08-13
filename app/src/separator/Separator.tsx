@@ -31,7 +31,7 @@ export default function Separator({
   const separatorId = id || generatedId;
   const detectedOrientation = useDetectedOrientation(orientation, separatorId);
 
-  const finalOrientation = orientation || detectedOrientation;
+  const finalOrientation = orientation ?? detectedOrientation;
 
   const separatorClasses = join(
     'shrink-0',
@@ -44,6 +44,7 @@ export default function Separator({
   return (
     <div
       {...props}
+      id={separatorId}
       className={separatorClasses}
       role={decorative ? 'presentation' : 'separator'}
       aria-orientation={decorative ? undefined : finalOrientation}

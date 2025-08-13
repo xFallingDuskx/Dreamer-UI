@@ -31,7 +31,7 @@ export type ColorVariant = keyof typeof colorVariants;
 
 export const sizeVariants: Record<Orientation, string> = {
   horizontal: 'w-full',
-  vertical: 'h-full',
+  vertical: 'min-h-4 h-full',
 } as const;
 
 export type SizeVariant = keyof typeof sizeVariants;
