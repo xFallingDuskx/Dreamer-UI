@@ -34,10 +34,7 @@ export const sizeVariants: Record<Orientation, string> = {
   vertical: 'min-h-4 h-full',
 } as const;
 
-export type SizeVariant = keyof typeof sizeVariants;
-
 export const defaultVariants = {
   thickness: 'thin',
   variant: 'default',
-  orientation: undefined,
 };
