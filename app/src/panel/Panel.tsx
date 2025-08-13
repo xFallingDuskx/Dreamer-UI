@@ -17,6 +17,8 @@ export interface PanelProps {
   title?: React.ReactNode;
   /** Panel content */
   children: React.ReactNode;
+  /** Panel footer - can be a string or React node */
+  footer?: React.ReactNode;
   /** Panel size variant */
   size?: PanelSize;
   /** Additional CSS classes for the panel */
@@ -44,6 +46,7 @@ export default function Panel({
   onClose,
   title,
   children,
+  footer,
   size = 'md',
   className,
   overlayClassName,
@@ -74,6 +77,21 @@ export default function Panel({
         {title}
       </h2>
     );
+  };
+
+  const renderFooter = () => {
+    if (!footer) return null;
+
+    if (React.isValidElement(footer)) {
+      const footerElement = footer as React.ReactElement<{ className?: string }>;
+      const existingClassName = footerElement.props.className || '';
+      return React.cloneElement(footerElement, { className: join('px-6 py-4', existingClassName) } as Record<
+        string,
+        unknown
+      >);
+    }
+
+    return <div className='px-6 py-4'>{footer}</div>;
   };
 
   return (
@@ -115,7 +133,7 @@ export default function Panel({
               data-panel-size={size}
             >
               <div className='flex h-full flex-col'>
-                {title && <div className='px-6 pt-6 pb-4'>{renderTitle()}</div>}
+                {title && <div className='px-6 pt-6'>{renderTitle()}</div>}
 
                 {!hideCloseButton && (
                   <button
@@ -129,7 +147,9 @@ export default function Panel({
                   </button>
                 )}
 
-                <div className='flex-1 overflow-y-auto px-6 py-8'>{children}</div>
+                <div className={join('flex-1 overflow-y-auto px-6 pb-6', title ? 'pt-6' : 'pt-10')}>{children}</div>
+
+                {renderFooter()}
               </div>
             </div>
           </div>

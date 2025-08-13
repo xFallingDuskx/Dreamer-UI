@@ -54,6 +54,7 @@ function AppContent() {
     withForm: false,
     large: false,
     small: false,
+    withFooter: false,
   });
 
   const handleRadioGroupChange = (value: string, index: number) => {
@@ -796,13 +797,13 @@ function AppContent() {
 
           <div id='panel-section'>
             <h3 className='mb-2'>Panel</h3>
-            <div className='grid grid-cols-2 gap-4'>
+            <div className='grid grid-cols-3 gap-4'>
               <Button onClick={() => openPanel('basic')}>Open Basic Panel</Button>
               <Button onClick={() => openPanel('withTitle')}>Panel with Title</Button>
               <Button onClick={() => openPanel('withForm')}>Panel with Form</Button>
+              <Button onClick={() => openPanel('withFooter')}>Panel with Footer</Button>
               <Button onClick={() => openPanel('large')}>Large Panel</Button>
               <Button onClick={() => openPanel('small')}>Small Panel</Button>
-              <Button onClick={() => openPanel('full')}>Full Screen Panel</Button>
             </div>
 
             {/* Basic Panel */}
@@ -823,7 +824,16 @@ function AppContent() {
             </Panel>
 
             {/* Panel with Title */}
-            <Panel isOpen={panelsOpen.withTitle} onClose={() => closePanel('withTitle')} title='Panel with Title'>
+            <Panel
+              isOpen={panelsOpen.withTitle}
+              onClose={() => closePanel('withTitle')}
+              title='Panel with Title'
+              footer={
+                <div className='flex justify-end'>
+                  <Button onClick={() => closePanel('withTitle')}>Got it!</Button>
+                </div>
+              }
+            >
               <div>
                 <p className='mb-4'>
                   This panel includes a header with a title and close button. The title is automatically styled and
@@ -838,7 +848,10 @@ function AppContent() {
                     <li>• Focus management</li>
                   </ul>
                 </div>
-                <Button onClick={() => closePanel('withTitle')}>Got it!</Button>
+                <p className='text-sm text-gray-500'>
+                  Notice how the action button is now in the footer, creating a cleaner separation between content and
+                  actions.
+                </p>
               </div>
             </Panel>
 
@@ -852,9 +865,20 @@ function AppContent() {
                   <span>Quick Survey</span>
                 </div>
               }
+              footer={
+                <div className='flex gap-2 justify-end'>
+                  <Button type='button' variant='secondary' onClick={() => closePanel('withForm')}>
+                    Cancel
+                  </Button>
+                  <Button type='submit' form='panel-survey-form'>
+                    Submit Survey
+                  </Button>
+                </div>
+              }
             >
               <div>
                 <form
+                  id='panel-survey-form'
                   onSubmit={(e) => {
                     e.preventDefault();
                     window.alert('Survey submitted!');
@@ -884,13 +908,63 @@ function AppContent() {
                     <Label htmlFor='panel-feedback'>Additional Feedback</Label>
                     <Textarea id='panel-feedback' placeholder='Tell us more...' rows={3} />
                   </div>
-                  <div className='flex gap-2 justify-end pt-4'>
-                    <Button type='button' variant='secondary' onClick={() => closePanel('withForm')}>
-                      Cancel
-                    </Button>
-                    <Button type='submit'>Submit Survey</Button>
-                  </div>
                 </form>
+              </div>
+            </Panel>
+
+            {/* Panel with Footer */}
+            <Panel
+              isOpen={panelsOpen.withFooter}
+              onClose={() => closePanel('withFooter')}
+              title='Panel with Custom Footer'
+              footer={
+                <div className='flex items-center justify-between'>
+                  <div className='text-sm text-gray-500'>
+                    <span className='font-medium'>Pro Tip:</span> Footers are great for actions and status information
+                  </div>
+                  <div className='flex gap-2'>
+                    <Button variant='outline' onClick={() => window.alert('Saved as draft!')}>
+                      Save Draft
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        window.alert('Published successfully!');
+                        closePanel('withFooter');
+                      }}
+                    >
+                      Publish
+                    </Button>
+                  </div>
+                </div>
+              }
+            >
+              <div>
+                <p className='mb-4'>
+                  This panel demonstrates how to use the footer prop to create a consistent action bar at the bottom of
+                  your panel content.
+                </p>
+                <div className='space-y-4 mb-4'>
+                  <div>
+                    <Label htmlFor='article-title'>Article Title</Label>
+                    <Input id='article-title' placeholder='Enter article title...' />
+                  </div>
+                  <div>
+                    <Label htmlFor='article-content'>Content</Label>
+                    <Textarea id='article-content' placeholder='Write your article content here...' rows={8} />
+                  </div>
+                  <div>
+                    <div className='flex items-center gap-2'>
+                      <Checkbox id='featured-article' />
+                      <Label htmlFor='featured-article'>Mark as featured article</Label>
+                    </div>
+                  </div>
+                </div>
+                <div className='bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded p-3'>
+                  <p className='text-sm text-blue-800 dark:text-blue-200'>
+                    <strong>Note:</strong> The footer remains visible at the bottom even when scrolling through long
+                    content. This ensures important actions are always accessible.
+                  </p>
+                </div>
               </div>
             </Panel>
 
