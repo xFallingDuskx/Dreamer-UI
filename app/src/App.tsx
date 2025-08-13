@@ -10,6 +10,7 @@ import {
   Modal,
   RadioGroup,
   RadioGroupItem,
+  Separator,
   Textarea,
   Toggle,
   Tooltip,
@@ -160,6 +161,7 @@ function AppContent() {
           <option value='actionmodal-section'>Action Modal</option>
           <option value='toast-section'>Toast</option>
           <option value='tooltip-section'>Tooltip</option>
+          <option value='separator-section'>Separator</option>
         </select>
 
         <div className='mt-12 max-w-2xl mx-auto px-10 space-y-20'>
@@ -999,6 +1001,79 @@ function AppContent() {
                   </div>
                 </Tooltip>
               </div>
+            </div>
+          </div>
+
+          <div id='separator-section'>
+            <h3 className='mb-2'>Separator</h3>
+
+            <h4 className='mb-2 text-lg'>Basic Separators</h4>
+            <div className='space-y-6'>
+              <div>
+                <p className='text-sm text-gray-400 mb-2'>Horizontal separator</p>
+                <div className='bg-slate-800 p-4 rounded'>
+                  <p>Content above</p>
+                  <Separator orientation='horizontal' className='my-4' />
+                  <p>Content below</p>
+                </div>
+              </div>
+
+              <div>
+                <p className='text-sm text-gray-400 mb-2'>Vertical separator</p>
+                <div className='bg-slate-800 p-4 rounded flex items-center justify-center gap-4'>
+                  <p>Left content</p>
+                  <Separator orientation='vertical' className='h-8' />
+                  <p>Right content</p>
+                </div>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Thickness Variants</h4>
+            <div className='space-y-4'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='mb-2'>Thin separator (default)</p>
+                <Separator thickness='thin' />
+                <p className='mt-2'>Content below</p>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='mb-2'>Medium separator</p>
+                <Separator thickness='medium' />
+                <p className='mt-2'>Content below</p>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='mb-2'>Thick separator</p>
+                <Separator thickness='thick' />
+                <p className='mt-2'>Content below</p>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='mb-2'>Extra-thick separator</p>
+                <Separator thickness='extra-thick' />
+                <p className='mt-2'>Content below</p>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Navigation Menu Example</h4>
+            <div className='bg-slate-800 p-4 rounded'>
+              <nav className='flex items-center gap-4'>
+                <a href='#' className='text-blue-400 hover:text-blue-300'>
+                  Home
+                </a>
+                <Separator orientation='vertical' className='h-4' decorative />
+                <a href='#' className='text-blue-400 hover:text-blue-300'>
+                  About
+                </a>
+                <Separator orientation='vertical' className='h-4' decorative />
+                <a href='#' className='text-blue-400 hover:text-blue-300'>
+                  Services
+                </a>
+                <Separator orientation='vertical' className='h-4' decorative />
+                <a href='#' className='text-blue-400 hover:text-blue-300'>
+                  Contact
+                </a>
+              </nav>
             </div>
           </div>
         </div>
