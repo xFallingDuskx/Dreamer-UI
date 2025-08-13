@@ -8,6 +8,7 @@ import {
   Input,
   Label,
   Modal,
+  Panel,
   RadioGroup,
   RadioGroupItem,
   Separator,
@@ -47,6 +48,14 @@ function AppContent() {
     destructiveConfirm: false,
     customText: false,
   });
+  const [panelsOpen, setPanelsOpen] = useState<Record<string, boolean>>({
+    basic: false,
+    withTitle: false,
+    withForm: false,
+    large: false,
+    small: false,
+    withFooter: false,
+  });
 
   const handleRadioGroupChange = (value: string, index: number) => {
     const newSelections = { ...radioGroupSelections };
@@ -68,6 +77,14 @@ function AppContent() {
 
   const closeActionModal = (modalId: string) => {
     setActionModalsOpen((prev) => ({ ...prev, [modalId]: false }));
+  };
+
+  const openPanel = (panelId: string) => {
+    setPanelsOpen((prev) => ({ ...prev, [panelId]: true }));
+  };
+
+  const closePanel = (panelId: string) => {
+    setPanelsOpen((prev) => ({ ...prev, [panelId]: false }));
   };
 
   // Provider-based action modal handlers
@@ -158,6 +175,7 @@ function AppContent() {
           <option value='accordion-section'>Accordion</option>
           <option value='clickable-section'>Clickable</option>
           <option value='modal-section'>Modal</option>
+          <option value='panel-section'>Panel</option>
           <option value='actionmodal-section'>Action Modal</option>
           <option value='toast-section'>Toast</option>
           <option value='tooltip-section'>Tooltip</option>
@@ -775,6 +793,226 @@ function AppContent() {
               }}
               className='bg-white dark:bg-gray-800 rounded-lg'
             />
+          </div>
+
+          <div id='panel-section'>
+            <h3 className='mb-2'>Panel</h3>
+            <div className='grid grid-cols-3 gap-4'>
+              <Button onClick={() => openPanel('basic')}>Open Basic Panel</Button>
+              <Button onClick={() => openPanel('withTitle')}>Panel with Title</Button>
+              <Button onClick={() => openPanel('withForm')}>Panel with Form</Button>
+              <Button onClick={() => openPanel('withFooter')}>Panel with Footer</Button>
+              <Button onClick={() => openPanel('large')}>Large Panel</Button>
+              <Button onClick={() => openPanel('small')}>Small Panel</Button>
+            </div>
+
+            {/* Basic Panel */}
+            <Panel isOpen={panelsOpen.basic} onClose={() => closePanel('basic')}>
+              <div>
+                <p className='mb-4'>
+                  This is a basic panel that slides in from the right side. It provides a clean overlay interface for
+                  additional content without disrupting the main page flow.
+                </p>
+                <p className='mb-4'>
+                  You can press the X button, click outside the panel, or press the Escape key to close it.
+                </p>
+                <div className='flex gap-2'>
+                  <Button onClick={() => closePanel('basic')}>Close Panel</Button>
+                  <Button variant='secondary'>Another Action</Button>
+                </div>
+              </div>
+            </Panel>
+
+            {/* Panel with Title */}
+            <Panel
+              isOpen={panelsOpen.withTitle}
+              onClose={() => closePanel('withTitle')}
+              title='Panel with Title'
+              footer={
+                <div className='flex justify-end'>
+                  <Button onClick={() => closePanel('withTitle')}>Got it!</Button>
+                </div>
+              }
+            >
+              <div>
+                <p className='mb-4'>
+                  This panel includes a header with a title and close button. The title is automatically styled and
+                  provides better context for the panel content.
+                </p>
+                <div className='bg-slate-100 dark:bg-slate-800 rounded-lg p-4 mb-4'>
+                  <h5 className='font-medium mb-2'>Features:</h5>
+                  <ul className='space-y-1 text-sm'>
+                    <li>• Slide-in animation from the right</li>
+                    <li>• Accessible keyboard navigation</li>
+                    <li>• Click-outside-to-close functionality</li>
+                    <li>• Focus management</li>
+                  </ul>
+                </div>
+                <p className='text-sm text-gray-500'>
+                  Notice how the action button is now in the footer, creating a cleaner separation between content and
+                  actions.
+                </p>
+              </div>
+            </Panel>
+
+            {/* Panel with Form */}
+            <Panel
+              isOpen={panelsOpen.withForm}
+              onClose={() => closePanel('withForm')}
+              title={
+                <div className='flex items-center gap-2'>
+                  <span className='text-2xl'>📋</span>
+                  <span>Quick Survey</span>
+                </div>
+              }
+              footer={
+                <div className='flex gap-2 justify-end'>
+                  <Button type='button' variant='secondary' onClick={() => closePanel('withForm')}>
+                    Cancel
+                  </Button>
+                  <Button type='submit' form='panel-survey-form'>
+                    Submit Survey
+                  </Button>
+                </div>
+              }
+            >
+              <div>
+                <form
+                  id='panel-survey-form'
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    window.alert('Survey submitted!');
+                    closePanel('withForm');
+                  }}
+                  className='space-y-4'
+                >
+                  <div>
+                    <Label htmlFor='panel-name'>Your Name</Label>
+                    <Input id='panel-name' placeholder='Enter your name' required />
+                  </div>
+                  <div>
+                    <Label htmlFor='panel-rating'>How was your experience?</Label>
+                    <select
+                      id='panel-rating'
+                      className='w-full px-3 py-2 border border-border rounded-md bg-inherit focus:outline-none focus:ring-2 focus:ring-accent'
+                      required
+                    >
+                      <option value=''>Select rating...</option>
+                      <option value='excellent'>Excellent</option>
+                      <option value='good'>Good</option>
+                      <option value='fair'>Fair</option>
+                      <option value='poor'>Poor</option>
+                    </select>
+                  </div>
+                  <div>
+                    <Label htmlFor='panel-feedback'>Additional Feedback</Label>
+                    <Textarea id='panel-feedback' placeholder='Tell us more...' rows={3} />
+                  </div>
+                </form>
+              </div>
+            </Panel>
+
+            {/* Panel with Footer */}
+            <Panel
+              isOpen={panelsOpen.withFooter}
+              onClose={() => closePanel('withFooter')}
+              title='Panel with Custom Footer'
+              footer={
+                <div className='flex items-center justify-between'>
+                  <div className='text-sm text-gray-500'>
+                    <span className='font-medium'>Pro Tip:</span> Footers are great for actions and status information
+                  </div>
+                  <div className='flex gap-2'>
+                    <Button variant='outline' onClick={() => window.alert('Saved as draft!')}>
+                      Save Draft
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        window.alert('Published successfully!');
+                        closePanel('withFooter');
+                      }}
+                    >
+                      Publish
+                    </Button>
+                  </div>
+                </div>
+              }
+            >
+              <div>
+                <p className='mb-4'>
+                  This panel demonstrates how to use the footer prop to create a consistent action bar at the bottom of
+                  your panel content.
+                </p>
+                <div className='space-y-4 mb-4'>
+                  <div>
+                    <Label htmlFor='article-title'>Article Title</Label>
+                    <Input id='article-title' placeholder='Enter article title...' />
+                  </div>
+                  <div>
+                    <Label htmlFor='article-content'>Content</Label>
+                    <Textarea id='article-content' placeholder='Write your article content here...' rows={8} />
+                  </div>
+                  <div>
+                    <div className='flex items-center gap-2'>
+                      <Checkbox id='featured-article' />
+                      <Label htmlFor='featured-article'>Mark as featured article</Label>
+                    </div>
+                  </div>
+                </div>
+                <div className='bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded p-3'>
+                  <p className='text-sm text-blue-800 dark:text-blue-200'>
+                    <strong>Note:</strong> The footer remains visible at the bottom even when scrolling through long
+                    content. This ensures important actions are always accessible.
+                  </p>
+                </div>
+              </div>
+            </Panel>
+
+            {/* Large Panel */}
+            <Panel isOpen={panelsOpen.large} onClose={() => closePanel('large')} title='Large Panel' size='xl'>
+              <div>
+                <p className='mb-4'>
+                  This is a large panel that takes up more horizontal space. It's perfect for more complex content or
+                  when you need more room to display information.
+                </p>
+                <div className='grid grid-cols-2 gap-4 mb-4'>
+                  <div className='bg-violet-50 dark:bg-violet-900/20 p-4 rounded-lg'>
+                    <h5 className='font-medium mb-2'>Column 1</h5>
+                    <p className='text-sm'>Some content for the first column with more detailed information.</p>
+                  </div>
+                  <div className='bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg'>
+                    <h5 className='font-medium mb-2'>Column 2</h5>
+                    <p className='text-sm'>Some content for the second column with additional details.</p>
+                  </div>
+                </div>
+                <div className='flex gap-2'>
+                  <Button onClick={() => closePanel('large')}>Close</Button>
+                  <Button variant='outline'>Save Draft</Button>
+                </div>
+              </div>
+            </Panel>
+
+            {/* Small Panel */}
+            <Panel isOpen={panelsOpen.small} onClose={() => closePanel('small')} title='Compact Panel' size='sm'>
+              <div>
+                <p className='mb-4 text-sm'>
+                  This is a smaller, more compact panel perfect for quick actions or simple information display.
+                </p>
+                <div className='space-y-3'>
+                  <Button size='sm' onClick={() => window.alert('Quick action 1!')}>
+                    Quick Action 1
+                  </Button>
+                  <Button size='sm' variant='secondary' onClick={() => window.alert('Quick action 2!')}>
+                    Quick Action 2
+                  </Button>
+                </div>
+                <div className='pt-4'>
+                  <Button size='sm' onClick={() => closePanel('small')}>
+                    Close
+                  </Button>
+                </div>
+              </div>
+            </Panel>
           </div>
 
           <div id='toast-section'>
