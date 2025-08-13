@@ -16,6 +16,7 @@ import {
   Toggle,
   Tooltip,
 } from '@moondreamsdev/dreamer-ui/components';
+import Skeleton from './skeleton';
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
@@ -166,6 +167,7 @@ function AppContent() {
         <h2>Select Component</h2>
         <select className='block mx-auto my-2 focus:outline-none' onChange={handleSelectOnChange}>
           <option value='buttons-section'>Button</option>
+          <option value='skeleton-section'>Skeleton</option>
           <option value='toggle-section'>Toggle</option>
           <option value='inputs-section'>Input</option>
           <option value='textarea-section'>Textarea</option>
@@ -208,6 +210,89 @@ function AppContent() {
               <Button linkTo='https://google.com' disabled={true}>
                 Link to Google
               </Button>
+            </div>
+          </div>
+
+          <div id='skeleton-section'>
+            <h3 className='mb-2'>Skeleton</h3>
+            
+            <h4 className='mb-2 text-lg'>Basic Shapes</h4>
+            <div className='grid grid-cols-3 gap-6 mb-6'>
+              <div className='space-y-2'>
+                <p className='text-sm text-gray-400'>Rectangle (default)</p>
+                <Skeleton shape='rectangle' />
+              </div>
+              <div className='space-y-2'>
+                <p className='text-sm text-gray-400'>Circle</p>
+                <div className='flex justify-center'>
+                  <Skeleton shape='circle' />
+                </div>
+              </div>
+              <div className='space-y-2'>
+                <p className='text-sm text-gray-400'>Text</p>
+                <Skeleton shape='text' />
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg'>Multiple Lines</h4>
+            <div className='grid grid-cols-2 gap-6 mb-6'>
+              <div className='space-y-2'>
+                <p className='text-sm text-gray-400'>3 lines with small spacing</p>
+                <Skeleton shape='text' lines={3} lineSpacing='sm' />
+              </div>
+              <div className='space-y-2'>
+                <p className='text-sm text-gray-400'>4 lines with large spacing</p>
+                <Skeleton shape='text' lines={4} lineSpacing='lg' />
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg'>Line Spacing Options</h4>
+            <div className='grid grid-cols-5 gap-4 mb-6'>
+              <div className='space-y-2'>
+                <p className='text-sm text-gray-400'>XS spacing</p>
+                <Skeleton shape='text' lines={3} lineSpacing='xs' />
+              </div>
+              <div className='space-y-2'>
+                <p className='text-sm text-gray-400'>SM spacing</p>
+                <Skeleton shape='text' lines={3} lineSpacing='sm' />
+              </div>
+              <div className='space-y-2'>
+                <p className='text-sm text-gray-400'>MD spacing</p>
+                <Skeleton shape='text' lines={3} lineSpacing='md' />
+              </div>
+              <div className='space-y-2'>
+                <p className='text-sm text-gray-400'>LG spacing</p>
+                <Skeleton shape='text' lines={3} lineSpacing='lg' />
+              </div>
+              <div className='space-y-2'>
+                <p className='text-sm text-gray-400'>XL spacing</p>
+                <Skeleton shape='text' lines={3} lineSpacing='xl' />
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg'>Animation Control</h4>
+            <div className='grid grid-cols-2 gap-6 mb-6'>
+              <div className='space-y-2'>
+                <p className='text-sm text-gray-400'>With animation (default)</p>
+                <Skeleton shape='rectangle' animate={true} />
+              </div>
+              <div className='space-y-2'>
+                <p className='text-sm text-gray-400'>Without animation</p>
+                <Skeleton shape='rectangle' animate={false} />
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg'>Card Layout Example</h4>
+            <div className='bg-slate-800 p-6 rounded-lg max-w-md'>
+              <div className='flex items-center gap-4 mb-4'>
+                <Skeleton shape='circle' />
+                <div className='flex-1'>
+                  <Skeleton shape='text' className='w-24 mb-2' />
+                  <Skeleton shape='text' className='w-16' />
+                </div>
+              </div>
+              <Skeleton shape='rectangle' className='mb-3 h-32' />
+              <Skeleton shape='text' lines={3} lineSpacing='sm' />
             </div>
           </div>
 
