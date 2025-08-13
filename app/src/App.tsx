@@ -225,7 +225,7 @@ function AppContent() {
               <div className='space-y-2'>
                 <p className='text-sm text-gray-400'>Circle</p>
                 <div className='flex justify-center'>
-                  <Skeleton shape='circle' />
+                  <Skeleton shape='circle' className='!size-20' />
                 </div>
               </div>
               <div className='space-y-2'>
@@ -285,7 +285,7 @@ function AppContent() {
             <h4 className='mb-2 text-lg'>Card Layout Example</h4>
             <div className='bg-slate-800 p-6 rounded-lg max-w-md'>
               <div className='flex items-center gap-4 mb-4'>
-                <Skeleton shape='circle' />
+                <Skeleton shape='circle' className='!size-16' />
                 <div className='flex-1'>
                   <Skeleton shape='text' className='w-24 mb-2' />
                   <Skeleton shape='text' className='w-16' />
