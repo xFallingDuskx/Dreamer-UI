@@ -1,6 +1,6 @@
 import React, { Ref } from 'react';
 import { join } from '../../utils';
-import { ColorVariant, colorVariants, sizeVariants, Thickness, thicknessVariants } from './variants';
+import { sizeVariants, Thickness, thicknessVariants } from './variants';
 
 export type Orientation = 'horizontal' | 'vertical';
 
@@ -14,22 +14,19 @@ export interface SeparatorProps extends Omit<React.HTMLAttributes<HTMLDivElement
    */
   decorative?: boolean;
   thickness?: Thickness;
-  variant?: ColorVariant;
 }
 
 export default function Separator({
   orientation = 'horizontal',
   decorative = false,
   thickness = 'thin',
-  variant = 'default',
   className,
   ...props
 }: SeparatorProps) {
   const separatorClasses = join(
-    'shrink-0',
+    'shrink-0 bg-border',
     sizeVariants[orientation],
     thicknessVariants[thickness][orientation],
-    colorVariants[variant],
     className
   );
 
@@ -42,7 +39,6 @@ export default function Separator({
       aria-hidden={decorative}
       data-orientation={orientation}
       data-thickness={thickness}
-      data-variant={variant}
     />
   );
 }

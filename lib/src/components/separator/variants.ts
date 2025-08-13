@@ -21,14 +21,6 @@ export const thicknessVariants: Record<Thickness, Record<Orientation, string>> =
 
 export type Thickness = 'thin' | 'medium' | 'thick' | 'extra-thick';
 
-export const colorVariants = {
-  default: 'bg-border',
-  muted: 'bg-muted',
-  accent: 'bg-accent',
-} as const;
-
-export type ColorVariant = keyof typeof colorVariants;
-
 export const sizeVariants: Record<Orientation, string> = {
   horizontal: 'w-full',
   vertical: 'min-h-4 h-full',
@@ -36,5 +28,4 @@ export const sizeVariants: Record<Orientation, string> = {
 
 export const defaultVariants = {
   thickness: 'thin',
-  variant: 'default',
 };

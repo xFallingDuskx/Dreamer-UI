@@ -1020,7 +1020,7 @@ function AppContent() {
 
               <div>
                 <p className='text-sm text-gray-400 mb-2'>Vertical separator</p>
-                <div className='bg-slate-800 p-4 rounded flex items-center gap-4'>
+                <div className='bg-slate-800 p-4 rounded flex items-center justify-center gap-4'>
                   <p>Left content</p>
                   <Separator orientation='vertical' className='h-8' />
                   <p>Right content</p>
@@ -1047,41 +1047,11 @@ function AppContent() {
                 <Separator thickness='thick' />
                 <p className='mt-2'>Content below</p>
               </div>
-            </div>
 
-            <h4 className='mb-2 text-lg mt-6'>Color Variants</h4>
-            <div className='space-y-4'>
               <div className='bg-slate-800 p-4 rounded'>
-                <p className='mb-2'>Default separator</p>
-                <Separator variant='default' />
+                <p className='mb-2'>Extra-thick separator</p>
+                <Separator thickness='extra-thick' />
                 <p className='mt-2'>Content below</p>
-              </div>
-
-              <div className='bg-slate-800 p-4 rounded'>
-                <p className='mb-2'>Muted separator</p>
-                <Separator variant='muted' />
-                <p className='mt-2'>Content below</p>
-              </div>
-
-              <div className='bg-slate-800 p-4 rounded'>
-                <p className='mb-2'>Accent separator</p>
-                <Separator variant='accent' />
-                <p className='mt-2'>Content below</p>
-              </div>
-            </div>
-
-            <h4 className='mb-2 text-lg mt-6'>Accessibility Examples</h4>
-            <div className='space-y-4'>
-              <div className='bg-slate-800 p-4 rounded'>
-                <p className='mb-2'>Semantic separator (default - announced by screen readers)</p>
-                <Separator />
-                <p className='mt-2'>This separator has semantic meaning</p>
-              </div>
-
-              <div className='bg-slate-800 p-4 rounded'>
-                <p className='mb-2'>Decorative separator (hidden from screen readers)</p>
-                <Separator decorative />
-                <p className='mt-2'>This separator is purely visual</p>
               </div>
             </div>
 
