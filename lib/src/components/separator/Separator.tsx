@@ -1,5 +1,5 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { Ref } from 'react';
+import { join } from '../../utils';
 import { ColorVariant, colorVariants, sizeVariants, Thickness, thicknessVariants } from './variants';
 
 export type Orientation = 'horizontal' | 'vertical';

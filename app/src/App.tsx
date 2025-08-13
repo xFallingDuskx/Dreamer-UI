@@ -10,6 +10,7 @@ import {
   Modal,
   RadioGroup,
   RadioGroupItem,
+  Separator,
   Textarea,
   Toggle,
   Tooltip,
@@ -17,7 +18,6 @@ import {
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
-import { Separator } from './separator';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
@@ -1006,7 +1006,7 @@ function AppContent() {
 
           <div id='separator-section'>
             <h3 className='mb-2'>Separator</h3>
-            
+
             <h4 className='mb-2 text-lg'>Basic Separators</h4>
             <div className='space-y-6'>
               <div>
@@ -1088,13 +1088,21 @@ function AppContent() {
             <h4 className='mb-2 text-lg mt-6'>Navigation Menu Example</h4>
             <div className='bg-slate-800 p-4 rounded'>
               <nav className='flex items-center gap-4'>
-                <a href='#' className='text-blue-400 hover:text-blue-300'>Home</a>
+                <a href='#' className='text-blue-400 hover:text-blue-300'>
+                  Home
+                </a>
                 <Separator orientation='vertical' className='h-4' decorative />
-                <a href='#' className='text-blue-400 hover:text-blue-300'>About</a>
+                <a href='#' className='text-blue-400 hover:text-blue-300'>
+                  About
+                </a>
                 <Separator orientation='vertical' className='h-4' decorative />
-                <a href='#' className='text-blue-400 hover:text-blue-300'>Services</a>
+                <a href='#' className='text-blue-400 hover:text-blue-300'>
+                  Services
+                </a>
                 <Separator orientation='vertical' className='h-4' decorative />
-                <a href='#' className='text-blue-400 hover:text-blue-300'>Contact</a>
+                <a href='#' className='text-blue-400 hover:text-blue-300'>
+                  Contact
+                </a>
               </nav>
             </div>
           </div>
