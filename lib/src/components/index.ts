@@ -6,6 +6,7 @@ export * from './clickable';
 export * from './input';
 export * from './label';
 export * from './modal';
+export * from './panel';
 export * from './radiogroup';
 export * from './separator';
 export * from './slot';

@@ -1,9 +1,9 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useId } from 'react';
 import { createPortal } from 'react-dom';
+import { X } from '../../symbols';
 import { useAnimationSlideIn, usePanelDocumentChanges, usePanelFocus } from './hooks';
 import { PanelSize, panelVariants } from './variants';
-import X from './X';
 
 export interface PanelProps {
   ref?: React.Ref<HTMLDivElement>;

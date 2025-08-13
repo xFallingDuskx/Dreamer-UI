@@ -8,6 +8,7 @@ import {
   Input,
   Label,
   Modal,
+  Panel,
   RadioGroup,
   RadioGroupItem,
   Separator,
@@ -18,7 +19,6 @@ import {
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
-import { Panel } from './panel';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
