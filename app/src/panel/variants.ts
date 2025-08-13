@@ -6,6 +6,7 @@ export const panelVariants = {
     xl: 'max-w-xl',
     '2xl': 'max-w-2xl',
     full: 'w-full',
+    screen: 'w-screen',
   },
 } as const;
 

@@ -941,7 +941,7 @@ function AppContent() {
             </Panel>
 
             {/* Full Screen Panel */}
-            <Panel isOpen={panelsOpen.full} onClose={() => closePanel('full')} title='Full Screen Panel' size='full'>
+            <Panel isOpen={panelsOpen.full} onClose={() => closePanel('full')} title='Full Screen Panel' size='screen'>
               <div>
                 <p className='mb-4'>
                   This is a full screen panel that takes up the entire viewport. It's ideal for immersive content or

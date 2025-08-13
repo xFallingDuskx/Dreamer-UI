@@ -87,7 +87,6 @@ export default function Panel({
           className='fixed inset-0 z-[100] overflow-hidden'
           data-panel-open={isOpen}
         >
-          {/* Overlay */}
           <div
             className={join(
               'fixed inset-0 bg-black/40 transition-opacity duration-300',
@@ -101,14 +100,14 @@ export default function Panel({
             }}
           />
 
-          {/* Panel */}
           <div className='fixed inset-y-0 right-0 flex max-w-full'>
             <div
               id={panelId}
               ref={ref}
               tabIndex={-1}
               className={join(
-                'relative h-full transform shadow-xl bg-popover transition-transform duration-300 ease-in-out border-l border-border',
+                'relative h-full transform shadow-xl bg-popover transition-transform duration-300 ease-in-out',
+                size !== 'screen' && 'border-l border-border',
                 panelVariants.size[size],
                 show ? 'translate-x-0' : 'translate-x-full',
                 className
@@ -116,7 +115,6 @@ export default function Panel({
               data-panel-size={size}
             >
               <div className='flex h-full flex-col'>
-                {/* Header */}
                 {title && <div className='px-6 pt-6 pb-4'>{renderTitle()}</div>}
 
                 {!hideCloseButton && (
@@ -131,7 +129,6 @@ export default function Panel({
                   </button>
                 )}
 
-                {/* Content */}
                 <div className='flex-1 overflow-y-auto px-6 py-8'>{children}</div>
               </div>
             </div>
