@@ -9,6 +9,7 @@ export * from './modal';
 export * from './panel';
 export * from './radiogroup';
 export * from './separator';
+export * from './skeleton';
 export * from './slot';
 export * from './textarea';
 export * from './toast';

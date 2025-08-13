@@ -11,12 +11,12 @@ import {
   Panel,
   RadioGroup,
   RadioGroupItem,
+  Skeleton,
   Separator,
   Textarea,
   Toggle,
   Tooltip,
 } from '@moondreamsdev/dreamer-ui/components';
-import Skeleton from './skeleton';
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
