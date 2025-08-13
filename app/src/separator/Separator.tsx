@@ -1,6 +1,5 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import React, { Ref, useId } from 'react';
-import { useDetectedOrientation } from './hooks';
+import React, { Ref } from 'react';
 import { ColorVariant, colorVariants, sizeVariants, Thickness, thicknessVariants } from './variants';
 
 export type Orientation = 'horizontal' | 'vertical';
@@ -19,24 +18,17 @@ export interface SeparatorProps extends Omit<React.HTMLAttributes<HTMLDivElement
 }
 
 export default function Separator({
-  orientation,
+  orientation = 'horizontal',
   decorative = false,
   thickness = 'thin',
   variant = 'default',
   className,
-  id,
   ...props
 }: SeparatorProps) {
-  const generatedId = useId();
-  const separatorId = id || generatedId;
-  const detectedOrientation = useDetectedOrientation(orientation, separatorId);
-
-  const finalOrientation = orientation ?? detectedOrientation;
-
   const separatorClasses = join(
     'shrink-0',
-    sizeVariants[finalOrientation],
-    thicknessVariants[thickness][finalOrientation],
+    sizeVariants[orientation],
+    thicknessVariants[thickness][orientation],
     colorVariants[variant],
     className
   );
@@ -44,12 +36,11 @@ export default function Separator({
   return (
     <div
       {...props}
-      id={separatorId}
       className={separatorClasses}
       role={decorative ? 'presentation' : 'separator'}
-      aria-orientation={decorative ? undefined : finalOrientation}
+      aria-orientation={decorative ? undefined : orientation}
       aria-hidden={decorative}
-      data-orientation={finalOrientation}
+      data-orientation={orientation}
       data-thickness={thickness}
       data-variant={variant}
     />

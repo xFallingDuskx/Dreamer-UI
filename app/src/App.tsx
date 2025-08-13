@@ -1010,7 +1010,7 @@ function AppContent() {
             <h4 className='mb-2 text-lg'>Basic Separators</h4>
             <div className='space-y-6'>
               <div>
-                <p className='text-sm text-gray-400 mb-2'>Horizontal separator (explicit)</p>
+                <p className='text-sm text-gray-400 mb-2'>Horizontal separator</p>
                 <div className='bg-slate-800 p-4 rounded'>
                   <p>Content above</p>
                   <Separator orientation='horizontal' className='my-4' />
@@ -1019,29 +1019,11 @@ function AppContent() {
               </div>
 
               <div>
-                <p className='text-sm text-gray-400 mb-2'>Vertical separator (explicit)</p>
+                <p className='text-sm text-gray-400 mb-2'>Vertical separator</p>
                 <div className='bg-slate-800 p-4 rounded flex items-center gap-4'>
                   <p>Left content</p>
                   <Separator orientation='vertical' className='h-8' />
                   <p>Right content</p>
-                </div>
-              </div>
-
-              <div>
-                <p className='text-sm text-gray-400 mb-2'>Auto-detected orientation (wide container)</p>
-                <div className='bg-slate-800 p-4 rounded w-full h-16 flex items-center justify-center'>
-                  <span>Wide container</span>
-                  <Separator className='mx-4 flex-shrink-0' />
-                  <span>Auto-detects horizontal</span>
-                </div>
-              </div>
-
-              <div>
-                <p className='text-sm text-gray-400 mb-2'>Auto-detected orientation (tall container)</p>
-                <div className='bg-slate-800 p-4 rounded w-32 h-32 flex flex-col items-center justify-center mx-auto'>
-                  <span className='text-center'>Tall container</span>
-                  <Separator className='my-2 w-16' />
-                  <span className='text-center'>Auto-detects horizontal</span>
                 </div>
               </div>
             </div>
@@ -1100,31 +1082,6 @@ function AppContent() {
                 <p className='mb-2'>Decorative separator (hidden from screen readers)</p>
                 <Separator decorative />
                 <p className='mt-2'>This separator is purely visual</p>
-              </div>
-            </div>
-
-            <h4 className='mb-2 text-lg mt-6'>Flex Direction Detection</h4>
-            <div className='space-y-4'>
-              <div className='bg-slate-800 p-4 rounded'>
-                <p className='mb-4'>Flexbox row (vertical separator auto-detected)</p>
-                <div className='flex items-center gap-4'>
-                  <Button size='sm'>Item 1</Button>
-                  <Separator />
-                  <Button size='sm'>Item 2</Button>
-                  <Separator />
-                  <Button size='sm'>Item 3</Button>
-                </div>
-              </div>
-
-              <div className='bg-slate-800 p-4 rounded'>
-                <p className='mb-4'>Flexbox column (horizontal separator auto-detected)</p>
-                <div className='flex flex-col items-center gap-2 max-w-xs mx-auto'>
-                  <Button size='sm'>Item 1</Button>
-                  <Separator />
-                  <Button size='sm'>Item 2</Button>
-                  <Separator />
-                  <Button size='sm'>Item 3</Button>
-                </div>
               </div>
             </div>
 
