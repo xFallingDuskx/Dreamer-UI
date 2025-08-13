@@ -66,11 +66,11 @@ export default function Panel({
     if (!title) return null;
 
     if (React.isValidElement(title)) {
-      return <div className='mb-4'>{title}</div>;
+      return <div>{title}</div>;
     }
 
     return (
-      <h2 className='mb-4 text-xl font-semibold' id={titleId}>
+      <h2 className='text-2xl font-semibold' id={titleId}>
         {title}
       </h2>
     );
@@ -90,7 +90,7 @@ export default function Panel({
           {/* Overlay */}
           <div
             className={join(
-              'fixed inset-0 bg-black/20 transition-opacity duration-300',
+              'fixed inset-0 bg-black/40 transition-opacity duration-300',
               show ? 'opacity-100' : 'opacity-0',
               overlayClassName
             )}
@@ -108,7 +108,7 @@ export default function Panel({
               ref={ref}
               tabIndex={-1}
               className={join(
-                'relative h-full transform shadow-xl bg-primary transition-transform duration-300 ease-in-out',
+                'relative h-full transform shadow-xl bg-popover transition-transform duration-300 ease-in-out border-l border-border',
                 panelVariants.size[size],
                 show ? 'translate-x-0' : 'translate-x-full',
                 className
@@ -117,7 +117,7 @@ export default function Panel({
             >
               <div className='flex h-full flex-col'>
                 {/* Header */}
-                {title && <div className='px-6 py-4'>{renderTitle()}</div>}
+                {title && <div className='px-6 pt-6 pb-4'>{renderTitle()}</div>}
 
                 {!hideCloseButton && (
                   <button
@@ -125,14 +125,14 @@ export default function Panel({
                     onClick={onClose}
                     data-panel-close-button='true'
                     aria-label='Close panel'
-                    className='rounded-md p-0.5 top-2.5 right-2.5 absolute opacity-80 hover:opacity-100 transition-opacity focus:outline-none focus:ring-2 focus:ring-gray-500 leading-0'
+                    className='rounded-md p-0.5 top-3 right-3 absolute opacity-80 hover:opacity-100 transition-opacity focus:outline-none focus:ring-2 focus:ring-gray-500 leading-0'
                   >
                     <X size={18} />
                   </button>
                 )}
 
                 {/* Content */}
-                <div className='flex-1 overflow-y-auto px-6 py-4'>{children}</div>
+                <div className='flex-1 overflow-y-auto px-6 py-8'>{children}</div>
               </div>
             </div>
           </div>

@@ -808,7 +808,6 @@ function AppContent() {
             {/* Basic Panel */}
             <Panel isOpen={panelsOpen.basic} onClose={() => closePanel('basic')}>
               <div>
-                <h4 className='text-lg font-semibold mb-3'>Basic Panel Content</h4>
                 <p className='mb-4'>
                   This is a basic panel that slides in from the right side. It provides a clean overlay interface for
                   additional content without disrupting the main page flow.
