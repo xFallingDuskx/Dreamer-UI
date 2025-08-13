@@ -5,6 +5,7 @@ applyTo: 'app/**/*'
 You should create a React component that meets the following requirements:
 
 1. **Location:** Only create the component files in the `app/` folder, using a component-based architecture (i.e. `app/src/<component-name>/<ComponentName>.ts` and `app/src/<component-name>/index.ts`)
+2. **Component Creation:** Use `export default function ComponentName` (DO NOT USE `const ComponentName: React.FC<Props> = () => {}` or `React.FC`)
 2. **Styling:** Uses Tailwind CSS V4 and pay attention to themes colors in `dreamer-ui.css`
 3. **Accessibility:** Follows best practices for accessibility, including keyboard navigation and screen reader support
 4. **Props:**
