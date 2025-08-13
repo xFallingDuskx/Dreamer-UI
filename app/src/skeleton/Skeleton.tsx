@@ -19,7 +19,7 @@ export default function Skeleton({
   animate = true,
   ...props
 }: SkeletonProps) {
-  const baseClasses = join('bg-muted', animate && 'animate-pulse', skeletonVariants.shape[shape], className);
+  const baseClasses = join('bg-muted/70', animate && 'animate-pulse', skeletonVariants.shape[shape], className);
 
   // If lines is greater than 1, render multiple skeleton lines
   if (lines > 1) {
