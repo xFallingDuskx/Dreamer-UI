@@ -1013,20 +1013,6 @@ function AppContent() {
                 </div>
               </div>
             </Panel>
-
-            {/* Full Screen Panel */}
-            <Panel isOpen={panelsOpen.full} onClose={() => closePanel('full')} title='Full Screen Panel' size='screen'>
-              <div>
-                <p className='mb-4'>
-                  This is a full screen panel that takes up the entire viewport. It's ideal for immersive content or
-                  when you need to focus the user's attention.
-                </p>
-                <div className='flex gap-2'>
-                  <Button onClick={() => closePanel('full')}>Close</Button>
-                  <Button variant='outline'>Save Draft</Button>
-                </div>
-              </div>
-            </Panel>
           </div>
 
           <div id='toast-section'>
