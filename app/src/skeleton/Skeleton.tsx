@@ -9,6 +9,8 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement>, Ske
   lines?: number;
   /** Whether the skeleton should animate */
   animate?: boolean;
+  /** Ref to be passed to the skeleton element */
+  ref?: React.Ref<HTMLDivElement>;
 }
 
 export default function Skeleton({
@@ -17,6 +19,7 @@ export default function Skeleton({
   className,
   lines = 1,
   animate = true,
+  ref,
   ...props
 }: SkeletonProps) {
   const baseClasses = join('bg-muted/70', animate && 'animate-pulse', skeletonVariants.shape[shape], className);
@@ -25,9 +28,14 @@ export default function Skeleton({
   if (lines > 1) {
     return (
       <div
+        ref={ref}
         className={skeletonVariants.lineSpacing[lineSpacing]}
+        role='presentation'
+        aria-hidden='true'
         data-testid='skeleton-container'
         data-lines={lines}
+        data-shape={shape}
+        data-animate={animate}
         {...props}
       >
         {Array.from({ length: lines }, (_, index) => (
@@ -38,6 +46,8 @@ export default function Skeleton({
               // Make last line shorter for a more natural text appearance
               index === lines - 1 && 'w-3/4'
             )}
+            role='presentation'
+            aria-hidden='true'
             data-testid='skeleton-line'
             data-line-index={index}
           />
@@ -46,5 +56,16 @@ export default function Skeleton({
     );
   }
 
-  return <div className={baseClasses} data-testid='skeleton' data-shape={shape} data-animate={animate} {...props} />;
+  return (
+    <div
+      ref={ref}
+      className={baseClasses}
+      role='presentation'
+      aria-hidden='true'
+      data-testid='skeleton'
+      data-shape={shape}
+      data-animate={animate}
+      {...props}
+    />
+  );
 }
