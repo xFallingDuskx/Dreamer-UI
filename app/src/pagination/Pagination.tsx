@@ -134,7 +134,6 @@ export default function Pagination({
     const baseClasses = join(
       'flex items-center justify-center min-w-fit',
       'disabled:opacity-50 disabled:cursor-not-allowed',
-      'transition-colors duration-200',
       paginationSizes[size],
       'rounded-md'
     );
