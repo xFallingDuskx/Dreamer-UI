@@ -10,6 +10,7 @@ export * from './panel';
 export * from './radiogroup';
 export * from './separator';
 export * from './skeleton';
+export * from './slider';
 export * from './slot';
 export * from './textarea';
 export * from './toast';
