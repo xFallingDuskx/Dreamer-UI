@@ -29,7 +29,7 @@ export function TabsTrigger({ value, disabled = false, className, children, onCl
   };
 
   const baseClassName =
-    'inline-flex items-center justify-center whitespace-nowrap px-3 py-2 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
+    'inline-flex items-center justify-center whitespace-nowrap px-3 py-2 text-sm ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
 
   return (
     <button
@@ -42,7 +42,13 @@ export function TabsTrigger({ value, disabled = false, className, children, onCl
       data-state={isActive ? 'active' : 'inactive'}
       data-value={value}
       disabled={disabled}
-      className={join(baseClassName, tabTriggerVariants[variant], triggersClassName, className)}
+      className={join(
+        baseClassName,
+        isActive ? 'font-medium' : 'font-light',
+        tabTriggerVariants[variant],
+        triggersClassName,
+        className
+      )}
       onClick={handleClick}
     >
       {children}
