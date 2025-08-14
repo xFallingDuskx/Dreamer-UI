@@ -8,6 +8,7 @@ import {
   Input,
   Label,
   Modal,
+  Pagination,
   Panel,
   RadioGroup,
   RadioGroupItem,
@@ -18,7 +19,6 @@ import {
   Toggle,
   Tooltip,
 } from '@moondreamsdev/dreamer-ui/components';
-import Pagination from './pagination';
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
