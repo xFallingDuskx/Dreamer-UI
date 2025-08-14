@@ -228,9 +228,9 @@ export default function Slider({
         {/* Thumb */}
         <div
           className={join(
-            'absolute size-5 -top-2 rounded-full bg-primary border shadow-md cursor-grab',
+            'absolute size-5 -top-2 rounded-full bg-primary shadow-md cursor-grab',
             disabled && 'cursor-not-allowed',
-            !disabled && 'cursor-grab focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
+            !disabled && 'cursor-grab focus:outline-none focus:ring-2',
             isDraggingRef.current ? 'cursor-grabbing scale-110' : 'transition-all',
             thumbClassName
           )}
