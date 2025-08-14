@@ -1518,11 +1518,7 @@ function AppContent() {
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
                 <Label className='mb-2 block'>Standard Pagination (5 pages)</Label>
-                <Pagination
-                  page={1}
-                  pageCount={5}
-                  onPageChange={(page) => console.log('Page changed to:', page)}
-                />
+                <Pagination page={1} pageCount={5} onPageChange={(page) => console.log('Page changed to:', page)} />
               </div>
 
               <div className='bg-slate-800 p-4 rounded'>

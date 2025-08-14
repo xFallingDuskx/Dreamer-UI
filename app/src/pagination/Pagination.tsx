@@ -19,6 +19,8 @@ interface PaginationProps extends React.HTMLAttributes<HTMLDivElement> {
   onPageChange: (page: number) => void;
   /** Ref for the pagination container */
   ref?: React.Ref<HTMLDivElement>;
+  /** Additional class names for the button elements */
+  buttonsClassName?: string;
 }
 
 // Navigation symbols - creating inline for now since they don't exist in the symbol library
@@ -84,6 +86,7 @@ export default function Pagination({
   variant = 'link',
   className,
   ref,
+  buttonsClassName,
   ...rest
 }: PaginationProps) {
   const isInfinite = pageCount === Infinity;
@@ -130,7 +133,7 @@ export default function Pagination({
   const getButtonClasses = useCallback(
     (isActive = false) => {
       const baseClasses = join(
-        'flex items-center justify-center',
+        'flex items-center justify-center min-w-fit',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         'transition-colors duration-200',
         paginationSizes[size],
@@ -141,9 +144,9 @@ export default function Pagination({
         ? paginationVariants[variant].activeClassName
         : paginationVariants[variant].inactiveClassName;
 
-      return join(baseClasses, variantClasses);
+      return join(baseClasses, variantClasses, buttonsClassName);
     },
-    [variant, size]
+    [variant, size, buttonsClassName]
   );
 
   return (
