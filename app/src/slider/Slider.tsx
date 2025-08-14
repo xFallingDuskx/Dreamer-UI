@@ -70,20 +70,23 @@ export default function Slider({
     [min, max, step, isControlled, onValueChange]
   );
 
-  const getValueFromPointerEvent = useCallback((event: PointerEvent | React.PointerEvent, isDragging = false) => {
-    const rect = trackRef.current?.getBoundingClientRect();
-    if (!rect) return currentValue;
+  const getValueFromPointerEvent = useCallback(
+    (event: PointerEvent | React.PointerEvent, isDragging = false) => {
+      const rect = trackRef.current?.getBoundingClientRect();
+      if (!rect) return currentValue;
 
-    let clientX = event.clientX;
-    
-    // If we're dragging, account for the offset from where the user initially clicked on the thumb
-    if (isDragging) {
-      clientX = clientX - dragOffsetRef.current;
-    }
+      let clientX = event.clientX;
 
-    const percentage = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-    return min + (max - min) * percentage;
-  }, [min, max, currentValue]);
+      // If we're dragging, account for the offset from where the user initially clicked on the thumb
+      if (isDragging) {
+        clientX = clientX - dragOffsetRef.current;
+      }
+
+      const percentage = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      return min + (max - min) * percentage;
+    },
+    [min, max, currentValue]
+  );
 
   const handleTrackPointerDown = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
@@ -106,16 +109,16 @@ export default function Slider({
       event.stopPropagation();
 
       isDraggingRef.current = true;
-      
+
       // Calculate the offset from the click position to the center of the thumb
       const trackRect = trackRef.current?.getBoundingClientRect();
       const thumbRect = event.currentTarget.getBoundingClientRect();
-      
+
       if (trackRect && thumbRect) {
         const thumbCenter = thumbRect.left + thumbRect.width / 2;
         dragOffsetRef.current = event.clientX - thumbCenter;
       }
-      
+
       // Set pointer capture on the thumb element for better tracking
       event.currentTarget.setPointerCapture(event.pointerId);
 
@@ -130,14 +133,14 @@ export default function Slider({
         if (e.pointerId !== event.pointerId) return;
         isDraggingRef.current = false;
         dragOffsetRef.current = 0;
-        
+
         // Try to release capture from both the thumb and document
         try {
           event.currentTarget.releasePointerCapture(e.pointerId);
         } catch {
           // Ignore errors if element is no longer available
         }
-        
+
         document.removeEventListener('pointermove', handleGlobalPointerMove);
         document.removeEventListener('pointerup', handleGlobalPointerUp);
       };
@@ -215,7 +218,7 @@ export default function Slider({
         {/* Range (filled portion) */}
         <div
           className={join(
-            'absolute h-full rounded-full bg-primary',
+            'absolute h-full rounded-full bg-primary pointer-events-none', // clicks will pass through to the track element underneath with `pointer-events-none`
             !isDraggingRef.current && 'transition-all',
             rangeClassName
           )}
