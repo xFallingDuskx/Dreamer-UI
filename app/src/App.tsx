@@ -1411,7 +1411,9 @@ function AppContent() {
                 <Label className='mb-2 block'>Default Slider (0-100)</Label>
                 <Slider
                   onValueChange={(value) => console.log('Default slider value:', value)}
-                  aria-label="Default slider"
+                  aria-label='Default slider'
+                  rangeClassName='bg-slate-500'
+                  thumbClassName='bg-slate-500'
                 />
               </div>
 
@@ -1423,7 +1425,9 @@ function AppContent() {
                   step={5}
                   defaultValue={25}
                   onValueChange={(value) => console.log('Custom range slider value:', value)}
-                  aria-label="Custom range slider"
+                  aria-label='Custom range slider'
+                  rangeClassName='bg-slate-500'
+                  thumbClassName='bg-slate-500'
                 />
               </div>
 
@@ -1432,7 +1436,9 @@ function AppContent() {
                 <Slider
                   defaultValue={30}
                   disabled
-                  aria-label="Disabled slider"
+                  aria-label='Disabled slider'
+                  rangeClassName='bg-slate-500'
+                  thumbClassName='bg-slate-500'
                 />
               </div>
             </div>
@@ -1446,18 +1452,7 @@ function AppContent() {
                   rangeClassName='bg-success'
                   thumbClassName='bg-success border-white'
                   onValueChange={(value) => console.log('Success slider value:', value)}
-                  aria-label="Success theme slider"
-                />
-              </div>
-
-              <div className='bg-slate-800 p-4 rounded'>
-                <Label className='mb-2 block'>Destructive Theme</Label>
-                <Slider
-                  defaultValue={60}
-                  rangeClassName='bg-destructive'
-                  thumbClassName='bg-destructive border-white'
-                  onValueChange={(value) => console.log('Destructive slider value:', value)}
-                  aria-label="Destructive theme slider"
+                  aria-label='Success theme slider'
                 />
               </div>
 
@@ -1469,7 +1464,7 @@ function AppContent() {
                   rangeClassName='bg-blue-500'
                   thumbClassName='bg-blue-500 border-blue-200'
                   onValueChange={(value) => console.log('Custom track slider value:', value)}
-                  aria-label="Custom track colors slider"
+                  aria-label='Custom track colors slider'
                 />
               </div>
             </div>
@@ -1484,7 +1479,9 @@ function AppContent() {
                     max={100}
                     defaultValue={50}
                     onValueChange={(value) => console.log('Volume:', value + '%')}
-                    aria-label="Volume control"
+                    aria-label='Volume control'
+                    rangeClassName='bg-pink-500'
+                    thumbClassName='bg-pink-500'
                   />
                 </div>
                 <span className='text-sm text-gray-400 w-12'>100%</span>
@@ -1502,7 +1499,7 @@ function AppContent() {
                 rangeClassName='bg-green-500'
                 thumbClassName='bg-green-500 border-white'
                 onValueChange={(value) => console.log('Budget: $' + value)}
-                aria-label="Budget range slider"
+                aria-label='Budget range slider'
               />
               <div className='flex justify-between text-sm text-gray-400 mt-2'>
                 <span>$0</span>

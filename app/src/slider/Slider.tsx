@@ -218,7 +218,7 @@ export default function Slider({
         {/* Range (filled portion) */}
         <div
           className={join(
-            'absolute h-full rounded-full bg-primary pointer-events-none', // clicks will pass through to the track element underneath with `pointer-events-none`
+            'absolute h-full rounded-full pointer-events-none', // clicks will pass through to the track element underneath with `pointer-events-none`
             !isDraggingRef.current && 'transition-all',
             rangeClassName
           )}
@@ -228,7 +228,7 @@ export default function Slider({
         {/* Thumb */}
         <div
           className={join(
-            'absolute size-5 -top-2 rounded-full bg-primary shadow-md cursor-grab',
+            'absolute size-5 -top-2 rounded-full shadow-md cursor-grab',
             disabled && 'cursor-not-allowed',
             !disabled && 'cursor-grab focus:outline-none focus:ring-2',
             isDraggingRef.current ? 'cursor-grabbing scale-110' : 'transition-all',
