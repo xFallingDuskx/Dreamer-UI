@@ -182,7 +182,7 @@ export default function Pagination({
           <button
             key={pageNum}
             onClick={() => handlePageChange(pageNum)}
-            className={getButtonClasses()}
+            className={join(getButtonClasses(), 'aspect-square')}
             aria-label={`Go to page ${pageNum}`}
             aria-current={pageNum === page ? true : undefined}
           >

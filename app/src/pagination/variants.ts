@@ -7,8 +7,8 @@ export const paginationVariants = {
 export type PaginationVariant = keyof typeof paginationVariants;
 
 export const paginationSizes = {
-  sm: 'px-2 py-1 text-sm min-w-[32px] h-8',
-  md: 'px-3 py-2 text-base min-w-[40px] h-10',
+  sm: 'px-2 py-1 text-sm min-w-[32px] min-h-8',
+  md: 'px-2 py-1 text-base min-w-[40px] min-h-10',
 } as const;
 
 export type PaginationSize = keyof typeof paginationSizes;
