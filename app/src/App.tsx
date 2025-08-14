@@ -17,6 +17,7 @@ import {
   Toggle,
   Tooltip,
 } from '@moondreamsdev/dreamer-ui/components';
+import Slider from './slider';
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
@@ -182,6 +183,7 @@ function AppContent() {
           <option value='toast-section'>Toast</option>
           <option value='tooltip-section'>Tooltip</option>
           <option value='separator-section'>Separator</option>
+          <option value='slider-section'>Slider</option>
         </select>
 
         <div className='mt-12 max-w-2xl mx-auto px-10 space-y-20'>
@@ -1397,6 +1399,115 @@ function AppContent() {
                   Contact
                 </a>
               </nav>
+            </div>
+          </div>
+
+          <div id='slider-section'>
+            <h3 className='mb-2'>Slider</h3>
+
+            <h4 className='mb-2 text-lg'>Basic Examples</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Default Slider (0-100)</Label>
+                <Slider
+                  onValueChange={(value) => console.log('Default slider value:', value)}
+                  aria-label="Default slider"
+                />
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Slider with Custom Range (10-50, step 5)</Label>
+                <Slider
+                  min={10}
+                  max={50}
+                  step={5}
+                  defaultValue={25}
+                  onValueChange={(value) => console.log('Custom range slider value:', value)}
+                  aria-label="Custom range slider"
+                />
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Disabled Slider</Label>
+                <Slider
+                  defaultValue={30}
+                  disabled
+                  aria-label="Disabled slider"
+                />
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Custom Colors</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Success Theme</Label>
+                <Slider
+                  defaultValue={40}
+                  rangeClassName='bg-success'
+                  thumbClassName='bg-success border-white'
+                  onValueChange={(value) => console.log('Success slider value:', value)}
+                  aria-label="Success theme slider"
+                />
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Destructive Theme</Label>
+                <Slider
+                  defaultValue={60}
+                  rangeClassName='bg-destructive'
+                  thumbClassName='bg-destructive border-white'
+                  onValueChange={(value) => console.log('Destructive slider value:', value)}
+                  aria-label="Destructive theme slider"
+                />
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Custom Track Colors</Label>
+                <Slider
+                  defaultValue={75}
+                  trackClassName='bg-blue-300/30'
+                  rangeClassName='bg-blue-500'
+                  thumbClassName='bg-blue-500 border-blue-200'
+                  onValueChange={(value) => console.log('Custom track slider value:', value)}
+                  aria-label="Custom track colors slider"
+                />
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Volume Control Example</h4>
+            <div className='bg-slate-800 p-4 rounded'>
+              <div className='flex items-center gap-4'>
+                <span className='text-2xl'>🔊</span>
+                <div className='flex-1'>
+                  <Slider
+                    min={0}
+                    max={100}
+                    defaultValue={50}
+                    onValueChange={(value) => console.log('Volume:', value + '%')}
+                    aria-label="Volume control"
+                  />
+                </div>
+                <span className='text-sm text-gray-400 w-12'>100%</span>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Price Range Example</h4>
+            <div className='bg-slate-800 p-4 rounded'>
+              <Label className='mb-2 block'>Budget Range ($0 - $1000)</Label>
+              <Slider
+                min={0}
+                max={1000}
+                step={50}
+                defaultValue={250}
+                rangeClassName='bg-green-500'
+                thumbClassName='bg-green-500 border-white'
+                onValueChange={(value) => console.log('Budget: $' + value)}
+                aria-label="Budget range slider"
+              />
+              <div className='flex justify-between text-sm text-gray-400 mt-2'>
+                <span>$0</span>
+                <span>$1000</span>
+              </div>
             </div>
           </div>
         </div>
