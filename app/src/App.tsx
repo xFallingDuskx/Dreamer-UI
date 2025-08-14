@@ -69,6 +69,9 @@ function AppContent() {
     customColors: 1,
   });
 
+  // Controlled tabs state
+  const [controlledTab, setControlledTab] = useState('controlled-tab1');
+
   const handleRadioGroupChange = (value: string, index: number) => {
     const newSelections = { ...radioGroupSelections };
     newSelections[index] = value;
@@ -1896,6 +1899,91 @@ function AppContent() {
                     <div className='p-4 bg-slate-700 rounded-md'>
                       <h4 className='font-semibold mb-2'>Another Available Tab</h4>
                       <p>This tab is also fully functional.</p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Controlled Tabs</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>
+                  Controlled example with external state and button controls
+                </p>
+                <div className='mb-4 flex gap-2'>
+                  <Button
+                    size='sm'
+                    variant={controlledTab === 'controlled-tab1' ? 'primary' : 'outline'}
+                    onClick={() => setControlledTab('controlled-tab1')}
+                  >
+                    Go to Tab 1
+                  </Button>
+                  <Button
+                    size='sm'
+                    variant={controlledTab === 'controlled-tab2' ? 'primary' : 'outline'}
+                    onClick={() => setControlledTab('controlled-tab2')}
+                  >
+                    Go to Tab 2
+                  </Button>
+                  <Button
+                    size='sm'
+                    variant={controlledTab === 'controlled-tab3' ? 'primary' : 'outline'}
+                    onClick={() => setControlledTab('controlled-tab3')}
+                  >
+                    Go to Tab 3
+                  </Button>
+                </div>
+                <div className='mb-4 text-sm text-gray-300'>
+                  Current active tab: <span className='font-mono'>{controlledTab}</span>
+                </div>
+                <Tabs 
+                  value={controlledTab} 
+                  onValueChange={setControlledTab} 
+                  variant='pills'
+                  tabsWidth='equal'
+                >
+                  <TabsList>
+                    <TabsTrigger value='controlled-tab1'>Dashboard</TabsTrigger>
+                    <TabsTrigger value='controlled-tab2'>Analytics</TabsTrigger>
+                    <TabsTrigger value='controlled-tab3'>Reports</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='controlled-tab1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Dashboard</h4>
+                      <p>
+                        This is a controlled tabs component. The active tab is managed by external state and can be 
+                        changed both by clicking the tabs themselves and by using the buttons above.
+                      </p>
+                      <p className='mt-2 text-sm text-gray-400'>
+                        Notice how the state is synchronized between the tabs and the external controls.
+                      </p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='controlled-tab2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Analytics</h4>
+                      <p>
+                        The controlled pattern is useful when you need to programmatically change tabs based on 
+                        other application logic or user actions.
+                      </p>
+                      <div className='mt-3 p-2 bg-blue-900/20 rounded border border-blue-800'>
+                        <p className='text-sm text-blue-200'>
+                          💡 Use controlled tabs when you need to sync with forms, URL routing, or other state management.
+                        </p>
+                      </div>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='controlled-tab3'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Reports</h4>
+                      <p>
+                        This demonstrates how the <code className='bg-slate-600 px-1 rounded'>onValueChange</code> callback 
+                        works in controlled mode.
+                      </p>
+                      <p className='mt-2 text-sm text-gray-400'>
+                        The component calls your callback whenever a tab is clicked, allowing you to update your state.
+                      </p>
                     </div>
                   </TabsContent>
                 </Tabs>
