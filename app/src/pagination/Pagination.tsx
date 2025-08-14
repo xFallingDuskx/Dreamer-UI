@@ -48,6 +48,32 @@ function ChevronRight({ size = 15, color = 'currentColor', className = 'inline' 
   );
 }
 
+function ChevronDoubleLeft({ size = 15, color = 'currentColor', className = 'inline' }) {
+  return (
+    <svg width={size} height={size} className={className} viewBox='0 0 15 15' xmlns='http://www.w3.org/2000/svg'>
+      <path
+        d='M6.85355 3.14645C7.04882 3.34171 7.04882 3.65829 6.85355 3.85355L3.20711 7.5L6.85355 11.1464C7.04882 11.3417 7.04882 11.6583 6.85355 11.8536C6.65829 12.0488 6.34171 12.0488 6.14645 11.8536L2.14645 7.85355C1.95118 7.65829 1.95118 7.34171 2.14645 7.14645L6.14645 3.14645C6.34171 2.95118 6.65829 2.95118 6.85355 3.14645ZM12.8536 3.14645C13.0488 3.34171 13.0488 3.65829 12.8536 3.85355L9.20711 7.5L12.8536 11.1464C13.0488 11.3417 13.0488 11.6583 12.8536 11.8536C12.6583 12.0488 12.3417 12.0488 12.1464 11.8536L8.14645 7.85355C7.95118 7.65829 7.95118 7.34171 8.14645 7.14645L12.1464 3.14645C12.3417 2.95118 12.6583 2.95118 12.8536 3.14645Z'
+        fill={color}
+        fillRule='evenodd'
+        clipRule='evenodd'
+      />
+    </svg>
+  );
+}
+
+function ChevronDoubleRight({ size = 15, color = 'currentColor', className = 'inline' }) {
+  return (
+    <svg width={size} height={size} className={className} viewBox='0 0 15 15' xmlns='http://www.w3.org/2000/svg'>
+      <path
+        d='M2.14645 11.8536C1.95118 11.6583 1.95118 11.3417 2.14645 11.1464L5.79289 7.5L2.14645 3.85355C1.95118 3.65829 1.95118 3.34171 2.14645 3.14645C2.34171 2.95118 2.65829 2.95118 2.85355 3.14645L6.85355 7.14645C7.04882 7.34171 7.04882 7.65829 6.85355 7.85355L2.85355 11.8536C2.65829 12.0488 2.34171 12.0488 2.14645 11.8536ZM8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.7929 7.5L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536Z'
+        fill={color}
+        fillRule='evenodd'
+        clipRule='evenodd'
+      />
+    </svg>
+  );
+}
+
 export default function Pagination({
   page,
   pageCount = 5,
@@ -138,7 +164,8 @@ export default function Pagination({
           disabled={page === 1}
           aria-label='Go to first page'
         >
-          First
+          <ChevronDoubleLeft size={size === 'sm' ? 12 : 15} />
+          <span className='ml-1'>First</span>
         </button>
       )}
 
@@ -186,7 +213,8 @@ export default function Pagination({
           disabled={page === pageCount}
           aria-label='Go to last page'
         >
-          Last
+          <span className='mr-1'>Last</span>
+          <ChevronDoubleRight size={size === 'sm' ? 12 : 15} />
         </button>
       )}
     </nav>
