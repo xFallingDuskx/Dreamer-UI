@@ -1,6 +1,10 @@
 export { default as Check } from './Check';
 export { default as CheckCircled } from './CheckCircled';
+export { default as ChevronDoubleLeft } from './ChevronDoubleLeft';
+export { default as ChevronDoubleRight } from './ChevronDoubleRight';
 export { default as ChevronDown } from './ChevronDown';
+export { default as ChevronLeft } from './ChevronLeft';
+export { default as ChevronRight } from './ChevronRight';
 export { default as CrossCircled } from './CrossCircled';
 export { default as ExclamationTriangle } from './ExclamationTriangle';
 export { default as EyeClosed } from './EyeClosed';
