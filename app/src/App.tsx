@@ -1920,6 +1920,53 @@ function AppContent() {
                 </Tabs>
               </div>
             </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Custom Styling</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>
+                  Using `triggersClassName` and `contentClassName` for custom styling
+                </p>
+                <Tabs
+                  defaultValue='custom1'
+                  variant='underline'
+                  triggersClassName='bg-orange-500/20 text-orange-300 hover:bg-orange-500/30 data-[state=active]:bg-orange-500/40 data-[state=active]:text-orange-100 data-[state=active]:border-orange-700'
+                  contentClassName='bg-orange-950/30 border border-orange-500/30 rounded-lg p-4 mt-3'
+                >
+                  <TabsList className='border-orange-300/50'>
+                    <TabsTrigger value='custom1'>Custom Tab 1</TabsTrigger>
+                    <TabsTrigger value='custom2'>Custom Tab 2</TabsTrigger>
+                    <TabsTrigger value='custom3'>Custom Tab 3</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='custom1'>
+                    <h4 className='font-semibold mb-3'>Custom Styled Content</h4>
+                    <p className='mb-3'>
+                      This example demonstrates how to use `triggersClassName` and `contentClassName` to apply custom
+                      orange styling to your tabs.
+                    </p>
+                    <div className='bg-orange-900/20 p-3 rounded border border-orange-500/20'>
+                      <p className='text-sm text-orange-200'>
+                        The triggers have custom orange backgrounds with hover and active states.
+                      </p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='custom2'>
+                    <h4 className='font-semibold mb-3'>Simple Orange Theme</h4>
+                    <p className='mb-3'>The content area uses an orange-themed background for a cohesive look.</p>
+                    <p className='text-sm text-orange-200'>
+                      This shows how easy it is to customize the appearance while keeping all functionality intact.
+                    </p>
+                  </TabsContent>
+                  <TabsContent value='custom3'>
+                    <h4 className='font-semibold mb-3'>Consistent Styling</h4>
+                    <p className='mb-3'>All tabs maintain the same orange theme for a unified design.</p>
+                    <p className='text-sm text-orange-200'>
+                      Both `triggersClassName` and `contentClassName` work together to create a cohesive orange theme.
+                    </p>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -21,6 +21,10 @@ export interface TabsProps {
   children?: React.ReactNode;
   /** Ref to the tabs container */
   ref?: React.Ref<HTMLDivElement>;
+  /** Additional class names for the tab triggers */
+  triggersClassName?: string;
+  /** Additional class names for the tab content */
+  contentClassName?: string;
 }
 
 export interface TabsListProps {
@@ -61,6 +65,8 @@ interface TabsContextValue {
   onValueChange: (value: string) => void;
   tabsWidth: TabsWidth;
   variant: TabsVariant;
+  triggersClassName?: string;
+  contentClassName?: string;
 }
 
 const TabsContext = createContext<TabsContextValue | null>(null);
@@ -83,6 +89,8 @@ export default function Tabs({
   children,
   ref,
   id,
+  triggersClassName,
+  contentClassName,
 }: TabsProps) {
   const { value: selectedValue, onValueChange: handleValueChange } = useTabs({
     defaultValue,
@@ -95,6 +103,8 @@ export default function Tabs({
     onValueChange: handleValueChange,
     tabsWidth,
     variant,
+    triggersClassName,
+    contentClassName,
   };
 
   return (
@@ -130,7 +140,7 @@ export function TabsList({ children, className, id, ref }: TabsListProps) {
 }
 
 export function TabsTrigger({ value, disabled = false, className, children, onClick, id, ref }: TabsTriggerProps) {
-  const { selectedValue, onValueChange, variant } = useTabsContext();
+  const { selectedValue, onValueChange, variant, triggersClassName } = useTabsContext();
   const isActive = selectedValue === value;
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -151,7 +161,7 @@ export function TabsTrigger({ value, disabled = false, className, children, onCl
       data-state={isActive ? 'active' : 'inactive'}
       data-value={value}
       disabled={disabled}
-      className={join(tabTriggerVariants.base, tabTriggerVariants.variant[variant], className)}
+      className={join(tabTriggerVariants.base, tabTriggerVariants.variant[variant], triggersClassName, className)}
       onClick={handleClick}
     >
       {children}
@@ -160,7 +170,7 @@ export function TabsTrigger({ value, disabled = false, className, children, onCl
 }
 
 export function TabsContent({ value, className, children, ref }: TabsContentProps) {
-  const { selectedValue } = useTabsContext();
+  const { selectedValue, contentClassName } = useTabsContext();
   const isActive = selectedValue === value;
 
   if (!isActive) {
@@ -175,7 +185,7 @@ export function TabsContent({ value, className, children, ref }: TabsContentProp
       aria-labelledby={`tabs-trigger-${value}`}
       data-state={isActive ? 'active' : 'inactive'}
       data-value={value}
-      className={join(tabContentVariants.base, className)}
+      className={join(tabContentVariants.base, contentClassName, className)}
       tabIndex={0}
     >
       {children}
