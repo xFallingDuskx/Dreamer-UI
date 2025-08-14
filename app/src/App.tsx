@@ -15,11 +15,14 @@ import {
   Separator,
   Skeleton,
   Slider,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
   Textarea,
   Toggle,
   Tooltip,
 } from '@moondreamsdev/dreamer-ui/components';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';

@@ -1,4 +1,3 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React from 'react';
 import { useTabs } from './hooks';
 import { TabsContext, TabsContextValue } from './TabsContext';
@@ -58,13 +57,7 @@ export function Tabs({
 
   return (
     <TabsContext.Provider value={contextValue}>
-      <div
-        id={id}
-        ref={ref}
-        className={join('tabs-root', className)}
-        data-tabs-width={tabsWidth}
-        data-variant={variant}
-      >
+      <div id={id} ref={ref} className={className} data-tabs-width={tabsWidth} data-variant={variant}>
         {children}
       </div>
     </TabsContext.Provider>

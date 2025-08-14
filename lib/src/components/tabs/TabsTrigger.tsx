@@ -1,4 +1,4 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
+import { join } from '../../utils';
 import { useTabsContext } from './TabsContext';
 import { tabTriggerVariants } from './variants';
 

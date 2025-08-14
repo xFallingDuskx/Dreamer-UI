@@ -13,6 +13,7 @@ export * from './separator';
 export * from './skeleton';
 export * from './slider';
 export * from './slot';
+export * from './tabs';
 export * from './textarea';
 export * from './toast';
 export * from './toggle';
