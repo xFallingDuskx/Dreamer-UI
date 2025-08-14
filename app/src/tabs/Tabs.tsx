@@ -16,8 +16,6 @@ export interface TabsProps {
   variant?: TabsVariant;
   /** Additional class names for the tabs container */
   className?: string;
-  /** Additional class names for the tabs list */
-  tabsClassName?: string;
   /** The tab content and triggers */
   children?: React.ReactNode;
   /** Ref to the tabs container */
@@ -58,7 +56,6 @@ interface TabsContextValue {
   onValueChange: (value: string) => void;
   tabsWidth: TabsWidth;
   variant: TabsVariant;
-  tabsClassName?: string;
 }
 
 const TabsContext = createContext<TabsContextValue | null>(null);
@@ -78,7 +75,6 @@ export default function Tabs({
   tabsWidth = 'fit',
   variant = 'underline',
   className,
-  tabsClassName,
   children,
   ref,
   id,
@@ -94,7 +90,6 @@ export default function Tabs({
     onValueChange: handleValueChange,
     tabsWidth,
     variant,
-    tabsClassName,
   };
 
   return (
@@ -113,7 +108,7 @@ export default function Tabs({
 }
 
 export function TabsList({ children, className }: TabsListProps) {
-  const { tabsWidth, variant, tabsClassName } = useTabsContext();
+  const { tabsWidth, variant } = useTabsContext();
 
   return (
     <div
@@ -122,7 +117,6 @@ export function TabsList({ children, className }: TabsListProps) {
         'tabs-list flex',
         tabsListVariants.width[tabsWidth],
         tabsListVariants.variant[variant],
-        tabsClassName,
         className
       )}
       data-tabs-width={tabsWidth}

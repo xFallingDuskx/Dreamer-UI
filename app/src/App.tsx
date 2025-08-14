@@ -1817,7 +1817,7 @@ function AppContent() {
 
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Equal width - All tabs have equal width</p>
-                <Tabs defaultValue='equal1' tabsWidth='equal' variant='bordered'>
+                <Tabs defaultValue='equal1' tabsWidth='full' variant='bordered'>
                   <TabsList>
                     <TabsTrigger value='equal1'>Short</TabsTrigger>
                     <TabsTrigger value='equal2'>Medium Length</TabsTrigger>
@@ -1842,75 +1842,10 @@ function AppContent() {
               </div>
             </div>
 
-            <h4 className='mb-2 text-lg mt-6'>Custom Styling</h4>
-            <div className='space-y-6'>
-              <div className='bg-slate-800 p-4 rounded'>
-                <p className='text-sm text-gray-400 mb-2'>Custom tab list styling with tabsClassName</p>
-                <Tabs defaultValue='custom1' variant='pills' tabsClassName='bg-slate-600 p-2 rounded-lg'>
-                  <TabsList>
-                    <TabsTrigger value='custom1'>Profile</TabsTrigger>
-                    <TabsTrigger value='custom2'>Account</TabsTrigger>
-                    <TabsTrigger value='custom3'>Security</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value='custom1'>
-                    <div className='p-4 bg-slate-700 rounded-md'>
-                      <h4 className='font-semibold mb-2'>Profile Settings</h4>
-                      <p>The tabsClassName prop allows you to add custom styling to the tab list container.</p>
-                    </div>
-                  </TabsContent>
-                  <TabsContent value='custom2'>
-                    <div className='p-4 bg-slate-700 rounded-md'>
-                      <h4 className='font-semibold mb-2'>Account Settings</h4>
-                      <p>This example shows a custom background and padding on the tab list.</p>
-                    </div>
-                  </TabsContent>
-                  <TabsContent value='custom3'>
-                    <div className='p-4 bg-slate-700 rounded-md'>
-                      <h4 className='font-semibold mb-2'>Security Settings</h4>
-                      <p>You can combine custom styling with any variant and width setting.</p>
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </div>
-
-              <div className='bg-slate-800 p-4 rounded'>
-                <p className='text-sm text-gray-400 mb-2'>Disabled tab example</p>
-                <Tabs defaultValue='enabled1' variant='underline'>
-                  <TabsList>
-                    <TabsTrigger value='enabled1'>Available</TabsTrigger>
-                    <TabsTrigger value='disabled1' disabled>
-                      Disabled
-                    </TabsTrigger>
-                    <TabsTrigger value='enabled2'>Another Available</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value='enabled1'>
-                    <div className='p-4 bg-slate-700 rounded-md'>
-                      <h4 className='font-semibold mb-2'>Available Tab</h4>
-                      <p>This tab is fully functional and can be clicked.</p>
-                    </div>
-                  </TabsContent>
-                  <TabsContent value='disabled1'>
-                    <div className='p-4 bg-slate-700 rounded-md'>
-                      <h4 className='font-semibold mb-2'>Disabled Tab</h4>
-                      <p>This content won't be accessible because the tab is disabled.</p>
-                    </div>
-                  </TabsContent>
-                  <TabsContent value='enabled2'>
-                    <div className='p-4 bg-slate-700 rounded-md'>
-                      <h4 className='font-semibold mb-2'>Another Available Tab</h4>
-                      <p>This tab is also fully functional.</p>
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </div>
-            </div>
-
             <h4 className='mb-2 text-lg mt-6'>Controlled Tabs</h4>
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
-                <p className='text-sm text-gray-400 mb-2'>
-                  Controlled example with external state and button controls
-                </p>
+                <p className='text-sm text-gray-400 mb-2'>Controlled example with external state and button controls</p>
                 <div className='mb-4 flex gap-2'>
                   <Button
                     size='sm'
@@ -1937,12 +1872,7 @@ function AppContent() {
                 <div className='mb-4 text-sm text-gray-300'>
                   Current active tab: <span className='font-mono'>{controlledTab}</span>
                 </div>
-                <Tabs 
-                  value={controlledTab} 
-                  onValueChange={setControlledTab} 
-                  variant='pills'
-                  tabsWidth='equal'
-                >
+                <Tabs value={controlledTab} onValueChange={setControlledTab} variant='pills' tabsWidth='full'>
                   <TabsList>
                     <TabsTrigger value='controlled-tab1'>Dashboard</TabsTrigger>
                     <TabsTrigger value='controlled-tab2'>Analytics</TabsTrigger>
@@ -1952,7 +1882,7 @@ function AppContent() {
                     <div className='p-4 bg-slate-700 rounded-md'>
                       <h4 className='font-semibold mb-2'>Dashboard</h4>
                       <p>
-                        This is a controlled tabs component. The active tab is managed by external state and can be 
+                        This is a controlled tabs component. The active tab is managed by external state and can be
                         changed both by clicking the tabs themselves and by using the buttons above.
                       </p>
                       <p className='mt-2 text-sm text-gray-400'>
@@ -1964,12 +1894,13 @@ function AppContent() {
                     <div className='p-4 bg-slate-700 rounded-md'>
                       <h4 className='font-semibold mb-2'>Analytics</h4>
                       <p>
-                        The controlled pattern is useful when you need to programmatically change tabs based on 
-                        other application logic or user actions.
+                        The controlled pattern is useful when you need to programmatically change tabs based on other
+                        application logic or user actions.
                       </p>
                       <div className='mt-3 p-2 bg-blue-900/20 rounded border border-blue-800'>
                         <p className='text-sm text-blue-200'>
-                          💡 Use controlled tabs when you need to sync with forms, URL routing, or other state management.
+                          💡 Use controlled tabs when you need to sync with forms, URL routing, or other state
+                          management.
                         </p>
                       </div>
                     </div>
@@ -1978,8 +1909,8 @@ function AppContent() {
                     <div className='p-4 bg-slate-700 rounded-md'>
                       <h4 className='font-semibold mb-2'>Reports</h4>
                       <p>
-                        This demonstrates how the <code className='bg-slate-600 px-1 rounded'>onValueChange</code> callback 
-                        works in controlled mode.
+                        This demonstrates how the <code className='bg-slate-600 px-1 rounded'>onValueChange</code>{' '}
+                        callback works in controlled mode.
                       </p>
                       <p className='mt-2 text-sm text-gray-400'>
                         The component calls your callback whenever a tab is clicked, allowing you to update your state.

@@ -1,10 +1,10 @@
-export type TabsWidth = 'fit' | 'equal';
+export type TabsWidth = 'fit' | 'full';
 export type TabsVariant = 'underline' | 'pills' | 'bordered';
 
 export const tabsListVariants = {
   width: {
     fit: 'w-fit',
-    equal: 'w-full *:flex-1',
+    full: 'w-full *:flex-1',
   },
   variant: {
     underline: 'border-b border-border',
