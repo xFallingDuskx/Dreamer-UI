@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 
 export interface SliderProps {
-  id?: string
+  id?: string;
   /** Current value of the slider */
   value?: number;
   /** Default value when uncontrolled */
@@ -191,7 +191,7 @@ export default function Slider({
   );
 
   // Calculate percentage for positioning
-  const percentage = ((currentValue - min) / (max - min)) * 100;
+  const percentage = max === min ? 0 : ((currentValue - min) / (max - min)) * 100;
 
   return (
     <div
@@ -221,7 +221,7 @@ export default function Slider({
         {/* Range (filled portion) */}
         <div
           className={join(
-            'absolute h-full rounded-full pointer-events-none', // clicks will pass through to the track element underneath with `pointer-events-none`
+            'absolute h-full rounded-full pointer-events-none', // pointer-events are disabled so that user interactions are handled by the track element, enabling correct slider behavior
             !isDraggingRef.current && 'transition-all',
             rangeClassName
           )}

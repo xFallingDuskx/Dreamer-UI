@@ -40,15 +40,21 @@ export function useSlider({
 }: UseSliderProps): UseSliderReturn {
   const [value, setValueState] = useState(defaultValue);
 
-  const clampValue = useCallback((val: number) => {
-    return Math.max(min, Math.min(max, Math.round(val / step) * step));
-  }, [min, max, step]);
+  const clampValue = useCallback(
+    (val: number) => {
+      return Math.max(min, Math.min(max, Math.round(val / step) * step));
+    },
+    [min, max, step]
+  );
 
-  const setValue = useCallback((newValue: number) => {
-    const clampedValue = clampValue(newValue);
-    setValueState(clampedValue);
-    onValueChange?.(clampedValue);
-  }, [clampValue, onValueChange]);
+  const setValue = useCallback(
+    (newValue: number) => {
+      const clampedValue = clampValue(newValue);
+      setValueState(clampedValue);
+      onValueChange?.(clampedValue);
+    },
+    [clampValue, onValueChange]
+  );
 
   const increment = useCallback(() => {
     setValue(value + step);
@@ -62,7 +68,7 @@ export function useSlider({
     setValue(defaultValue);
   }, [setValue, defaultValue]);
 
-  const percentage = ((value - min) / (max - min)) * 100;
+  const percentage = max === min ? 0 : ((value - min) / (max - min)) * 100;
 
   return {
     value,
