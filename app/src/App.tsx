@@ -15,6 +15,10 @@ import {
   Separator,
   Skeleton,
   Slider,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
   Textarea,
   Toggle,
   Tooltip,
@@ -67,6 +71,9 @@ function AppContent() {
     infinite: 3,
     customColors: 1,
   });
+
+  // Controlled tabs state
+  const [controlledTab, setControlledTab] = useState('controlled-tab1');
 
   const handleRadioGroupChange = (value: string, index: number) => {
     const newSelections = { ...radioGroupSelections };
@@ -194,6 +201,7 @@ function AppContent() {
           <option value='separator-section'>Separator</option>
           <option value='slider-section'>Slider</option>
           <option value='pagination-section'>Pagination</option>
+          <option value='tabs-section'>Tabs</option>
         </select>
 
         <div className='mt-12 max-w-2xl mx-auto px-10 space-y-20'>
@@ -1680,6 +1688,286 @@ function AppContent() {
                   buttonsClassName='border-2 border-cyan-500 !text-cyan-400 hover:!bg-cyan-500 hover:!text-white aria-current:!bg-cyan-500 aria-current:!text-white aria-current:border-cyan-400'
                   onPageChange={(page) => setPaginationExamples((prev) => ({ ...prev, customColors: page }))}
                 />
+              </div>
+            </div>
+          </div>
+
+          <div id='tabs-section'>
+            <h3 className='mb-2'>Tabs</h3>
+
+            <h4 className='mb-2 text-lg'>Basic Tabs</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Underline variant (default)</p>
+                <Tabs defaultValue='tab1' variant='underline'>
+                  <TabsList>
+                    <TabsTrigger value='tab1'>First Tab</TabsTrigger>
+                    <TabsTrigger value='tab2'>Second Tab</TabsTrigger>
+                    <TabsTrigger value='tab3'>Third Tab</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='tab1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>First Tab Content</h4>
+                      <p>
+                        This is the content for the first tab. The underline variant shows a border underneath the
+                        active tab.
+                      </p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='tab2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Second Tab Content</h4>
+                      <p>This is the content for the second tab with some different information.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='tab3'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Third Tab Content</h4>
+                      <p>This is the content for the third tab, showing how easy it is to add more tabs.</p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Pills variant</p>
+                <Tabs defaultValue='pill1' variant='pills'>
+                  <TabsList>
+                    <TabsTrigger value='pill1'>Overview</TabsTrigger>
+                    <TabsTrigger value='pill2'>Features</TabsTrigger>
+                    <TabsTrigger value='pill3'>Settings</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='pill1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Overview</h4>
+                      <p>
+                        The pills variant uses rounded backgrounds for the active tab, providing a more modern look.
+                      </p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='pill2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Features</h4>
+                      <p>This tab showcases the different features available in our tabs component.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='pill3'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Settings</h4>
+                      <p>Configuration options and preferences can be displayed in this tab.</p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Bordered variant</p>
+                <Tabs defaultValue='border1' variant='bordered'>
+                  <TabsList>
+                    <TabsTrigger value='border1'>Documents</TabsTrigger>
+                    <TabsTrigger value='border2'>Images</TabsTrigger>
+                    <TabsTrigger value='border3'>Videos</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='border1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Documents</h4>
+                      <p>The bordered variant wraps the tab list in a border for a more contained appearance.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='border2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Images</h4>
+                      <p>Perfect for organizing different types of content or media.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='border3'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Videos</h4>
+                      <p>Each tab can contain completely different content and layouts.</p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Tab Widths</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Fit width (default) - Tabs size to their content</p>
+                <Tabs defaultValue='fit1' tabsWidth='fit' variant='pills'>
+                  <TabsList>
+                    <TabsTrigger value='fit1'>Short</TabsTrigger>
+                    <TabsTrigger value='fit2'>Medium Length</TabsTrigger>
+                    <TabsTrigger value='fit3'>Very Long Tab Name</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='fit1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <p>Content for the short tab.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='fit2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <p>Content for the medium length tab.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='fit3'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <p>Content for the very long tab name.</p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Equal width - All tabs have equal width</p>
+                <Tabs defaultValue='equal1' tabsWidth='full' variant='bordered'>
+                  <TabsList>
+                    <TabsTrigger value='equal1'>Short</TabsTrigger>
+                    <TabsTrigger value='equal2'>Medium Length</TabsTrigger>
+                    <TabsTrigger value='equal3'>Very Long Tab Name</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='equal1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <p>All tabs have equal width regardless of content length.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='equal2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <p>This creates a more uniform appearance.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='equal3'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <p>Perfect for consistent layouts.</p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Controlled Tabs</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Controlled example with external state and button controls</p>
+                <div className='mb-4 flex gap-2'>
+                  <Button
+                    size='sm'
+                    variant={controlledTab === 'controlled-tab1' ? 'primary' : 'outline'}
+                    onClick={() => setControlledTab('controlled-tab1')}
+                  >
+                    Go to Tab 1
+                  </Button>
+                  <Button
+                    size='sm'
+                    variant={controlledTab === 'controlled-tab2' ? 'primary' : 'outline'}
+                    onClick={() => setControlledTab('controlled-tab2')}
+                  >
+                    Go to Tab 2
+                  </Button>
+                  <Button
+                    size='sm'
+                    variant={controlledTab === 'controlled-tab3' ? 'primary' : 'outline'}
+                    onClick={() => setControlledTab('controlled-tab3')}
+                  >
+                    Go to Tab 3
+                  </Button>
+                </div>
+                <div className='mb-4 text-sm text-gray-300'>
+                  Current active tab: <span className='font-mono'>{controlledTab}</span>
+                </div>
+                <Tabs value={controlledTab} onValueChange={setControlledTab} variant='pills' tabsWidth='full'>
+                  <TabsList>
+                    <TabsTrigger value='controlled-tab1'>Dashboard</TabsTrigger>
+                    <TabsTrigger value='controlled-tab2'>Analytics</TabsTrigger>
+                    <TabsTrigger value='controlled-tab3'>Reports</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='controlled-tab1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Dashboard</h4>
+                      <p>
+                        This is a controlled tabs component. The active tab is managed by external state and can be
+                        changed both by clicking the tabs themselves and by using the buttons above.
+                      </p>
+                      <p className='mt-2 text-sm text-gray-400'>
+                        Notice how the state is synchronized between the tabs and the external controls.
+                      </p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='controlled-tab2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Analytics</h4>
+                      <p>
+                        The controlled pattern is useful when you need to programmatically change tabs based on other
+                        application logic or user actions.
+                      </p>
+                      <div className='mt-3 p-2 bg-blue-900/20 rounded border border-blue-800'>
+                        <p className='text-sm text-blue-200'>
+                          💡 Use controlled tabs when you need to sync with forms, URL routing, or other state
+                          management.
+                        </p>
+                      </div>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='controlled-tab3'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Reports</h4>
+                      <p>
+                        This demonstrates how the <code className='bg-slate-600 px-1 rounded'>onValueChange</code>{' '}
+                        callback works in controlled mode.
+                      </p>
+                      <p className='mt-2 text-sm text-gray-400'>
+                        The component calls your callback whenever a tab is clicked, allowing you to update your state.
+                      </p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Custom Styling</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>
+                  Using `triggersClassName` and `contentClassName` for custom styling
+                </p>
+                <Tabs
+                  defaultValue='custom1'
+                  variant='underline'
+                  triggersClassName='bg-orange-500/20 text-orange-300 hover:bg-orange-500/30 data-[state=active]:bg-orange-500/40 data-[state=active]:text-orange-100 data-[state=active]:border-orange-700'
+                  contentClassName='bg-orange-950/30 border border-orange-500/30 rounded-lg p-4 mt-3'
+                >
+                  <TabsList className='border-orange-300/50'>
+                    <TabsTrigger value='custom1'>Custom Tab 1</TabsTrigger>
+                    <TabsTrigger value='custom2'>Custom Tab 2</TabsTrigger>
+                    <TabsTrigger value='custom3'>Custom Tab 3</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='custom1'>
+                    <h4 className='font-semibold mb-3'>Custom Styled Content</h4>
+                    <p className='mb-3'>
+                      This example demonstrates how to use `triggersClassName` and `contentClassName` to apply custom
+                      orange styling to your tabs.
+                    </p>
+                    <div className='bg-orange-900/20 p-3 rounded border border-orange-500/20'>
+                      <p className='text-sm text-orange-200'>
+                        The triggers have custom orange backgrounds with hover and active states.
+                      </p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='custom2'>
+                    <h4 className='font-semibold mb-3'>Simple Orange Theme</h4>
+                    <p className='mb-3'>The content area uses an orange-themed background for a cohesive look.</p>
+                    <p className='text-sm text-orange-200'>
+                      This shows how easy it is to customize the appearance while keeping all functionality intact.
+                    </p>
+                  </TabsContent>
+                  <TabsContent value='custom3'>
+                    <h4 className='font-semibold mb-3'>Consistent Styling</h4>
+                    <p className='mb-3'>All tabs maintain the same orange theme for a unified design.</p>
+                    <p className='text-sm text-orange-200'>
+                      Both `triggersClassName` and `contentClassName` work together to create a cohesive orange theme.
+                    </p>
+                  </TabsContent>
+                </Tabs>
               </div>
             </div>
           </div>

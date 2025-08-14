@@ -11,6 +11,7 @@ You should create a React component that meets the following requirements:
 4. **Props:**
 
 - Always allow a `ref` to be passed in by using `React.Ref<HTMLDivElement>` (DO NOT USE `forwardRef`)
+- Always allow a `id` prop to be passed in
 - Define variants in a separate `variants.ts` file
 - Define hooks in a separate `hooks.ts` file
 - Use `data-*` attributes to store key prop values for testing and accessibility
