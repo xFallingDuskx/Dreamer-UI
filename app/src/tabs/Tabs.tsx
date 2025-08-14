@@ -22,6 +22,7 @@ export interface TabsProps {
   children?: React.ReactNode;
   /** Ref to the tabs container */
   ref?: React.Ref<HTMLDivElement>;
+  id?: string;
 }
 
 export interface TabsListProps {
@@ -79,12 +80,13 @@ export default function Tabs({
   className,
   tabsClassName,
   children,
-  ref
+  ref,
+  id,
 }: TabsProps) {
   const { value: selectedValue, onValueChange: handleValueChange } = useTabs({
     defaultValue,
     value,
-    onValueChange
+    onValueChange,
   });
 
   const contextValue: TabsContextValue = {
@@ -92,12 +94,13 @@ export default function Tabs({
     onValueChange: handleValueChange,
     tabsWidth,
     variant,
-    tabsClassName
+    tabsClassName,
   };
 
   return (
     <TabsContext.Provider value={contextValue}>
       <div
+        id={id}
         ref={ref}
         className={join('tabs-root', className)}
         data-tabs-width={tabsWidth}
@@ -114,7 +117,7 @@ export function TabsList({ children, className }: TabsListProps) {
 
   return (
     <div
-      role="tablist"
+      role='tablist'
       className={join(
         'tabs-list flex',
         tabsListVariants.width[tabsWidth],
@@ -130,13 +133,7 @@ export function TabsList({ children, className }: TabsListProps) {
   );
 }
 
-export function TabsTrigger({ 
-  value, 
-  disabled = false, 
-  className, 
-  children, 
-  onClick 
-}: TabsTriggerProps) {
+export function TabsTrigger({ value, disabled = false, className, children, onClick }: TabsTriggerProps) {
   const { selectedValue, onValueChange, variant } = useTabsContext();
   const isActive = selectedValue === value;
 
@@ -149,18 +146,14 @@ export function TabsTrigger({
 
   return (
     <button
-      role="tab"
-      type="button"
+      role='tab'
+      type='button'
       aria-selected={isActive}
       aria-controls={`tabs-content-${value}`}
       data-state={isActive ? 'active' : 'inactive'}
       data-value={value}
       disabled={disabled}
-      className={join(
-        tabTriggerVariants.base,
-        tabTriggerVariants.variant[variant],
-        className
-      )}
+      className={join(tabTriggerVariants.base, tabTriggerVariants.variant[variant], className)}
       onClick={handleClick}
     >
       {children}
@@ -178,7 +171,7 @@ export function TabsContent({ value, className, children }: TabsContentProps) {
 
   return (
     <div
-      role="tabpanel"
+      role='tabpanel'
       id={`tabs-content-${value}`}
       aria-labelledby={`tabs-trigger-${value}`}
       data-state={isActive ? 'active' : 'inactive'}
