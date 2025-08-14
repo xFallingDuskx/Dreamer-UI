@@ -1,8 +1,6 @@
 import React from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-
-type PaginationVariant = 'filled' | 'outline';
-type PaginationSize = 'sm' | 'md';
+import { paginationVariants, paginationSizes, PaginationVariant, PaginationSize } from './variants';
 
 interface PaginationProps {
   /** The current page number (1-indexed) */
@@ -73,7 +71,7 @@ export default function Pagination({
   showFirstLast = true,
   onPageChange,
   size = 'md',
-  variant = 'filled',
+  variant = 'link',
   className,
   ref,
   'data-testid': testId,
@@ -119,6 +117,23 @@ export default function Pagination({
     }
   };
 
+  // Helper function to get button classes based on variant and state
+  const getButtonClasses = (isActive = false) => {
+    const baseClasses = join(
+      'flex items-center justify-center',
+      'disabled:opacity-50 disabled:cursor-not-allowed',
+      'transition-colors duration-200',
+      paginationSizes[size],
+      'rounded-md'
+    );
+
+    const variantClasses = isActive 
+      ? paginationVariants[variant].activeClassName 
+      : paginationVariants[variant].inactiveClassName;
+
+    return join(baseClasses, variantClasses);
+  };
+
   return (
     <nav
       ref={ref}
@@ -137,15 +152,7 @@ export default function Pagination({
       {showFirstButton && (
         <button
           onClick={() => handlePageChange(1)}
-          className={join(
-            'flex items-center justify-center',
-            'border border-primary text-primary',
-            'hover:bg-primary hover:text-primary-foreground',
-            'disabled:opacity-50 disabled:cursor-not-allowed',
-            'transition-colors duration-200',
-            size === 'sm' ? 'px-2 py-1 text-sm min-w-[32px] h-8' : 'px-3 py-2 text-base min-w-[40px] h-10',
-            'rounded-md'
-          )}
+          className={getButtonClasses(false)}
           disabled={page === 1}
           aria-label="Go to first page"
         >
@@ -156,14 +163,7 @@ export default function Pagination({
       {/* Previous button */}
       <button
         onClick={() => handlePageChange(page - 1)}
-        className={join(
-          'flex items-center justify-center',
-          variant === 'outline' ? 'border border-primary text-primary hover:bg-primary hover:text-primary-foreground' : 'bg-primary text-primary-foreground hover:bg-primary/85',
-          'disabled:opacity-50 disabled:cursor-not-allowed',
-          'transition-colors duration-200',
-          size === 'sm' ? 'px-2 py-1 text-sm min-w-[32px] h-8' : 'px-3 py-2 text-base min-w-[40px] h-10',
-          'rounded-md'
-        )}
+        className={getButtonClasses(false)}
         disabled={!canGoPrevious}
         aria-label="Go to previous page"
       >
@@ -176,19 +176,7 @@ export default function Pagination({
         <button
           key={pageNum}
           onClick={() => handlePageChange(pageNum)}
-          className={join(
-            'flex items-center justify-center',
-            pageNum === page
-              ? variant === 'outline' 
-                ? 'bg-primary text-primary-foreground border border-primary' 
-                : 'bg-primary text-primary-foreground'
-              : variant === 'outline'
-              ? 'border border-primary text-primary hover:bg-primary hover:text-primary-foreground'
-              : 'bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground',
-            'transition-colors duration-200',
-            size === 'sm' ? 'px-2 py-1 text-sm min-w-[32px] h-8' : 'px-3 py-2 text-base min-w-[40px] h-10',
-            'rounded-md'
-          )}
+          className={getButtonClasses(pageNum === page)}
           aria-label={`Go to page ${pageNum}`}
           aria-current={pageNum === page ? 'page' : undefined}
         >
@@ -199,14 +187,7 @@ export default function Pagination({
       {/* Next button */}
       <button
         onClick={() => handlePageChange(page + 1)}
-        className={join(
-          'flex items-center justify-center',
-          variant === 'outline' ? 'border border-primary text-primary hover:bg-primary hover:text-primary-foreground' : 'bg-primary text-primary-foreground hover:bg-primary/85',
-          'disabled:opacity-50 disabled:cursor-not-allowed',
-          'transition-colors duration-200',
-          size === 'sm' ? 'px-2 py-1 text-sm min-w-[32px] h-8' : 'px-3 py-2 text-base min-w-[40px] h-10',
-          'rounded-md'
-        )}
+        className={getButtonClasses(false)}
         disabled={!canGoNext}
         aria-label="Go to next page"
       >
@@ -218,15 +199,7 @@ export default function Pagination({
       {showLastButton && (
         <button
           onClick={() => handlePageChange(pageCount)}
-          className={join(
-            'flex items-center justify-center',
-            'border border-primary text-primary',
-            'hover:bg-primary hover:text-primary-foreground',
-            'disabled:opacity-50 disabled:cursor-not-allowed',
-            'transition-colors duration-200',
-            size === 'sm' ? 'px-2 py-1 text-sm min-w-[32px] h-8' : 'px-3 py-2 text-base min-w-[40px] h-10',
-            'rounded-md'
-          )}
+          className={getButtonClasses(false)}
           disabled={page === pageCount}
           aria-label="Go to last page"
         >

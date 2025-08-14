@@ -1571,7 +1571,17 @@ function AppContent() {
             <h4 className='mb-2 text-lg mt-6'>Style Variants</h4>
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
-                <Label className='mb-2 block'>Filled Style (default)</Label>
+                <Label className='mb-2 block'>Link Style (default)</Label>
+                <Pagination
+                  page={2}
+                  pageCount={7}
+                  variant='link'
+                  onPageChange={(page) => console.log('Link pagination page:', page)}
+                />
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Filled Style</Label>
                 <Pagination
                   page={2}
                   pageCount={7}
