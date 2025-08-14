@@ -38,6 +38,19 @@ And, finally, install the stylesheets in main CSS file (recommended):
 @source "../node_modules/@moondreamsdev/dreamer-ui/dist/**/*.{js,jsx,ts,tsx}";
 ```
 
+### Tailwind Class Name Auto-Detection
+
+To enable Tailwind CSS IntelliSense for component classnames like `targetClassName`, add the following to your VS Code settings.json:
+
+```json
+{
+  "tailwindCSS.classAttributes": ["class", "className", ".*ClassName"]
+}
+```
+
+This configuration allows the Tailwind CSS extension to provide autocomplete and validation for any attribute that contains "className" in its name, including custom props like `targetClassName`, `containerClassName`, etc.
+
+
 ## Usage
 
 ```tsx
