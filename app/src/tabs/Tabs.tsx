@@ -1,7 +1,8 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import React, { createContext, useContext } from 'react';
+import React from 'react';
 import { useTabs } from './hooks';
-import { tabsListVariants, TabsVariant, TabsWidth, tabTriggerVariants } from './variants';
+import { TabsContext, TabsContextValue } from './TabsContext';
+import { TabsVariant, TabsWidth } from './variants';
 
 export interface TabsProps {
   id?: string;
@@ -27,59 +28,7 @@ export interface TabsProps {
   contentClassName?: string;
 }
 
-export interface TabsListProps {
-  id?: string;
-  ref?: React.Ref<HTMLDivElement>;
-  children?: React.ReactNode;
-  className?: string;
-}
-
-export interface TabsTriggerProps {
-  id?: string;
-  ref?: React.Ref<HTMLButtonElement>;
-  /** The value that identifies this tab */
-  value: string;
-  /** Whether this trigger is disabled */
-  disabled?: boolean;
-  /** Additional class names */
-  className?: string;
-  /** Tab trigger content */
-  children?: React.ReactNode;
-  /** Click handler */
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-}
-
-export interface TabsContentProps {
-  ref?: React.Ref<HTMLDivElement>;
-  /** The value that identifies this tab content */
-  value: string;
-  /** Additional class names */
-  className?: string;
-  /** Tab content */
-  children?: React.ReactNode;
-}
-
-// Context for sharing tabs state
-interface TabsContextValue {
-  selectedValue: string;
-  onValueChange: (value: string) => void;
-  tabsWidth: TabsWidth;
-  variant: TabsVariant;
-  triggersClassName?: string;
-  contentClassName?: string;
-}
-
-const TabsContext = createContext<TabsContextValue | null>(null);
-
-const useTabsContext = () => {
-  const context = useContext(TabsContext);
-  if (!context) {
-    throw new Error('Tabs components must be used within a Tabs component');
-  }
-  return context;
-};
-
-export default function Tabs({
+export function Tabs({
   defaultValue,
   value,
   onValueChange,
@@ -119,82 +68,5 @@ export default function Tabs({
         {children}
       </div>
     </TabsContext.Provider>
-  );
-}
-
-export function TabsList({ children, className, id, ref }: TabsListProps) {
-  const { tabsWidth, variant } = useTabsContext();
-
-  return (
-    <div
-      id={id}
-      ref={ref}
-      role='tablist'
-      className={join('flex', tabsListVariants.width[tabsWidth], tabsListVariants.variant[variant], className)}
-      data-tabs-width={tabsWidth}
-      data-variant={variant}
-    >
-      {children}
-    </div>
-  );
-}
-
-export function TabsTrigger({ value, disabled = false, className, children, onClick, id, ref }: TabsTriggerProps) {
-  const { selectedValue, onValueChange, variant, triggersClassName } = useTabsContext();
-  const isActive = selectedValue === value;
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (!disabled) {
-      onValueChange(value);
-    }
-    onClick?.(event);
-  };
-
-  const baseClassName =
-    'inline-flex items-center justify-center whitespace-nowrap px-3 py-2 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
-
-  return (
-    <button
-      id={id}
-      ref={ref}
-      role='tab'
-      type='button'
-      aria-selected={isActive}
-      aria-controls={`tabs-content-${value}`}
-      data-state={isActive ? 'active' : 'inactive'}
-      data-value={value}
-      disabled={disabled}
-      className={join(baseClassName, tabTriggerVariants[variant], triggersClassName, className)}
-      onClick={handleClick}
-    >
-      {children}
-    </button>
-  );
-}
-
-export function TabsContent({ value, className, children, ref }: TabsContentProps) {
-  const { selectedValue, contentClassName } = useTabsContext();
-  const isActive = selectedValue === value;
-
-  if (!isActive) {
-    return null;
-  }
-
-  const baseClassName =
-    'mt-4 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2';
-
-  return (
-    <div
-      ref={ref}
-      role='tabpanel'
-      id={`tabs-content-${value}`}
-      aria-labelledby={`tabs-trigger-${value}`}
-      data-state={isActive ? 'active' : 'inactive'}
-      data-value={value}
-      className={join(baseClassName, contentClassName, className)}
-      tabIndex={0}
-    >
-      {children}
-    </div>
   );
 }
