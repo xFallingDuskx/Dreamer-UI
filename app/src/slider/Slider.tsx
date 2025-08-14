@@ -2,6 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 
 export interface SliderProps {
+  id?: string
   /** Current value of the slider */
   value?: number;
   /** Default value when uncontrolled */
@@ -33,6 +34,7 @@ export interface SliderProps {
 }
 
 export default function Slider({
+  id,
   value,
   defaultValue = 0,
   onValueChange,
@@ -193,6 +195,7 @@ export default function Slider({
 
   return (
     <div
+      id={id}
       ref={ref}
       className={join(
         'relative flex items-center w-full touch-none select-none',

@@ -1482,6 +1482,7 @@ function AppContent() {
                     aria-label='Volume control'
                     rangeClassName='bg-pink-500'
                     thumbClassName='bg-pink-500'
+                    trackClassName='bg-pink-300/30'
                   />
                 </div>
                 <span className='text-sm text-gray-400 w-12'>100%</span>
