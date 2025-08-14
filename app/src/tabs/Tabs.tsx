@@ -1,7 +1,7 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { createContext, useContext } from 'react';
 import { useTabs } from './hooks';
-import { tabContentVariants, tabsListVariants, TabsVariant, TabsWidth, tabTriggerVariants } from './variants';
+import { tabsListVariants, TabsVariant, TabsWidth, tabTriggerVariants } from './variants';
 
 export interface TabsProps {
   id?: string;
@@ -150,6 +150,9 @@ export function TabsTrigger({ value, disabled = false, className, children, onCl
     onClick?.(event);
   };
 
+  const baseClassName =
+    'inline-flex items-center justify-center whitespace-nowrap px-3 py-2 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
+
   return (
     <button
       id={id}
@@ -161,7 +164,7 @@ export function TabsTrigger({ value, disabled = false, className, children, onCl
       data-state={isActive ? 'active' : 'inactive'}
       data-value={value}
       disabled={disabled}
-      className={join(tabTriggerVariants.base, tabTriggerVariants.variant[variant], triggersClassName, className)}
+      className={join(baseClassName, tabTriggerVariants[variant], triggersClassName, className)}
       onClick={handleClick}
     >
       {children}
@@ -177,6 +180,9 @@ export function TabsContent({ value, className, children, ref }: TabsContentProp
     return null;
   }
 
+  const baseClassName =
+    'mt-4 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2';
+
   return (
     <div
       ref={ref}
@@ -185,7 +191,7 @@ export function TabsContent({ value, className, children, ref }: TabsContentProp
       aria-labelledby={`tabs-trigger-${value}`}
       data-state={isActive ? 'active' : 'inactive'}
       data-value={value}
-      className={join(tabContentVariants.base, contentClassName, className)}
+      className={join(baseClassName, contentClassName, className)}
       tabIndex={0}
     >
       {children}
