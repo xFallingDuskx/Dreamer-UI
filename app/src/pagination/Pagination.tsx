@@ -120,8 +120,8 @@ export default function Pagination({
   const visiblePages = getVisiblePages();
   const canGoPrevious = page > 1;
   const canGoNext = isInfinite || page < pageCount;
-  const showFirstButton = showFirstLast && !isInfinite && visiblePages.length > 0 && !visiblePages.includes(1);
-  const showLastButton = showFirstLast && !isInfinite && visiblePages.length > 0 && !visiblePages.includes(pageCount);
+  const showFirstButton = showFirstLast && !isInfinite;
+  const showLastButton = showFirstLast && !isInfinite;
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && (isInfinite || newPage <= pageCount)) {
@@ -130,20 +130,17 @@ export default function Pagination({
   };
 
   // Helper function to get button classes based on variant and state
-  const getButtonClasses = useCallback(
-    () => {
-      const baseClasses = join(
-        'flex items-center justify-center min-w-fit',
-        'disabled:opacity-50 disabled:cursor-not-allowed',
-        'transition-colors duration-200',
-        paginationSizes[size],
-        'rounded-md'
-      );
+  const getButtonClasses = useCallback(() => {
+    const baseClasses = join(
+      'flex items-center justify-center min-w-fit',
+      'disabled:opacity-50 disabled:cursor-not-allowed',
+      'transition-colors duration-200',
+      paginationSizes[size],
+      'rounded-md'
+    );
 
-      return join(baseClasses, paginationVariants[variant], buttonsClassName);
-    },
-    [variant, size, buttonsClassName]
-  );
+    return join(baseClasses, paginationVariants[variant], buttonsClassName);
+  }, [variant, size, buttonsClassName]);
 
   return (
     <nav
