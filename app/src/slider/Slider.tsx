@@ -27,9 +27,9 @@ export interface SliderProps {
   /** Ref to the root element */
   ref?: React.Ref<HTMLDivElement>;
   /** ARIA label for accessibility */
-  'aria-label'?: string;
+  ariaLabel?: string;
   /** ARIA labelledby for accessibility */
-  'aria-labelledby'?: string;
+  ariaLabelledBy?: string;
 }
 
 export default function Slider({
@@ -45,90 +45,102 @@ export default function Slider({
   thumbClassName,
   className,
   ref,
-  'aria-label': ariaLabel,
-  'aria-labelledby': ariaLabelledBy,
+  ariaLabel,
+  ariaLabelledBy,
   ...props
 }: SliderProps) {
   const [internalValue, setInternalValue] = useState(defaultValue);
   const isControlled = value !== undefined;
   const currentValue = isControlled ? value : internalValue;
-  
+
   const trackRef = useRef<HTMLDivElement>(null);
   const isDraggingRef = useRef(false);
 
-  const updateValue = useCallback((newValue: number) => {
-    const clampedValue = Math.max(min, Math.min(max, newValue));
-    const steppedValue = Math.round(clampedValue / step) * step;
-    
-    if (!isControlled) {
-      setInternalValue(steppedValue);
-    }
-    onValueChange?.(steppedValue);
-  }, [min, max, step, isControlled, onValueChange]);
+  const updateValue = useCallback(
+    (newValue: number) => {
+      const clampedValue = Math.max(min, Math.min(max, newValue));
+      const steppedValue = Math.round(clampedValue / step) * step;
 
-  const handlePointerDown = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
-    if (disabled) return;
-    
-    isDraggingRef.current = true;
-    event.currentTarget.setPointerCapture(event.pointerId);
-    
-    const rect = trackRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    
-    const percentage = (event.clientX - rect.left) / rect.width;
-    const newValue = min + (max - min) * percentage;
-    updateValue(newValue);
-  }, [disabled, min, max, updateValue]);
+      if (!isControlled) {
+        setInternalValue(steppedValue);
+      }
+      onValueChange?.(steppedValue);
+    },
+    [min, max, step, isControlled, onValueChange]
+  );
 
-  const handlePointerMove = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDraggingRef.current || disabled) return;
-    
-    const rect = trackRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    
-    const percentage = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
-    const newValue = min + (max - min) * percentage;
-    updateValue(newValue);
-  }, [disabled, min, max, updateValue]);
+  const handlePointerDown = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (disabled) return;
+
+      isDraggingRef.current = true;
+      event.currentTarget.setPointerCapture(event.pointerId);
+
+      const rect = trackRef.current?.getBoundingClientRect();
+      if (!rect) return;
+
+      const percentage = (event.clientX - rect.left) / rect.width;
+      const newValue = min + (max - min) * percentage;
+      updateValue(newValue);
+    },
+    [disabled, min, max, updateValue]
+  );
+
+  const handlePointerMove = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (!isDraggingRef.current || disabled) return;
+
+      const rect = trackRef.current?.getBoundingClientRect();
+      if (!rect) return;
+
+      const percentage = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+      const newValue = min + (max - min) * percentage;
+      updateValue(newValue);
+    },
+    [disabled, min, max, updateValue]
+  );
 
   const handlePointerUp = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
     isDraggingRef.current = false;
     event.currentTarget.releasePointerCapture(event.pointerId);
   }, []);
 
-  const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (disabled) return;
-    
-    let newValue = currentValue;
-    
-    switch (event.key) {
-      case 'ArrowRight':
-      case 'ArrowUp':
-        newValue = currentValue + step;
-        break;
-      case 'ArrowLeft':
-      case 'ArrowDown':
-        newValue = currentValue - step;
-        break;
-      case 'Home':
-        newValue = min;
-        break;
-      case 'End':
-        newValue = max;
-        break;
-      case 'PageUp':
-        newValue = currentValue + step * 10;
-        break;
-      case 'PageDown':
-        newValue = currentValue - step * 10;
-        break;
-      default:
-        return;
-    }
-    
-    event.preventDefault();
-    updateValue(newValue);
-  }, [disabled, currentValue, step, min, max, updateValue]);
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (disabled) return;
+
+      let newValue = currentValue;
+
+      switch (event.key) {
+        case 'ArrowRight':
+        case 'ArrowUp':
+          newValue = currentValue + step;
+          break;
+        case 'ArrowLeft':
+        case 'ArrowDown':
+          newValue = currentValue - step;
+          break;
+        case 'Home':
+          newValue = min;
+          break;
+        case 'End':
+          newValue = max;
+          break;
+        case 'PageUp':
+          newValue = currentValue + step * 10;
+          break;
+        case 'PageDown':
+          newValue = currentValue - step * 10;
+          break;
+        default:
+          return;
+      }
+
+      event.preventDefault();
+      updateValue(newValue);
+    },
+    [disabled, currentValue, step, min, max, updateValue]
+  );
 
   // Calculate percentage for positioning
   const percentage = ((currentValue - min) / (max - min)) * 100;
@@ -151,7 +163,7 @@ export default function Slider({
       <div
         ref={trackRef}
         className={join(
-          'relative h-2 w-full rounded-full bg-muted cursor-pointer',
+          'relative h-1.5 w-full rounded-full bg-muted cursor-pointer',
           disabled && 'cursor-not-allowed',
           trackClassName
         )}
@@ -161,24 +173,22 @@ export default function Slider({
       >
         {/* Range (filled portion) */}
         <div
-          className={join(
-            'absolute h-full rounded-full bg-primary transition-all',
-            rangeClassName
-          )}
+          className={join('absolute h-full rounded-full bg-primary transition-all', rangeClassName)}
           style={{ width: `${percentage}%` }}
         />
-        
+
         {/* Thumb */}
         <div
           className={join(
-            'absolute w-5 h-5 -top-1.5 rounded-full bg-primary border-2 border-white shadow-md cursor-grab focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all',
+            'absolute size-5 -top-2 rounded-full bg-primary border shadow-md cursor-grab transition-all',
             disabled && 'cursor-not-allowed',
+            !disabled && 'cursor-grab focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
             isDraggingRef.current && 'cursor-grabbing scale-110',
             thumbClassName
           )}
           style={{ left: `calc(${percentage}% - 10px)` }}
           tabIndex={disabled ? -1 : 0}
-          role="slider"
+          role='slider'
           aria-valuemin={min}
           aria-valuemax={max}
           aria-valuenow={currentValue}
