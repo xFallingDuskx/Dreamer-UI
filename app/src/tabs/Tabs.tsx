@@ -1,9 +1,10 @@
-import React, { createContext, useContext } from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import { TabsWidth, TabsVariant, tabsListVariants, tabTriggerVariants, tabContentVariants } from './variants';
+import React, { createContext, useContext } from 'react';
 import { useTabs } from './hooks';
+import { tabContentVariants, tabsListVariants, TabsVariant, TabsWidth, tabTriggerVariants } from './variants';
 
 export interface TabsProps {
+  id?: string;
   /** The default selected tab value (uncontrolled) */
   defaultValue?: string;
   /** The selected tab value (controlled) */
@@ -20,15 +21,18 @@ export interface TabsProps {
   children?: React.ReactNode;
   /** Ref to the tabs container */
   ref?: React.Ref<HTMLDivElement>;
-  id?: string;
 }
 
 export interface TabsListProps {
+  id?: string;
+  ref?: React.Ref<HTMLDivElement>;
   children?: React.ReactNode;
   className?: string;
 }
 
 export interface TabsTriggerProps {
+  id?: string;
+  ref?: React.Ref<HTMLButtonElement>;
   /** The value that identifies this tab */
   value: string;
   /** Whether this trigger is disabled */
@@ -42,6 +46,7 @@ export interface TabsTriggerProps {
 }
 
 export interface TabsContentProps {
+  ref?: React.Ref<HTMLDivElement>;
   /** The value that identifies this tab content */
   value: string;
   /** Additional class names */
@@ -107,18 +112,15 @@ export default function Tabs({
   );
 }
 
-export function TabsList({ children, className }: TabsListProps) {
+export function TabsList({ children, className, id, ref }: TabsListProps) {
   const { tabsWidth, variant } = useTabsContext();
 
   return (
     <div
+      id={id}
+      ref={ref}
       role='tablist'
-      className={join(
-        'tabs-list flex',
-        tabsListVariants.width[tabsWidth],
-        tabsListVariants.variant[variant],
-        className
-      )}
+      className={join('flex', tabsListVariants.width[tabsWidth], tabsListVariants.variant[variant], className)}
       data-tabs-width={tabsWidth}
       data-variant={variant}
     >
@@ -127,7 +129,7 @@ export function TabsList({ children, className }: TabsListProps) {
   );
 }
 
-export function TabsTrigger({ value, disabled = false, className, children, onClick }: TabsTriggerProps) {
+export function TabsTrigger({ value, disabled = false, className, children, onClick, id, ref }: TabsTriggerProps) {
   const { selectedValue, onValueChange, variant } = useTabsContext();
   const isActive = selectedValue === value;
 
@@ -140,6 +142,8 @@ export function TabsTrigger({ value, disabled = false, className, children, onCl
 
   return (
     <button
+      id={id}
+      ref={ref}
       role='tab'
       type='button'
       aria-selected={isActive}
@@ -155,7 +159,7 @@ export function TabsTrigger({ value, disabled = false, className, children, onCl
   );
 }
 
-export function TabsContent({ value, className, children }: TabsContentProps) {
+export function TabsContent({ value, className, children, ref }: TabsContentProps) {
   const { selectedValue } = useTabsContext();
   const isActive = selectedValue === value;
 
@@ -165,6 +169,7 @@ export function TabsContent({ value, className, children }: TabsContentProps) {
 
   return (
     <div
+      ref={ref}
       role='tabpanel'
       id={`tabs-content-${value}`}
       aria-labelledby={`tabs-trigger-${value}`}
