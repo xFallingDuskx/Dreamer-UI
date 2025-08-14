@@ -18,6 +18,7 @@ import {
   Toggle,
   Tooltip,
 } from '@moondreamsdev/dreamer-ui/components';
+import Pagination from './pagination';
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
@@ -184,6 +185,7 @@ function AppContent() {
           <option value='tooltip-section'>Tooltip</option>
           <option value='separator-section'>Separator</option>
           <option value='slider-section'>Slider</option>
+          <option value='pagination-section'>Pagination</option>
         </select>
 
         <div className='mt-12 max-w-2xl mx-auto px-10 space-y-20'>
@@ -1505,6 +1507,112 @@ function AppContent() {
               <div className='flex justify-between text-sm text-gray-400 mt-2'>
                 <span>$0</span>
                 <span>$1000</span>
+              </div>
+            </div>
+          </div>
+
+          <div id='pagination-section'>
+            <h3 className='mb-2'>Pagination</h3>
+
+            <h4 className='mb-2 text-lg'>Basic Examples</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Standard Pagination (5 pages)</Label>
+                <Pagination
+                  page={1}
+                  pageCount={5}
+                  onPageChange={(page) => console.log('Page changed to:', page)}
+                />
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Large Page Count (50 pages, max 7 visible)</Label>
+                <Pagination
+                  page={25}
+                  pageCount={50}
+                  maxVisiblePages={7}
+                  onPageChange={(page) => console.log('Large pagination page:', page)}
+                />
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Infinite Pagination</Label>
+                <Pagination
+                  page={5}
+                  pageCount={Infinity}
+                  onPageChange={(page) => console.log('Infinite pagination page:', page)}
+                />
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Size Variants</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Small Size</Label>
+                <Pagination
+                  page={3}
+                  pageCount={10}
+                  size='sm'
+                  onPageChange={(page) => console.log('Small pagination page:', page)}
+                />
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Medium Size (default)</Label>
+                <Pagination
+                  page={3}
+                  pageCount={10}
+                  size='md'
+                  onPageChange={(page) => console.log('Medium pagination page:', page)}
+                />
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Style Variants</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Filled Style (default)</Label>
+                <Pagination
+                  page={2}
+                  pageCount={7}
+                  variant='filled'
+                  onPageChange={(page) => console.log('Filled pagination page:', page)}
+                />
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Outline Style</Label>
+                <Pagination
+                  page={2}
+                  pageCount={7}
+                  variant='outline'
+                  onPageChange={(page) => console.log('Outline pagination page:', page)}
+                />
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Advanced Options</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Without First/Last Buttons</Label>
+                <Pagination
+                  page={15}
+                  pageCount={30}
+                  maxVisiblePages={5}
+                  showFirstLast={false}
+                  onPageChange={(page) => console.log('No first/last page:', page)}
+                />
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>With First/Last Buttons (when needed)</Label>
+                <Pagination
+                  page={15}
+                  pageCount={30}
+                  maxVisiblePages={5}
+                  showFirstLast={true}
+                  onPageChange={(page) => console.log('With first/last page:', page)}
+                />
               </div>
             </div>
           </div>
