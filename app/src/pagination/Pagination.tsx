@@ -131,7 +131,7 @@ export default function Pagination({
 
   // Helper function to get button classes based on variant and state
   const getButtonClasses = useCallback(
-    (isActive = false) => {
+    () => {
       const baseClasses = join(
         'flex items-center justify-center min-w-fit',
         'disabled:opacity-50 disabled:cursor-not-allowed',
@@ -140,11 +140,7 @@ export default function Pagination({
         'rounded-md'
       );
 
-      const variantClasses = isActive
-        ? paginationVariants[variant].activeClassName
-        : paginationVariants[variant].inactiveClassName;
-
-      return join(baseClasses, variantClasses, buttonsClassName);
+      return join(baseClasses, paginationVariants[variant], buttonsClassName);
     },
     [variant, size, buttonsClassName]
   );
@@ -163,7 +159,7 @@ export default function Pagination({
       {showFirstButton && (
         <button
           onClick={() => handlePageChange(1)}
-          className={getButtonClasses(false)}
+          className={getButtonClasses()}
           disabled={page === 1}
           aria-label='Go to first page'
         >
@@ -175,7 +171,7 @@ export default function Pagination({
       {/* Previous button */}
       <button
         onClick={() => handlePageChange(page - 1)}
-        className={getButtonClasses(false)}
+        className={getButtonClasses()}
         disabled={!canGoPrevious}
         aria-label='Go to previous page'
       >
@@ -189,9 +185,9 @@ export default function Pagination({
           <button
             key={pageNum}
             onClick={() => handlePageChange(pageNum)}
-            className={getButtonClasses(pageNum === page)}
+            className={getButtonClasses()}
             aria-label={`Go to page ${pageNum}`}
-            aria-current={pageNum === page ? 'page' : undefined}
+            aria-current={pageNum === page ? true : undefined}
           >
             {pageNum}
           </button>
@@ -200,7 +196,7 @@ export default function Pagination({
       {/* Next button */}
       <button
         onClick={() => handlePageChange(page + 1)}
-        className={getButtonClasses(false)}
+        className={getButtonClasses()}
         disabled={!canGoNext}
         aria-label='Go to next page'
       >
@@ -212,7 +208,7 @@ export default function Pagination({
       {showLastButton && (
         <button
           onClick={() => handlePageChange(pageCount)}
-          className={getButtonClasses(false)}
+          className={getButtonClasses()}
           disabled={page === pageCount}
           aria-label='Go to last page'
         >

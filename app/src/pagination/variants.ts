@@ -1,16 +1,7 @@
 export const paginationVariants = {
-  link: {
-    activeClassName: 'text-primary-foreground bg-primary',
-    inactiveClassName: 'text-primary hover:text-primary-foreground hover:bg-primary/10',
-  },
-  outline: {
-    activeClassName: 'bg-primary text-primary-foreground border border-primary',
-    inactiveClassName: 'border border-primary text-primary hover:bg-primary hover:text-primary-foreground',
-  },
-  filled: {
-    activeClassName: 'bg-primary text-primary-foreground',
-    inactiveClassName: 'bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground',
-  },
+  link: 'text-primary hover:text-primary-foreground hover:bg-primary/10 aria-current:text-primary-foreground aria-current:bg-primary',
+  outline: 'border border-primary text-primary hover:bg-primary hover:text-primary-foreground aria-current:bg-primary aria-current:text-primary-foreground aria-current:border-primary',
+  filled: 'bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground aria-current:bg-primary aria-current:text-primary-foreground',
 } as const;
 
 export type PaginationVariant = keyof typeof paginationVariants;

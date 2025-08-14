@@ -60,6 +60,14 @@ function AppContent() {
     withFooter: false,
   });
 
+  // Pagination state
+  const [paginationExamples, setPaginationExamples] = useState({
+    basic: 1,
+    advanced: 5,
+    infinite: 3,
+    customColors: 1,
+  });
+
   const handleRadioGroupChange = (value: string, index: number) => {
     const newSelections = { ...radioGroupSelections };
     newSelections[index] = value;
@@ -1618,6 +1626,59 @@ function AppContent() {
                   maxVisiblePages={5}
                   showFirstLast={true}
                   onPageChange={(page) => console.log('With first/last page:', page)}
+                />
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Interactive Examples</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Interactive Basic Pagination</Label>
+                <div className='mb-4 text-sm text-gray-300'>Current page: {paginationExamples.basic} of 10</div>
+                <Pagination
+                  page={paginationExamples.basic}
+                  pageCount={10}
+                  onPageChange={(page) => setPaginationExamples((prev) => ({ ...prev, basic: page }))}
+                />
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Interactive Advanced Pagination (50 pages)</Label>
+                <div className='mb-4 text-sm text-gray-300'>Current page: {paginationExamples.advanced} of 50</div>
+                <Pagination
+                  page={paginationExamples.advanced}
+                  pageCount={50}
+                  maxVisiblePages={7}
+                  variant='outline'
+                  onPageChange={(page) => setPaginationExamples((prev) => ({ ...prev, advanced: page }))}
+                />
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Interactive Infinite Pagination</Label>
+                <div className='mb-4 text-sm text-gray-300'>
+                  Current page: {paginationExamples.infinite} (infinite pages)
+                </div>
+                <Pagination
+                  page={paginationExamples.infinite}
+                  pageCount={Infinity}
+                  variant='filled'
+                  onPageChange={(page) => setPaginationExamples((prev) => ({ ...prev, infinite: page }))}
+                />
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <Label className='mb-2 block'>Interactive Custom Colors</Label>
+                <div className='mb-4 text-sm text-gray-300'>
+                  Current page: {paginationExamples.customColors} of 10 - Custom cyan theme with hover effects
+                </div>
+                <Pagination
+                  page={paginationExamples.customColors}
+                  pageCount={10}
+                  maxVisiblePages={5}
+                  showFirstLast={true}
+                  buttonsClassName='border-2 border-cyan-500 !text-cyan-400 hover:!bg-cyan-500 hover:!text-white aria-current:!bg-cyan-500 aria-current:!text-white aria-current:border-cyan-400'
+                  onPageChange={(page) => setPaginationExamples((prev) => ({ ...prev, customColors: page }))}
                 />
               </div>
             </div>
