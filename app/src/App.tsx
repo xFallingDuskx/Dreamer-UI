@@ -19,6 +19,7 @@ import {
   Toggle,
   Tooltip,
 } from '@moondreamsdev/dreamer-ui/components';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
@@ -194,6 +195,7 @@ function AppContent() {
           <option value='separator-section'>Separator</option>
           <option value='slider-section'>Slider</option>
           <option value='pagination-section'>Pagination</option>
+          <option value='tabs-section'>Tabs</option>
         </select>
 
         <div className='mt-12 max-w-2xl mx-auto px-10 space-y-20'>
@@ -1680,6 +1682,223 @@ function AppContent() {
                   buttonsClassName='border-2 border-cyan-500 !text-cyan-400 hover:!bg-cyan-500 hover:!text-white aria-current:!bg-cyan-500 aria-current:!text-white aria-current:border-cyan-400'
                   onPageChange={(page) => setPaginationExamples((prev) => ({ ...prev, customColors: page }))}
                 />
+              </div>
+            </div>
+          </div>
+
+          <div id='tabs-section'>
+            <h3 className='mb-2'>Tabs</h3>
+
+            <h4 className='mb-2 text-lg'>Basic Tabs</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Underline variant (default)</p>
+                <Tabs defaultValue='tab1' variant='underline'>
+                  <TabsList>
+                    <TabsTrigger value='tab1'>First Tab</TabsTrigger>
+                    <TabsTrigger value='tab2'>Second Tab</TabsTrigger>
+                    <TabsTrigger value='tab3'>Third Tab</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='tab1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>First Tab Content</h4>
+                      <p>
+                        This is the content for the first tab. The underline variant shows a border underneath the
+                        active tab.
+                      </p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='tab2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Second Tab Content</h4>
+                      <p>This is the content for the second tab with some different information.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='tab3'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Third Tab Content</h4>
+                      <p>This is the content for the third tab, showing how easy it is to add more tabs.</p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Pills variant</p>
+                <Tabs defaultValue='pill1' variant='pills'>
+                  <TabsList>
+                    <TabsTrigger value='pill1'>Overview</TabsTrigger>
+                    <TabsTrigger value='pill2'>Features</TabsTrigger>
+                    <TabsTrigger value='pill3'>Settings</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='pill1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Overview</h4>
+                      <p>
+                        The pills variant uses rounded backgrounds for the active tab, providing a more modern look.
+                      </p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='pill2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Features</h4>
+                      <p>This tab showcases the different features available in our tabs component.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='pill3'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Settings</h4>
+                      <p>Configuration options and preferences can be displayed in this tab.</p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Bordered variant</p>
+                <Tabs defaultValue='border1' variant='bordered'>
+                  <TabsList>
+                    <TabsTrigger value='border1'>Documents</TabsTrigger>
+                    <TabsTrigger value='border2'>Images</TabsTrigger>
+                    <TabsTrigger value='border3'>Videos</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='border1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Documents</h4>
+                      <p>The bordered variant wraps the tab list in a border for a more contained appearance.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='border2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Images</h4>
+                      <p>Perfect for organizing different types of content or media.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='border3'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Videos</h4>
+                      <p>Each tab can contain completely different content and layouts.</p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Tab Widths</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Fit width (default) - Tabs size to their content</p>
+                <Tabs defaultValue='fit1' tabsWidth='fit' variant='pills'>
+                  <TabsList>
+                    <TabsTrigger value='fit1'>Short</TabsTrigger>
+                    <TabsTrigger value='fit2'>Medium Length</TabsTrigger>
+                    <TabsTrigger value='fit3'>Very Long Tab Name</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='fit1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <p>Content for the short tab.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='fit2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <p>Content for the medium length tab.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='fit3'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <p>Content for the very long tab name.</p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Equal width - All tabs have equal width</p>
+                <Tabs defaultValue='equal1' tabsWidth='equal' variant='bordered'>
+                  <TabsList>
+                    <TabsTrigger value='equal1'>Short</TabsTrigger>
+                    <TabsTrigger value='equal2'>Medium Length</TabsTrigger>
+                    <TabsTrigger value='equal3'>Very Long Tab Name</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='equal1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <p>All tabs have equal width regardless of content length.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='equal2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <p>This creates a more uniform appearance.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='equal3'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <p>Perfect for consistent layouts.</p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Custom Styling</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Custom tab list styling with tabsClassName</p>
+                <Tabs defaultValue='custom1' variant='pills' tabsClassName='bg-slate-600 p-2 rounded-lg'>
+                  <TabsList>
+                    <TabsTrigger value='custom1'>Profile</TabsTrigger>
+                    <TabsTrigger value='custom2'>Account</TabsTrigger>
+                    <TabsTrigger value='custom3'>Security</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='custom1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Profile Settings</h4>
+                      <p>The tabsClassName prop allows you to add custom styling to the tab list container.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='custom2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Account Settings</h4>
+                      <p>This example shows a custom background and padding on the tab list.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='custom3'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Security Settings</h4>
+                      <p>You can combine custom styling with any variant and width setting.</p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Disabled tab example</p>
+                <Tabs defaultValue='enabled1' variant='underline'>
+                  <TabsList>
+                    <TabsTrigger value='enabled1'>Available</TabsTrigger>
+                    <TabsTrigger value='disabled1' disabled>
+                      Disabled
+                    </TabsTrigger>
+                    <TabsTrigger value='enabled2'>Another Available</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='enabled1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Available Tab</h4>
+                      <p>This tab is fully functional and can be clicked.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='disabled1'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Disabled Tab</h4>
+                      <p>This content won't be accessible because the tab is disabled.</p>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value='enabled2'>
+                    <div className='p-4 bg-slate-700 rounded-md'>
+                      <h4 className='font-semibold mb-2'>Another Available Tab</h4>
+                      <p>This tab is also fully functional.</p>
+                    </div>
+                  </TabsContent>
+                </Tabs>
               </div>
             </div>
           </div>
