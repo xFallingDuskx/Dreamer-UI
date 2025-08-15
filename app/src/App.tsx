@@ -12,6 +12,7 @@ import {
   Panel,
   RadioGroup,
   RadioGroupItem,
+  ScrollArea,
   Separator,
   Skeleton,
   Slider,
@@ -202,6 +203,7 @@ function AppContent() {
           <option value='slider-section'>Slider</option>
           <option value='pagination-section'>Pagination</option>
           <option value='tabs-section'>Tabs</option>
+          <option value='scroll-area-section'>Scroll Area</option>
         </select>
 
         <div className='mt-12 max-w-2xl mx-auto px-10 space-y-20'>
@@ -1968,6 +1970,291 @@ function AppContent() {
                     </p>
                   </TabsContent>
                 </Tabs>
+              </div>
+            </div>
+          </div>
+
+          <div id='scroll-area-section'>
+            <h3 className='mb-2'>Scroll Area</h3>
+
+            <h4 className='mb-2 text-lg'>Basic Examples</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Fixed height with vertical scroll</p>
+                <ScrollArea className='h-48 w-full border border-slate-600 rounded'>
+                  <div className='p-4'>
+                    <h4 className='font-semibold mb-2'>Long Content</h4>
+                    <p className='mb-4'>
+                      This is a scroll area with a fixed height of 12rem (h-48). When the content exceeds this height, a
+                      vertical scrollbar will appear.
+                    </p>
+                    <p className='mb-4'>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                      nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                    <p className='mb-4'>
+                      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                      mollit anim id est laborum.
+                    </p>
+                    <p className='mb-4'>
+                      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+                      totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
+                      dicta sunt explicabo.
+                    </p>
+                    <p className='mb-4'>
+                      Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur
+                      magni dolores eos qui ratione voluptatem sequi nesciunt.
+                    </p>
+                    <p>
+                      At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
+                      deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
+                      provident.
+                    </p>
+                  </div>
+                </ScrollArea>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Fixed width with horizontal scroll</p>
+                <ScrollArea className='h-24 w-full border border-slate-600 rounded'>
+                  <div className='p-4 w-[800px]'>
+                    <h4 className='font-semibold mb-2'>Wide Content</h4>
+                    <p>
+                      This content is intentionally wider than the container (800px) to demonstrate horizontal
+                      scrolling. You can scroll horizontally to see more content. This is useful for tables, code
+                      blocks, or any wide content that doesn&apos;t fit in the available space.
+                    </p>
+                  </div>
+                </ScrollArea>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Custom Thumb Styling</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Custom green thumb</p>
+                <ScrollArea
+                  className='h-32 w-full border border-slate-600 rounded'
+                  thumbClassName='!bg-green-500 hover:!bg-green-400 active:!bg-green-600'
+                >
+                  <div className='p-4'>
+                    <h4 className='font-semibold mb-2'>Custom Green Scrollbar</h4>
+                    <p className='mb-4'>
+                      This scroll area uses a custom green thumb via the `thumbClassName` prop. The thumb changes color
+                      on hover and when active.
+                    </p>
+                    <p className='mb-4'>
+                      You can customize the scrollbar appearance to match your design system or brand colors.
+                    </p>
+                    <p className='mb-4'>
+                      The scrollbar automatically appears when content overflows and disappears when it doesn&apos;t.
+                    </p>
+                    <p>
+                      Try scrolling to see the green thumb in action. The smooth transitions make the interaction feel
+                      polished.
+                    </p>
+                  </div>
+                </ScrollArea>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Gradient thumb</p>
+                <ScrollArea
+                  className='h-32 w-full border border-slate-600 rounded'
+                  thumbClassName='bg-gradient-to-br from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400'
+                >
+                  <div className='p-4'>
+                    <h4 className='font-semibold mb-2'>Gradient Scrollbar</h4>
+                    <p className='mb-4'>
+                      This scroll area features a gradient thumb that transitions from purple to pink.
+                    </p>
+                    <p className='mb-4'>
+                      The gradient changes on hover, creating a dynamic and visually appealing scrollbar.
+                    </p>
+                    <p className='mb-4'>You can use any Tailwind gradient utilities in the `thumbClassName` prop.</p>
+                    <p>Gradients can help make your scrollbars stand out and match your app&apos;s visual theme.</p>
+                  </div>
+                </ScrollArea>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Different Sizes</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Small scroll area</p>
+                <ScrollArea className='h-20 w-64 border border-slate-600 rounded'>
+                  <div className='p-4'>
+                    <p>
+                      Small scroll area perfect for compact spaces. This demonstrates how the scrollbar adapts to
+                      different container sizes.
+                    </p>
+                    <p className='mt-2'>More content here to make it scrollable.</p>
+                  </div>
+                </ScrollArea>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Large scroll area</p>
+                <ScrollArea className='h-64 w-full border border-slate-600 rounded'>
+                  <div className='p-6'>
+                    <h4 className='font-semibold mb-4'>Large Scroll Area</h4>
+                    <div className='grid grid-cols-2 gap-4 mb-4'>
+                      <div className='bg-slate-700 p-3 rounded'>
+                        <h5 className='font-medium mb-2'>Feature 1</h5>
+                        <p className='text-sm text-gray-300'>
+                          Description of feature 1 with some details about what it does.
+                        </p>
+                      </div>
+                      <div className='bg-slate-700 p-3 rounded'>
+                        <h5 className='font-medium mb-2'>Feature 2</h5>
+                        <p className='text-sm text-gray-300'>
+                          Description of feature 2 with some details about what it does.
+                        </p>
+                      </div>
+                      <div className='bg-slate-700 p-3 rounded'>
+                        <h5 className='font-medium mb-2'>Feature 3</h5>
+                        <p className='text-sm text-gray-300'>
+                          Description of feature 3 with some details about what it does.
+                        </p>
+                      </div>
+                      <div className='bg-slate-700 p-3 rounded'>
+                        <h5 className='font-medium mb-2'>Feature 4</h5>
+                        <p className='text-sm text-gray-300'>
+                          Description of feature 4 with some details about what it does.
+                        </p>
+                      </div>
+                    </div>
+                    <p>
+                      This larger scroll area can accommodate more complex layouts and content structures. The scrollbar
+                      remains proportional to the content size.
+                    </p>
+                  </div>
+                </ScrollArea>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Scrollbar Thickness</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Thin scrollbars (6px)</p>
+                <ScrollArea
+                  className='h-32 w-full border border-slate-600 rounded'
+                  scrollbarThickness={6}
+                  thumbClassName='bg-blue-500 hover:bg-blue-400'
+                >
+                  <div className='p-4 w-[800px]'>
+                    <h4 className='font-semibold mb-2'>Thin Scrollbars</h4>
+                    <p className='mb-4'>
+                      This scroll area uses thin 6px scrollbars, perfect for modern, minimalist designs where you want
+                      scrollbars to be less prominent.
+                    </p>
+                    <p className='mb-4'>
+                      The thin scrollbars take up less space while still providing clear visual feedback about scroll
+                      position.
+                    </p>
+                    <p className='mb-4'>
+                      Great for applications where screen real estate is valuable and you want a clean, unobtrusive
+                      scrolling experience.
+                    </p>
+                    <p>You can still easily interact with them despite their smaller size.</p>
+                  </div>
+                </ScrollArea>
+              </div>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Custom extra-thick scrollbars (24px)</p>
+                <ScrollArea
+                  className='h-32 w-full border border-slate-600 rounded'
+                  scrollbarThickness={24}
+                  thumbClassName='bg-gradient-to-br from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400'
+                >
+                  <div className='p-4'>
+                    <h4 className='font-semibold mb-2'>Extra-Thick Custom Scrollbars</h4>
+                    <p className='mb-4'>
+                      This demonstrates 24px scrollbars with a custom gradient thumb, showing how you can create bold,
+                      highly visible scroll indicators.
+                    </p>
+                    <p className='mb-4'>
+                      Extra-thick scrollbars work well for specialized applications, kiosk interfaces, or when
+                      scrollbars are a key part of your design language.
+                    </p>
+                    <p className='mb-4'>
+                      The combination of custom thickness and gradient styling creates a unique, branded scrolling
+                      experience.
+                    </p>
+                    <p>You have complete control over both the size and appearance of your scrollbars.</p>
+                  </div>
+                </ScrollArea>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Practical Examples</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Code block example</p>
+                <ScrollArea className='h-40 w-full border border-slate-600 rounded bg-black'>
+                  <pre className='p-4 text-sm text-green-400 font-mono text-left'>
+                    <code>{`function createScrollArea() {
+  const scrollArea = document.createElement('div');
+  scrollArea.className = 'scroll-area';
+  
+  const viewport = document.createElement('div');
+  viewport.className = 'viewport';
+  
+  const content = document.createElement('div');
+  content.className = 'content';
+  
+  // Add some sample content
+  for (let i = 0; i < 50; i++) {
+    const line = document.createElement('div');
+    line.textContent = \`Line \${i + 1}: Some code content here\`;
+    content.appendChild(line);
+  }
+  
+  viewport.appendChild(content);
+  scrollArea.appendChild(viewport);
+  
+  return scrollArea;
+}
+
+// Usage
+const container = document.getElementById('app');
+const scrollableCode = createScrollArea();
+container.appendChild(scrollableCode);
+
+// Event handlers
+scrollableCode.addEventListener('scroll', (e) => {
+  console.log('Scrolled to:', e.target.scrollTop);
+});`}</code>
+                  </pre>
+                </ScrollArea>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Chat messages example</p>
+                <ScrollArea className='h-48 w-full border border-slate-600 rounded bg-slate-900'>
+                  <div className='p-4 space-y-3'>
+                    {Array.from({ length: 15 }, (_, i) => (
+                      <div key={i} className={`flex ${i % 3 === 0 ? 'justify-end' : 'justify-start'}`}>
+                        <div
+                          className={`max-w-xs p-2 rounded-lg ${
+                            i % 3 === 0 ? 'bg-blue-600 text-white' : 'bg-slate-700 text-gray-200'
+                          }`}
+                        >
+                          <p className='text-sm'>
+                            {i % 3 === 0
+                              ? `This is my message ${i + 1}. I'm sending a response here.`
+                              : `This is message ${i + 1} from another user. Here's some chat content.`}
+                          </p>
+                          <p className='text-xs opacity-70 mt-1'>
+                            {new Date(Date.now() - (15 - i) * 60000).toLocaleTimeString()}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
               </div>
             </div>
           </div>

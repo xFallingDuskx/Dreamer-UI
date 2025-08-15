@@ -12,7 +12,7 @@ You should create a React component that meets the following requirements:
 
 - Always allow a `ref` to be passed in by using `React.Ref<HTMLDivElement>` (DO NOT USE `forwardRef`)
 - Always allow a `id` prop to be passed in
-- Define variants in a separate `variants.ts` file
+- Define variants in a separate `variants.ts` file: variants should only hold styles for adjustable properties (i.e. `size`). it should not hold base styles.
 - Define hooks in a separate `hooks.ts` file
 - Use `data-*` attributes to store key prop values for testing and accessibility
 - Only add docstring comments to explain unclear props
