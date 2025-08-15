@@ -2037,7 +2037,7 @@ function AppContent() {
                 <p className='text-sm text-gray-400 mb-2'>Custom green thumb</p>
                 <ScrollArea
                   className='h-32 w-full border border-slate-600 rounded'
-                  thumbClassName='bg-green-500 hover:bg-green-400 active:bg-green-600'
+                  thumbClassName='!bg-green-500 hover:!bg-green-400 active:!bg-green-600'
                 >
                   <div className='p-4'>
                     <h4 className='font-semibold mb-2'>Custom Green Scrollbar</h4>
@@ -2055,26 +2055,6 @@ function AppContent() {
                       Try scrolling to see the green thumb in action. The smooth transitions make the interaction
                       feel polished.
                     </p>
-                  </div>
-                </ScrollArea>
-              </div>
-
-              <div className='bg-slate-800 p-4 rounded'>
-                <p className='text-sm text-gray-400 mb-2'>Custom blue thumb with rounded corners</p>
-                <ScrollArea
-                  className='h-32 w-full border border-slate-600 rounded'
-                  thumbClassName='bg-blue-500 hover:bg-blue-400 active:bg-blue-600 rounded-full'
-                >
-                  <div className='p-4'>
-                    <h4 className='font-semibold mb-2'>Rounded Blue Scrollbar</h4>
-                    <p className='mb-4'>
-                      This example shows a blue thumb with `rounded-full` class for completely rounded corners.
-                    </p>
-                    <p className='mb-4'>
-                      The thumb color transitions smoothly between states: normal, hover, and active.
-                    </p>
-                    <p className='mb-4'>You can combine multiple Tailwind classes in the `thumbClassName` prop.</p>
-                    <p>The rounded style gives the scrollbar a more modern, pill-like appearance.</p>
                   </div>
                 </ScrollArea>
               </div>
@@ -2164,7 +2144,7 @@ function AppContent() {
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Code block example</p>
                 <ScrollArea className='h-40 w-full border border-slate-600 rounded bg-black'>
-                  <pre className='p-4 text-sm text-green-400 font-mono'>
+                  <pre className='p-4 text-sm text-green-400 font-mono text-left'>
                     <code>{`function createScrollArea() {
   const scrollArea = document.createElement('div');
   scrollArea.className = 'scroll-area';
