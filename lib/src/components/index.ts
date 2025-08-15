@@ -9,6 +9,7 @@ export * from './modal';
 export * from './pagination';
 export * from './panel';
 export * from './radiogroup';
+export * from './scroll-area';
 export * from './separator';
 export * from './skeleton';
 export * from './slider';

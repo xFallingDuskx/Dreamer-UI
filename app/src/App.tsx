@@ -12,6 +12,7 @@ import {
   Panel,
   RadioGroup,
   RadioGroupItem,
+  ScrollArea,
   Separator,
   Skeleton,
   Slider,
@@ -26,7 +27,6 @@ import {
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
-import ScrollArea from './scroll-area';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
@@ -1985,13 +1985,13 @@ function AppContent() {
                   <div className='p-4'>
                     <h4 className='font-semibold mb-2'>Long Content</h4>
                     <p className='mb-4'>
-                      This is a scroll area with a fixed height of 12rem (h-48). When the content exceeds this height,
-                      a vertical scrollbar will appear.
+                      This is a scroll area with a fixed height of 12rem (h-48). When the content exceeds this height, a
+                      vertical scrollbar will appear.
                     </p>
                     <p className='mb-4'>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
-                      et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                      aliquip ex ea commodo consequat.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                      nisi ut aliquip ex ea commodo consequat.
                     </p>
                     <p className='mb-4'>
                       Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
@@ -2042,8 +2042,8 @@ function AppContent() {
                   <div className='p-4'>
                     <h4 className='font-semibold mb-2'>Custom Green Scrollbar</h4>
                     <p className='mb-4'>
-                      This scroll area uses a custom green thumb via the `thumbClassName` prop. The thumb changes
-                      color on hover and when active.
+                      This scroll area uses a custom green thumb via the `thumbClassName` prop. The thumb changes color
+                      on hover and when active.
                     </p>
                     <p className='mb-4'>
                       You can customize the scrollbar appearance to match your design system or brand colors.
@@ -2052,8 +2052,8 @@ function AppContent() {
                       The scrollbar automatically appears when content overflows and disappears when it doesn&apos;t.
                     </p>
                     <p>
-                      Try scrolling to see the green thumb in action. The smooth transitions make the interaction
-                      feel polished.
+                      Try scrolling to see the green thumb in action. The smooth transitions make the interaction feel
+                      polished.
                     </p>
                   </div>
                 </ScrollArea>
@@ -2073,12 +2073,8 @@ function AppContent() {
                     <p className='mb-4'>
                       The gradient changes on hover, creating a dynamic and visually appealing scrollbar.
                     </p>
-                    <p className='mb-4'>
-                      You can use any Tailwind gradient utilities in the `thumbClassName` prop.
-                    </p>
-                    <p>
-                      Gradients can help make your scrollbars stand out and match your app&apos;s visual theme.
-                    </p>
+                    <p className='mb-4'>You can use any Tailwind gradient utilities in the `thumbClassName` prop.</p>
+                    <p>Gradients can help make your scrollbars stand out and match your app&apos;s visual theme.</p>
                   </div>
                 </ScrollArea>
               </div>
@@ -2131,8 +2127,8 @@ function AppContent() {
                       </div>
                     </div>
                     <p>
-                      This larger scroll area can accommodate more complex layouts and content structures. The
-                      scrollbar remains proportional to the content size.
+                      This larger scroll area can accommodate more complex layouts and content structures. The scrollbar
+                      remains proportional to the content size.
                     </p>
                   </div>
                 </ScrollArea>
@@ -2143,21 +2139,24 @@ function AppContent() {
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Thin scrollbars (6px)</p>
-                <ScrollArea 
-                  className='h-32 w-full border border-slate-600 rounded' 
+                <ScrollArea
+                  className='h-32 w-full border border-slate-600 rounded'
                   scrollbarThickness={6}
                   thumbClassName='bg-blue-500 hover:bg-blue-400'
                 >
                   <div className='p-4 w-[800px]'>
                     <h4 className='font-semibold mb-2'>Thin Scrollbars</h4>
                     <p className='mb-4'>
-                      This scroll area uses thin 6px scrollbars, perfect for modern, minimalist designs where you want scrollbars to be less prominent.
+                      This scroll area uses thin 6px scrollbars, perfect for modern, minimalist designs where you want
+                      scrollbars to be less prominent.
                     </p>
                     <p className='mb-4'>
-                      The thin scrollbars take up less space while still providing clear visual feedback about scroll position.
+                      The thin scrollbars take up less space while still providing clear visual feedback about scroll
+                      position.
                     </p>
                     <p className='mb-4'>
-                      Great for applications where screen real estate is valuable and you want a clean, unobtrusive scrolling experience.
+                      Great for applications where screen real estate is valuable and you want a clean, unobtrusive
+                      scrolling experience.
                     </p>
                     <p>You can still easily interact with them despite their smaller size.</p>
                   </div>
@@ -2165,21 +2164,24 @@ function AppContent() {
               </div>
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Custom extra-thick scrollbars (24px)</p>
-                <ScrollArea 
-                  className='h-32 w-full border border-slate-600 rounded' 
+                <ScrollArea
+                  className='h-32 w-full border border-slate-600 rounded'
                   scrollbarThickness={24}
                   thumbClassName='bg-gradient-to-br from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400'
                 >
                   <div className='p-4'>
                     <h4 className='font-semibold mb-2'>Extra-Thick Custom Scrollbars</h4>
                     <p className='mb-4'>
-                      This demonstrates 24px scrollbars with a custom gradient thumb, showing how you can create bold, highly visible scroll indicators.
+                      This demonstrates 24px scrollbars with a custom gradient thumb, showing how you can create bold,
+                      highly visible scroll indicators.
                     </p>
                     <p className='mb-4'>
-                      Extra-thick scrollbars work well for specialized applications, kiosk interfaces, or when scrollbars are a key part of your design language.
+                      Extra-thick scrollbars work well for specialized applications, kiosk interfaces, or when
+                      scrollbars are a key part of your design language.
                     </p>
                     <p className='mb-4'>
-                      The combination of custom thickness and gradient styling creates a unique, branded scrolling experience.
+                      The combination of custom thickness and gradient styling creates a unique, branded scrolling
+                      experience.
                     </p>
                     <p>You have complete control over both the size and appearance of your scrollbars.</p>
                   </div>
@@ -2237,13 +2239,11 @@ scrollableCode.addEventListener('scroll', (e) => {
                       <div key={i} className={`flex ${i % 3 === 0 ? 'justify-end' : 'justify-start'}`}>
                         <div
                           className={`max-w-xs p-2 rounded-lg ${
-                            i % 3 === 0
-                              ? 'bg-blue-600 text-white'
-                              : 'bg-slate-700 text-gray-200'
+                            i % 3 === 0 ? 'bg-blue-600 text-white' : 'bg-slate-700 text-gray-200'
                           }`}
                         >
                           <p className='text-sm'>
-                            {i % 3 === 0 
+                            {i % 3 === 0
                               ? `This is my message ${i + 1}. I'm sending a response here.`
                               : `This is message ${i + 1} from another user. Here's some chat content.`}
                           </p>
