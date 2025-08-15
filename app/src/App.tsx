@@ -27,6 +27,7 @@ import {
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
+import Select from './select';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
@@ -40,6 +41,8 @@ const TestComponent = ({ index }: { index: number }) => {
 function AppContent() {
   const { alert, confirm } = useActionModal();
   const { addToast } = useToast();
+  const [selectedFruit, setSelectedFruit] = useState<string>('');
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('');
   const [radioGroupSelections, setRadioGroupSelections] = useState<Record<number, string>>({});
   const [modalsOpen, setModalsOpen] = useState<Record<string, boolean>>({
     basic: false,
@@ -198,6 +201,7 @@ function AppContent() {
           <option value='panel-section'>Panel</option>
           <option value='actionmodal-section'>Action Modal</option>
           <option value='toast-section'>Toast</option>
+          <option value='select-section'>Select</option>
           <option value='tooltip-section'>Tooltip</option>
           <option value='separator-section'>Separator</option>
           <option value='slider-section'>Slider</option>
@@ -1195,6 +1199,121 @@ function AppContent() {
               >
                 Persistent Toast
               </Button>
+            </div>
+          </div>
+
+          <div id='select-section'>
+            <h3 className='mb-2'>Select</h3>
+            
+            <h4 className='mb-2 text-lg'>Basic Examples</h4>
+            <div className='space-y-4 mb-6'>
+              <Select
+                value={selectedFruit}
+                onChange={setSelectedFruit}
+                options={[
+                  { text: 'Apple', value: 'apple' },
+                  { text: 'Banana', value: 'banana' },
+                  { text: 'Cherry', value: 'cherry' },
+                  { text: 'Disabled Option', value: 'disabled', disabled: true },
+                ]}
+                placeholder="Choose a fruit..."
+              />
+              <div className='text-sm text-muted-foreground'>
+                Selected: {selectedFruit || 'None'}
+              </div>
+              
+              <Select
+                options={[
+                  { text: 'Option 1', value: 'opt1', description: 'This is the first option' },
+                  { text: 'Option 2', value: 'opt2', description: 'This is the second option' },
+                  { text: 'Option 3', value: 'opt3', description: 'This is the third option' },
+                ]}
+                placeholder="Select with descriptions..."
+              />
+            </div>
+
+            <h4 className='mb-2 text-lg'>Searchable Select (Combobox)</h4>
+            <div className='space-y-4 mb-6'>
+              <Select
+                searchable
+                value={selectedLanguage}
+                onChange={setSelectedLanguage}
+                options={[
+                  { text: 'JavaScript', value: 'js', description: 'Dynamic programming language' },
+                  { text: 'TypeScript', value: 'ts', description: 'Typed superset of JavaScript' },
+                  { text: 'Python', value: 'py', description: 'High-level programming language' },
+                  { text: 'Java', value: 'java', description: 'Object-oriented programming language' },
+                  { text: 'C++', value: 'cpp', description: 'Systems programming language' },
+                  { text: 'Rust', value: 'rust', description: 'Memory-safe systems language' },
+                ]}
+                placeholder="Search for a programming language..."
+              />
+              <div className='text-sm text-muted-foreground'>
+                Selected: {selectedLanguage || 'None'}
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg'>Different Sizes</h4>
+            <div className='space-y-4 mb-6'>
+              <Select
+                size="sm"
+                options={[
+                  { text: 'Small Select', value: 'small' },
+                  { text: 'Another Option', value: 'another' },
+                ]}
+                placeholder="Small size..."
+              />
+              
+              <Select
+                size="md"
+                options={[
+                  { text: 'Medium Select', value: 'medium' },
+                  { text: 'Another Option', value: 'another' },
+                ]}
+                placeholder="Medium size (default)..."
+              />
+              
+              <Select
+                size="lg"
+                options={[
+                  { text: 'Large Select', value: 'large' },
+                  { text: 'Another Option', value: 'another' },
+                ]}
+                placeholder="Large size..."
+              />
+            </div>
+
+            <h4 className='mb-2 text-lg'>Custom Styling</h4>
+            <div className='space-y-4 mb-6'>
+              <Select
+                options={[
+                  { text: 'Custom Trigger', value: 'custom1' },
+                  { text: 'Another Option', value: 'custom2' },
+                ]}
+                placeholder="Custom trigger styling..."
+                triggerClassName="bg-blue-50 border-blue-200 hover:border-blue-400"
+              />
+              
+              <Select
+                options={[
+                  { text: 'Custom Content', value: 'content1' },
+                  { text: 'Another Option', value: 'content2' },
+                ]}
+                placeholder="Custom content styling..."
+                contentClassName="bg-purple-50 border-purple-200"
+              />
+            </div>
+
+            <h4 className='mb-2 text-lg'>Disabled State</h4>
+            <div className='space-y-4'>
+              <Select
+                disabled
+                options={[
+                  { text: 'Disabled Select', value: 'disabled1' },
+                  { text: 'Cannot Select', value: 'disabled2' },
+                ]}
+                placeholder="This select is disabled..."
+              />
             </div>
           </div>
 
