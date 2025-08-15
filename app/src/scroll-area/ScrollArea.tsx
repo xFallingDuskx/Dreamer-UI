@@ -11,6 +11,8 @@ export interface ScrollAreaProps {
   viewportClassName?: string;
   /** Custom CSS classes for the scrollbar track */
   scrollbarClassName?: string;
+  /** Scrollbar thickness in pixels. Defaults to 10px */
+  scrollbarThickness?: number;
   /** Children content to be scrolled */
   children: React.ReactNode;
   /** HTML id attribute */
@@ -24,6 +26,7 @@ export default function ScrollArea({
   thumbClassName,
   viewportClassName,
   scrollbarClassName,
+  scrollbarThickness = 10,
   children,
   id,
   ref,
@@ -56,13 +59,14 @@ export default function ScrollArea({
         <div
           className={join(
             'touch-none select-none transition-all duration-300',
-            'h-full w-2.5 p-[1px]',
+            'h-full p-[1px]',
             'absolute right-0 top-0',
             isFadingOut ? 'opacity-0' : 'opacity-100',
             scrollbarClassName
           )}
           data-scroll-area-scrollbar='vertical'
           data-state={isScrolling ? 'visible' : 'hidden'}
+          style={{ width: `${scrollbarThickness}px` }}
         >
           <div
             ref={verticalThumbRef}
@@ -78,13 +82,14 @@ export default function ScrollArea({
         <div
           className={join(
             'touch-none select-none transition-all duration-300',
-            'h-2.5 p-[1px]',
-            'absolute bottom-0 left-0 w-full',
+            'w-full p-[1px]',
+            'absolute bottom-0 left-0',
             isFadingOut ? 'opacity-0' : 'opacity-100',
             scrollbarClassName
           )}
           data-scroll-area-scrollbar='horizontal'
           data-state={isScrolling ? 'visible' : 'hidden'}
+          style={{ height: `${scrollbarThickness}px` }}
         >
           <div
             ref={horizontalThumbRef}
@@ -97,7 +102,14 @@ export default function ScrollArea({
 
       {/* Corner */}
       {scrollbarVisible.vertical && scrollbarVisible.horizontal && (
-        <div className={join('bg-transparent', 'absolute bottom-0 right-0 h-2.5 w-2.5')} data-scroll-area-corner='' />
+        <div 
+          className={join('bg-transparent', 'absolute bottom-0 right-0')} 
+          data-scroll-area-corner=''
+          style={{ 
+            height: `${scrollbarThickness}px`, 
+            width: `${scrollbarThickness}px` 
+          }}
+        />
       )}
     </div>
   );

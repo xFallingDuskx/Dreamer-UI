@@ -2139,6 +2139,54 @@ function AppContent() {
               </div>
             </div>
 
+            <h4 className='mb-2 text-lg mt-6'>Scrollbar Thickness</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Thin scrollbars (6px)</p>
+                <ScrollArea 
+                  className='h-32 w-full border border-slate-600 rounded' 
+                  scrollbarThickness={6}
+                  thumbClassName='bg-blue-500 hover:bg-blue-400'
+                >
+                  <div className='p-4 w-[800px]'>
+                    <h4 className='font-semibold mb-2'>Thin Scrollbars</h4>
+                    <p className='mb-4'>
+                      This scroll area uses thin 6px scrollbars, perfect for modern, minimalist designs where you want scrollbars to be less prominent.
+                    </p>
+                    <p className='mb-4'>
+                      The thin scrollbars take up less space while still providing clear visual feedback about scroll position.
+                    </p>
+                    <p className='mb-4'>
+                      Great for applications where screen real estate is valuable and you want a clean, unobtrusive scrolling experience.
+                    </p>
+                    <p>You can still easily interact with them despite their smaller size.</p>
+                  </div>
+                </ScrollArea>
+              </div>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Custom extra-thick scrollbars (24px)</p>
+                <ScrollArea 
+                  className='h-32 w-full border border-slate-600 rounded' 
+                  scrollbarThickness={24}
+                  thumbClassName='bg-gradient-to-br from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400'
+                >
+                  <div className='p-4'>
+                    <h4 className='font-semibold mb-2'>Extra-Thick Custom Scrollbars</h4>
+                    <p className='mb-4'>
+                      This demonstrates 24px scrollbars with a custom gradient thumb, showing how you can create bold, highly visible scroll indicators.
+                    </p>
+                    <p className='mb-4'>
+                      Extra-thick scrollbars work well for specialized applications, kiosk interfaces, or when scrollbars are a key part of your design language.
+                    </p>
+                    <p className='mb-4'>
+                      The combination of custom thickness and gradient styling creates a unique, branded scrolling experience.
+                    </p>
+                    <p>You have complete control over both the size and appearance of your scrollbars.</p>
+                  </div>
+                </ScrollArea>
+              </div>
+            </div>
+
             <h4 className='mb-2 text-lg mt-6'>Practical Examples</h4>
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
