@@ -29,14 +29,8 @@ export default function ScrollArea({
   ref,
   ...props
 }: ScrollAreaProps) {
-  const {
-    viewportRef,
-    verticalThumbRef,
-    horizontalThumbRef,
-    isScrolling,
-    scrollbarVisible,
-    handleScroll,
-  } = useScrollArea();
+  const { viewportRef, verticalThumbRef, horizontalThumbRef, isScrolling, isFadingOut, scrollbarVisible, handleScroll } =
+    useScrollArea();
 
   const thumbsClassName = join(
     'relative flex-1 rounded-full bg-slate-400/60 hover:bg-slate-400/80 active:bg-slate-400',
@@ -58,12 +52,13 @@ export default function ScrollArea({
       </div>
 
       {/* Vertical Scrollbar */}
-      {scrollbarVisible.vertical && (
+      {scrollbarVisible.vertical && (isScrolling || isFadingOut) && (
         <div
           className={join(
-            'touch-none select-none transition-colors',
+            'touch-none select-none transition-all duration-300',
             'h-full w-2.5 p-[1px]',
             'absolute right-0 top-0',
+            isFadingOut ? 'opacity-0' : 'opacity-100',
             scrollbarClassName
           )}
           data-scroll-area-scrollbar='vertical'
@@ -79,12 +74,13 @@ export default function ScrollArea({
       )}
 
       {/* Horizontal Scrollbar */}
-      {scrollbarVisible.horizontal && (
+      {scrollbarVisible.horizontal && (isScrolling || isFadingOut) && (
         <div
           className={join(
-            'touch-none select-none transition-colors',
+            'touch-none select-none transition-all duration-300',
             'h-2.5 p-[1px]',
             'absolute bottom-0 left-0 w-full',
+            isFadingOut ? 'opacity-0' : 'opacity-100',
             scrollbarClassName
           )}
           data-scroll-area-scrollbar='horizontal'

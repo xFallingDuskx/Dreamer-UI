@@ -5,10 +5,13 @@ export function useScrollArea() {
   const verticalThumbRef = useRef<HTMLDivElement>(null);
   const horizontalThumbRef = useRef<HTMLDivElement>(null);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false);
   const [scrollbarVisible, setScrollbarVisible] = useState({
     vertical: false,
     horizontal: false,
   });
+  const scrollTimeout = useRef<number | null>(null);
+  const fadeTimeout = useRef<number | null>(null);
 
   // Check if content overflows and update scrollbar visibility
   const checkOverflow = useCallback(() => {
@@ -69,15 +72,28 @@ export function useScrollArea() {
 
   // Handle scroll events
   const handleScroll = useCallback(() => {
+    // Clear any existing timeouts
+    if (scrollTimeout.current) {
+      clearTimeout(scrollTimeout.current);
+    }
+    if (fadeTimeout.current) {
+      clearTimeout(fadeTimeout.current);
+    }
+
     setIsScrolling(true);
+    setIsFadingOut(false);
     updateThumbSizes();
 
-    // Clear existing timeout
-    const timeoutId = setTimeout(() => {
-      setIsScrolling(false);
-    }, 150);
-
-    return () => clearTimeout(timeoutId);
+    // Start fade-out process after scroll stops
+    scrollTimeout.current = setTimeout(() => {
+      setIsFadingOut(true);
+      
+      // Remove scrollbars after fade animation completes
+      fadeTimeout.current = setTimeout(() => {
+        setIsScrolling(false);
+        setIsFadingOut(false);
+      }, 300); // 300ms for fade-out animation
+    }, 1000); // 1s delay before fade starts
   }, [updateThumbSizes]);
 
   // Set up observers for content and size changes
@@ -110,11 +126,24 @@ export function useScrollArea() {
     updateThumbSizes();
   }, [scrollbarVisible, updateThumbSizes]);
 
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+      if (fadeTimeout.current) {
+        clearTimeout(fadeTimeout.current);
+      }
+    };
+  }, []);
+
   return {
     viewportRef,
     verticalThumbRef,
     horizontalThumbRef,
     isScrolling,
+    isFadingOut,
     scrollbarVisible,
     handleScroll,
   };
