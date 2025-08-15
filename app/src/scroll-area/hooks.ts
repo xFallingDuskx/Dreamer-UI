@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export function useScrollArea() {
+export function useScrollArea(scrollbarThickness: number) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const verticalThumbRef = useRef<HTMLDivElement>(null);
   const horizontalThumbRef = useRef<HTMLDivElement>(null);
@@ -36,14 +36,19 @@ export function useScrollArea() {
     if (!viewport) return;
 
     if (verticalThumb && scrollbarVisible.vertical) {
-      const scrollRatio = viewport.clientHeight / viewport.scrollHeight;
+      // Calculate available height (subtract horizontal scrollbar thickness if present)
+      const availableHeight = scrollbarVisible.horizontal 
+        ? viewport.clientHeight - scrollbarThickness 
+        : viewport.clientHeight;
+      
+      const scrollRatio = availableHeight / viewport.scrollHeight;
       const thumbHeight = Math.max(scrollRatio * 100, 10); // Minimum 10% height
 
       // Calculate scroll percentage (0 to 1)
       const maxScrollTop = viewport.scrollHeight - viewport.clientHeight;
       const scrollPercentage = maxScrollTop > 0 ? viewport.scrollTop / maxScrollTop : 0;
 
-      // The thumb should move from 0% to (100% - thumbHeight%) of the track
+      // The thumb should move from 0% to (100% - thumbHeight%) of the available track
       const maxThumbPosition = 100 - thumbHeight;
       const thumbTop = scrollPercentage * maxThumbPosition;
 
@@ -53,14 +58,19 @@ export function useScrollArea() {
     }
 
     if (horizontalThumb && scrollbarVisible.horizontal) {
-      const scrollRatio = viewport.clientWidth / viewport.scrollWidth;
+      // Calculate available width (subtract vertical scrollbar thickness if present)
+      const availableWidth = scrollbarVisible.vertical 
+        ? viewport.clientWidth - scrollbarThickness 
+        : viewport.clientWidth;
+      
+      const scrollRatio = availableWidth / viewport.scrollWidth;
       const thumbWidth = Math.max(scrollRatio * 100, 10); // Minimum 10% width
 
       // Calculate scroll percentage (0 to 1)
       const maxScrollLeft = viewport.scrollWidth - viewport.clientWidth;
       const scrollPercentage = maxScrollLeft > 0 ? viewport.scrollLeft / maxScrollLeft : 0;
 
-      // The thumb should move from 0% to (100% - thumbWidth%) of the track
+      // The thumb should move from 0% to (100% - thumbWidth%) of the available track
       const maxThumbPosition = 100 - thumbWidth;
       const thumbLeft = scrollPercentage * maxThumbPosition;
 
@@ -68,7 +78,7 @@ export function useScrollArea() {
       horizontalThumb.style.left = `${thumbLeft}%`;
       horizontalThumb.style.transform = 'none';
     }
-  }, [scrollbarVisible]);
+  }, [scrollbarVisible, scrollbarThickness]);
 
   // Handle scroll events
   const handleScroll = useCallback(() => {
