@@ -50,4 +50,8 @@
   }
 }
 
+.example-container h2, h3 {
+  @apply text-center
+}
+
 @source "../node_modules/@moondreamsdev/dreamer-ui/dist/**/*.{js,jsx,ts,tsx}";

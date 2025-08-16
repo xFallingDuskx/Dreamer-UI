@@ -184,7 +184,7 @@ function AppContent() {
         <p className='text-slate-200 font-semibold'>A collection of Tailwind CSS components for React</p>
       </div>
 
-      <div className='text-center'>
+      <div className='example-container'>
         <h2>Select Component</h2>
         <select className='block mx-auto my-2 focus:outline-none' onChange={handleSelectOnChange}>
           <option value='buttons-section'>Button</option>
@@ -1204,7 +1204,7 @@ function AppContent() {
 
           <div id='select-section'>
             <h3 className='mb-2'>Select</h3>
-            
+
             <h4 className='mb-2 text-lg'>Basic Examples</h4>
             <div className='space-y-4 mb-6'>
               <Select
@@ -1216,19 +1216,17 @@ function AppContent() {
                   { text: 'Cherry', value: 'cherry' },
                   { text: 'Disabled Option', value: 'disabled', disabled: true },
                 ]}
-                placeholder="Choose a fruit..."
+                placeholder='Choose a fruit...'
               />
-              <div className='text-sm text-muted-foreground'>
-                Selected: {selectedFruit || 'None'}
-              </div>
-              
+              <div className='text-sm text-muted-foreground'>Selected: {selectedFruit || 'None'}</div>
+
               <Select
                 options={[
                   { text: 'Option 1', value: 'opt1', description: 'This is the first option' },
                   { text: 'Option 2', value: 'opt2', description: 'This is the second option' },
                   { text: 'Option 3', value: 'opt3', description: 'This is the third option' },
                 ]}
-                placeholder="Select with descriptions..."
+                placeholder='Select with descriptions...'
               />
             </div>
 
@@ -1246,40 +1244,38 @@ function AppContent() {
                   { text: 'C++', value: 'cpp', description: 'Systems programming language' },
                   { text: 'Rust', value: 'rust', description: 'Memory-safe systems language' },
                 ]}
-                placeholder="Search for a programming language..."
+                placeholder='Search for a programming language...'
               />
-              <div className='text-sm text-muted-foreground'>
-                Selected: {selectedLanguage || 'None'}
-              </div>
+              <div className='text-sm text-muted-foreground'>Selected: {selectedLanguage || 'None'}</div>
             </div>
 
             <h4 className='mb-2 text-lg'>Different Sizes</h4>
             <div className='space-y-4 mb-6'>
               <Select
-                size="sm"
+                size='sm'
                 options={[
                   { text: 'Small Select', value: 'small' },
                   { text: 'Another Option', value: 'another' },
                 ]}
-                placeholder="Small size..."
+                placeholder='Small size...'
               />
-              
+
               <Select
-                size="md"
+                size='md'
                 options={[
                   { text: 'Medium Select', value: 'medium' },
                   { text: 'Another Option', value: 'another' },
                 ]}
-                placeholder="Medium size (default)..."
+                placeholder='Medium size (default)...'
               />
-              
+
               <Select
-                size="lg"
+                size='lg'
                 options={[
                   { text: 'Large Select', value: 'large' },
                   { text: 'Another Option', value: 'another' },
                 ]}
-                placeholder="Large size..."
+                placeholder='Large size...'
               />
             </div>
 
@@ -1290,17 +1286,18 @@ function AppContent() {
                   { text: 'Custom Trigger', value: 'custom1' },
                   { text: 'Another Option', value: 'custom2' },
                 ]}
-                placeholder="Custom trigger styling..."
-                triggerClassName="bg-blue-50 border-blue-200 hover:border-blue-400"
+                placeholder='Custom trigger styling...'
+                triggerClassName='bg-blue-50 border-blue-200 hover:border-blue-400'
               />
-              
+
               <Select
                 options={[
                   { text: 'Custom Content', value: 'content1' },
                   { text: 'Another Option', value: 'content2' },
                 ]}
-                placeholder="Custom content styling..."
-                contentClassName="bg-purple-50 border-purple-200"
+                placeholder='Custom content styling...'
+                triggerClassName='!bg-purple-100 text-purple-950 border-purple-200 focus:!border-purple-600 focus:!ring-purple-600'
+                dropdownClassName='bg-purple-100 text-purple-950 !border-purple-800'
               />
             </div>
 
@@ -1312,7 +1309,7 @@ function AppContent() {
                   { text: 'Disabled Select', value: 'disabled1' },
                   { text: 'Cannot Select', value: 'disabled2' },
                 ]}
-                placeholder="This select is disabled..."
+                placeholder='This select is disabled...'
               />
             </div>
           </div>
