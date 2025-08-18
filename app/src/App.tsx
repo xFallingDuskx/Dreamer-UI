@@ -1279,6 +1279,40 @@ function AppContent() {
               />
             </div>
 
+            <h4 className='mb-2 text-lg'>Clearable Select</h4>
+            <div className='space-y-4 mb-6'>
+              <Select
+                clearable
+                value={selectedFruit}
+                onChange={setSelectedFruit}
+                options={[
+                  { text: 'Apple', value: 'apple' },
+                  { text: 'Banana', value: 'banana' },
+                  { text: 'Cherry', value: 'cherry' },
+                ]}
+                placeholder='Select a fruit (clearable)...'
+              />
+              <div className='text-sm text-muted-foreground'>
+                You can clear the selection using the X button. Selected: {selectedFruit || 'None'}
+              </div>
+              
+              <Select
+                searchable
+                clearable
+                value={selectedLanguage}
+                onChange={setSelectedLanguage}
+                options={[
+                  { text: 'JavaScript', value: 'js', description: 'Dynamic programming language' },
+                  { text: 'TypeScript', value: 'ts', description: 'Typed superset of JavaScript' },
+                  { text: 'Python', value: 'py', description: 'High-level programming language' },
+                ]}
+                placeholder='Searchable and clearable...'
+              />
+              <div className='text-sm text-muted-foreground'>
+                Combined searchable and clearable. Selected: {selectedLanguage || 'None'}
+              </div>
+            </div>
+
             <h4 className='mb-2 text-lg'>Custom Styling</h4>
             <div className='space-y-4 mb-6'>
               <Select

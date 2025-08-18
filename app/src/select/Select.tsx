@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import { ChevronDown, Check } from './icons';
+import { ChevronDown, Check, X } from './icons';
 import { useSelectDropdown, useSelectKeyboardNavigation, SelectOption } from './hooks';
 import { selectVariants, sizeVariants, selectDefaults, SelectVariant, SelectSize } from './variants';
 
@@ -12,6 +12,7 @@ export interface SelectProps {
   placeholder?: string;
   searchable?: boolean;
   disabled?: boolean;
+  clearable?: boolean;
   variant?: SelectVariant;
   size?: SelectSize;
   className?: string;
@@ -30,6 +31,7 @@ export default function Select({
   placeholder = 'Select an option...',
   searchable = false,
   disabled = false,
+  clearable = false,
   variant = selectDefaults.variant,
   size = selectDefaults.size,
   className,
@@ -133,6 +135,12 @@ export default function Select({
     setHighlightedIndex(-1);
   };
 
+  const handleClear = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onChange?.('');
+  };
+
   return (
     <div
       className={join('relative', className)}
@@ -142,6 +150,7 @@ export default function Select({
       data-value={value}
       data-searchable={searchable}
       data-disabled={disabled}
+      data-clearable={clearable}
     >
       {/* Trigger Button */}
       <button
@@ -167,7 +176,20 @@ export default function Select({
         <span className={join('block truncate', !selectedOption && 'opacity-70')}>
           {selectedOption ? selectedOption.text : placeholder}
         </span>
-        <ChevronDown size={16} className={join('ml-2 transition-transform duration-200', isOpen && 'rotate-180')} />
+        <div className='flex items-center ml-2'>
+          {clearable && selectedOption && (
+            <button
+              type='button'
+              onClick={handleClear}
+              className='p-0.5 rounded hover:bg-accent/20 transition-colors mr-1 group'
+              aria-label='Clear selection'
+              data-select-clear='true'
+            >
+              <X size={14} className='opacity-70 group-hover:opacity-100' />
+            </button>
+          )}
+          <ChevronDown size={16} className={join('transition-transform duration-200', isOpen && 'rotate-180')} />
+        </div>
       </button>
 
       {/* Dropdown */}
