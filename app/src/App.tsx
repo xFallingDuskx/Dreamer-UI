@@ -1249,6 +1249,51 @@ function AppContent() {
               <div className='text-sm text-muted-foreground'>Selected: {selectedLanguage || 'None'}</div>
             </div>
 
+            <h4 className='mb-2 text-lg'>Keyboard Navigation & Scrolling</h4>
+            <div className='space-y-4 mb-6'>
+              <Select
+                options={[
+                  { text: 'Afghanistan', value: 'AF' },
+                  { text: 'Albania', value: 'AL' },
+                  { text: 'Algeria', value: 'DZ' },
+                  { text: 'Argentina', value: 'AR' },
+                  { text: 'Australia', value: 'AU' },
+                  { text: 'Austria', value: 'AT' },
+                  { text: 'Bangladesh', value: 'BD' },
+                  { text: 'Belgium', value: 'BE' },
+                  { text: 'Brazil', value: 'BR' },
+                  { text: 'Canada', value: 'CA' },
+                  { text: 'Chile', value: 'CL' },
+                  { text: 'China', value: 'CN' },
+                  { text: 'Colombia', value: 'CO' },
+                  { text: 'Denmark', value: 'DK' },
+                  { text: 'Egypt', value: 'EG' },
+                  { text: 'Finland', value: 'FI' },
+                  { text: 'France', value: 'FR' },
+                  { text: 'Germany', value: 'DE' },
+                  { text: 'India', value: 'IN' },
+                  { text: 'Indonesia', value: 'ID' },
+                  { text: 'Italy', value: 'IT' },
+                  { text: 'Japan', value: 'JP' },
+                  { text: 'Mexico', value: 'MX' },
+                  { text: 'Netherlands', value: 'NL' },
+                  { text: 'Norway', value: 'NO' },
+                  { text: 'Poland', value: 'PL' },
+                  { text: 'Portugal', value: 'PT' },
+                  { text: 'Russia', value: 'RU' },
+                  { text: 'Spain', value: 'ES' },
+                  { text: 'Sweden', value: 'SE' },
+                  { text: 'Switzerland', value: 'CH' },
+                  { text: 'United Kingdom', value: 'GB' },
+                  { text: 'United States', value: 'US' },
+                ]}
+                placeholder="Select a country (use arrow keys)..."
+              />
+              <div className='text-sm text-muted-foreground'>
+                Use arrow keys ↑↓ to navigate. The dropdown automatically scrolls to keep the highlighted option visible.
+              </div>
+            </div>
+
             <h4 className='mb-2 text-lg'>Different Sizes</h4>
             <div className='space-y-4 mb-6'>
               <Select

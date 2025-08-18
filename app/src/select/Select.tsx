@@ -48,6 +48,7 @@ export default function Select({
   const triggerRef = useRef<HTMLButtonElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const optionsContainerRef = useRef<HTMLDivElement>(null);
 
   const { show, shouldRender } = useSelectDropdown(isOpen);
 
@@ -72,6 +73,21 @@ export default function Select({
       searchInputRef.current.focus();
     }
   }, [isOpen, searchable, shouldRender]);
+
+  // Auto-scroll to highlighted option
+  useEffect(() => {
+    if (highlightedIndex >= 0 && optionsContainerRef.current) {
+      const container = optionsContainerRef.current;
+      const highlightedOption = container.querySelector(`[data-option-index="${highlightedIndex}"]`) as HTMLElement;
+      
+      if (highlightedOption) {
+        highlightedOption.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+        });
+      }
+    }
+  }, [highlightedIndex]);
 
   const { handleKeyDown } = useSelectKeyboardNavigation({
     isOpen,
@@ -218,7 +234,7 @@ export default function Select({
           )}
 
           {/* Options */}
-          <div className='max-h-60 overflow-auto'>
+          <div ref={optionsContainerRef} className='max-h-60 overflow-auto'>
             {filteredOptions.length > 0 ? (
               filteredOptions.map((option, index) => (
                 <div
@@ -238,6 +254,7 @@ export default function Select({
                   data-select-option='true'
                   data-value={option.value}
                   data-highlighted={index === highlightedIndex}
+                  data-option-index={index}
                 >
                   <div className='flex-1 min-w-0'>
                     <div className='font-medium'>{option.text}</div>
