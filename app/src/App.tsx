@@ -43,6 +43,7 @@ function AppContent() {
   const { addToast } = useToast();
   const [selectedFruit, setSelectedFruit] = useState<string>('');
   const [selectedLanguage, setSelectedLanguage] = useState<string>('');
+  const [selectedCountry, setSelectedCountry] = useState<string>('PT'); // Pre-select Portugal to demo scroll-to-selected
   const [radioGroupSelections, setRadioGroupSelections] = useState<Record<number, string>>({});
   const [modalsOpen, setModalsOpen] = useState<Record<string, boolean>>({
     basic: false,
@@ -1252,6 +1253,8 @@ function AppContent() {
             <h4 className='mb-2 text-lg'>Keyboard Navigation & Scrolling</h4>
             <div className='space-y-4 mb-6'>
               <Select
+                value={selectedCountry}
+                onChange={setSelectedCountry}
                 options={[
                   { text: 'Afghanistan', value: 'AF' },
                   { text: 'Albania', value: 'AL' },
@@ -1290,7 +1293,7 @@ function AppContent() {
                 placeholder="Select a country (use arrow keys)..."
               />
               <div className='text-sm text-muted-foreground'>
-                Use arrow keys ↑↓ to navigate. The dropdown automatically scrolls to keep the highlighted option visible.
+                Portugal is pre-selected. When you open the dropdown, it scrolls to the selected option and keyboard navigation starts from there. Selected: {selectedCountry}
               </div>
             </div>
 

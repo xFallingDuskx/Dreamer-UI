@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { ChevronDown, Check, X } from './icons';
-import { useSelectDropdown, useSelectKeyboardNavigation, SelectOption } from './hooks';
+import { useSelectDropdown, useSelectKeyboardNavigation, useSelectHighlight, SelectOption } from './hooks';
 import { sizeVariants, SelectSize } from './variants';
 
 export type { SelectOption };
@@ -43,7 +43,6 @@ export default function Select({
 }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
   const triggerRef = useRef<HTMLButtonElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -62,10 +61,16 @@ export default function Select({
     );
   }, [options, searchable, searchTerm]);
 
-  // Reset highlighted index when options change
-  useEffect(() => {
-    setHighlightedIndex(-1);
-  }, [filteredOptions]);
+  const selectedOption = useMemo(() => options.find((option) => option.value === value), [options, value]);
+
+  // Use the highlight hook
+  const { highlightedIndex, setHighlightedIndex } = useSelectHighlight({
+    isOpen,
+    filteredOptions,
+    selectedOption,
+    shouldRender,
+    optionsContainerRef,
+  });
 
   // Focus search input when dropdown opens
   useEffect(() => {
@@ -74,20 +79,16 @@ export default function Select({
     }
   }, [isOpen, searchable, shouldRender]);
 
-  // Auto-scroll to highlighted option
-  useEffect(() => {
-    if (highlightedIndex >= 0 && optionsContainerRef.current) {
-      const container = optionsContainerRef.current;
-      const highlightedOption = container.querySelector(`[data-option-index="${highlightedIndex}"]`) as HTMLElement;
-      
-      if (highlightedOption) {
-        highlightedOption.scrollIntoView({
-          behavior: 'smooth',
-          block: 'nearest',
-        });
+  const keyboardOnSelect = useCallback(
+    (option: SelectOption) => {
+      if (!option.disabled) {
+        onChange?.(option.value);
+        setIsOpen(false);
+        setSearchTerm('');
       }
-    }
-  }, [highlightedIndex]);
+    },
+    [onChange]
+  );
 
   const { handleKeyDown } = useSelectKeyboardNavigation({
     isOpen,
@@ -95,13 +96,7 @@ export default function Select({
     filteredOptions,
     highlightedIndex,
     setHighlightedIndex,
-    onSelect: (option: SelectOption) => {
-      if (!option.disabled) {
-        onChange?.(option.value);
-        setIsOpen(false);
-        setSearchTerm('');
-      }
-    },
+    onSelect: keyboardOnSelect,
     triggerRef,
   });
 
@@ -121,8 +116,6 @@ export default function Select({
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  const selectedOption = options.find((option) => option.value === value);
 
   const handleToggle = () => {
     if (!disabled) {
@@ -181,6 +174,7 @@ export default function Select({
         onClick={handleToggle}
         onKeyDown={handleKeyDown}
         disabled={disabled}
+        aria-disabled={disabled}
         aria-haspopup='listbox'
         aria-expanded={isOpen}
         aria-label={selectedOption ? selectedOption.text : placeholder}
