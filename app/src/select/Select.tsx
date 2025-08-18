@@ -68,10 +68,10 @@ export default function Select({
 
   // Focus search input when dropdown opens
   useEffect(() => {
-    if (isOpen && searchable && searchInputRef.current) {
+    if (isOpen && shouldRender && searchable && searchInputRef.current) {
       searchInputRef.current.focus();
     }
-  }, [isOpen, searchable]);
+  }, [isOpen, searchable, shouldRender]);
 
   const { handleKeyDown } = useSelectKeyboardNavigation({
     isOpen,
