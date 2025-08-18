@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { ChevronDown, Check, X } from './icons';
 import { useSelectDropdown, useSelectKeyboardNavigation, SelectOption } from './hooks';
-import { selectVariants, sizeVariants, selectDefaults, SelectVariant, SelectSize } from './variants';
+import { sizeVariants, SelectSize } from './variants';
 
 export type { SelectOption };
 
@@ -13,7 +13,6 @@ export interface SelectProps {
   searchable?: boolean;
   disabled?: boolean;
   clearable?: boolean;
-  variant?: SelectVariant;
   size?: SelectSize;
   className?: string;
   triggerClassName?: string;
@@ -32,8 +31,7 @@ export default function Select({
   searchable = false,
   disabled = false,
   clearable = false,
-  variant = selectDefaults.variant,
-  size = selectDefaults.size,
+  size = 'md',
   className,
   triggerClassName,
   dropdownClassName,
@@ -161,7 +159,6 @@ export default function Select({
           'hover:border-primary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary',
           disabled && 'opacity-50 cursor-not-allowed hover:border-border',
           isOpen && 'border-primary ring-1 ring-primary',
-          selectVariants[variant],
           sizeVariants[size].trigger,
           triggerClassName
         )}
@@ -185,7 +182,7 @@ export default function Select({
               aria-label='Clear selection'
               data-select-clear='true'
             >
-              <X size={14} className='opacity-70 group-hover:opacity-100' />
+              <X size={14} className='opacity-70 group-hover:opacity-100 transition-opacity' />
             </button>
           )}
           <ChevronDown size={16} className={join('transition-transform duration-200', isOpen && 'rotate-180')} />
