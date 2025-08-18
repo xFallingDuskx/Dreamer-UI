@@ -162,7 +162,7 @@ export default function Select({
           disabled && 'opacity-50 cursor-not-allowed hover:border-border',
           isOpen && 'border-primary ring-1 ring-primary',
           selectVariants[variant],
-          sizeVariants[size],
+          sizeVariants[size].trigger,
           triggerClassName
         )}
         onClick={handleToggle}
@@ -227,8 +227,9 @@ export default function Select({
                 <div
                   key={option.value}
                   className={join(
-                    'flex items-center px-3 py-2 text-sm cursor-pointer transition-colors',
+                    'flex items-center cursor-pointer transition-colors',
                     'hover:bg-accent/10 focus:bg-accent/10',
+                    sizeVariants[size].options,
                     option.disabled && 'opacity-50 cursor-not-allowed',
                     index === highlightedIndex && 'bg-accent/20',
                     value === option.value && 'bg-accent/30'
