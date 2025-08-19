@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback, useId } from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { ChevronDown, Check, X } from './icons';
 import { useSelectDropdown, useSelectKeyboardNavigation, useSelectHighlight, SelectOption } from './hooks';
@@ -41,6 +41,12 @@ export default function Select({
   onSearch,
   searchPlaceholder = 'Search options...',
 }: SelectProps) {
+  const generatedId = useId();
+  const activeId = id ?? generatedId;
+  const listboxId = `${activeId}-listbox`;
+
+  const getOptionId = (index: number) => `${listboxId}-option-${index}`;
+
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -72,6 +78,8 @@ export default function Select({
     optionsContainerRef,
   });
 
+  const activeDescendantId = highlightedIndex >= 0 ? getOptionId(highlightedIndex) : undefined;
+
   // Focus search input when dropdown opens
   useEffect(() => {
     if (isOpen && shouldRender && searchable && searchInputRef.current) {
@@ -85,6 +93,7 @@ export default function Select({
         onChange?.(option.value);
         setIsOpen(false);
         setSearchTerm('');
+        triggerRef.current?.focus();
       }
     },
     [onChange]
@@ -102,6 +111,10 @@ export default function Select({
 
   // Close dropdown when clicking outside
   useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
@@ -115,7 +128,7 @@ export default function Select({
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [isOpen]);
 
   const handleToggle = () => {
     if (!disabled) {
@@ -177,6 +190,8 @@ export default function Select({
         aria-disabled={disabled}
         aria-haspopup='listbox'
         aria-expanded={isOpen}
+        aria-controls={isOpen ? listboxId : undefined}
+        aria-activedescendant={isOpen && !searchable ? activeDescendantId : undefined}
         aria-label={selectedOption ? selectedOption.text : placeholder}
         data-select-trigger='true'
       >
@@ -208,6 +223,7 @@ export default function Select({
             show ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2',
             dropdownClassName
           )}
+          id={listboxId}
           role='listbox'
           data-select-content='true'
         >
@@ -222,6 +238,9 @@ export default function Select({
                 onKeyDown={handleKeyDown}
                 placeholder={searchPlaceholder}
                 className='w-full px-2 py-2 text-inherit focus:outline-none'
+                aria-autocomplete='list'
+                aria-controls={listboxId}
+                aria-activedescendant={activeDescendantId}
                 data-select-search='true'
               />
             </div>
@@ -233,6 +252,7 @@ export default function Select({
               filteredOptions.map((option, index) => (
                 <div
                   key={option.value}
+                  id={getOptionId(index)}
                   className={join(
                     'flex items-center cursor-pointer transition-colors',
                     'hover:bg-accent/10 focus:bg-accent/10',
