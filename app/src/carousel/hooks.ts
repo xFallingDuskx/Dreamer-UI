@@ -84,6 +84,11 @@ export function useCarousel({
     return stopInterval;
   }, [autoScroll, scrollInterval, pauseScrollOnHover, isHovered, goToNext]);
 
+  // Reset to first slide when # of items to show changes
+  useEffect(() => {
+    setCurrentSlide(0);
+  }, [itemsToShow]);
+
   return {
     currentSlide,
     canGoPrev,

@@ -2244,6 +2244,57 @@ function AppContent() {
               </div>
             </div>
 
+            <h4 className='mb-2 text-lg mt-6'>Responsive Breakpoint Carousel</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Responsive using breakpoint object: 1 on mobile, 2 on md, 3 on lg, 4 on xl</p>
+                <Carousel 
+                  className='w-full max-w-4xl mx-auto' 
+                  itemsToShow={{ md: 2, lg: 3, xl: 4 }}
+                >
+                  {Array.from({ length: 8 }, (_, i) => (
+                    <div 
+                      key={i}
+                      className={`h-40 rounded-lg flex flex-col items-center justify-center text-white text-lg font-semibold mx-2 ${
+                        ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-teal-500'][i]
+                      }`}
+                    >
+                      <div className='text-2xl font-bold'>#{i + 1}</div>
+                      <div className='text-sm'>Responsive Item</div>
+                    </div>
+                  ))}
+                </Carousel>
+                <p className='text-xs text-gray-500 mt-2'>
+                  Resize your browser window to see how the number of visible items changes
+                </p>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Complex Responsive Layout</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Advanced: 1 on mobile, 2 on sm, 3 on md, 4 on lg, 6 on xl+</p>
+                <Carousel 
+                  className='w-full max-w-6xl mx-auto' 
+                  itemsToShow={{ sm: 2, md: 3, lg: 4, xl: 6 }}
+                  autoScroll={true}
+                  scrollInterval={4000}
+                >
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <div 
+                      key={i}
+                      className='bg-gradient-to-br from-gray-600 to-gray-800 h-24 rounded-md flex items-center justify-center text-white text-sm font-semibold border border-gray-500 mx-1'
+                    >
+                      Card {i + 1}
+                    </div>
+                  ))}
+                </Carousel>
+                <p className='text-xs text-gray-500 mt-2'>
+                  This carousel automatically adjusts from 1 item on mobile up to 6 items on extra-large screens
+                </p>
+              </div>
+            </div>
+
             <h4 className='mb-2 text-lg mt-6'>Custom Styled Carousel</h4>
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>

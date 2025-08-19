@@ -1,7 +1,8 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useCarousel } from './hooks.ts';
 import { carouselVariants } from './variants.ts';
+import useScreenSize, { ScreenSize } from './useScreenSize';
 
 // Simple chevron icons
 const ChevronLeft = ({ className }: { className?: string }) => (
@@ -35,8 +36,8 @@ export interface CarouselProps {
   hidePrevNext?: boolean;
   /** Hide dot indicators */
   hideDots?: boolean;
-  /** Number of items to show at once */
-  itemsToShow?: number;
+  /** Number of items to show at once, or breakpoint object mapping screen sizes to item counts */
+  itemsToShow?: number | Partial<Record<ScreenSize, number>>;
   /** Size variant for navigation buttons */
   buttonSize?: 'sm' | 'md' | 'lg';
   /** Style variant for navigation buttons */
@@ -47,6 +48,8 @@ export interface CarouselProps {
   prevButton?: React.ReactNode;
   /** Custom next button content */
   nextButton?: React.ReactNode;
+  /** Additional class names for carousel items */
+  itemsClassName?: string;
 }
 
 export default function Carousel({
@@ -67,14 +70,38 @@ export default function Carousel({
   infinite = true,
   prevButton,
   nextButton,
+  itemsClassName,
 }: CarouselProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const childrenArray = React.Children.toArray(children).filter(React.isValidElement);
   const totalItems = childrenArray.length;
+  const { screenSize } = useScreenSize();
+
+  // Resolve the current itemsToShow based on screen size or use the number value
+  const currentItemsToShow = useMemo(() => {
+    if (typeof itemsToShow === 'number') {
+      return itemsToShow;
+    }
+    
+    if (typeof itemsToShow === 'object' && itemsToShow && screenSize) {
+      // Start from current screen size and work down to find a defined value
+      const breakpointOrder: Array<ScreenSize> = ['2xl', 'xl', 'lg', 'md', 'sm', 'xs'];
+      const currentIndex = breakpointOrder.indexOf(screenSize);
+      
+      for (let i = currentIndex; i < breakpointOrder.length; i++) {
+        const breakpoint = breakpointOrder[i];
+        if (itemsToShow[breakpoint] !== undefined) {
+          return itemsToShow[breakpoint]!;
+        }
+      }
+    }
+    
+    return 1; // Default fallback
+  }, [itemsToShow, screenSize]);
 
   const { currentSlide, canGoPrev, canGoNext, goToPrev, goToNext, goToSlide, setIsHovered } = useCarousel({
     totalItems,
-    itemsToShow,
+    itemsToShow: currentItemsToShow,
     infinite,
     autoScroll,
     scrollInterval,
@@ -103,7 +130,7 @@ export default function Carousel({
     }
   };
 
-  const translateX = -(currentSlide * (100 / totalItems) * itemsToShow);
+  const translateX = -(currentSlide * (100 / totalItems) * currentItemsToShow);
 
   return (
     <div
@@ -114,7 +141,7 @@ export default function Carousel({
       onMouseLeave={handleMouseLeave}
       data-carousel='true'
       data-current-index={currentSlide}
-      data-items-to-show={itemsToShow}
+      data-items-to-show={currentItemsToShow}
       data-auto-scroll={autoScroll}
     >
       {/* Carousel Track */}
@@ -123,11 +150,16 @@ export default function Carousel({
         className='flex transition-transform duration-300 ease-in-out'
         style={{
           transform: `translateX(${translateX}%)`,
-          width: `${(totalItems / itemsToShow) * 100}%`,
+          width: `${(totalItems / currentItemsToShow) * 100}%`,
         }}
       >
         {childrenArray.map((child, index) => (
-          <div key={index} className='flex-shrink-0' style={{ width: `${100 / totalItems}%` }} data-slide-index={index}>
+          <div
+            key={index}
+            className={join('flex-shrink-0', itemsClassName)}
+            style={{ width: `${100 / totalItems}%` }}
+            data-slide-index={index}
+          >
             {child}
           </div>
         ))}
@@ -173,7 +205,7 @@ export default function Carousel({
       {/* Dots Indicator */}
       {!hideDots && (
         <div className='absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2'>
-          {Array.from({ length: Math.ceil(totalItems / itemsToShow) }).map((_, index) => (
+          {Array.from({ length: Math.ceil(totalItems / currentItemsToShow) }).map((_, index) => (
             <button
               key={index}
               type='button'
