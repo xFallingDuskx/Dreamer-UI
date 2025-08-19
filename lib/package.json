@@ -1,6 +1,6 @@
 {
   "name": "@moondreamsdev/dreamer-ui",
-  "version": "1.7.7-test.14",
+  "version": "1.7.7-test.16",
   "publishConfig": {
     "access": "public"
   },
@@ -13,7 +13,7 @@
     "dist"
   ],
   "bin": {
-    "dreamer-ui-init": "./dist/init.js"
+    "dreamer-ui-init": "dist/init.js"
   },
   "exports": {
     ".": {
@@ -59,7 +59,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xFallingDuskx/Dreamer-UI.git"
+    "url": "git+https://github.com/xFallingDuskx/Dreamer-UI.git"
   },
   "scripts": {
     "dev": "vite",

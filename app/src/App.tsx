@@ -13,6 +13,7 @@ import {
   RadioGroup,
   RadioGroupItem,
   ScrollArea,
+  Select,
   Separator,
   Skeleton,
   Slider,
@@ -40,6 +41,9 @@ const TestComponent = ({ index }: { index: number }) => {
 function AppContent() {
   const { alert, confirm } = useActionModal();
   const { addToast } = useToast();
+  const [selectedFruit, setSelectedFruit] = useState<string>('');
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('');
+  const [selectedCountry, setSelectedCountry] = useState<string>('PT'); // Pre-select Portugal to demo scroll-to-selected
   const [radioGroupSelections, setRadioGroupSelections] = useState<Record<number, string>>({});
   const [modalsOpen, setModalsOpen] = useState<Record<string, boolean>>({
     basic: false,
@@ -181,7 +185,7 @@ function AppContent() {
         <p className='text-slate-200 font-semibold'>A collection of Tailwind CSS components for React</p>
       </div>
 
-      <div className='text-center'>
+      <div className='example-container'>
         <h2>Select Component</h2>
         <select className='block mx-auto my-2 focus:outline-none' onChange={handleSelectOnChange}>
           <option value='buttons-section'>Button</option>
@@ -198,6 +202,7 @@ function AppContent() {
           <option value='panel-section'>Panel</option>
           <option value='actionmodal-section'>Action Modal</option>
           <option value='toast-section'>Toast</option>
+          <option value='select-section'>Select</option>
           <option value='tooltip-section'>Tooltip</option>
           <option value='separator-section'>Separator</option>
           <option value='slider-section'>Slider</option>
@@ -1195,6 +1200,200 @@ function AppContent() {
               >
                 Persistent Toast
               </Button>
+            </div>
+          </div>
+
+          <div id='select-section'>
+            <h3 className='mb-2'>Select</h3>
+
+            <h4 className='mb-2 text-lg'>Basic Examples</h4>
+            <div className='space-y-4 mb-6'>
+              <Select
+                value={selectedFruit}
+                onChange={setSelectedFruit}
+                options={[
+                  { text: 'Apple', value: 'apple' },
+                  { text: 'Banana', value: 'banana' },
+                  { text: 'Cherry', value: 'cherry' },
+                  { text: 'Disabled Option', value: 'disabled', disabled: true },
+                ]}
+                placeholder='Choose a fruit...'
+              />
+              <div className='text-sm text-muted-foreground'>Selected: {selectedFruit || 'None'}</div>
+
+              <Select
+                options={[
+                  { text: 'Option 1', value: 'opt1', description: 'This is the first option' },
+                  { text: 'Option 2', value: 'opt2', description: 'This is the second option' },
+                  { text: 'Option 3', value: 'opt3', description: 'This is the third option' },
+                ]}
+                placeholder='Select with descriptions...'
+              />
+            </div>
+
+            <h4 className='mb-2 text-lg'>Searchable Select (Combobox)</h4>
+            <div className='space-y-4 mb-6'>
+              <Select
+                searchable
+                value={selectedLanguage}
+                onChange={setSelectedLanguage}
+                options={[
+                  { text: 'JavaScript', value: 'js', description: 'Dynamic programming language' },
+                  { text: 'TypeScript', value: 'ts', description: 'Typed superset of JavaScript' },
+                  { text: 'Python', value: 'py', description: 'High-level programming language' },
+                  { text: 'Java', value: 'java', description: 'Object-oriented programming language' },
+                  { text: 'C++', value: 'cpp', description: 'Systems programming language' },
+                  { text: 'Rust', value: 'rust', description: 'Memory-safe systems language' },
+                ]}
+                placeholder='Search for a programming language...'
+              />
+              <div className='text-sm text-muted-foreground'>Selected: {selectedLanguage || 'None'}</div>
+            </div>
+
+            <h4 className='mb-2 text-lg'>Keyboard Navigation & Scrolling</h4>
+            <div className='space-y-4 mb-6'>
+              <Select
+                value={selectedCountry}
+                onChange={setSelectedCountry}
+                options={[
+                  { text: 'Afghanistan', value: 'AF' },
+                  { text: 'Albania', value: 'AL' },
+                  { text: 'Algeria', value: 'DZ' },
+                  { text: 'Argentina', value: 'AR' },
+                  { text: 'Australia', value: 'AU' },
+                  { text: 'Austria', value: 'AT' },
+                  { text: 'Bangladesh', value: 'BD' },
+                  { text: 'Belgium', value: 'BE' },
+                  { text: 'Brazil', value: 'BR' },
+                  { text: 'Canada', value: 'CA' },
+                  { text: 'Chile', value: 'CL' },
+                  { text: 'China', value: 'CN' },
+                  { text: 'Colombia', value: 'CO' },
+                  { text: 'Denmark', value: 'DK' },
+                  { text: 'Egypt', value: 'EG' },
+                  { text: 'Finland', value: 'FI' },
+                  { text: 'France', value: 'FR' },
+                  { text: 'Germany', value: 'DE' },
+                  { text: 'India', value: 'IN' },
+                  { text: 'Indonesia', value: 'ID' },
+                  { text: 'Italy', value: 'IT' },
+                  { text: 'Japan', value: 'JP' },
+                  { text: 'Mexico', value: 'MX' },
+                  { text: 'Netherlands', value: 'NL' },
+                  { text: 'Norway', value: 'NO' },
+                  { text: 'Poland', value: 'PL' },
+                  { text: 'Portugal', value: 'PT' },
+                  { text: 'Russia', value: 'RU' },
+                  { text: 'Spain', value: 'ES' },
+                  { text: 'Sweden', value: 'SE' },
+                  { text: 'Switzerland', value: 'CH' },
+                  { text: 'United Kingdom', value: 'GB' },
+                  { text: 'United States', value: 'US' },
+                ]}
+                placeholder='Select a country (use arrow keys)...'
+              />
+              <div className='text-sm text-muted-foreground'>
+                Portugal is pre-selected. When you open the dropdown, it scrolls to the selected option and keyboard
+                navigation starts from there. Selected: {selectedCountry}
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg'>Different Sizes</h4>
+            <div className='space-y-4 mb-6'>
+              <Select
+                size='sm'
+                options={[
+                  { text: 'Small Select', value: 'small' },
+                  { text: 'Another Option', value: 'another' },
+                ]}
+                placeholder='Small size...'
+              />
+
+              <Select
+                size='md'
+                options={[
+                  { text: 'Medium Select', value: 'medium' },
+                  { text: 'Another Option', value: 'another' },
+                ]}
+                placeholder='Medium size (default)...'
+              />
+
+              <Select
+                size='lg'
+                options={[
+                  { text: 'Large Select', value: 'large' },
+                  { text: 'Another Option', value: 'another' },
+                ]}
+                placeholder='Large size...'
+              />
+            </div>
+
+            <h4 className='mb-2 text-lg'>Clearable Select</h4>
+            <div className='space-y-4 mb-6'>
+              <Select
+                clearable
+                value={selectedFruit}
+                onChange={setSelectedFruit}
+                options={[
+                  { text: 'Apple', value: 'apple' },
+                  { text: 'Banana', value: 'banana' },
+                  { text: 'Cherry', value: 'cherry' },
+                ]}
+                placeholder='Select a fruit (clearable)...'
+              />
+              <div className='text-sm text-muted-foreground'>
+                You can clear the selection using the X button. Selected: {selectedFruit || 'None'}
+              </div>
+
+              <Select
+                searchable
+                clearable
+                value={selectedLanguage}
+                onChange={setSelectedLanguage}
+                options={[
+                  { text: 'JavaScript', value: 'js', description: 'Dynamic programming language' },
+                  { text: 'TypeScript', value: 'ts', description: 'Typed superset of JavaScript' },
+                  { text: 'Python', value: 'py', description: 'High-level programming language' },
+                ]}
+                placeholder='Searchable and clearable...'
+              />
+              <div className='text-sm text-muted-foreground'>
+                Combined searchable and clearable. Selected: {selectedLanguage || 'None'}
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg'>Custom Styling</h4>
+            <div className='space-y-4 mb-6'>
+              <Select
+                options={[
+                  { text: 'Custom Trigger', value: 'custom1' },
+                  { text: 'Another Option', value: 'custom2' },
+                ]}
+                placeholder='Custom trigger styling...'
+                triggerClassName='bg-blue-50 border-blue-200 hover:border-blue-400'
+              />
+
+              <Select
+                options={[
+                  { text: 'Custom Content', value: 'content1' },
+                  { text: 'Another Option', value: 'content2' },
+                ]}
+                placeholder='Custom content styling...'
+                triggerClassName='!bg-purple-100 text-purple-950 border-purple-200 focus:!border-purple-600 focus:!ring-purple-600'
+                dropdownClassName='bg-purple-100 text-purple-950 !border-purple-800'
+              />
+            </div>
+
+            <h4 className='mb-2 text-lg'>Disabled State</h4>
+            <div className='space-y-4'>
+              <Select
+                disabled
+                options={[
+                  { text: 'Disabled Select', value: 'disabled1' },
+                  { text: 'Cannot Select', value: 'disabled2' },
+                ]}
+                placeholder='This select is disabled...'
+              />
             </div>
           </div>
 
