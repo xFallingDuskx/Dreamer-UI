@@ -13,6 +13,7 @@ import {
   RadioGroup,
   RadioGroupItem,
   ScrollArea,
+  Select,
   Separator,
   Skeleton,
   Slider,
@@ -27,7 +28,6 @@ import {
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
-import Select from './select';
 
 const TestComponent = ({ index }: { index: number }) => {
   return (
@@ -1290,10 +1290,11 @@ function AppContent() {
                   { text: 'United Kingdom', value: 'GB' },
                   { text: 'United States', value: 'US' },
                 ]}
-                placeholder="Select a country (use arrow keys)..."
+                placeholder='Select a country (use arrow keys)...'
               />
               <div className='text-sm text-muted-foreground'>
-                Portugal is pre-selected. When you open the dropdown, it scrolls to the selected option and keyboard navigation starts from there. Selected: {selectedCountry}
+                Portugal is pre-selected. When you open the dropdown, it scrolls to the selected option and keyboard
+                navigation starts from there. Selected: {selectedCountry}
               </div>
             </div>
 
@@ -1343,7 +1344,7 @@ function AppContent() {
               <div className='text-sm text-muted-foreground'>
                 You can clear the selection using the X button. Selected: {selectedFruit || 'None'}
               </div>
-              
+
               <Select
                 searchable
                 clearable
