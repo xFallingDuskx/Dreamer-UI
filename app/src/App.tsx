@@ -25,6 +25,7 @@ import {
   Toggle,
   Tooltip,
 } from '@moondreamsdev/dreamer-ui/components';
+import { Carousel } from './carousel';
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
@@ -208,6 +209,7 @@ function AppContent() {
           <option value='slider-section'>Slider</option>
           <option value='pagination-section'>Pagination</option>
           <option value='tabs-section'>Tabs</option>
+          <option value='carousel-section'>Carousel</option>
           <option value='scroll-area-section'>Scroll Area</option>
         </select>
 
@@ -2169,6 +2171,146 @@ function AppContent() {
                     </p>
                   </TabsContent>
                 </Tabs>
+              </div>
+            </div>
+          </div>
+
+          <div id='carousel-section'>
+            <h3 className='mb-2'>Carousel</h3>
+
+            <h4 className='mb-2 text-lg'>Basic Carousel</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Basic carousel with 3 items</p>
+                <Carousel className='w-full max-w-md mx-auto'>
+                  <div className='bg-gradient-to-br from-blue-500 to-purple-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Slide 1
+                  </div>
+                  <div className='bg-gradient-to-br from-green-500 to-teal-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Slide 2
+                  </div>
+                  <div className='bg-gradient-to-br from-orange-500 to-red-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Slide 3
+                  </div>
+                </Carousel>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Auto-scroll Carousel</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Auto-scrolls every 2 seconds, pauses on hover</p>
+                <Carousel 
+                  className='w-full max-w-md mx-auto' 
+                  autoScroll={true}
+                  scrollInterval={2000}
+                  pauseScrollOnHover={true}
+                >
+                  <div className='bg-gradient-to-br from-pink-500 to-rose-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Auto Slide 1
+                  </div>
+                  <div className='bg-gradient-to-br from-indigo-500 to-blue-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Auto Slide 2
+                  </div>
+                  <div className='bg-gradient-to-br from-yellow-500 to-orange-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Auto Slide 3
+                  </div>
+                  <div className='bg-gradient-to-br from-purple-500 to-pink-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Auto Slide 4
+                  </div>
+                </Carousel>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Multiple Items Carousel</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Shows 2 items at once</p>
+                <Carousel 
+                  className='w-full max-w-2xl mx-auto' 
+                  itemsToShow={2}
+                >
+                  {Array.from({ length: 6 }, (_, i) => (
+                    <div 
+                      key={i}
+                      className={`h-32 rounded-lg flex items-center justify-center text-white text-lg font-semibold mx-2 ${
+                        ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500', 'bg-pink-500'][i]
+                      }`}
+                    >
+                      Item {i + 1}
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Custom Styled Carousel</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Large buttons, ghost variant, no infinite scroll</p>
+                <Carousel 
+                  className='w-full max-w-lg mx-auto' 
+                  buttonSize='lg'
+                  buttonVariant='ghost'
+                  infinite={false}
+                >
+                  <div className='bg-slate-700 border-2 border-slate-600 h-40 rounded-lg flex flex-col items-center justify-center text-white'>
+                    <h4 className='text-xl font-bold mb-2'>Card 1</h4>
+                    <p className='text-slate-300'>First card content</p>
+                  </div>
+                  <div className='bg-slate-700 border-2 border-slate-600 h-40 rounded-lg flex flex-col items-center justify-center text-white'>
+                    <h4 className='text-xl font-bold mb-2'>Card 2</h4>
+                    <p className='text-slate-300'>Second card content</p>
+                  </div>
+                  <div className='bg-slate-700 border-2 border-slate-600 h-40 rounded-lg flex flex-col items-center justify-center text-white'>
+                    <h4 className='text-xl font-bold mb-2'>Card 3</h4>
+                    <p className='text-slate-300'>Third card content</p>
+                  </div>
+                </Carousel>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Hidden Navigation Carousel</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Navigation buttons hidden, only dots for navigation</p>
+                <Carousel 
+                  className='w-full max-w-md mx-auto' 
+                  hidePrevNext={true}
+                >
+                  <div className='bg-gradient-to-r from-cyan-500 to-blue-500 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Slide A
+                  </div>
+                  <div className='bg-gradient-to-r from-emerald-500 to-green-500 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Slide B
+                  </div>
+                  <div className='bg-gradient-to-r from-violet-500 to-purple-500 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Slide C
+                  </div>
+                </Carousel>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Custom Button Content</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Custom previous and next button content</p>
+                <Carousel 
+                  className='w-full max-w-md mx-auto'
+                  prevButton={<span className='text-xl'>←</span>}
+                  nextButton={<span className='text-xl'>→</span>}
+                  buttonVariant='outline'
+                >
+                  <div className='bg-gradient-to-br from-amber-500 to-yellow-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Custom 1
+                  </div>
+                  <div className='bg-gradient-to-br from-teal-500 to-cyan-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Custom 2
+                  </div>
+                  <div className='bg-gradient-to-br from-rose-500 to-pink-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Custom 3
+                  </div>
+                </Carousel>
               </div>
             </div>
           </div>
