@@ -1,15 +1,24 @@
 export const buttonSizeVariants = {
-  sm: 'h-8 w-8 text-xs',
-  md: 'h-10 w-10 text-sm',
-  lg: 'h-12 w-12 text-base',
+  sm: {
+    button: 'h-6 w-6 text-xs',
+    icon: 'size-3',
+  },
+  md: {
+    button: 'h-8 w-8 text-sm',
+    icon: 'size-4',
+  },
+  lg: {
+    button: 'h-10 w-10 text-lg',
+    icon: 'size-5',
+  },
 };
 
 export type ButtonSize = keyof typeof buttonSizeVariants;
 
 export const buttonStyleVariants = {
-  default: 'bg-primary text-primary-foreground hover:bg-primary/90',
-  outline: 'border border-border bg-background hover:bg-accent hover:text-accent-foreground',
-  ghost: 'hover:bg-accent hover:text-accent-foreground',
+  default: 'bg-accent text-accent-foreground hover:bg-accent-foreground hover:text-accent',
+  outline: 'border border-border bg-background hover:bg-accent hover:text-accent-foreground hover:border-accent',
+  ghost: 'hover:text-accent',
 };
 
 export type ButtonStyle = keyof typeof buttonStyleVariants;
@@ -20,12 +29,12 @@ export const buttonPositionVariants = {
     next: 'absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 z-10',
   },
   exterior: {
-    prev: 'absolute -left-12 top-1/2 -translate-y-1/2 z-10',
-    next: 'absolute -right-12 top-1/2 -translate-y-1/2 z-10',
+    prev: 'absolute -left-10 top-1/2 -translate-y-1/2 z-10',
+    next: 'absolute -right-10 top-1/2 -translate-y-1/2 z-10',
   },
   interior: {
-    prev: 'absolute left-4 top-1/2 -translate-y-1/2 z-10',
-    next: 'absolute right-4 top-1/2 -translate-y-1/2 z-10',
+    prev: 'absolute left-2 top-1/2 -translate-y-1/2 z-10',
+    next: 'absolute right-2 top-1/2 -translate-y-1/2 z-10',
   },
 };
 

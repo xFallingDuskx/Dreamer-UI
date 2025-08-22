@@ -143,8 +143,10 @@ export default function Carousel({
   const translateX = -(currentSlide * (100 / totalItems) * currentItemsToShow);
 
   // Base styles for carousel buttons
-  const baseButtonStyles =
-    'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
+  const baseButtonStyles = join(
+    'inline-flex items-center justify-center rounded-md font-medium transition-all focus-visible:outline-none focus-visible:ring focus-visible:ring-ring disabled:pointer-events-none',
+    buttonPosition === 'aligned' ? 'disabled:opacity-90' : 'disabled:opacity-50'
+  );
 
   return (
     <div className={join('relative', className)} data-carousel-wrapper='true'>
@@ -156,15 +158,14 @@ export default function Carousel({
           disabled={!canGoPrev}
           className={join(
             baseButtonStyles,
-            buttonSizeVariants[buttonSize],
+            buttonSizeVariants[buttonSize].button,
             buttonStyleVariants[buttonVariant],
-            buttonPositionVariants[buttonPosition].prev,
-            !canGoPrev && 'opacity-50 cursor-not-allowed'
+            buttonPositionVariants[buttonPosition].prev
           )}
           aria-label='Previous slide'
           data-carousel-prev='true'
         >
-          {prevButton || <ChevronLeft className='w-4 h-4' />}
+          {prevButton || <ChevronLeft className={buttonSizeVariants[buttonSize].icon} />}
         </button>
       )}
 
@@ -211,7 +212,7 @@ export default function Carousel({
                 onClick={() => goToSlide(index)}
                 className={join(
                   'w-2 h-2 rounded-full transition-colors duration-200',
-                  index === currentSlide ? 'bg-primary' : 'bg-muted hover:bg-muted-foreground/50'
+                  index === currentSlide ? 'bg-accent' : 'bg-muted hover:bg-muted-foreground/50'
                 )}
                 aria-label={`Go to slide ${index + 1}`}
                 data-carousel-dot={index}
@@ -229,15 +230,14 @@ export default function Carousel({
           disabled={!canGoNext}
           className={join(
             baseButtonStyles,
-            buttonSizeVariants[buttonSize],
+            buttonSizeVariants[buttonSize].button,
             buttonStyleVariants[buttonVariant],
-            buttonPositionVariants[buttonPosition].next,
-            !canGoNext && 'opacity-50 cursor-not-allowed'
+            buttonPositionVariants[buttonPosition].next
           )}
           aria-label='Next slide'
           data-carousel-next='true'
         >
-          {nextButton || <ChevronRight className='w-4 h-4' />}
+          {nextButton || <ChevronRight className={buttonSizeVariants[buttonSize].icon} />}
         </button>
       )}
     </div>

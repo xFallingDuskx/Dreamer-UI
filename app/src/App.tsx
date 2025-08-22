@@ -2349,6 +2349,7 @@ function AppContent() {
                 <Carousel 
                   className='w-full max-w-md mx-auto' 
                   buttonPosition='aligned'
+                  infinite={false}
                 >
                   <div className='bg-gradient-to-br from-blue-500 to-purple-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
                     Aligned 1
@@ -2369,6 +2370,7 @@ function AppContent() {
                     className='w-full max-w-md mx-auto' 
                     buttonPosition='exterior'
                     buttonVariant='outline'
+                    infinite={false}
                   >
                     <div className='bg-gradient-to-br from-pink-500 to-rose-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
                       Exterior 1
@@ -2390,6 +2392,7 @@ function AppContent() {
                   buttonPosition='interior'
                   buttonVariant='ghost'
                   buttonSize='lg'
+                  infinite={false}
                 >
                   <div className='bg-gradient-to-br from-purple-500 to-pink-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
                     Interior 1
