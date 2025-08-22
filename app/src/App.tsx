@@ -3,6 +3,7 @@ import {
   AccordionItem,
   ActionModal,
   Button,
+  Carousel,
   Checkbox,
   Clickable,
   Input,
@@ -25,7 +26,6 @@ import {
   Toggle,
   Tooltip,
 } from '@moondreamsdev/dreamer-ui/components';
-import { Carousel } from './carousel';
 import { useActionModal, useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { useState } from 'react';
@@ -2414,7 +2414,6 @@ function AppContent() {
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Exterior - buttons positioned outside the carousel</p>
                 <div className='px-16'>
-                  {' '}
                   {/* Add padding to accommodate exterior buttons */}
                   <Carousel
                     className='w-full max-w-md mx-auto'

@@ -29,11 +29,14 @@ export function useCarousel({
   const canGoPrev = infinite || currentSlide > 0;
   const canGoNext = infinite || currentSlide < maxSlides - 1;
 
-  const goToSlide = useCallback((index: number) => {
-    const clampedIndex = Math.max(0, Math.min(index, maxSlides - 1));
-    setCurrentSlide(clampedIndex);
-    onIndexChange?.(clampedIndex);
-  }, [maxSlides, onIndexChange]);
+  const goToSlide = useCallback(
+    (index: number) => {
+      const clampedIndex = Math.max(0, Math.min(index, maxSlides - 1));
+      setCurrentSlide(clampedIndex);
+      onIndexChange?.(clampedIndex);
+    },
+    [maxSlides, onIndexChange]
+  );
 
   const goToPrev = useCallback(() => {
     if (canGoPrev) {
@@ -63,7 +66,7 @@ export function useCarousel({
     const startInterval = () => {
       intervalRef.current = setInterval(() => {
         if (pauseScrollOnHover && isHovered) return;
-        
+
         goToNext();
       }, scrollInterval);
     };

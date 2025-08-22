@@ -1,6 +1,6 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useCallback, useMemo, useRef } from 'react';
-import { useCarousel } from './hooks.ts';
+import { join } from '../../utils';
+import { useCarousel } from './hooks';
 import useScreenSize, { ScreenSize } from './useScreenSize';
 import {
   ButtonPosition,
@@ -9,30 +9,17 @@ import {
   buttonSizeVariants,
   ButtonStyle,
   buttonStyleVariants,
-} from './variants.ts';
+} from './variants';
+import { ChevronLeft, ChevronRight } from '../../symbols';
 
-// Simple chevron icons
-const ChevronLeft = ({ className }: { className?: string }) => (
-  <svg className={className} fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 19l-7-7 7-7' />
-  </svg>
-);
-
-const ChevronRight = ({ className }: { className?: string }) => (
-  <svg className={className} fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
-  </svg>
-);
-
-// Type for button element with common props
-type ButtonElementProps = {
+interface ButtonElementProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   className?: string;
   'aria-label'?: string;
   'data-carousel-prev'?: string;
   'data-carousel-next'?: string;
-};
+}
 
 export interface CarouselProps {
   children: React.ReactNode;
@@ -71,6 +58,8 @@ export interface CarouselProps {
   itemsClassName?: string;
   /** Additional class names for the carousel container */
   containerClassName?: string;
+  /** Additional class names for the dot indicators */
+  dotsClassName?: string;
   /** Gap between carousel items in pixels */
   gap?: number;
 }
@@ -96,6 +85,7 @@ export default function Carousel({
   nextButton,
   itemsClassName,
   containerClassName,
+  dotsClassName,
   gap = 8,
 }: CarouselProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -136,25 +126,26 @@ export default function Carousel({
     onIndexChange,
   });
 
-  const getSlideItemMargins = useCallback(
+  const getSlideItemStyles = useCallback(
     (pos: number) => {
       // If only showing one item
       if (currentItemsToShow === 1) {
-        return { left: 0, right: 0 };
+        return { leftWidth: 0, rightWidth: 0, widthReduction: 0 };
       }
 
+      const widthReduction = (gap * (currentItemsToShow - 1)) / currentItemsToShow;
       // If item is first element of a slide
       if (pos % currentItemsToShow === 0) {
-        return { left: 0, right: gap / 2 };
+        return { leftWidth: 0, rightWidth: gap / 2, widthReduction };
       }
 
       // If item is last element of a slide
       if (pos % currentItemsToShow === currentItemsToShow - 1) {
-        return { left: gap / 2, right: 0 };
+        return { leftWidth: gap / 2, rightWidth: 0, widthReduction };
       }
 
       // If item is a middle element of a slide
-      return { left: gap / 2, right: gap / 2 };
+      return { leftWidth: gap / 2, rightWidth: gap / 2, widthReduction };
     },
     [currentItemsToShow, gap]
   );
@@ -251,17 +242,15 @@ export default function Carousel({
           }}
         >
           {childrenArray.map((child, index) => {
-            // Determine if this item is currently visible
-            const { left, right } = getSlideItemMargins(index);
-
+            const { leftWidth, rightWidth, widthReduction } = getSlideItemStyles(index);
             return (
               <div
                 key={index}
                 className={join('flex-shrink-0', itemsClassName)}
                 style={{
-                  width: `calc(${100 / totalItems}% - ${left}px - ${right}px)`,
-                  marginRight: right > 0 ? `${right}px` : undefined,
-                  marginLeft: left > 0 ? `${left}px` : undefined,
+                  width: `calc(${100 / totalItems}% - ${widthReduction}px)`,
+                  marginRight: rightWidth > 0 ? `${rightWidth}px` : undefined,
+                  marginLeft: leftWidth > 0 ? `${leftWidth}px` : undefined,
                 }}
                 data-slide-index={index}
               >
@@ -281,7 +270,8 @@ export default function Carousel({
                 onClick={() => goToSlide(index)}
                 className={join(
                   'w-2 h-2 rounded-full transition-colors duration-200',
-                  index === currentSlide ? 'bg-accent' : 'bg-muted hover:bg-muted-foreground/50'
+                  index === currentSlide ? 'bg-accent' : 'bg-muted hover:bg-muted-foreground/50',
+                  dotsClassName
                 )}
                 aria-label={`Go to slide ${index + 1}`}
                 data-carousel-dot={index}
