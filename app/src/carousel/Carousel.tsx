@@ -88,7 +88,7 @@ export default function Carousel({
   itemsToShow = 1,
   buttonSize = 'md',
   buttonVariant = 'default',
-  buttonPosition = 'aligned',
+  buttonPosition = 'exterior',
   infinite = true,
   prevButton,
   nextButton,
