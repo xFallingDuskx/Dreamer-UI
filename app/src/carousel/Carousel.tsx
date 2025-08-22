@@ -69,6 +69,8 @@ export interface CarouselProps {
   nextButton?: React.ReactNode;
   /** Additional class names for carousel items */
   itemsClassName?: string;
+  /** Additional class names for the carousel container */
+  containerClassName?: string;
 }
 
 export default function Carousel({
@@ -91,6 +93,7 @@ export default function Carousel({
   prevButton,
   nextButton,
   itemsClassName,
+  containerClassName,
 }: CarouselProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const childrenArray = React.Children.toArray(children).filter(React.isValidElement);
@@ -203,7 +206,7 @@ export default function Carousel({
       <div
         id={id}
         ref={ref}
-        className='relative overflow-hidden'
+        className={join('relative overflow-hidden', containerClassName)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         data-carousel='true'

@@ -2345,7 +2345,12 @@ function AppContent() {
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Aligned (default) - buttons aligned with carousel edges</p>
-                <Carousel className='w-full max-w-md mx-auto' buttonPosition='aligned' infinite={false}>
+                <Carousel
+                  className='w-full max-w-md mx-auto'
+                  buttonPosition='aligned'
+                  infinite={false}
+                  containerClassName='rounded-lg'
+                >
                   <div className='bg-gradient-to-br from-blue-500 to-purple-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
                     Aligned 1
                   </div>
@@ -2368,6 +2373,7 @@ function AppContent() {
                     buttonPosition='exterior'
                     buttonVariant='outline'
                     infinite={false}
+                    containerClassName='rounded-lg'
                   >
                     <div className='bg-gradient-to-br from-pink-500 to-rose-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
                       Exterior 1
@@ -2390,6 +2396,7 @@ function AppContent() {
                   buttonVariant='ghost'
                   buttonSize='lg'
                   infinite={false}
+                  containerClassName='rounded-lg'
                 >
                   <div className='bg-gradient-to-br from-purple-500 to-pink-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
                     Interior 1
@@ -2414,6 +2421,7 @@ function AppContent() {
                   nextButton={<button className='text-xl disabled:opacity-0'>→</button>}
                   buttonVariant='outline'
                   infinite={false}
+                  containerClassName='rounded-lg'
                 >
                   <div className='bg-gradient-to-br from-amber-500 to-yellow-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
                     Custom 1
