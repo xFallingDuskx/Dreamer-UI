@@ -4,11 +4,15 @@ export const buttonSizeVariants = {
   lg: 'h-12 w-12 text-base',
 };
 
+export type ButtonSize = keyof typeof buttonSizeVariants;
+
 export const buttonStyleVariants = {
   default: 'bg-primary text-primary-foreground hover:bg-primary/90',
   outline: 'border border-border bg-background hover:bg-accent hover:text-accent-foreground',
   ghost: 'hover:bg-accent hover:text-accent-foreground',
 };
+
+export type ButtonStyle = keyof typeof buttonStyleVariants;
 
 export const buttonPositionVariants = {
   aligned: {
@@ -24,3 +28,5 @@ export const buttonPositionVariants = {
     next: 'absolute right-4 top-1/2 -translate-y-1/2 z-10',
   },
 };
+
+export type ButtonPosition = keyof typeof buttonPositionVariants;

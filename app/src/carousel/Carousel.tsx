@@ -1,8 +1,15 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useMemo, useRef } from 'react';
 import { useCarousel } from './hooks.ts';
-import { buttonSizeVariants, buttonStyleVariants, buttonPositionVariants } from './variants.ts';
 import useScreenSize, { ScreenSize } from './useScreenSize';
+import {
+  ButtonPosition,
+  buttonPositionVariants,
+  ButtonSize,
+  buttonSizeVariants,
+  ButtonStyle,
+  buttonStyleVariants,
+} from './variants.ts';
 
 // Simple chevron icons
 const ChevronLeft = ({ className }: { className?: string }) => (
@@ -39,11 +46,11 @@ export interface CarouselProps {
   /** Number of items to show at once, or breakpoint object mapping screen sizes to item counts */
   itemsToShow?: number | Partial<Record<ScreenSize, number>>;
   /** Size variant for navigation buttons */
-  buttonSize?: 'sm' | 'md' | 'lg';
+  buttonSize?: ButtonSize;
   /** Style variant for navigation buttons */
-  buttonVariant?: 'default' | 'outline' | 'ghost';
+  buttonVariant?: ButtonStyle;
   /** Position of navigation buttons relative to carousel */
-  buttonPosition?: 'aligned' | 'exterior' | 'interior';
+  buttonPosition?: ButtonPosition;
   /** Enable infinite scrolling */
   infinite?: boolean;
   /** Custom previous button content */
@@ -85,12 +92,12 @@ export default function Carousel({
     if (typeof itemsToShow === 'number') {
       return itemsToShow;
     }
-    
+
     if (typeof itemsToShow === 'object' && itemsToShow && screenSize) {
       // Start from current screen size and work down to find a defined value
       const breakpointOrder: Array<ScreenSize> = ['2xl', 'xl', 'lg', 'md', 'sm', 'xs'];
       const currentIndex = breakpointOrder.indexOf(screenSize);
-      
+
       for (let i = currentIndex; i < breakpointOrder.length; i++) {
         const breakpoint = breakpointOrder[i];
         if (itemsToShow[breakpoint] !== undefined) {
@@ -98,7 +105,7 @@ export default function Carousel({
         }
       }
     }
-    
+
     return 1; // Default fallback
   }, [itemsToShow, screenSize]);
 
@@ -136,7 +143,8 @@ export default function Carousel({
   const translateX = -(currentSlide * (100 / totalItems) * currentItemsToShow);
 
   // Base styles for carousel buttons
-  const baseButtonStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
+  const baseButtonStyles =
+    'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
 
   return (
     <div className={join('relative', className)} data-carousel-wrapper='true'>
