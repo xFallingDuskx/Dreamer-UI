@@ -3,6 +3,7 @@ import {
   AccordionItem,
   ActionModal,
   Button,
+  Carousel,
   Checkbox,
   Clickable,
   Input,
@@ -208,6 +209,7 @@ function AppContent() {
           <option value='slider-section'>Slider</option>
           <option value='pagination-section'>Pagination</option>
           <option value='tabs-section'>Tabs</option>
+          <option value='carousel-section'>Carousel</option>
           <option value='scroll-area-section'>Scroll Area</option>
         </select>
 
@@ -2169,6 +2171,323 @@ function AppContent() {
                     </p>
                   </TabsContent>
                 </Tabs>
+              </div>
+            </div>
+          </div>
+
+          <div id='carousel-section'>
+            <h3 className='mb-2'>Carousel</h3>
+
+            <h4 className='mb-2 text-lg'>Basic Carousel</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Basic carousel with 3 items</p>
+                <Carousel className='w-full max-w-md mx-auto'>
+                  <div className='bg-gradient-to-br from-blue-500 to-purple-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Slide 1
+                  </div>
+                  <div className='bg-gradient-to-br from-green-500 to-teal-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Slide 2
+                  </div>
+                  <div className='bg-gradient-to-br from-orange-500 to-red-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Slide 3
+                  </div>
+                </Carousel>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Auto-scroll Carousel</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Auto-scrolls every 2 seconds, pauses on hover</p>
+                <Carousel
+                  className='w-full max-w-md mx-auto'
+                  autoScroll={true}
+                  scrollInterval={2000}
+                  pauseScrollOnHover={true}
+                >
+                  <div className='bg-gradient-to-br from-pink-500 to-rose-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Auto Slide 1
+                  </div>
+                  <div className='bg-gradient-to-br from-indigo-500 to-blue-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Auto Slide 2
+                  </div>
+                  <div className='bg-gradient-to-br from-yellow-500 to-orange-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Auto Slide 3
+                  </div>
+                  <div className='bg-gradient-to-br from-purple-500 to-pink-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Auto Slide 4
+                  </div>
+                </Carousel>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Multiple Items Carousel</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Shows 2 items at once with 16px gap</p>
+                <Carousel className='w-full max-w-2xl mx-auto' itemsToShow={2} gap={16}>
+                  {Array.from({ length: 6 }, (_, i) => (
+                    <div
+                      key={i}
+                      className={`h-32 rounded-lg flex items-center justify-center text-white text-lg font-semibold ${
+                        ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500', 'bg-pink-500'][
+                          i
+                        ]
+                      }`}
+                    >
+                      Item {i + 1}
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Responsive Breakpoint Carousel</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>
+                  Responsive using breakpoint object: 1 on mobile, 2 on md, 3 on lg, 4 on xl with 12px gap
+                </p>
+                <Carousel className='w-full max-w-4xl mx-auto' itemsToShow={{ md: 2, lg: 3, xl: 4 }} gap={12}>
+                  {Array.from({ length: 8 }, (_, i) => (
+                    <div
+                      key={i}
+                      className={`h-40 rounded-lg flex flex-col items-center justify-center text-white text-lg font-semibold ${
+                        [
+                          'bg-red-500',
+                          'bg-blue-500',
+                          'bg-green-500',
+                          'bg-yellow-500',
+                          'bg-purple-500',
+                          'bg-pink-500',
+                          'bg-indigo-500',
+                          'bg-teal-500',
+                        ][i]
+                      }`}
+                    >
+                      <div className='text-2xl font-bold'>#{i + 1}</div>
+                      <div className='text-sm'>Responsive Item</div>
+                    </div>
+                  ))}
+                </Carousel>
+                <p className='text-xs text-gray-500 mt-2'>
+                  Resize your browser window to see how the number of visible items changes
+                </p>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Complex Responsive Layout</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>
+                  Advanced: 1 on mobile, 2 on sm, 3 on md, 4 on lg, 6 on xl+ with 8px gap
+                </p>
+                <Carousel
+                  className='w-full max-w-6xl mx-auto'
+                  itemsToShow={{ sm: 2, md: 3, lg: 4, xl: 6 }}
+                  autoScroll={true}
+                  scrollInterval={4000}
+                  gap={8}
+                >
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <div
+                      key={i}
+                      className='bg-gradient-to-br from-gray-600 to-gray-800 h-24 rounded-md flex items-center justify-center text-white text-sm font-semibold border border-gray-500'
+                    >
+                      Card {i + 1}
+                    </div>
+                  ))}
+                </Carousel>
+                <p className='text-xs text-gray-500 mt-2'>
+                  This carousel automatically adjusts from 1 item on mobile up to 6 items on extra-large screens
+                </p>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Gap Examples</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Small gap (default - 8px)</p>
+                <Carousel className='w-full max-w-2xl mx-auto' itemsToShow={3}>
+                  {Array.from({ length: 6 }, (_, i) => (
+                    <div
+                      key={i}
+                      className='bg-green-500 h-20 rounded flex items-center justify-center text-white font-semibold'
+                    >
+                      {i + 1}
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Medium gap (16px)</p>
+                <Carousel className='w-full max-w-2xl mx-auto' itemsToShow={3} gap={16}>
+                  {Array.from({ length: 6 }, (_, i) => (
+                    <div
+                      key={i}
+                      className='bg-purple-500 h-20 rounded flex items-center justify-center text-white font-semibold'
+                    >
+                      {i + 1}
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Large gap (32px)</p>
+                <Carousel className='w-full max-w-2xl mx-auto' itemsToShow={3} gap={32}>
+                  {Array.from({ length: 6 }, (_, i) => (
+                    <div
+                      key={i}
+                      className='bg-orange-500 h-20 rounded flex items-center justify-center text-white font-semibold'
+                    >
+                      {i + 1}
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Custom Styled Carousel</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Large buttons, ghost variant, no infinite scroll</p>
+                <Carousel className='w-full max-w-lg mx-auto' buttonSize='lg' buttonVariant='ghost' infinite={false}>
+                  <div className='bg-slate-700 border-2 border-slate-600 h-40 rounded-lg flex flex-col items-center justify-center text-white'>
+                    <h4 className='text-xl font-bold mb-2'>Card 1</h4>
+                    <p className='text-slate-300'>First card content</p>
+                  </div>
+                  <div className='bg-slate-700 border-2 border-slate-600 h-40 rounded-lg flex flex-col items-center justify-center text-white'>
+                    <h4 className='text-xl font-bold mb-2'>Card 2</h4>
+                    <p className='text-slate-300'>Second card content</p>
+                  </div>
+                  <div className='bg-slate-700 border-2 border-slate-600 h-40 rounded-lg flex flex-col items-center justify-center text-white'>
+                    <h4 className='text-xl font-bold mb-2'>Card 3</h4>
+                    <p className='text-slate-300'>Third card content</p>
+                  </div>
+                </Carousel>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Hidden Navigation Carousel</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Navigation buttons hidden, only dots for navigation</p>
+                <Carousel className='w-full max-w-md mx-auto' hidePrevNext={true}>
+                  <div className='bg-gradient-to-r from-cyan-500 to-blue-500 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Slide A
+                  </div>
+                  <div className='bg-gradient-to-r from-emerald-500 to-green-500 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Slide B
+                  </div>
+                  <div className='bg-gradient-to-r from-violet-500 to-purple-500 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Slide C
+                  </div>
+                </Carousel>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Button Positioning Options</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Aligned (default) - buttons aligned with carousel edges</p>
+                <Carousel
+                  className='w-full max-w-md mx-auto'
+                  buttonPosition='aligned'
+                  infinite={false}
+                  containerClassName='rounded-lg'
+                >
+                  <div className='bg-gradient-to-br from-blue-500 to-purple-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Aligned 1
+                  </div>
+                  <div className='bg-gradient-to-br from-green-500 to-teal-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Aligned 2
+                  </div>
+                  <div className='bg-gradient-to-br from-orange-500 to-red-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Aligned 3
+                  </div>
+                </Carousel>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Exterior - buttons positioned outside the carousel</p>
+                <div className='px-16'>
+                  {/* Add padding to accommodate exterior buttons */}
+                  <Carousel
+                    className='w-full max-w-md mx-auto'
+                    buttonPosition='exterior'
+                    buttonVariant='outline'
+                    infinite={false}
+                    containerClassName='rounded-lg'
+                  >
+                    <div className='bg-gradient-to-br from-pink-500 to-rose-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                      Exterior 1
+                    </div>
+                    <div className='bg-gradient-to-br from-indigo-500 to-blue-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                      Exterior 2
+                    </div>
+                    <div className='bg-gradient-to-br from-yellow-500 to-orange-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                      Exterior 3
+                    </div>
+                  </Carousel>
+                </div>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Interior - buttons positioned further inside the carousel</p>
+                <Carousel
+                  className='w-full max-w-md mx-auto'
+                  buttonPosition='interior'
+                  buttonVariant='ghost'
+                  buttonSize='lg'
+                  infinite={false}
+                  containerClassName='rounded-lg'
+                >
+                  <div className='bg-gradient-to-br from-purple-500 to-pink-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Interior 1
+                  </div>
+                  <div className='bg-gradient-to-br from-cyan-500 to-blue-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Interior 2
+                  </div>
+                  <div className='bg-gradient-to-br from-emerald-500 to-teal-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Interior 3
+                  </div>
+                </Carousel>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Custom Button Content</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Custom previous and next button content</p>
+                <Carousel
+                  className='w-full max-w-md mx-auto'
+                  prevButton={
+                    <button className='text-xl border rounded-full p-1.5 leading-none opacity-70 hover:opacity-100 transition-opacity disabled:hidden'>
+                      ←
+                    </button>
+                  }
+                  nextButton={
+                    <button className='text-xl border rounded-full p-1.5 leading-none opacity-70 hover:opacity-100 transition-opacity disabled:hidden'>
+                      →
+                    </button>
+                  }
+                  buttonVariant='outline'
+                  infinite={false}
+                  containerClassName='rounded-lg'
+                >
+                  <div className='bg-gradient-to-br from-amber-500 to-yellow-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Custom 1
+                  </div>
+                  <div className='bg-gradient-to-br from-teal-500 to-cyan-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Custom 2
+                  </div>
+                  <div className='bg-gradient-to-br from-rose-500 to-pink-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Custom 3
+                  </div>
+                </Carousel>
               </div>
             </div>
           </div>
