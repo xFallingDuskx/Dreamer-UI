@@ -2342,6 +2342,68 @@ function AppContent() {
               </div>
             </div>
 
+            <h4 className='mb-2 text-lg mt-6'>Button Positioning Options</h4>
+            <div className='space-y-6'>
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Aligned (default) - buttons aligned with carousel edges</p>
+                <Carousel 
+                  className='w-full max-w-md mx-auto' 
+                  buttonPosition='aligned'
+                >
+                  <div className='bg-gradient-to-br from-blue-500 to-purple-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Aligned 1
+                  </div>
+                  <div className='bg-gradient-to-br from-green-500 to-teal-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Aligned 2
+                  </div>
+                  <div className='bg-gradient-to-br from-orange-500 to-red-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Aligned 3
+                  </div>
+                </Carousel>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Exterior - buttons positioned outside the carousel</p>
+                <div className='px-16'> {/* Add padding to accommodate exterior buttons */}
+                  <Carousel 
+                    className='w-full max-w-md mx-auto' 
+                    buttonPosition='exterior'
+                    buttonVariant='outline'
+                  >
+                    <div className='bg-gradient-to-br from-pink-500 to-rose-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                      Exterior 1
+                    </div>
+                    <div className='bg-gradient-to-br from-indigo-500 to-blue-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                      Exterior 2
+                    </div>
+                    <div className='bg-gradient-to-br from-yellow-500 to-orange-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                      Exterior 3
+                    </div>
+                  </Carousel>
+                </div>
+              </div>
+
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Interior - buttons positioned further inside the carousel</p>
+                <Carousel 
+                  className='w-full max-w-md mx-auto' 
+                  buttonPosition='interior'
+                  buttonVariant='ghost'
+                  buttonSize='lg'
+                >
+                  <div className='bg-gradient-to-br from-purple-500 to-pink-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Interior 1
+                  </div>
+                  <div className='bg-gradient-to-br from-cyan-500 to-blue-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Interior 2
+                  </div>
+                  <div className='bg-gradient-to-br from-emerald-500 to-teal-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
+                    Interior 3
+                  </div>
+                </Carousel>
+              </div>
+            </div>
+
             <h4 className='mb-2 text-lg mt-6'>Custom Button Content</h4>
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>

@@ -1,7 +1,7 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useMemo, useRef } from 'react';
 import { useCarousel } from './hooks.ts';
-import { carouselVariants } from './variants.ts';
+import { buttonSizeVariants, buttonStyleVariants, buttonPositionVariants } from './variants.ts';
 import useScreenSize, { ScreenSize } from './useScreenSize';
 
 // Simple chevron icons
@@ -42,6 +42,8 @@ export interface CarouselProps {
   buttonSize?: 'sm' | 'md' | 'lg';
   /** Style variant for navigation buttons */
   buttonVariant?: 'default' | 'outline' | 'ghost';
+  /** Position of navigation buttons relative to carousel */
+  buttonPosition?: 'aligned' | 'exterior' | 'interior';
   /** Enable infinite scrolling */
   infinite?: boolean;
   /** Custom previous button content */
@@ -67,6 +69,7 @@ export default function Carousel({
   itemsToShow = 1,
   buttonSize = 'md',
   buttonVariant = 'default',
+  buttonPosition = 'aligned',
   infinite = true,
   prevButton,
   nextButton,
@@ -132,93 +135,102 @@ export default function Carousel({
 
   const translateX = -(currentSlide * (100 / totalItems) * currentItemsToShow);
 
+  // Base styles for carousel buttons
+  const baseButtonStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
+
   return (
-    <div
-      id={id}
-      ref={ref}
-      className={join('relative overflow-hidden', className)}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      data-carousel='true'
-      data-current-index={currentSlide}
-      data-items-to-show={currentItemsToShow}
-      data-auto-scroll={autoScroll}
-    >
-      {/* Carousel Track */}
-      <div
-        ref={containerRef}
-        className='flex transition-transform duration-300 ease-in-out'
-        style={{
-          transform: `translateX(${translateX}%)`,
-          width: `${(totalItems / currentItemsToShow) * 100}%`,
-        }}
-      >
-        {childrenArray.map((child, index) => (
-          <div
-            key={index}
-            className={join('flex-shrink-0', itemsClassName)}
-            style={{ width: `${100 / totalItems}%` }}
-            data-slide-index={index}
-          >
-            {child}
-          </div>
-        ))}
-      </div>
-
-      {/* Navigation Buttons */}
+    <div className={join('relative', className)} data-carousel-wrapper='true'>
+      {/* Navigation Buttons - Previous */}
       {!hidePrevNext && (
-        <>
-          {/* Previous Button */}
-          <button
-            type='button'
-            onClick={handlePrevClick}
-            disabled={!canGoPrev}
-            className={join(
-              carouselVariants.button({ size: buttonSize, variant: buttonVariant }),
-              'absolute left-2 top-1/2 -translate-y-1/2 z-10',
-              !canGoPrev && 'opacity-50 cursor-not-allowed'
-            )}
-            aria-label='Previous slide'
-            data-carousel-prev='true'
-          >
-            {prevButton || <ChevronLeft className='w-4 h-4' />}
-          </button>
-
-          {/* Next Button */}
-          <button
-            type='button'
-            onClick={handleNextClick}
-            disabled={!canGoNext}
-            className={join(
-              carouselVariants.button({ size: buttonSize, variant: buttonVariant }),
-              'absolute right-2 top-1/2 -translate-y-1/2 z-10',
-              !canGoNext && 'opacity-50 cursor-not-allowed'
-            )}
-            aria-label='Next slide'
-            data-carousel-next='true'
-          >
-            {nextButton || <ChevronRight className='w-4 h-4' />}
-          </button>
-        </>
+        <button
+          type='button'
+          onClick={handlePrevClick}
+          disabled={!canGoPrev}
+          className={join(
+            baseButtonStyles,
+            buttonSizeVariants[buttonSize],
+            buttonStyleVariants[buttonVariant],
+            buttonPositionVariants[buttonPosition].prev,
+            !canGoPrev && 'opacity-50 cursor-not-allowed'
+          )}
+          aria-label='Previous slide'
+          data-carousel-prev='true'
+        >
+          {prevButton || <ChevronLeft className='w-4 h-4' />}
+        </button>
       )}
 
-      {/* Dots Indicator */}
-      {!hideDots && (
-        <div className='absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2'>
-          {Array.from({ length: Math.ceil(totalItems / currentItemsToShow) }).map((_, index) => (
-            <button
+      <div
+        id={id}
+        ref={ref}
+        className='relative overflow-hidden'
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        data-carousel='true'
+        data-current-index={currentSlide}
+        data-items-to-show={currentItemsToShow}
+        data-auto-scroll={autoScroll}
+        data-button-position={buttonPosition}
+      >
+        {/* Carousel Track */}
+        <div
+          ref={containerRef}
+          className='flex transition-transform duration-300 ease-in-out'
+          style={{
+            transform: `translateX(${translateX}%)`,
+            width: `${(totalItems / currentItemsToShow) * 100}%`,
+          }}
+        >
+          {childrenArray.map((child, index) => (
+            <div
               key={index}
-              type='button'
-              onClick={() => goToSlide(index)}
-              className={join(
-                'w-2 h-2 rounded-full transition-colors duration-200',
-                index === currentSlide ? 'bg-primary' : 'bg-muted hover:bg-muted-foreground/50'
-              )}
-              aria-label={`Go to slide ${index + 1}`}
-              data-carousel-dot={index}
-            />
+              className={join('flex-shrink-0', itemsClassName)}
+              style={{ width: `${100 / totalItems}%` }}
+              data-slide-index={index}
+            >
+              {child}
+            </div>
           ))}
         </div>
+
+        {/* Dots Indicator */}
+        {!hideDots && (
+          <div className='absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2'>
+            {Array.from({ length: Math.ceil(totalItems / currentItemsToShow) }).map((_, index) => (
+              <button
+                key={index}
+                type='button'
+                onClick={() => goToSlide(index)}
+                className={join(
+                  'w-2 h-2 rounded-full transition-colors duration-200',
+                  index === currentSlide ? 'bg-primary' : 'bg-muted hover:bg-muted-foreground/50'
+                )}
+                aria-label={`Go to slide ${index + 1}`}
+                data-carousel-dot={index}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Navigation Buttons - Next */}
+      {!hidePrevNext && (
+        <button
+          type='button'
+          onClick={handleNextClick}
+          disabled={!canGoNext}
+          className={join(
+            baseButtonStyles,
+            buttonSizeVariants[buttonSize],
+            buttonStyleVariants[buttonVariant],
+            buttonPositionVariants[buttonPosition].next,
+            !canGoNext && 'opacity-50 cursor-not-allowed'
+          )}
+          aria-label='Next slide'
+          data-carousel-next='true'
+        >
+          {nextButton || <ChevronRight className='w-4 h-4' />}
+        </button>
       )}
     </div>
   );
