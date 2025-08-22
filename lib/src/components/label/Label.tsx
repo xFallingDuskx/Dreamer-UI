@@ -24,13 +24,18 @@ export function Label({
   ...props
 }: LabelProps) {
   const id = useId();
-  const labelClasses = join('font-medium', display, className);
-  const helpId = helpMessage ? `${htmlFor ?? id}-help` : undefined;
+  const showHelp = (helpMessage?.trim()?.length || 0) > 0;
+  const showDescription = (description?.trim()?.length || 0) > 0;
+  const helpId = showHelp ? `${htmlFor ?? id}-help` : undefined;
+  const descriptionId = showDescription ? `${htmlFor ?? id}-description` : undefined;
 
   return (
-    <div style={{ display: display === 'inline' ? 'inline-block' : 'block', width }}>
+    <div
+      style={{ display: display === 'inline' ? 'inline-block' : 'block', width }}
+      className={join('mb-0.5', className)}
+    >
       <div className='relative flex'>
-        <label className={labelClasses} htmlFor={htmlFor} {...props}>
+        <label className='font-medium' htmlFor={htmlFor} {...props}>
           {children}
           {required && (
             <span className='text-red-500 font-medium ml-1' aria-label='required'>
@@ -38,7 +43,7 @@ export function Label({
             </span>
           )}
         </label>
-        {helpMessage && (
+        {showHelp && (
           <span
             className='text-gray-500 ml-1 size-fit -translate-y-1/3'
             aria-describedby={helpId}
@@ -48,14 +53,18 @@ export function Label({
             <QuestionMarkCircled />
           </span>
         )}
-        {helpMessage && (
+        {showHelp && (
           <div id={helpId} className='sr-only'>
             {helpMessage}
           </div>
         )}
         {suffix && <span className='ml-1'>{suffix}</span>}
       </div>
-      {description && <div className='opacity-80 mt-1'>{description}</div>}
+      {showDescription && (
+        <small id={descriptionId} className='block opacity-80 mt-0.5' role='note'>
+          {description}
+        </small>
+      )}
     </div>
   );
 }
