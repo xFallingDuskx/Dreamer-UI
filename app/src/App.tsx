@@ -2225,12 +2225,12 @@ function AppContent() {
             <h4 className='mb-2 text-lg mt-6'>Multiple Items Carousel</h4>
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
-                <p className='text-sm text-gray-400 mb-2'>Shows 2 items at once</p>
-                <Carousel className='w-full max-w-2xl mx-auto' itemsToShow={2}>
+                <p className='text-sm text-gray-400 mb-2'>Shows 2 items at once with 16px gap</p>
+                <Carousel className='w-full max-w-2xl mx-auto' itemsToShow={2} gap={16}>
                   {Array.from({ length: 6 }, (_, i) => (
                     <div
                       key={i}
-                      className={`h-32 rounded-lg flex items-center justify-center text-white text-lg font-semibold mx-2 ${
+                      className={`h-32 rounded-lg flex items-center justify-center text-white text-lg font-semibold ${
                         ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500', 'bg-pink-500'][
                           i
                         ]
@@ -2247,13 +2247,13 @@ function AppContent() {
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>
-                  Responsive using breakpoint object: 1 on mobile, 2 on md, 3 on lg, 4 on xl
+                  Responsive using breakpoint object: 1 on mobile, 2 on md, 3 on lg, 4 on xl with 12px gap
                 </p>
-                <Carousel className='w-full max-w-4xl mx-auto' itemsToShow={{ md: 2, lg: 3, xl: 4 }}>
+                <Carousel className='w-full max-w-4xl mx-auto' itemsToShow={{ md: 2, lg: 3, xl: 4 }} gap={12}>
                   {Array.from({ length: 8 }, (_, i) => (
                     <div
                       key={i}
-                      className={`h-40 rounded-lg flex flex-col items-center justify-center text-white text-lg font-semibold mx-2 ${
+                      className={`h-40 rounded-lg flex flex-col items-center justify-center text-white text-lg font-semibold ${
                         [
                           'bg-red-500',
                           'bg-blue-500',
@@ -2280,17 +2280,18 @@ function AppContent() {
             <h4 className='mb-2 text-lg mt-6'>Complex Responsive Layout</h4>
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
-                <p className='text-sm text-gray-400 mb-2'>Advanced: 1 on mobile, 2 on sm, 3 on md, 4 on lg, 6 on xl+</p>
+                <p className='text-sm text-gray-400 mb-2'>Advanced: 1 on mobile, 2 on sm, 3 on md, 4 on lg, 6 on xl+ with 8px gap</p>
                 <Carousel
                   className='w-full max-w-6xl mx-auto'
                   itemsToShow={{ sm: 2, md: 3, lg: 4, xl: 6 }}
                   autoScroll={true}
                   scrollInterval={4000}
+                  gap={8}
                 >
                   {Array.from({ length: 12 }, (_, i) => (
                     <div
                       key={i}
-                      className='bg-gradient-to-br from-gray-600 to-gray-800 h-24 rounded-md flex items-center justify-center text-white text-sm font-semibold border border-gray-500 mx-1'
+                      className='bg-gradient-to-br from-gray-600 to-gray-800 h-24 rounded-md flex items-center justify-center text-white text-sm font-semibold border border-gray-500'
                     >
                       Card {i + 1}
                     </div>
@@ -2299,6 +2300,51 @@ function AppContent() {
                 <p className='text-xs text-gray-500 mt-2'>
                   This carousel automatically adjusts from 1 item on mobile up to 6 items on extra-large screens
                 </p>
+              </div>
+            </div>
+
+            <h4 className='mb-2 text-lg mt-6'>Gap Examples</h4>
+            <div className='space-y-6'>              
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Small gap (default - 8px)</p>
+                <Carousel className='w-full max-w-2xl mx-auto' itemsToShow={3}>
+                  {Array.from({ length: 6 }, (_, i) => (
+                    <div
+                      key={i}
+                      className='bg-green-500 h-20 rounded flex items-center justify-center text-white font-semibold'
+                    >
+                      {i + 1}
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
+              
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Medium gap (16px)</p>
+                <Carousel className='w-full max-w-2xl mx-auto' itemsToShow={3} gap={16}>
+                  {Array.from({ length: 6 }, (_, i) => (
+                    <div
+                      key={i}
+                      className='bg-purple-500 h-20 rounded flex items-center justify-center text-white font-semibold'
+                    >
+                      {i + 1}
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
+              
+              <div className='bg-slate-800 p-4 rounded'>
+                <p className='text-sm text-gray-400 mb-2'>Large gap (32px)</p>
+                <Carousel className='w-full max-w-2xl mx-auto' itemsToShow={3} gap={32}>
+                  {Array.from({ length: 6 }, (_, i) => (
+                    <div
+                      key={i}
+                      className='bg-orange-500 h-20 rounded flex items-center justify-center text-white font-semibold'
+                    >
+                      {i + 1}
+                    </div>
+                  ))}
+                </Carousel>
               </div>
             </div>
 

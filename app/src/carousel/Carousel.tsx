@@ -1,5 +1,5 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import React, { useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { useCarousel } from './hooks.ts';
 import useScreenSize, { ScreenSize } from './useScreenSize';
 import {
@@ -71,6 +71,8 @@ export interface CarouselProps {
   itemsClassName?: string;
   /** Additional class names for the carousel container */
   containerClassName?: string;
+  /** Gap between carousel items in pixels */
+  gap?: number;
 }
 
 export default function Carousel({
@@ -94,6 +96,7 @@ export default function Carousel({
   nextButton,
   itemsClassName,
   containerClassName,
+  gap = 8,
 }: CarouselProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const childrenArray = React.Children.toArray(children).filter(React.isValidElement);
@@ -132,6 +135,29 @@ export default function Carousel({
     currentIndex,
     onIndexChange,
   });
+
+  const getSlideItemMargins = useCallback(
+    (pos: number) => {
+      // If only showing one item
+      if (currentItemsToShow === 1) {
+        return { left: 0, right: 0 };
+      }
+
+      // If item is first element of a slide
+      if (pos % currentItemsToShow === 0) {
+        return { left: 0, right: gap / 2 };
+      }
+
+      // If item is last element of a slide
+      if (pos % currentItemsToShow === currentItemsToShow - 1) {
+        return { left: gap / 2, right: 0 };
+      }
+
+      // If item is a middle element of a slide
+      return { left: gap / 2, right: gap / 2 };
+    },
+    [currentItemsToShow, gap]
+  );
 
   const handlePrevClick = () => {
     goToPrev();
@@ -224,16 +250,25 @@ export default function Carousel({
             width: `${(totalItems / currentItemsToShow) * 100}%`,
           }}
         >
-          {childrenArray.map((child, index) => (
-            <div
-              key={index}
-              className={join('flex-shrink-0', itemsClassName)}
-              style={{ width: `${100 / totalItems}%` }}
-              data-slide-index={index}
-            >
-              {child}
-            </div>
-          ))}
+          {childrenArray.map((child, index) => {
+            // Determine if this item is currently visible
+            const { left, right } = getSlideItemMargins(index);
+
+            return (
+              <div
+                key={index}
+                className={join('flex-shrink-0', itemsClassName)}
+                style={{
+                  width: `calc(${100 / totalItems}% - ${left}px - ${right}px)`,
+                  marginRight: right > 0 ? `${right}px` : undefined,
+                  marginLeft: left > 0 ? `${left}px` : undefined,
+                }}
+                data-slide-index={index}
+              >
+                {child}
+              </div>
+            );
+          })}
         </div>
 
         {/* Dots Indicator */}
