@@ -302,8 +302,7 @@ export default function Carousel({
                 disabled: !canGoNext,
                 className: join(
                   (nextButton as React.ReactElement<{ className?: string }>).props?.className || '',
-                  buttonPositionVariants[buttonPosition].next,
-                  'disabled:text-green-600'
+                  buttonPositionVariants[buttonPosition].next
                 ),
                 role: 'button',
                 'aria-disabled': !canGoNext,
