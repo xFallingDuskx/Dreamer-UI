@@ -2280,7 +2280,9 @@ function AppContent() {
             <h4 className='mb-2 text-lg mt-6'>Complex Responsive Layout</h4>
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
-                <p className='text-sm text-gray-400 mb-2'>Advanced: 1 on mobile, 2 on sm, 3 on md, 4 on lg, 6 on xl+ with 8px gap</p>
+                <p className='text-sm text-gray-400 mb-2'>
+                  Advanced: 1 on mobile, 2 on sm, 3 on md, 4 on lg, 6 on xl+ with 8px gap
+                </p>
                 <Carousel
                   className='w-full max-w-6xl mx-auto'
                   itemsToShow={{ sm: 2, md: 3, lg: 4, xl: 6 }}
@@ -2304,7 +2306,7 @@ function AppContent() {
             </div>
 
             <h4 className='mb-2 text-lg mt-6'>Gap Examples</h4>
-            <div className='space-y-6'>              
+            <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Small gap (default - 8px)</p>
                 <Carousel className='w-full max-w-2xl mx-auto' itemsToShow={3}>
@@ -2318,7 +2320,7 @@ function AppContent() {
                   ))}
                 </Carousel>
               </div>
-              
+
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Medium gap (16px)</p>
                 <Carousel className='w-full max-w-2xl mx-auto' itemsToShow={3} gap={16}>
@@ -2332,7 +2334,7 @@ function AppContent() {
                   ))}
                 </Carousel>
               </div>
-              
+
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Large gap (32px)</p>
                 <Carousel className='w-full max-w-2xl mx-auto' itemsToShow={3} gap={32}>
@@ -2463,8 +2465,16 @@ function AppContent() {
                 <p className='text-sm text-gray-400 mb-2'>Custom previous and next button content</p>
                 <Carousel
                   className='w-full max-w-md mx-auto'
-                  prevButton={<button className='text-xl disabled:opacity-0'>←</button>}
-                  nextButton={<button className='text-xl disabled:opacity-0'>→</button>}
+                  prevButton={
+                    <button className='text-xl border rounded-full p-1.5 leading-none opacity-70 hover:opacity-100 transition-opacity disabled:hidden'>
+                      ←
+                    </button>
+                  }
+                  nextButton={
+                    <button className='text-xl border rounded-full p-1.5 leading-none opacity-70 hover:opacity-100 transition-opacity disabled:hidden'>
+                      →
+                    </button>
+                  }
                   buttonVariant='outline'
                   infinite={false}
                   containerClassName='rounded-lg'
