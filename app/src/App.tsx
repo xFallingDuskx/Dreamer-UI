@@ -2200,8 +2200,8 @@ function AppContent() {
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Auto-scrolls every 2 seconds, pauses on hover</p>
-                <Carousel 
-                  className='w-full max-w-md mx-auto' 
+                <Carousel
+                  className='w-full max-w-md mx-auto'
                   autoScroll={true}
                   scrollInterval={2000}
                   pauseScrollOnHover={true}
@@ -2226,15 +2226,14 @@ function AppContent() {
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Shows 2 items at once</p>
-                <Carousel 
-                  className='w-full max-w-2xl mx-auto' 
-                  itemsToShow={2}
-                >
+                <Carousel className='w-full max-w-2xl mx-auto' itemsToShow={2}>
                   {Array.from({ length: 6 }, (_, i) => (
-                    <div 
+                    <div
                       key={i}
                       className={`h-32 rounded-lg flex items-center justify-center text-white text-lg font-semibold mx-2 ${
-                        ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500', 'bg-pink-500'][i]
+                        ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500', 'bg-pink-500'][
+                          i
+                        ]
                       }`}
                     >
                       Item {i + 1}
@@ -2247,16 +2246,24 @@ function AppContent() {
             <h4 className='mb-2 text-lg mt-6'>Responsive Breakpoint Carousel</h4>
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
-                <p className='text-sm text-gray-400 mb-2'>Responsive using breakpoint object: 1 on mobile, 2 on md, 3 on lg, 4 on xl</p>
-                <Carousel 
-                  className='w-full max-w-4xl mx-auto' 
-                  itemsToShow={{ md: 2, lg: 3, xl: 4 }}
-                >
+                <p className='text-sm text-gray-400 mb-2'>
+                  Responsive using breakpoint object: 1 on mobile, 2 on md, 3 on lg, 4 on xl
+                </p>
+                <Carousel className='w-full max-w-4xl mx-auto' itemsToShow={{ md: 2, lg: 3, xl: 4 }}>
                   {Array.from({ length: 8 }, (_, i) => (
-                    <div 
+                    <div
                       key={i}
                       className={`h-40 rounded-lg flex flex-col items-center justify-center text-white text-lg font-semibold mx-2 ${
-                        ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-teal-500'][i]
+                        [
+                          'bg-red-500',
+                          'bg-blue-500',
+                          'bg-green-500',
+                          'bg-yellow-500',
+                          'bg-purple-500',
+                          'bg-pink-500',
+                          'bg-indigo-500',
+                          'bg-teal-500',
+                        ][i]
                       }`}
                     >
                       <div className='text-2xl font-bold'>#{i + 1}</div>
@@ -2274,14 +2281,14 @@ function AppContent() {
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Advanced: 1 on mobile, 2 on sm, 3 on md, 4 on lg, 6 on xl+</p>
-                <Carousel 
-                  className='w-full max-w-6xl mx-auto' 
+                <Carousel
+                  className='w-full max-w-6xl mx-auto'
                   itemsToShow={{ sm: 2, md: 3, lg: 4, xl: 6 }}
                   autoScroll={true}
                   scrollInterval={4000}
                 >
                   {Array.from({ length: 12 }, (_, i) => (
-                    <div 
+                    <div
                       key={i}
                       className='bg-gradient-to-br from-gray-600 to-gray-800 h-24 rounded-md flex items-center justify-center text-white text-sm font-semibold border border-gray-500 mx-1'
                     >
@@ -2299,12 +2306,7 @@ function AppContent() {
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Large buttons, ghost variant, no infinite scroll</p>
-                <Carousel 
-                  className='w-full max-w-lg mx-auto' 
-                  buttonSize='lg'
-                  buttonVariant='ghost'
-                  infinite={false}
-                >
+                <Carousel className='w-full max-w-lg mx-auto' buttonSize='lg' buttonVariant='ghost' infinite={false}>
                   <div className='bg-slate-700 border-2 border-slate-600 h-40 rounded-lg flex flex-col items-center justify-center text-white'>
                     <h4 className='text-xl font-bold mb-2'>Card 1</h4>
                     <p className='text-slate-300'>First card content</p>
@@ -2325,10 +2327,7 @@ function AppContent() {
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Navigation buttons hidden, only dots for navigation</p>
-                <Carousel 
-                  className='w-full max-w-md mx-auto' 
-                  hidePrevNext={true}
-                >
+                <Carousel className='w-full max-w-md mx-auto' hidePrevNext={true}>
                   <div className='bg-gradient-to-r from-cyan-500 to-blue-500 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
                     Slide A
                   </div>
@@ -2346,11 +2345,7 @@ function AppContent() {
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Aligned (default) - buttons aligned with carousel edges</p>
-                <Carousel 
-                  className='w-full max-w-md mx-auto' 
-                  buttonPosition='aligned'
-                  infinite={false}
-                >
+                <Carousel className='w-full max-w-md mx-auto' buttonPosition='aligned' infinite={false}>
                   <div className='bg-gradient-to-br from-blue-500 to-purple-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
                     Aligned 1
                   </div>
@@ -2365,9 +2360,11 @@ function AppContent() {
 
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Exterior - buttons positioned outside the carousel</p>
-                <div className='px-16'> {/* Add padding to accommodate exterior buttons */}
-                  <Carousel 
-                    className='w-full max-w-md mx-auto' 
+                <div className='px-16'>
+                  {' '}
+                  {/* Add padding to accommodate exterior buttons */}
+                  <Carousel
+                    className='w-full max-w-md mx-auto'
                     buttonPosition='exterior'
                     buttonVariant='outline'
                     infinite={false}
@@ -2387,8 +2384,8 @@ function AppContent() {
 
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Interior - buttons positioned further inside the carousel</p>
-                <Carousel 
-                  className='w-full max-w-md mx-auto' 
+                <Carousel
+                  className='w-full max-w-md mx-auto'
                   buttonPosition='interior'
                   buttonVariant='ghost'
                   buttonSize='lg'
@@ -2411,11 +2408,12 @@ function AppContent() {
             <div className='space-y-6'>
               <div className='bg-slate-800 p-4 rounded'>
                 <p className='text-sm text-gray-400 mb-2'>Custom previous and next button content</p>
-                <Carousel 
+                <Carousel
                   className='w-full max-w-md mx-auto'
-                  prevButton={<span className='text-xl'>←</span>}
-                  nextButton={<span className='text-xl'>→</span>}
+                  prevButton={<button className='text-xl disabled:opacity-0'>←</button>}
+                  nextButton={<button className='text-xl disabled:opacity-0'>→</button>}
                   buttonVariant='outline'
+                  infinite={false}
                 >
                   <div className='bg-gradient-to-br from-amber-500 to-yellow-600 h-48 rounded-lg flex items-center justify-center text-white text-xl font-semibold'>
                     Custom 1

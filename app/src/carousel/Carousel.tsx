@@ -24,6 +24,16 @@ const ChevronRight = ({ className }: { className?: string }) => (
   </svg>
 );
 
+// Type for button element with common props
+type ButtonElementProps = {
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  disabled?: boolean;
+  className?: string;
+  'aria-label'?: string;
+  'data-carousel-prev'?: string;
+  'data-carousel-next'?: string;
+};
+
 export interface CarouselProps {
   children: React.ReactNode;
   id?: string;
@@ -152,21 +162,42 @@ export default function Carousel({
     <div className={join('relative', className)} data-carousel-wrapper='true'>
       {/* Navigation Buttons - Previous */}
       {!hidePrevNext && (
-        <button
-          type='button'
-          onClick={handlePrevClick}
-          disabled={!canGoPrev}
-          className={join(
-            baseButtonStyles,
-            buttonSizeVariants[buttonSize].button,
-            buttonStyleVariants[buttonVariant],
-            buttonPositionVariants[buttonPosition].prev
+        <>
+          {prevButton ? (
+            React.cloneElement(
+              prevButton as React.ReactElement,
+              {
+                onClick: handlePrevClick,
+                disabled: !canGoPrev,
+                className: join(
+                  (prevButton as React.ReactElement<{ className?: string }>).props?.className || '',
+                  buttonPositionVariants[buttonPosition].prev
+                ),
+                role: 'button',
+                'aria-disabled': !canGoPrev,
+                'aria-label': 'Previous slide',
+                'data-carousel-prev': 'true',
+              } as ButtonElementProps
+            )
+          ) : (
+            <button
+              type='button'
+              onClick={handlePrevClick}
+              disabled={!canGoPrev}
+              className={join(
+                baseButtonStyles,
+                buttonSizeVariants[buttonSize].button,
+                buttonStyleVariants[buttonVariant],
+                buttonPositionVariants[buttonPosition].prev
+              )}
+              aria-disabled={!canGoPrev}
+              aria-label='Previous slide'
+              data-carousel-prev='true'
+            >
+              <ChevronLeft className={buttonSizeVariants[buttonSize].icon} />
+            </button>
           )}
-          aria-label='Previous slide'
-          data-carousel-prev='true'
-        >
-          {prevButton || <ChevronLeft className={buttonSizeVariants[buttonSize].icon} />}
-        </button>
+        </>
       )}
 
       <div
@@ -224,21 +255,43 @@ export default function Carousel({
 
       {/* Navigation Buttons - Next */}
       {!hidePrevNext && (
-        <button
-          type='button'
-          onClick={handleNextClick}
-          disabled={!canGoNext}
-          className={join(
-            baseButtonStyles,
-            buttonSizeVariants[buttonSize].button,
-            buttonStyleVariants[buttonVariant],
-            buttonPositionVariants[buttonPosition].next
+        <>
+          {nextButton ? (
+            React.cloneElement(
+              nextButton as React.ReactElement,
+              {
+                onClick: handleNextClick,
+                disabled: !canGoNext,
+                className: join(
+                  (nextButton as React.ReactElement<{ className?: string }>).props?.className || '',
+                  buttonPositionVariants[buttonPosition].next,
+                  'disabled:text-green-600'
+                ),
+                role: 'button',
+                'aria-disabled': !canGoNext,
+                'aria-label': 'Next slide',
+                'data-carousel-next': 'true',
+              } as ButtonElementProps
+            )
+          ) : (
+            <button
+              type='button'
+              onClick={handleNextClick}
+              disabled={!canGoNext}
+              className={join(
+                baseButtonStyles,
+                buttonSizeVariants[buttonSize].button,
+                buttonStyleVariants[buttonVariant],
+                buttonPositionVariants[buttonPosition].next
+              )}
+              aria-disabled={!canGoNext}
+              aria-label='Next slide'
+              data-carousel-next='true'
+            >
+              <ChevronRight className={buttonSizeVariants[buttonSize].icon} />
+            </button>
           )}
-          aria-label='Next slide'
-          data-carousel-next='true'
-        >
-          {nextButton || <ChevronRight className={buttonSizeVariants[buttonSize].icon} />}
-        </button>
+        </>
       )}
     </div>
   );
