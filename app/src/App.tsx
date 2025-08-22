@@ -528,6 +528,9 @@ function AppContent() {
               <Label display='block'>Second Label</Label>
               <Label required={true}>Third Label</Label>
               <Label helpMessage='This is a help message for the label'>Label w/ Help</Label>
+              <Label description='This is a description for the label' helpMessage='some'>
+                Label w/ Description
+              </Label>
             </div>
           </div>
 
