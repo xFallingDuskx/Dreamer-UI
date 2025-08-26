@@ -173,46 +173,48 @@ export default function Select({
       data-clearable={clearable}
     >
       {/* Trigger Button */}
-      <button
-        ref={triggerRef}
-        type='button'
-        className={join(
-          'flex items-center justify-between w-full text-left bg-inherit border border-border rounded-md transition-colors',
-          'hover:border-primary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary',
-          disabled && 'opacity-50 cursor-not-allowed hover:border-border',
-          isOpen && 'border-primary ring-1 ring-primary',
-          sizeVariants[size].trigger,
-          triggerClassName
-        )}
-        onClick={handleToggle}
-        onKeyDown={handleKeyDown}
-        disabled={disabled}
-        aria-disabled={disabled}
-        aria-haspopup='listbox'
-        aria-expanded={isOpen}
-        aria-controls={isOpen ? listboxId : undefined}
-        aria-activedescendant={isOpen && !searchable ? activeDescendantId : undefined}
-        aria-label={selectedOption ? selectedOption.text : placeholder}
-        data-select-trigger='true'
-      >
-        <span className={join('block truncate', !selectedOption && 'opacity-70')}>
-          {selectedOption ? selectedOption.text : placeholder}
-        </span>
-        <div className='flex items-center ml-2'>
-          {clearable && selectedOption && (
-            <button
-              type='button'
-              onClick={handleClear}
-              className='p-0.5 rounded hover:bg-accent/20 transition-colors mr-1 group'
-              aria-label='Clear selection'
-              data-select-clear='true'
-            >
-              <X size={14} className='opacity-70 group-hover:opacity-100 transition-opacity' />
-            </button>
+      <div className='relative'>
+        <button
+          ref={triggerRef}
+          type='button'
+          className={join(
+            'flex items-center justify-between w-full text-left bg-inherit border border-border rounded-md transition-colors',
+            'hover:border-primary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary',
+            disabled && 'opacity-50 cursor-not-allowed hover:border-border',
+            isOpen && 'border-primary ring-1 ring-primary',
+            sizeVariants[size].trigger,
+            triggerClassName
           )}
-          <ChevronDown size={16} className={join('transition-transform duration-200', isOpen && 'rotate-180')} />
-        </div>
-      </button>
+          onClick={handleToggle}
+          onKeyDown={handleKeyDown}
+          disabled={disabled}
+          aria-disabled={disabled}
+          aria-haspopup='listbox'
+          aria-expanded={isOpen}
+          aria-controls={isOpen ? listboxId : undefined}
+          aria-activedescendant={isOpen && !searchable ? activeDescendantId : undefined}
+          aria-label={selectedOption ? selectedOption.text : placeholder}
+          data-select-trigger='true'
+        >
+          <span className={join('block truncate', !selectedOption && 'opacity-70')}>
+            {selectedOption ? selectedOption.text : placeholder}
+          </span>
+          <div className='flex items-center ml-2'>
+            <ChevronDown size={16} className={join('transition-transform duration-200', isOpen && 'rotate-180')} />
+          </div>
+        </button>
+        {clearable && selectedOption && (
+          <button
+            type='button'
+            onClick={handleClear}
+            className='absolute right-8 top-1/2 -translate-y-1/2 p-0.5 rounded hover:bg-accent/20 transition-colors group z-10'
+            aria-label='Clear selection'
+            data-select-clear='true'
+          >
+            <X size={14} className='opacity-70 group-hover:opacity-100 transition-opacity' />
+          </button>
+        )}
+      </div>
 
       {/* Dropdown */}
       {shouldRender && (
