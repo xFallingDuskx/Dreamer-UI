@@ -1,6 +1,6 @@
-import { SymbolProps } from '.';
+import { SymbolProps } from './props';
 
-export default function EyeClosed({ size = 15, color = 'currentColor', className = 'inline', ...props }: SymbolProps) {
+export function EyeOpened({ size = 15, color = 'currentColor', className = 'inline', ...props }: SymbolProps) {
   return (
     <svg
       {...props}

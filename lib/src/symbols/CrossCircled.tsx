@@ -1,6 +1,6 @@
-import { SymbolProps } from '.';
+import { SymbolProps } from './props';
 
-export default function CrossCircled({
+export function CrossCircled({
   size = 15,
   color = 'currentColor',
   className = 'inline',

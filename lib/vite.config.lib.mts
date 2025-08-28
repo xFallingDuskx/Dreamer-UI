@@ -11,7 +11,7 @@ export default defineConfig({
         components: 'src/components/index.ts',
         hooks: 'src/hooks/index.ts',
         providers: 'src/providers/index.ts',
-        symbols: 'src/symbols/index.tsx',
+        symbols: 'src/symbols/index.ts',
         utils: 'src/utils/index.ts',
       },
       name: 'DreamerUI',
