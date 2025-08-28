@@ -8,6 +8,7 @@ export interface ToastAction {
   onClick: () => void;
 }
 
+/** Data for a toast notification */
 export interface ToastData {
   id: string;
   title: string;

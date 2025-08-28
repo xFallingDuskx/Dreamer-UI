@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { join } from '../../utils';
 
-export default function LoadingDots() {
+export function LoadingDots() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {

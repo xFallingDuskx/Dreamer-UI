@@ -1,2 +1,1 @@
-export { Toast } from './Toast';
-export type { ToastAction, ToastData, ToastType } from './Toast';
+export { Toast, type ToastAction, type ToastData, type ToastType } from './Toast';

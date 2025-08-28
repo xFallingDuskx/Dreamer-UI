@@ -1,6 +1,6 @@
-import { SymbolProps } from '.';
+import { SymbolProps } from './props';
 
-export default function X({ size = 15, color = 'currentColor', className = 'inline', ...props }: SymbolProps) {
+export function X({ size = 15, color = 'currentColor', className = 'inline', ...props }: SymbolProps) {
   return (
     <svg
       {...props}

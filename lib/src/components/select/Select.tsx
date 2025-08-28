@@ -24,7 +24,7 @@ export interface SelectProps {
   searchPlaceholder?: string;
 }
 
-export default function Select({
+export function Select({
   options,
   value,
   placeholder = 'Select an option...',

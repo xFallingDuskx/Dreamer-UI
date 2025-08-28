@@ -1,6 +1,6 @@
-import { SymbolProps } from '.';
+import { SymbolProps } from './props';
 
-export default function InfoCircled({
+export function InfoCircled({
   size = 15,
   color = 'currentColor',
   className = 'inline',

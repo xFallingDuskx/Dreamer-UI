@@ -1,7 +1,7 @@
 // Button.tsx
 import { ButtonHTMLAttributes, Ref } from 'react';
 import { join } from '../../utils';
-import LoadingDots from './LoadingDots';
+import { LoadingDots } from './LoadingDots';
 import { ButtonSize, ButtonVariants, buttonDefaults, buttonVariants, roundedVariants, sizeVariants } from './variants';
 
 export interface ButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttributes<HTMLButtonElement> {
@@ -11,7 +11,7 @@ export interface ButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttribut
   linkProps?: Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>;
 }
 
-export default function Button({
+export function Button({
   variant = buttonDefaults.variant,
   size,
   rounded = buttonDefaults.rounded,

@@ -21,7 +21,7 @@ export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {
   ref?: React.Ref<HTMLDivElement>;
 }
 
-export default function ScrollArea({
+export function ScrollArea({
   className,
   thumbClassName,
   viewportClassName,

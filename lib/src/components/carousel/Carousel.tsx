@@ -64,7 +64,7 @@ export interface CarouselProps {
   gap?: number;
 }
 
-export default function Carousel({
+export function Carousel({
   children,
   id,
   ref,

@@ -1,2 +1,1 @@
-export { ActionModal } from './ActionModal';
-export type { ActionModalProps } from './ActionModal';
+export { ActionModal, type ActionModalProps } from './ActionModal';

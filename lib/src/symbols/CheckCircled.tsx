@@ -1,6 +1,6 @@
-import { SymbolProps } from '.';
+import { SymbolProps } from './props';
 
-export default function CheckCircled({
+export function CheckCircled({
   size = 15,
   color = 'currentColor',
   className = 'inline',

@@ -33,7 +33,7 @@ export interface SliderProps {
   ariaLabelledBy?: string;
 }
 
-export default function Slider({
+export function Slider({
   id,
   value,
   defaultValue = 0,

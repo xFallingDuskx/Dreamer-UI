@@ -1,5 +1,5 @@
 import React, { Ref, useEffect, useId, useMemo, useState } from 'react';
-import Check from '../../symbols/Check';
+import { Check } from '../../symbols';
 import { join } from '../../utils';
 import { useFilledBackgroundColor } from './hooks';
 
@@ -13,7 +13,7 @@ export interface CheckboxProps extends React.ButtonHTMLAttributes<HTMLButtonElem
   onCheckedChange?: (checked: boolean) => void;
 }
 
-export default function Checkbox({
+export function Checkbox({
   ref,
   id,
   size = 20,

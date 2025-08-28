@@ -1,6 +1,6 @@
 import { join } from '../../utils';
 
-interface ClickableProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onClick'> {
+export interface ClickableProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onClick'> {
   children: React.ReactNode;
   linkTo?: React.HTMLProps<HTMLAnchorElement>['href'];
   linkProps?: Omit<React.HTMLProps<HTMLAnchorElement>, 'href'>;
@@ -8,7 +8,7 @@ interface ClickableProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onClick'
   buttonProps?: Omit<React.HTMLProps<HTMLButtonElement>, 'onClick'>;
 }
 
-export default function Clickable({
+export function Clickable({
   children,
   className,
   linkTo,

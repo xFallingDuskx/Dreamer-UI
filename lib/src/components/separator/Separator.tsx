@@ -16,7 +16,7 @@ export interface SeparatorProps extends Omit<React.HTMLAttributes<HTMLDivElement
   thickness?: Thickness;
 }
 
-export default function Separator({
+export function Separator({
   orientation = 'horizontal',
   decorative = false,
   thickness = 'thin',

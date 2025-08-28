@@ -5,14 +5,14 @@ import { join } from '../../utils';
 import './styles.css';
 import { inputDefaults, inputVariants, InputVariants, roundedVariants } from './variants';
 
-interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<HTMLInputElement> {
   ref?: Ref<HTMLInputElement>;
   displayOnlyMode?: boolean;
   errorMessage?: string;
   successMessage?: string;
 }
 
-export default function Input({
+export function Input({
   variant = inputDefaults.variant,
   rounded,
   displayOnlyMode = false,

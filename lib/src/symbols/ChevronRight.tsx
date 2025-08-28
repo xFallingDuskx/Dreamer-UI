@@ -1,6 +1,6 @@
-import { SymbolProps } from '.';
+import { SymbolProps } from './props';
 
-export default function ChevronRight({
+export function ChevronRight({
   size = 15,
   color = 'currentColor',
   className = 'inline',
