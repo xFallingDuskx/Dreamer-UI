@@ -13,7 +13,7 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement>, Ske
   ref?: React.Ref<HTMLDivElement>;
 }
 
-export default function Skeleton({
+export function Skeleton({
   shape = 'rectangle',
   lineSpacing = 'sm',
   className,

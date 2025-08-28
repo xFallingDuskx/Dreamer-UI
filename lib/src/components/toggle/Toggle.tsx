@@ -20,7 +20,7 @@ export interface ToggleProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonE
   backgroundClassNames?: ToggleBackgroundClasses;
 }
 
-export default function Toggle({
+export function Toggle({
   ref,
   id,
   size = toggleDefaults.size,

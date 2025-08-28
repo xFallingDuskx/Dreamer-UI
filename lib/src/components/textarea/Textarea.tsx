@@ -6,7 +6,7 @@ import { useAutoExpand } from './hooks';
 import './styles.css';
 import { roundedVariants, textareaDefaults, textareaVariants, TextareaVariants } from './variants';
 
-interface TextareaProps extends Partial<TextareaVariants>, React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextareaProps extends Partial<TextareaVariants>, React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   ref?: Ref<HTMLTextAreaElement>;
   displayOnlyMode?: boolean;
   errorMessage?: string;
@@ -16,7 +16,7 @@ interface TextareaProps extends Partial<TextareaVariants>, React.TextareaHTMLAtt
   characterLimit?: number;
 }
 
-export default function Textarea({
+export function Textarea({
   variant = textareaDefaults.variant,
   rounded,
   displayOnlyMode = false,

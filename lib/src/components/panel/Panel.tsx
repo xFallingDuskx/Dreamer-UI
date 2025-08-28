@@ -39,7 +39,7 @@ export interface PanelProps {
  * Panel component that slides in from the right side of the screen.
  * Provides an overlay and slide-in animation for side content display.
  */
-export default function Panel({
+export function Panel({
   ref,
   id,
   isOpen,

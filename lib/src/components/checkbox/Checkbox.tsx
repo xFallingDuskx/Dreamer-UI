@@ -13,7 +13,7 @@ export interface CheckboxProps extends React.ButtonHTMLAttributes<HTMLButtonElem
   onCheckedChange?: (checked: boolean) => void;
 }
 
-export default function Checkbox({
+export function Checkbox({
   ref,
   id,
   size = 20,

@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { ChevronDoubleLeft, ChevronDoubleRight, ChevronLeft, ChevronRight } from '../../symbols';
 import { PaginationSize, paginationSizes, PaginationVariant, paginationVariants } from './variants';
 
-interface PaginationProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface PaginationProps extends React.HTMLAttributes<HTMLDivElement> {
   /** The current page number (1-indexed) */
   page: number;
   /** Total number of pages. Use Infinity for infinite pagination */
@@ -24,7 +24,7 @@ interface PaginationProps extends React.HTMLAttributes<HTMLDivElement> {
   buttonsClassName?: string;
 }
 
-export default function Pagination({
+export function Pagination({
   page,
   pageCount = 5,
   maxVisiblePages = 5,
