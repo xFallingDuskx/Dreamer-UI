@@ -68,6 +68,17 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
               >
                 Home
               </Link>
+
+              <Link
+                to='/getting-started'
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                  location.pathname === '/getting-started'
+                    ? 'text-primary bg-primary/20'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                }`}
+              >
+                Getting Started
+              </Link>
               
               {/* Components Dropdown */}
               <div className='relative group'>

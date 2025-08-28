@@ -34,17 +34,21 @@ export const LandingPage = () => {
         {/* Call to Action */}
         <div className='pt-8 space-y-4'>
           <Link
-            to='/components'
+            to='/getting-started'
             className='inline-block px-8 py-4 bg-gradient-to-r from-primary to-accent text-white font-semibold rounded-xl shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/40 transform hover:scale-105 transition-all duration-200 text-lg border border-primary/30'
           >
-            Explore Components
+            Get Started
           </Link>
           <p className='text-gray-400 text-sm'>
             Or browse our{' '}
+            <Link to='/components' className='text-accent hover:text-accent/80 underline'>
+              components
+            </Link>
+            ,{' '}
             <Link to='/hooks' className='text-accent hover:text-accent/80 underline'>
               hooks
-            </Link>{' '}
-            and{' '}
+            </Link>
+            , and{' '}
             <Link to='/utils' className='text-accent hover:text-accent/80 underline'>
               utilities
             </Link>

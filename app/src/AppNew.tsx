@@ -6,6 +6,7 @@ import { Layout } from './components/layout/Layout';
 
 // Pages
 import { LandingPage } from './pages/LandingPage';
+import { GettingStartedPage } from './pages/GettingStartedPage';
 import { ComponentsPage } from './pages/ComponentsIndexPage';
 import { HooksPage } from './pages/HooksIndexPage';
 import { UtilsPage } from './pages/UtilsIndexPage';
@@ -32,6 +33,9 @@ function App() {
             <Route path="/" element={<Layout />}>
               {/* Landing Page */}
               <Route index element={<LandingPage />} />
+              
+              {/* Getting Started Page */}
+              <Route path="getting-started" element={<GettingStartedPage />} />
               
               {/* Components Index */}
               <Route path="components" element={<ComponentsPage />} />

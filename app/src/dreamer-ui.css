@@ -8,7 +8,7 @@
   --color-destructive: var(--color-red-600); /* Slightly stronger red for better visibility */
   --color-destructive-foreground: var(--color-white);
   --color-muted: var(--color-slate-100); /* Softer neutral background */
-  --color-muted-foreground: var(--color-slate-700); /* Better contrast for readability */
+  --color-muted-foreground: var(--color-slate-500); /* Better contrast for readability */
 
   --color-accent: var(--color-teal-500); /* Cosmic teal accent for aurora/nebula feel */
   --color-accent-foreground: var(--color-white);
