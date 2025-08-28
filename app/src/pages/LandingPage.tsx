@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Clickable } from '@moondreamsdev/dreamer-ui/components';
 
 export const LandingPage = () => {
   return (
@@ -21,34 +20,28 @@ export const LandingPage = () => {
 
         {/* Feature Highlights */}
         <div className='flex flex-wrap justify-center gap-4 mt-12'>
-          <Clickable onButtonClick={() => alert('Lightning Fast!')}>
-            <div className='px-4 py-2 bg-gray-800/80 backdrop-blur-sm rounded-full border border-gray-600 text-primary text-sm font-medium shadow-lg hover:shadow-primary/20 transition-all duration-200'>
-              ⚡ Lightning Fast
-            </div>
-          </Clickable>
-          <Clickable onButtonClick={() => alert('Type Safe!')}>
-            <div className='px-4 py-2 bg-gray-800/80 backdrop-blur-sm rounded-full border border-gray-600 text-accent text-sm font-medium shadow-lg hover:shadow-accent/20 transition-all duration-200'>
-              🔒 Type Safe
-            </div>
-          </Clickable>
-          <Clickable onButtonClick={() => alert('Beautiful Design!')}>
-            <div className='px-4 py-2 bg-gray-800/80 backdrop-blur-sm rounded-full border border-gray-600 text-secondary text-sm font-medium shadow-lg hover:shadow-secondary/20 transition-all duration-200'>
-              🎨 Beautiful Design
-            </div>
-          </Clickable>
+          <div className='px-4 py-2 bg-gray-800/80 backdrop-blur-sm rounded-full border border-gray-600 text-secondary text-sm font-medium shadow-lg hover:shadow-secondary/20 transition-all duration-200'>
+            ⚡ Lightning Fast
+          </div>
+          <div className='px-4 py-2 bg-gray-800/80 backdrop-blur-sm rounded-full border border-gray-600 text-secondary text-sm font-medium shadow-lg hover:shadow-secondary/20 transition-all duration-200'>
+            🔒 Type Safe
+          </div>
+          <div className='px-4 py-2 bg-gray-800/80 backdrop-blur-sm rounded-full border border-gray-600 text-secondary text-sm font-medium shadow-lg hover:shadow-secondary/20 transition-all duration-200'>
+            🎨 Beautiful Design
+          </div>
         </div>
 
         {/* Call to Action */}
         <div className='pt-8 space-y-4'>
           <Link
-            to='/components/button'
+            to='/components'
             className='inline-block px-8 py-4 bg-gradient-to-r from-primary to-accent text-white font-semibold rounded-xl shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/40 transform hover:scale-105 transition-all duration-200 text-lg border border-primary/30'
           >
             Explore Components
           </Link>
           <p className='text-gray-400 text-sm'>
             Or browse our{' '}
-            <Link to='/hooks' className='text-primary hover:text-primary/80 underline'>
+            <Link to='/hooks' className='text-accent hover:text-accent/80 underline'>
               hooks
             </Link>{' '}
             and{' '}

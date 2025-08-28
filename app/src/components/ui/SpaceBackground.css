@@ -119,31 +119,31 @@
 
 /* Animation Classes */
 .star-glow-intense { 
-  animation: starGlowIntense 6s ease-in-out infinite; 
+  animation: starGlowIntense 3s ease-in-out infinite; 
 }
 
 .star-pulse-strong { 
-  animation: starPulseStrong 5s ease-in-out infinite; 
+  animation: starPulseStrong 3s ease-in-out infinite; 
 }
 
 .star-twinkle-intense { 
-  animation: starTwinkleIntense 7s ease-in-out infinite; 
+  animation: starTwinkleIntense 5s ease-in-out infinite; 
 }
 
 .star-breathe-slow {
-  animation: starBreatheSlow 8s ease-in-out infinite;
+  animation: starBreatheSlow 6s ease-in-out infinite;
 }
 
 .primary-star-glow {
-  animation: primaryStarGlow 6s ease-in-out infinite;
+  animation: primaryStarGlow 4s ease-in-out infinite;
 }
 
 .accent-star-glow {
-  animation: accentStarGlow 5s ease-in-out infinite;
+  animation: accentStarGlow 3s ease-in-out infinite;
 }
 
 .secondary-star-glow {
-  animation: secondaryStarGlow 8s ease-in-out infinite;
+  animation: secondaryStarGlow 6s ease-in-out infinite;
 }
 
 .nebula-drift {
