@@ -29,7 +29,7 @@ or, if the above command fails:
 And, finally, install the stylesheets in main CSS file (recommended):
 
 ```css
-@import "@moondreamsdev/dreamer-ui/styles"; /* non-TailwindCSS styles */
+@import '@moondreamsdev/dreamer-ui/styles'; /* non-TailwindCSS styles */
 @import './dreamer-ui.css'; /* customizable, theme styles */
 
 /* other styles */
@@ -40,16 +40,16 @@ And, finally, install the stylesheets in main CSS file (recommended):
 
 ### Tailwind Class Name Auto-Detection
 
-To enable Tailwind CSS IntelliSense for component classnames like `targetClassName`, add the following to your VS Code settings.json:
+To enable Tailwind CSS IntelliSense for component classnames like `targetClassName` and when using `join()`, add the following to your VS Code settings.json:
 
 ```json
 {
-  "tailwindCSS.classAttributes": ["class", "className", ".*ClassName"]
+  "tailwindCSS.classAttributes": ["class", "className", ".*ClassName"],
+  "tailwindCSS.classFunctions": ["join"]
 }
 ```
 
 This configuration allows the Tailwind CSS extension to provide autocomplete and validation for any attribute that contains "className" in its name, including custom props like `targetClassName`, `containerClassName`, etc.
-
 
 ## Usage
 
@@ -59,9 +59,9 @@ import { Button, Input, Textarea } from 'dreamer-ui';
 function App() {
   return (
     <div>
-      <Button variant="primary">Click me</Button>
-      <Input placeholder="Enter text" />
-      <Textarea placeholder="Enter message" />
+      <Button variant='primary'>Click me</Button>
+      <Input placeholder='Enter text' />
+      <Textarea placeholder='Enter message' />
     </div>
   );
 }
