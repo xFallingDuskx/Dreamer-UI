@@ -351,7 +351,7 @@ export function CodeBlock({
     return lines.map((_, index) => (
       <div 
         key={index} 
-        className="text-gray-500 text-right pr-4 select-none min-w-8 text-sm font-mono leading-6"
+        className="text-gray-500 text-right pl-3 pr-1 select-none min-w-8 text-sm font-mono leading-6"
       >
         {index + 1}
       </div>
@@ -443,16 +443,20 @@ export function CodeBlock({
         </div>
         
         {/* Code Content */}
-        <div className="flex" style={codeStyle}>
-          {showLineNumbers && (
-            <div className="bg-gray-800 py-4 border-r border-gray-700 flex flex-col">
-              {getLineNumbers()}
+        <div className="flex overflow-hidden" style={codeStyle}>
+          <div className="flex-1 overflow-x-auto">
+            <div className="flex">
+              {showLineNumbers && (
+                <div className="bg-gray-800 py-4 border-r border-gray-700 flex flex-col flex-shrink-0">
+                  {getLineNumbers()}
+                </div>
+              )}
+              <div className="flex-1 p-4">
+                <pre className="text-sm font-mono">
+                  {renderHighlightedCode()}
+                </pre>
+              </div>
             </div>
-          )}
-          <div className="flex-1 p-4 overflow-x-auto">
-            <pre className="text-sm font-mono">
-              {renderHighlightedCode()}
-            </pre>
           </div>
         </div>
       </div>
