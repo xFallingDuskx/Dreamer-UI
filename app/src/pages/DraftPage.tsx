@@ -1,88 +1,7 @@
-import { CodeBlock, CodeBlockTokenClasses } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
+import { Disclosure } from '../disclosure';
 
 export const DraftPage = () => {
-  const tsCode = `interface User {
-  id: number;
-  name: string;
-  email: string;
-  isActive?: boolean;
-  createdAt: Date;
-}
-
-class UserService {
-  private users: User[] = [];
-  private readonly apiUrl = 'https://api.example.com/users';
-
-  async createUser(userData: Omit<User, 'id' | 'createdAt'>): Promise<User> {
-    try {
-      const newUser: User = {
-        id: Math.floor(Math.random() * 1000),
-        createdAt: new Date(),
-        ...userData
-      };
-      
-      this.users.push(newUser);
-      return newUser;
-    } catch (error) {
-      throw new Error(\`Failed to create user: \${error.message}\`);
-    }
-  }
-}`;
-
-  const tsxCode = `import { useState, useCallback } from 'react';
-
-interface CounterProps {
-  initialCount?: number;
-  step?: number;
-  maxCount?: number;
-  onCountChange?: (count: number) => void;
-}
-
-export default function Counter({ 
-  initialCount = 0, 
-  step = 1,
-  maxCount = 100,
-  onCountChange
-}: CounterProps) {
-  const [count, setCount] = useState<number>(initialCount);
-
-  const handleIncrement = useCallback((): void => {
-    if (count >= maxCount) return;
-    
-    const newCount = Math.min(count + step, maxCount);
-    setCount(newCount);
-    onCountChange?.(newCount);
-  }, [count, step, maxCount, onCountChange]);
-
-  return (
-    <div className="counter p-6 bg-white rounded-lg shadow-lg">
-      <div className="flex items-center justify-center space-x-4">
-        <button 
-          onClick={() => setCount(Math.max(count - step, 0))}
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        >
-          -
-        </button>
-        <span className="text-2xl font-bold text-blue-600">{count}</span>
-        <button 
-          onClick={handleIncrement}
-          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-        >
-          +
-        </button>
-      </div>
-    </div>
-  );
-}`;
-
-  const customCodeBlockTokenClasses: CodeBlockTokenClasses = {
-    keyword: 'text-red-400 font-bold',
-    function: 'text-green-600 font-semibold',
-    string: 'text-green-400',
-    type: 'text-orange-400 font-medium',
-    comment: 'text-gray-400 italic',
-  };
   return (
     <ComponentPage
       title='Draft'
@@ -115,64 +34,44 @@ export default function Counter({
 
           {/* Example testing section */}
           <div className='space-y-6'>
-            <div>
-              <h3 className='text-lg font-medium text-white mb-3'>CodeBlock Component Testing</h3>
-
-              {/* TypeScript Example */}
-              <div className='mb-6'>
-                <h4 className='text-md font-medium text-gray-300 mb-3'>TypeScript Interface & Class</h4>
-                <CodeBlock
-                  code={tsCode}
-                  language='typescript'
-                  filename='UserService.ts'
-                  showLineNumbers={true}
-                  maxHeight={300}
-                  allowDownload={true}
-                  allowFullscreen={true}
-                />
-              </div>
-
-              {/* TSX Example */}
-              <div className='mb-6'>
-                <h4 className='text-md font-medium text-gray-300 mb-3'>React TSX Component</h4>
-                <CodeBlock
-                  code={tsxCode}
-                  language='tsx'
-                  filename='Counter.tsx'
-                  showTrafficLights={false}
-                  showLineNumbers={true}
-                  allowDownload={true}
-                />
-              </div>
-
-              {/* Basic TypeScript Example */}
-              <div className='mb-6'>
-                <h4 className='text-md font-medium text-gray-300 mb-3'>Basic Example (No Line Numbers)</h4>
-                <CodeBlock
-                  code={`const message: string = 'Hello, TypeScript!';\nconsole.log(message);`}
-                  language='ts'
-                />
-              </div>
-
-              {/* Custom Token Classes Example */}
-              <div className='mb-6'>
-                <h4 className='text-md font-medium text-gray-300 mb-3'>Custom Token Colors Example</h4>
-                <CodeBlock
-                  code={`// Custom color scheme example\nconst greet = (name: string): string => {\n  return \`Hello, \${name}!\`;\n};\n\nconsole.log(greet('World'));`}
-                  language='ts'
-                  filename='custom-colors.ts'
-                  tokenClasses={customCodeBlockTokenClasses}
-                />
-              </div>
-
-              {/* Hidden Header Example */}
-              <div className='mb-6'>
-                <h4 className='text-md font-medium text-gray-300 mb-3'>Hidden Header Example</h4>
-                <CodeBlock
-                  code={`// No header bar - buttons float in corner\nconst example = "Clean minimal look";\nconsole.log(example);`}
-                  language='ts'
-                  hideHeader={true}
-                />
+            {/* Disclosure Component Testing */}
+            <div className='mb-6'>
+              <h3 className='text-lg font-medium text-white mb-3'>Disclosure Component Testing</h3>
+              <div className='space-y-4'>
+                {/* Default variant */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Default Variant</h4>
+                  <Disclosure label='Show more (default)' id='disclosure-default'>
+                    <div className='p-2 text-gray-800 dark:text-gray-200'>
+                      This is the default disclosure content. You can put any React node here.
+                    </div>
+                  </Disclosure>
+                </div>
+                {/* Subtle variant */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Subtle Variant</h4>
+                  <Disclosure label='Show more (subtle)' id='disclosure-subtle'>
+                    <div className='p-2 text-gray-800 dark:text-gray-200'>
+                      This is the subtle disclosure content. Useful for less prominent sections.
+                    </div>
+                  </Disclosure>
+                </div>
+                {/* Danger variant */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Danger Variant</h4>
+                  <Disclosure label='Show more (danger)' id='disclosure-danger'>
+                    <div className='p-2 text-red-700 dark:text-red-300'>
+                      This is the danger disclosure content. Use for warnings or destructive actions.
+                    </div>
+                  </Disclosure>
+                </div>
+                {/* Disabled state */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Disabled State</h4>
+                  <Disclosure label='Disabled disclosure' id='disclosure-disabled' disabled>
+                    <div className='p-2 text-gray-400'>This disclosure is disabled and cannot be opened.</div>
+                  </Disclosure>
+                </div>
               </div>
             </div>
           </div>
