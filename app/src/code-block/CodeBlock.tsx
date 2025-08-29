@@ -1,6 +1,7 @@
 import { Check } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Copy, Dash, Download, Window } from './icons';
 
 export interface TokenClasses {
@@ -98,6 +99,10 @@ export function CodeBlock({
   useEffect(() => {
     if (isFullscreen) {
       previousActiveElement.current = document.activeElement as HTMLElement;
+
+      // Prevent document scrolling
+      document.body.style.overflow = 'hidden';
+
       // Focus the container in fullscreen mode
       setTimeout(() => {
         containerRef.current?.focus();
@@ -113,6 +118,8 @@ export function CodeBlock({
       document.addEventListener('keydown', handleKeyDown);
       return () => {
         document.removeEventListener('keydown', handleKeyDown);
+        // Restore document scrolling
+        document.body.style.overflow = '';
       };
     } else if (previousActiveElement.current) {
       // Restore focus when exiting fullscreen
@@ -480,107 +487,114 @@ export function CodeBlock({
     ));
   }, [showLineNumbers, codeLines]);
 
-  const codeBlockClasses = useMemo(
-    () =>
-      join(
-        'bg-gray-900 rounded-lg border border-gray-700 overflow-hidden motion-reduce:transition-none',
-        isFullscreen && 'fixed inset-0 z-[9999]',
-        className
-      ),
-    [isFullscreen, className]
-  );
-
   const codeStyle = useMemo(
     () => ({
-      maxHeight: maxHeight && !isFullscreen ? `${maxHeight}px` : isFullscreen ? '100vh' : undefined,
+      maxHeight: maxHeight && !isFullscreen ? `${maxHeight}px` : isFullscreen ? 'fit-content' : undefined,
       overflow: maxHeight || isFullscreen ? 'auto' : 'visible',
     }),
     [maxHeight, isFullscreen]
   );
 
-  return (
-    <>
-      {isFullscreen && (
-        <div className='fixed inset-0 bg-black/50 z-[9998]' onClick={() => setIsFullscreen(false)} aria-hidden='true' />
+  const codeBlockContent = (
+    <div
+      id={id}
+      ref={(node) => {
+        containerRef.current = node;
+        if (typeof ref === 'function') {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+      }}
+      className={join(
+        'bg-gray-900 rounded-lg border border-gray-700 overflow-hidden motion-reduce:transition-none',
+        isFullscreen && 'fixed inset-0 z-[9999] max-h-fit',
+        className
       )}
-      <div
-        id={id}
-        ref={(node) => {
-          containerRef.current = node;
-          if (typeof ref === 'function') {
-            ref(node);
-          } else if (ref) {
-            ref.current = node;
-          }
-        }}
-        className={codeBlockClasses}
-        data-language={language}
-        data-filename={filename}
-        data-fullscreen={isFullscreen}
-        role='region'
-        aria-label={`Code block${filename ? ` for ${filename}` : ''} in ${language}`}
-        aria-describedby={showLineNumbers ? `${id}-description` : undefined}
-        tabIndex={0}
-        onKeyDown={handleKeyDown}
-        {...props}
-      >
-        {showLineNumbers && (
-          <div id={`${id}-description`} className='sr-only'>
-            Code block with line numbers. Use Cmd+C or Ctrl+C to copy code.
-            {allowFullscreen && ' Press F to toggle fullscreen.'}
-          </div>
-        )}
-
-        {/* Live region for copy feedback */}
-        <div aria-live='polite' aria-atomic='true' className='sr-only'>
-          {copied && 'Code copied to clipboard'}
+      data-language={language}
+      data-filename={filename}
+      data-fullscreen={isFullscreen}
+      role='region'
+      aria-label={`Code block${filename ? ` for ${filename}` : ''} in ${language}`}
+      aria-describedby={showLineNumbers ? `${id}-description` : undefined}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      {...props}
+    >
+      {showLineNumbers && (
+        <div id={`${id}-description`} className='sr-only'>
+          Code block with line numbers. Use Cmd+C or Ctrl+C to copy code.
+          {allowFullscreen && ' Press F to toggle fullscreen.'}
         </div>
+      )}
 
-        {/* Header */}
-        {!hideHeader && (
-          <div className='flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700'>
-            <div className='flex items-center space-x-3'>
-              {showTrafficLights && (
-                <div className='flex space-x-2'>
-                  <div className='w-3 h-3 bg-red-500 rounded-full' />
-                  <div className='w-3 h-3 bg-yellow-500 rounded-full' />
-                  <div className='w-3 h-3 bg-green-500 rounded-full' />
-                </div>
-              )}
-              {filename && <span className='text-sm text-gray-300 font-medium'>{filename}</span>}
-            </div>
-            {renderButtons(true)}
-          </div>
-        )}
+      {/* Live region for copy feedback */}
+      <div aria-live='polite' aria-atomic='true' className='sr-only'>
+        {copied && 'Code copied to clipboard'}
+      </div>
 
-        {/* Code Content */}
-        <div className={join('flex overflow-hidden', hideHeader && 'relative')} style={codeStyle}>
-          {hideHeader && renderButtons(false)}
-          <div className='flex-1 overflow-x-auto'>
-            <div className='flex'>
-              {showLineNumbers && (
-                <div
-                  className='bg-gray-800 py-4 border-r border-gray-700 flex flex-col flex-shrink-0'
-                  aria-hidden='true'
-                  role='presentation'
-                >
-                  {lineNumbers}
-                </div>
-              )}
-              <div className='flex-1 p-4'>
-                <pre
-                  className='text-sm font-mono focus:outline-none'
-                  role='code'
-                  aria-label={`${language} code content`}
-                  tabIndex={-1}
-                >
-                  <code>{formattedCode}</code>
-                </pre>
+      {/* Header */}
+      {!hideHeader && (
+        <div className='flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700'>
+          <div className='flex items-center space-x-3'>
+            {showTrafficLights && (
+              <div className='flex space-x-2'>
+                <div className='w-3 h-3 bg-red-500 rounded-full' />
+                <div className='w-3 h-3 bg-yellow-500 rounded-full' />
+                <div className='w-3 h-3 bg-green-500 rounded-full' />
               </div>
+            )}
+            {filename && <span className='text-sm text-gray-300 font-medium'>{filename}</span>}
+          </div>
+          {renderButtons(true)}
+        </div>
+      )}
+
+      {/* Code Content */}
+      <div className={join('flex overflow-hidden', hideHeader && 'relative')} style={codeStyle}>
+        {hideHeader && renderButtons(false)}
+        <div className='flex-1 overflow-x-auto'>
+          <div className='flex'>
+            {showLineNumbers && (
+              <div
+                className='bg-gray-800 py-4 border-r border-gray-700 flex flex-col flex-shrink-0'
+                aria-hidden='true'
+                role='presentation'
+              >
+                {lineNumbers}
+              </div>
+            )}
+            <div className='flex-1 p-4'>
+              <pre
+                className='text-sm font-mono focus:outline-none'
+                role='code'
+                aria-label={`${language} code content`}
+                tabIndex={-1}
+              >
+                <code>{formattedCode}</code>
+              </pre>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  );
+
+  return (
+    <>
+      {!isFullscreen && codeBlockContent}
+      {isFullscreen &&
+        createPortal(
+          <>
+            <div
+              className='fixed inset-0 bg-black z-[9998]'
+              onClick={() => setIsFullscreen(false)}
+              aria-hidden='true'
+            />
+            {codeBlockContent}
+          </>,
+          document.body
+        )}
     </>
   );
 }
