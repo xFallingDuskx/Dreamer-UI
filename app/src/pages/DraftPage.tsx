@@ -138,7 +138,7 @@ export default function Counter({
               <div className='mb-6'>
                 <h4 className='text-md font-medium text-gray-300 mb-3'>Basic Example (No Line Numbers)</h4>
                 <CodeBlock 
-                  code="const message: string = 'Hello, TypeScript!';\nconsole.log(message);"
+                  code={`const message: string = 'Hello, TypeScript!';\nconsole.log(message);`}
                   language="ts"
                   allowDownload={false}
                   allowFullscreen={false}

@@ -219,6 +219,15 @@ export function CodeBlock({
   const renderHighlightedCode = () => {
     const lines = code.split('\n');
     return lines.map((line, lineIndex) => {
+      // Handle empty lines by adding a non-breaking space
+      if (line.trim() === '') {
+        return (
+          <div key={lineIndex} className="leading-6">
+            &nbsp;
+          </div>
+        );
+      }
+
       const tokens = tokenizeTypeScript(line);
       return (
         <div key={lineIndex} className="leading-6">
