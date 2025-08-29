@@ -57,6 +57,8 @@ export interface CodeBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement
   showLineNumbers?: boolean;
   /** Whether to hide the header bar (buttons will appear in top-right corner) */
   hideHeader?: boolean;
+  /** Whether to hide the file type label */
+  hideFiletype?: boolean;
   /** Maximum height in pixels before scrolling */
   maxHeight?: number;
   /** Custom token classes for syntax highlighting */
@@ -79,6 +81,7 @@ export function CodeBlock({
   showTrafficLights = true,
   showLineNumbers = false,
   hideHeader = false,
+  hideFiletype = false,
   maxHeight,
   tokenClasses: customTokenClasses,
   className,
@@ -122,7 +125,9 @@ export function CodeBlock({
 
   const renderButtons = (inHeader = true) => (
     <div className={join('flex items-center space-x-2', !inHeader && 'absolute top-2 right-2 z-10')}>
-      <span className='text-xs text-gray-400 uppercase tracking-wide font-medium'>{language}</span>
+      {!hideFiletype && (
+        <span className='text-xs text-gray-400 uppercase tracking-wide font-medium'>{language}</span>
+      )}
       {allowFullscreen && (
         <button
           onClick={() => setIsFullscreen(!isFullscreen)}
