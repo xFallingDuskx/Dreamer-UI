@@ -3,11 +3,14 @@ interface ExampleSectionProps {
   description?: string;
   children: React.ReactNode;
   className?: string;
+  id?: string;
 }
 
-export const ExampleSection = ({ title, description, children, className = '' }: ExampleSectionProps) => {
+export function ExampleSection({ title, description, children, className = '', id }: ExampleSectionProps) {
+  const sectionId = id || title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
   return (
-    <section className={`mb-12 ${className}`}>
+    <section className={`mb-12 ${className}`} id={sectionId}>
       <div className='mb-6'>
         <h3 className='text-2xl font-semibold text-white mb-2'>{title}</h3>
         {description && (
@@ -19,4 +22,4 @@ export const ExampleSection = ({ title, description, children, className = '' }:
       </div>
     </section>
   );
-};
+}
