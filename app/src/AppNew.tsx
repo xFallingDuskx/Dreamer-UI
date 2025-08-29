@@ -7,9 +7,10 @@ import { Layout } from './components/layout/Layout';
 // Pages
 import { LandingPage } from './pages/LandingPage';
 import { GettingStartedPage } from './pages/GettingStartedPage';
-import { ComponentsPage } from './pages/ComponentsIndexPage';
-import { HooksPage } from './pages/HooksIndexPage';
-import { UtilsPage } from './pages/UtilsIndexPage';
+import { ComponentsPage } from './pages/components/_ComponentsPage';
+import { HooksPage } from './pages/hooks/_HooksPage';
+import { UtilsPage } from './pages/utils/_UtilsPage';
+import { DraftPage } from './pages/DraftPage';
 
 // Component Pages
 import { ButtonPage } from './pages/components/ButtonPage';
@@ -24,7 +25,12 @@ import { UseToastPage } from './pages/hooks/UseToastPage';
 // Utils Pages
 import { JoinPage } from './pages/utils/JoinPage';
 
+// Utils
+import { isLocalhost } from './utils/isLocalhost';
+
 function App() {
+  const showDraftRoute = isLocalhost();
+
   return (
     <ActionModalProvider>
       <ToastProvider position='top-center'>
@@ -54,6 +60,11 @@ function App() {
               {/* Utils Pages */}
               <Route path="utils" element={<UtilsPage />} />
               <Route path="utils/join" element={<JoinPage />} />
+
+              {/* Draft Page - Only available on localhost */}
+              {showDraftRoute && (
+                <Route path="draft" element={<DraftPage />} />
+              )}
             </Route>
           </Routes>
         </Router>

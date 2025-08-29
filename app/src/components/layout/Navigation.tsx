@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { isLocalhost } from '../../utils/isLocalhost';
 
 interface NavigationProps {
   className?: string;
@@ -40,6 +41,7 @@ const utils = [
 
 export const Navigation = ({ className = '' }: NavigationProps) => {
   const location = useLocation();
+  const showDraft = isLocalhost();
 
   return (
     <nav className={`bg-gray-900/80 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50 ${className}`}>
@@ -182,6 +184,20 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
                   </div>
                 </div>
               </div>
+
+              {/* Draft Link - Only visible on localhost */}
+              {showDraft && (
+                <Link
+                  to='/draft'
+                  className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                    location.pathname === '/draft'
+                      ? 'text-orange-400 bg-orange-400/20'
+                      : 'text-orange-300 hover:text-orange-200 hover:bg-orange-400/10'
+                  }`}
+                >
+                  Draft
+                </Link>
+              )}
             </div>
           </div>
 
