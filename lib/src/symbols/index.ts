@@ -5,12 +5,16 @@ export { ChevronDoubleRight } from './ChevronDoubleRight';
 export { ChevronDown } from './ChevronDown';
 export { ChevronLeft } from './ChevronLeft';
 export { ChevronRight } from './ChevronRight';
+export { Copy } from './Copy';
 export { CrossCircled } from './CrossCircled';
+export { Dash } from './Dash';
+export { Download } from './Download';
 export { ExclamationTriangle } from './ExclamationTriangle';
 export { EyeClosed } from './EyeClosed';
 export { EyeOpened } from './EyeOpened';
 export { InfoCircled } from './InfoCircled';
 export { QuestionMarkCircled } from './QuestionMarkCircled';
+export { Window } from './Window';
 export { X } from './X';
 
 export type { SymbolProps } from './props';

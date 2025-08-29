@@ -1,6 +1,88 @@
+import { CodeBlock, TokenClasses } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
 
 export const DraftPage = () => {
+  const tsCode = `interface User {
+  id: number;
+  name: string;
+  email: string;
+  isActive?: boolean;
+  createdAt: Date;
+}
+
+class UserService {
+  private users: User[] = [];
+  private readonly apiUrl = 'https://api.example.com/users';
+
+  async createUser(userData: Omit<User, 'id' | 'createdAt'>): Promise<User> {
+    try {
+      const newUser: User = {
+        id: Math.floor(Math.random() * 1000),
+        createdAt: new Date(),
+        ...userData
+      };
+      
+      this.users.push(newUser);
+      return newUser;
+    } catch (error) {
+      throw new Error(\`Failed to create user: \${error.message}\`);
+    }
+  }
+}`;
+
+  const tsxCode = `import { useState, useCallback } from 'react';
+
+interface CounterProps {
+  initialCount?: number;
+  step?: number;
+  maxCount?: number;
+  onCountChange?: (count: number) => void;
+}
+
+export default function Counter({ 
+  initialCount = 0, 
+  step = 1,
+  maxCount = 100,
+  onCountChange
+}: CounterProps) {
+  const [count, setCount] = useState<number>(initialCount);
+
+  const handleIncrement = useCallback((): void => {
+    if (count >= maxCount) return;
+    
+    const newCount = Math.min(count + step, maxCount);
+    setCount(newCount);
+    onCountChange?.(newCount);
+  }, [count, step, maxCount, onCountChange]);
+
+  return (
+    <div className="counter p-6 bg-white rounded-lg shadow-lg">
+      <div className="flex items-center justify-center space-x-4">
+        <button 
+          onClick={() => setCount(Math.max(count - step, 0))}
+          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+        >
+          -
+        </button>
+        <span className="text-2xl font-bold text-blue-600">{count}</span>
+        <button 
+          onClick={handleIncrement}
+          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+        >
+          +
+        </button>
+      </div>
+    </div>
+  );
+}`;
+
+  const customTokenClasses: TokenClasses = {
+    keyword: 'text-red-400 font-bold',
+    function: 'text-green-600 font-semibold',
+    string: 'text-green-400',
+    type: 'text-orange-400 font-medium',
+    comment: 'text-gray-400 italic'
+  };
   return (
     <ComponentPage
       title='Draft'
@@ -34,12 +116,63 @@ export const DraftPage = () => {
           {/* Example testing section */}
           <div className='space-y-6'>
             <div>
-              <h3 className='text-lg font-medium text-white mb-3'>Example Testing Section</h3>
-              <div className='bg-gray-800/50 border border-gray-600 rounded p-4'>
-                <p className='text-gray-400 text-sm mb-2'>Add your component tests here:</p>
-                <div className='bg-gray-700/30 rounded p-4 border-2 border-dashed border-gray-600'>
-                  <p className='text-gray-500 text-center italic'>Component testing area</p>
-                </div>
+              <h3 className='text-lg font-medium text-white mb-3'>CodeBlock Component Testing</h3>
+              
+              {/* TypeScript Example */}
+              <div className='mb-6'>
+                <h4 className='text-md font-medium text-gray-300 mb-3'>TypeScript Interface & Class</h4>
+                <CodeBlock 
+                  code={tsCode}
+                  language="typescript"
+                  filename="UserService.ts"
+                  showLineNumbers={true}
+                  maxHeight={300}
+                  allowDownload={true}
+                  allowFullscreen={true}
+                />
+              </div>
+
+              {/* TSX Example */}
+              <div className='mb-6'>
+                <h4 className='text-md font-medium text-gray-300 mb-3'>React TSX Component</h4>
+                <CodeBlock 
+                  code={tsxCode}
+                  language="tsx"
+                  filename="Counter.tsx"
+                  showTrafficLights={false}
+                  showLineNumbers={true}
+                  allowDownload={true}
+                />
+              </div>
+
+              {/* Basic TypeScript Example */}
+              <div className='mb-6'>
+                <h4 className='text-md font-medium text-gray-300 mb-3'>Basic Example (No Line Numbers)</h4>
+                <CodeBlock 
+                  code={`const message: string = 'Hello, TypeScript!';\nconsole.log(message);`}
+                  language="ts"
+                />
+              </div>
+
+              {/* Custom Token Classes Example */}
+              <div className='mb-6'>
+                <h4 className='text-md font-medium text-gray-300 mb-3'>Custom Token Colors Example</h4>
+                <CodeBlock 
+                  code={`// Custom color scheme example\nconst greet = (name: string): string => {\n  return \`Hello, \${name}!\`;\n};\n\nconsole.log(greet('World'));`}
+                  language="ts"
+                  filename="custom-colors.ts"
+                  tokenClasses={customTokenClasses}
+                />
+              </div>
+
+              {/* Hidden Header Example */}
+              <div className='mb-6'>
+                <h4 className='text-md font-medium text-gray-300 mb-3'>Hidden Header Example</h4>
+                <CodeBlock 
+                  code={`// No header bar - buttons float in corner\nconst example = "Clean minimal look";\nconsole.log(example);`}
+                  language="ts"
+                  hideHeader={true}
+                />
               </div>
             </div>
           </div>

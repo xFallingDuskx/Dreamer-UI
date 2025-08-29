@@ -17,6 +17,7 @@ import { ButtonPage } from './pages/components/ButtonPage';
 import { SkeletonPage } from './pages/components/SkeletonPage';
 import { InputPage } from './pages/components/InputPage';
 import { ModalPage } from './pages/components/ModalPage';
+import { CodeBlockPage } from './pages/components/CodeBlockPage';
 
 // Hook Pages
 import { UseActionModalPage } from './pages/hooks/UseActionModalPage';
@@ -51,6 +52,7 @@ function App() {
               <Route path="components/skeleton" element={<SkeletonPage />} />
               <Route path="components/input" element={<InputPage />} />
               <Route path="components/modal" element={<ModalPage />} />
+              <Route path="components/codeblock" element={<CodeBlockPage />} />
               
               {/* Hook Pages */}
               <Route path="hooks" element={<HooksPage />} />

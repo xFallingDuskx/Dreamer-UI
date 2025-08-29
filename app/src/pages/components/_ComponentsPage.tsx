@@ -10,6 +10,12 @@ const components = [
     category: 'Form',
   },
   {
+    name: 'CodeBlock',
+    path: '/components/codeblock',
+    description: 'Syntax-highlighted code display with TypeScript support, copy, and fullscreen.',
+    category: 'Display',
+  },
+  {
     name: 'Input',
     path: '/components/input',
     description: 'Flexible input component with validation states and different types.',

@@ -7,6 +7,7 @@ interface NavigationProps {
 
 const components = [
   { name: 'Button', path: '/components/button' },
+  { name: 'CodeBlock', path: '/components/codeblock' },
   { name: 'Input', path: '/components/input' },
   { name: 'Textarea', path: '/components/textarea' },
   { name: 'Select', path: '/components/select' },
