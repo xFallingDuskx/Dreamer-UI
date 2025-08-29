@@ -1,4 +1,4 @@
-import { ComponentPage } from '../../components/layout/ComponentPage';
+import { ComponentPage } from '../components/layout/ComponentPage';
 
 export const DraftPage = () => {
   return (
