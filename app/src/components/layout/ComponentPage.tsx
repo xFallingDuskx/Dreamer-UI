@@ -1,6 +1,6 @@
+import { Disclosure } from '@moondreamsdev/dreamer-ui/components';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Disclosure } from '../../disclosure';
 
 interface TableOfContentsItem {
   id: string;

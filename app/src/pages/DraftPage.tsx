@@ -1,5 +1,5 @@
+import { Disclosure } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
-import { Disclosure } from '../disclosure';
 
 export const DraftPage = () => {
   return (
