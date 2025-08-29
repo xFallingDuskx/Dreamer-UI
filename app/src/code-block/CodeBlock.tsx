@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Check } from '@moondreamsdev/dreamer-ui/symbols';
-import { Copy, Download, Maximize } from './icons';
+import { Copy, Download, Window, Dash } from './icons';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 
 export interface TokenClasses {
@@ -408,17 +408,17 @@ export function CodeBlock({
             {allowFullscreen && (
               <button
                 onClick={() => setIsFullscreen(!isFullscreen)}
-                className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
+                className="p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
                 title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
                 aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen mode"}
               >
-                <Maximize size={14} />
+                {isFullscreen ? <Dash size={14} /> : <Window size={14} />}
               </button>
             )}
             {allowDownload && (
               <button
                 onClick={handleDownload}
-                className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
+                className="p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
                 title="Download code"
                 aria-label="Download code as file"
               >
@@ -428,7 +428,7 @@ export function CodeBlock({
             {allowCopy && (
               <button
                 onClick={handleCopy}
-                className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
+                className="p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
                 title="Copy code"
                 aria-label="Copy code to clipboard"
               >
