@@ -1,5 +1,5 @@
 import { ComponentPage } from '../components/layout/ComponentPage';
-import { CodeBlock } from '../code-block';
+import { CodeBlock, type TokenClasses } from '../code-block';
 
 export const DraftPage = () => {
   const tsCode = `interface User {
@@ -75,6 +75,14 @@ export default function Counter({
     </div>
   );
 }`;
+
+  const customTokenClasses: TokenClasses = {
+    keyword: 'text-red-400 font-bold',
+    function: 'text-green-600 font-semibold',
+    string: 'text-green-400',
+    type: 'text-orange-400 font-medium',
+    comment: 'text-gray-400 italic'
+  };
   return (
     <ComponentPage
       title='Draft'
@@ -140,6 +148,19 @@ export default function Counter({
                 <CodeBlock 
                   code={`const message: string = 'Hello, TypeScript!';\nconsole.log(message);`}
                   language="ts"
+                  allowDownload={false}
+                  allowFullscreen={false}
+                />
+              </div>
+
+              {/* Custom Token Classes Example */}
+              <div className='mb-6'>
+                <h4 className='text-md font-medium text-gray-300 mb-3'>Custom Token Colors Example</h4>
+                <CodeBlock 
+                  code={`// Custom color scheme example\nconst greet = (name: string): string => {\n  return \`Hello, \${name}!\`;\n};\n\nconsole.log(greet('World'));`}
+                  language="ts"
+                  filename="custom-colors.ts"
+                  tokenClasses={customTokenClasses}
                   allowDownload={false}
                   allowFullscreen={false}
                 />

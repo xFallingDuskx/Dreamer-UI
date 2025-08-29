@@ -3,6 +3,38 @@ import { Check } from '@moondreamsdev/dreamer-ui/symbols';
 import { Copy, Download, Maximize } from './icons';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 
+export interface TokenClasses {
+  /** CSS classes for keywords like 'const', 'let', 'function', 'if', etc. @example 'text-purple-400 font-semibold' */
+  keyword?: string;
+  /** CSS classes for types like 'string', 'number', 'boolean', 'Promise', etc. @example 'text-cyan-400 font-medium' */
+  type?: string;
+  /** CSS classes for string literals including template literals @example 'text-green-400' */
+  string?: string;
+  /** CSS classes for JSX brackets like '<', '>', '/>' @example 'text-gray-400' */
+  'jsx-bracket'?: string;
+  /** CSS classes for JSX tag names like 'div', 'button', 'Component' @example 'text-blue-400 font-medium' */
+  'jsx-tag'?: string;
+  /** CSS classes for JSX attributes like 'className', 'onClick' @example 'text-amber-400' */
+  'jsx-attribute'?: string;
+  /** CSS classes for JSX expression braces '{}' @example 'text-yellow-400' */
+  'jsx-brace'?: string;
+  /** CSS classes for JSX elements (fallback) @example 'text-blue-400 font-medium' */
+  jsx?: string;
+  /** CSS classes for object properties and keys @example 'text-amber-400' */
+  property?: string;
+  /** CSS classes for numeric literals @example 'text-orange-400 font-medium' */
+  number?: string;
+  /** CSS classes for comments (both single-line and multi-line) @example 'text-gray-500 italic' */
+  comment?: string;
+  /** CSS classes for function calls like 'console.log', 'useState' @example 'text-yellow-300 font-semibold' */
+  function?: string;
+  /** CSS classes for React hooks like 'useState', 'useEffect' @example 'text-pink-400 font-semibold' */
+  hook?: string;
+  /** CSS classes for operators like '=>', '===', '&&', '+' @example 'text-gray-300' */
+  operator?: string;
+  /** CSS classes for plain text and unmatched content @example 'text-gray-100' */
+  plain?: string;
+}
 export interface CodeBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   /** The code content to display */
   code: string;
@@ -22,6 +54,8 @@ export interface CodeBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement
   showLineNumbers?: boolean;
   /** Maximum height in pixels before scrolling */
   maxHeight?: number;
+  /** Custom token classes for syntax highlighting */
+  tokenClasses?: TokenClasses;
   /** Additional CSS classes */
   className?: string;
   /** Element ID */
@@ -40,6 +74,7 @@ export function CodeBlock({
   showTrafficLights = true,
   showLineNumbers = false,
   maxHeight,
+  tokenClasses: customTokenClasses,
   className,
   id,
   ref,
@@ -276,7 +311,7 @@ export function CodeBlock({
       return (
         <div key={lineIndex} className="leading-6">
           {tokens.map((token, tokenIndex) => {
-            const tokenClasses = {
+            const defaultTokenClasses: TokenClasses = {
               keyword: 'text-purple-400 font-semibold',
               type: 'text-cyan-400 font-medium',
               string: 'text-green-400',
@@ -288,11 +323,13 @@ export function CodeBlock({
               property: 'text-amber-400',
               number: 'text-orange-400 font-medium',
               comment: 'text-gray-500 italic',
-              function: 'text-yellow-300 font-semibold',
-              hook: 'text-pink-400 font-semibold',
+              function: 'text-rose-400 font-semibold',
+              hook: 'text-rose-400 font-semibold',
               operator: 'text-gray-300',
               plain: 'text-gray-100'
             };
+
+            const tokenClasses = { ...defaultTokenClasses, ...customTokenClasses };
             
             return (
               <span 
