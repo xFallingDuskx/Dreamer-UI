@@ -55,6 +55,8 @@ export interface CodeBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement
   showTrafficLights?: boolean;
   /** Whether to show line numbers */
   showLineNumbers?: boolean;
+  /** Whether to hide the header bar (buttons will appear in top-right corner) */
+  hideHeader?: boolean;
   /** Maximum height in pixels before scrolling */
   maxHeight?: number;
   /** Custom token classes for syntax highlighting */
@@ -71,11 +73,12 @@ export function CodeBlock({
   code,
   language = 'typescript',
   allowCopy = true,
-  allowDownload = true,
-  allowFullscreen = true,
+  allowDownload = false,
+  allowFullscreen = false,
   filename,
   showTrafficLights = true,
   showLineNumbers = false,
+  hideHeader = false,
   maxHeight,
   tokenClasses: customTokenClasses,
   className,
@@ -116,6 +119,42 @@ export function CodeBlock({
     };
     return extensions[lang] || 'ts';
   };
+
+  const renderButtons = (inHeader = true) => (
+    <div className={join('flex items-center space-x-2', !inHeader && 'absolute top-2 right-2 z-10')}>
+      <span className='text-xs text-gray-400 uppercase tracking-wide font-medium'>{language}</span>
+      {allowFullscreen && (
+        <button
+          onClick={() => setIsFullscreen(!isFullscreen)}
+          className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors'
+          title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+          aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen mode'}
+        >
+          {isFullscreen ? <Dash size={14} /> : <Window size={14} />}
+        </button>
+      )}
+      {allowDownload && (
+        <button
+          onClick={handleDownload}
+          className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors'
+          title='Download code'
+          aria-label='Download code as file'
+        >
+          <Download size={14} />
+        </button>
+      )}
+      {allowCopy && (
+        <button
+          onClick={handleCopy}
+          className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors'
+          title='Copy code'
+          aria-label='Copy code to clipboard'
+        >
+          {copied ? <Check size={14} className='text-green-400' /> : <Copy size={14} />}
+        </button>
+      )}
+    </div>
+  );
 
   const tokenizeTypeScript = (code: string, inheritedJSXContext: boolean = false, inheritedBraceDepth: number = 0) => {
     const tokens: Array<{ text: string; type: TokenType }> = [];
@@ -384,55 +423,25 @@ export function CodeBlock({
         {...props}
       >
         {/* Header */}
-        <div className='flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700'>
-          <div className='flex items-center space-x-3'>
-            {showTrafficLights && (
-              <div className='flex space-x-2'>
-                <div className='w-3 h-3 bg-red-500 rounded-full' />
-                <div className='w-3 h-3 bg-yellow-500 rounded-full' />
-                <div className='w-3 h-3 bg-green-500 rounded-full' />
-              </div>
-            )}
-            {filename && <span className='text-sm text-gray-300 font-medium'>{filename}</span>}
+        {!hideHeader && (
+          <div className='flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700'>
+            <div className='flex items-center space-x-3'>
+              {showTrafficLights && (
+                <div className='flex space-x-2'>
+                  <div className='w-3 h-3 bg-red-500 rounded-full' />
+                  <div className='w-3 h-3 bg-yellow-500 rounded-full' />
+                  <div className='w-3 h-3 bg-green-500 rounded-full' />
+                </div>
+              )}
+              {filename && <span className='text-sm text-gray-300 font-medium'>{filename}</span>}
+            </div>
+            {renderButtons(true)}
           </div>
-
-          <div className='flex items-center space-x-2'>
-            <span className='text-xs text-gray-400 uppercase tracking-wide font-medium'>{language}</span>
-            {allowFullscreen && (
-              <button
-                onClick={() => setIsFullscreen(!isFullscreen)}
-                className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors'
-                title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
-                aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen mode'}
-              >
-                {isFullscreen ? <Dash size={14} /> : <Window size={14} />}
-              </button>
-            )}
-            {allowDownload && (
-              <button
-                onClick={handleDownload}
-                className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors'
-                title='Download code'
-                aria-label='Download code as file'
-              >
-                <Download size={14} />
-              </button>
-            )}
-            {allowCopy && (
-              <button
-                onClick={handleCopy}
-                className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors'
-                title='Copy code'
-                aria-label='Copy code to clipboard'
-              >
-                {copied ? <Check size={14} className='text-green-400' /> : <Copy size={14} />}
-              </button>
-            )}
-          </div>
-        </div>
+        )}
 
         {/* Code Content */}
-        <div className='flex overflow-hidden' style={codeStyle}>
+        <div className={join('flex overflow-hidden', hideHeader && 'relative')} style={codeStyle}>
+          {hideHeader && renderButtons(false)}
           <div className='flex-1 overflow-x-auto'>
             <div className='flex'>
               {showLineNumbers && (

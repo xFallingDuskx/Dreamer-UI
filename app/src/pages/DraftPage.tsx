@@ -127,6 +127,8 @@ export default function Counter({
                   filename="UserService.ts"
                   showLineNumbers={true}
                   maxHeight={300}
+                  allowDownload={true}
+                  allowFullscreen={true}
                 />
               </div>
 
@@ -139,6 +141,7 @@ export default function Counter({
                   filename="Counter.tsx"
                   showTrafficLights={false}
                   showLineNumbers={true}
+                  allowDownload={true}
                 />
               </div>
 
@@ -148,8 +151,6 @@ export default function Counter({
                 <CodeBlock 
                   code={`const message: string = 'Hello, TypeScript!';\nconsole.log(message);`}
                   language="ts"
-                  allowDownload={false}
-                  allowFullscreen={false}
                 />
               </div>
 
@@ -161,8 +162,16 @@ export default function Counter({
                   language="ts"
                   filename="custom-colors.ts"
                   tokenClasses={customTokenClasses}
-                  allowDownload={false}
-                  allowFullscreen={false}
+                />
+              </div>
+
+              {/* Hidden Header Example */}
+              <div className='mb-6'>
+                <h4 className='text-md font-medium text-gray-300 mb-3'>Hidden Header Example</h4>
+                <CodeBlock 
+                  code={`// No header bar - buttons float in corner\nconst example = "Clean minimal look";\nconsole.log(example);`}
+                  language="ts"
+                  hideHeader={true}
                 />
               </div>
             </div>
