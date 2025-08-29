@@ -2,15 +2,25 @@ import { Skeleton } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
 
-export const SkeletonPage = () => {
+const tableOfContents = [
+  { id: 'basic-shapes', title: 'Basic Shapes', level: 1 },
+  { id: 'multiple-lines', title: 'Multiple Lines', level: 1 },
+  { id: 'line-spacing-options', title: 'Line Spacing Options', level: 1 },
+  { id: 'animation-control', title: 'Animation Control', level: 1 },
+  { id: 'card-layout-example', title: 'Card Layout Example', level: 1 },
+];
+
+export function SkeletonPage() {
   return (
     <ComponentPage
       title='Skeleton'
       description='Loading placeholders that mimic the structure of your content while data is being fetched.'
+      tableOfContents={tableOfContents}
     >
       <ExampleSection 
         title='Basic Shapes'
         description='Different skeleton shapes for various content types.'
+        id='basic-shapes'
       >
         <div className='grid grid-cols-3 gap-6'>
           <div className='space-y-2'>
@@ -31,6 +41,7 @@ export const SkeletonPage = () => {
       <ExampleSection 
         title='Multiple Lines'
         description='Text skeletons with different line configurations.'
+        id='multiple-lines'
       >
         <div className='grid grid-cols-2 gap-6'>
           <div className='space-y-2'>
@@ -47,6 +58,7 @@ export const SkeletonPage = () => {
       <ExampleSection 
         title='Line Spacing Options'
         description='Different spacing options between text lines.'
+        id='line-spacing-options'
       >
         <div className='grid grid-cols-5 gap-4'>
           {(['xs', 'sm', 'md', 'lg', 'xl'] as const).map((spacing) => (
@@ -61,6 +73,7 @@ export const SkeletonPage = () => {
       <ExampleSection 
         title='Animation Control'
         description='Control the skeleton loading animation.'
+        id='animation-control'
       >
         <div className='grid grid-cols-2 gap-6'>
           <div className='space-y-2'>
@@ -74,9 +87,10 @@ export const SkeletonPage = () => {
         </div>
       </ExampleSection>
 
-      <ExampleSection 
+            <ExampleSection 
         title='Card Layout Example'
-        description='A realistic example showing how skeletons work in a card layout.'
+        description='Real-world example of skeletons in a card layout.'
+        id='card-layout-example'
       >
         <div className='bg-gray-800 p-6 rounded-lg max-w-md mx-auto'>
           <div className='flex items-center gap-4 mb-4'>
@@ -91,4 +105,4 @@ export const SkeletonPage = () => {
       </ExampleSection>
     </ComponentPage>
   );
-};
+}

@@ -3,7 +3,15 @@ import { useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
 
-export const UseToastPage = () => {
+const tableOfContents = [
+  { id: 'installation-setup', title: 'Installation & Setup', level: 1 },
+  { id: 'basic-toast-types', title: 'Basic Toast Types', level: 1 },
+  { id: 'advanced-features', title: 'Advanced Features', level: 1 },
+  { id: 'provider-configuration', title: 'Provider Configuration', level: 1 },
+  { id: 'api-reference', title: 'API Reference', level: 1 },
+];
+
+export function UseToastPage() {
   const { addToast } = useToast();
 
   const showInfoToast = () => {
@@ -62,10 +70,12 @@ export const UseToastPage = () => {
     <ComponentPage
       title='useToast'
       description='A React hook for displaying toast notifications with different types, actions, and customizable duration.'
+      tableOfContents={tableOfContents}
     >
       <ExampleSection 
         title='Installation & Setup'
         description='Import the hook and set up the required provider.'
+        id='installation-setup'
       >
         <div className='space-y-4'>
           <div className='bg-gray-700 p-4 rounded-lg'>
@@ -94,6 +104,7 @@ function App() {
       <ExampleSection 
         title='Basic Toast Types'
         description='Different types of toast notifications for various use cases.'
+        id='basic-toast-types'
       >
         <div className='space-y-4'>
           <div className='grid grid-cols-2 md:grid-cols-4 gap-2'>
@@ -129,6 +140,7 @@ addToast({
       <ExampleSection 
         title='Advanced Features'
         description='Toast notifications with actions and custom durations.'
+        id='advanced-features'
       >
         <div className='space-y-4'>
           <div className='flex gap-4'>
@@ -176,6 +188,7 @@ addToast({
       <ExampleSection 
         title='Provider Configuration'
         description='Configure toast position and default behavior.'
+        id='provider-configuration'
       >
         <div className='bg-gray-700 p-4 rounded-lg'>
           <h4 className='text-white font-semibold mb-2'>Provider Props</h4>
@@ -195,6 +208,7 @@ addToast({
       <ExampleSection 
         title='API Reference'
         description='Complete API documentation for the useToast hook.'
+        id='api-reference'
       >
         <div className='space-y-4'>
           <div className='bg-gray-700 p-4 rounded-lg'>
@@ -226,4 +240,4 @@ addToast({
       </ExampleSection>
     </ComponentPage>
   );
-};
+}

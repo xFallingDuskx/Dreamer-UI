@@ -2,7 +2,16 @@ import { CodeBlock, type CodeBlockTokenClasses } from '@moondreamsdev/dreamer-ui
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
 
-export const CodeBlockPage = () => {
+const tableOfContents = [
+  { id: 'basic-usage', title: 'Basic Usage', level: 1 },
+  { id: 'line-numbers', title: 'Line Numbers', level: 1 },
+  { id: 'interactive-features', title: 'Interactive Features', level: 1 },
+  { id: 'styling-options', title: 'Styling Options', level: 1 },
+  { id: 'advanced-examples', title: 'Advanced Examples', level: 1 },
+  { id: 'accessibility-usage', title: 'Accessibility & Usage', level: 1 },
+];
+
+export function CodeBlockPage() {
   // Example code snippets
   const basicTypeScript = `interface User {
   id: number;
@@ -95,11 +104,12 @@ export default function Counter({
   };
 
   return (
-    <ComponentPage
+        <ComponentPage
       title='Code Block'
-      description='A syntax-highlighted code display component with TypeScript/TSX support, copy functionality, download options, and fullscreen viewing.'
+      description='A syntax-highlighted code block component with copy, download, and interactive features.'
+      tableOfContents={tableOfContents}
     >
-      <ExampleSection title='Basic Usage' description='Simple code blocks with different configurations.'>
+      <ExampleSection title='Basic Usage' description='Simple code blocks with different configurations.' id='basic-usage'>
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>Basic TypeScript Code</h4>
@@ -118,7 +128,7 @@ export default function Counter({
         </div>
       </ExampleSection>
 
-      <ExampleSection title='Line Numbers' description='Display line numbers for easier code reference.'>
+      <ExampleSection title='Line Numbers' description='Display line numbers for easier code reference.' id='line-numbers'>
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>With Line Numbers</h4>
@@ -127,7 +137,7 @@ export default function Counter({
         </div>
       </ExampleSection>
 
-      <ExampleSection title='Interactive Features' description='Copy, download, and fullscreen functionality.'>
+      <ExampleSection title='Interactive Features' description='Copy, download, and fullscreen functionality.' id='interactive-features'>
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>With Download & Fullscreen</h4>
@@ -148,7 +158,7 @@ export default function Counter({
         </div>
       </ExampleSection>
 
-      <ExampleSection title='Styling Options' description='Different visual configurations and customizations.'>
+      <ExampleSection title='Styling Options' description='Different visual configurations and customizations.' id='styling-options'>
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>No Traffic Lights</h4>
@@ -194,7 +204,7 @@ export default function Counter({
         </div>
       </ExampleSection>
 
-      <ExampleSection title='Advanced Examples' description='Real-world usage patterns and complex configurations.'>
+      <ExampleSection title='Advanced Examples' description='Real-world usage patterns and complex configurations.' id='advanced-examples'>
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>Full-Featured Code Block</h4>
@@ -264,7 +274,7 @@ async function handleApiCall<T>(
         </div>
       </ExampleSection>
 
-      <ExampleSection title='Accessibility & Usage' description='Keyboard shortcuts and accessibility features.'>
+      <ExampleSection title='Accessibility & Usage' description='Keyboard shortcuts and accessibility features.' id='accessibility-usage'>
         <div className='space-y-4'>
           <div className='bg-slate-700 p-4 rounded-lg'>
             <h5 className='font-medium mb-2'>Keyboard Shortcuts</h5>
@@ -295,4 +305,4 @@ async function handleApiCall<T>(
       </ExampleSection>
     </ComponentPage>
   );
-};
+}

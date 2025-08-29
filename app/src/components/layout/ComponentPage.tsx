@@ -143,7 +143,7 @@ export function ComponentPage({ title, description, children, tableOfContents }:
               className='w-full bg-gray-800/50 border border-gray-600 rounded-xl p-4 text-left text-white hover:bg-gray-700/50 transition-colors'
             >
               <span className='font-semibold'>Table of Contents</span>
-              <span className='float-right'>{isTocOpen ? '−' : '+'}</span>
+              <span className='float-right'>{isTocOpen ? '-' : '+'}</span>
             </button>
             {isTocOpen && (
               <div className='mt-2 bg-gray-800/50 border border-gray-600 rounded-xl p-4'>

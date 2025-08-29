@@ -3,7 +3,14 @@ import { Button, Modal, Input } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
 
-export const ModalPage = () => {
+const tableOfContents = [
+  { id: 'basic-modals', title: 'Basic Modals', level: 1 },
+  { id: 'interactive-modals', title: 'Interactive Modals', level: 1 },
+  { id: 'props-reference', title: 'Props Reference', level: 1 },
+  { id: 'usage-tips', title: 'Usage Tips', level: 1 },
+];
+
+export function ModalPage() {
   const [modalsOpen, setModalsOpen] = useState<Record<string, boolean>>({
     basic: false,
     withTitle: false,
@@ -25,10 +32,12 @@ export const ModalPage = () => {
     <ComponentPage
       title='Modal'
       description='A flexible modal component for overlaying content, forms, and interactive elements on top of your main interface.'
+      tableOfContents={tableOfContents}
     >
       <ExampleSection 
         title='Basic Modals'
         description='Simple modal examples with different configurations.'
+        id='basic-modals'
       >
         <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
           <Button onClick={() => openModal('basic')}>Basic Modal</Button>
@@ -97,6 +106,7 @@ export const ModalPage = () => {
       <ExampleSection 
         title='Interactive Modals'
         description='Modals with forms, actions, and complex interactions.'
+        id='interactive-modals'
       >
         <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
           <Button onClick={() => openModal('withForm')} variant='outline'>Modal with Form</Button>
@@ -203,6 +213,7 @@ export const ModalPage = () => {
       <ExampleSection 
         title='Props Reference'
         description='Available props and their usage.'
+        id='props-reference'
       >
         <div className='bg-gray-700 p-4 rounded-lg'>
           <pre className='text-sm text-gray-300 overflow-x-auto'>
@@ -228,9 +239,10 @@ export const ModalPage = () => {
         </div>
       </ExampleSection>
 
-      <ExampleSection 
+            <ExampleSection 
         title='Usage Tips'
-        description='Best practices and common patterns.'
+        description='Best practices and helpful tips for using modals effectively.'
+        id='usage-tips'
       >
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           <div className='bg-gray-700 p-4 rounded-lg'>
@@ -257,4 +269,4 @@ export const ModalPage = () => {
       </ExampleSection>
     </ComponentPage>
   );
-};
+}

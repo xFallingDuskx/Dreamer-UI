@@ -3,7 +3,16 @@ import { Input } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
 
-export const InputPage = () => {
+const tableOfContents = [
+  { id: 'input-variants', title: 'Input Variants', level: 1 },
+  { id: 'input-types', title: 'Input Types', level: 1 },
+  { id: 'validation-states', title: 'Validation States', level: 1 },
+  { id: 'special-states', title: 'Special States', level: 1 },
+  { id: 'usage-examples', title: 'Usage Examples', level: 1 },
+  { id: 'props-reference', title: 'Props Reference', level: 1 },
+];
+
+export function InputPage() {
   const [values, setValues] = useState({
     basic: '',
     password: '',
@@ -20,10 +29,12 @@ export const InputPage = () => {
     <ComponentPage
       title='Input'
       description='A flexible input component with multiple variants, validation states, and built-in support for different input types.'
+      tableOfContents={tableOfContents}
     >
       <ExampleSection 
         title='Input Variants'
         description='Different styling variants for various design needs.'
+        id='input-variants'
       >
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           <Input 
@@ -55,6 +66,7 @@ export const InputPage = () => {
       <ExampleSection 
         title='Input Types'
         description='Different input types for various data collection needs.'
+        id='input-types'
       >
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           <Input 
@@ -87,6 +99,7 @@ export const InputPage = () => {
       <ExampleSection 
         title='Validation States'
         description='Visual feedback for different input states.'
+        id='validation-states'
       >
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           <Input 
@@ -109,6 +122,7 @@ export const InputPage = () => {
       <ExampleSection 
         title='Special States'
         description='Disabled and display-only modes for different use cases.'
+        id='special-states'
       >
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           <Input 
@@ -135,6 +149,7 @@ export const InputPage = () => {
       <ExampleSection 
         title='Usage Examples'
         description='Common input usage patterns in forms and applications.'
+        id='usage-examples'
       >
         <div className='space-y-6'>
           <div className='bg-gray-700 p-6 rounded-lg'>
@@ -182,6 +197,7 @@ export const InputPage = () => {
       <ExampleSection 
         title='Props Reference'
         description='Available props and their usage.'
+        id='props-reference'
       >
         <div className='bg-gray-700 p-4 rounded-lg'>
           <pre className='text-sm text-gray-300 overflow-x-auto'>
@@ -205,4 +221,4 @@ export const InputPage = () => {
       </ExampleSection>
     </ComponentPage>
   );
-};
+}
