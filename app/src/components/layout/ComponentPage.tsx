@@ -1,5 +1,5 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface TableOfContentsItem {
   id: string;
@@ -18,6 +18,7 @@ export function ComponentPage({ title, description, children, tableOfContents }:
   const [activeSection, setActiveSection] = useState<string>('');
   const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
   const [tocOffset, setTocOffset] = useState<number>(0);
+  const tocRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!tableOfContents?.length) return;
@@ -28,11 +29,6 @@ export function ComponentPage({ title, description, children, tableOfContents }:
           if (entry.isIntersecting) {
             const newActiveSection = entry.target.id;
             setActiveSection(newActiveSection);
-            
-            // Update URL hash without triggering scroll
-            if (newActiveSection && window.location.hash !== `#${newActiveSection}`) {
-              window.history.replaceState(null, '', `#${newActiveSection}`);
-            }
           }
         });
       },
@@ -72,12 +68,13 @@ export function ComponentPage({ title, description, children, tableOfContents }:
     let tocElement: HTMLElement | null = null;
     let initialTop = 0;
     let ticking = false;
+    let lastOffset = 0;
 
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
           if (!tocElement) {
-            tocElement = document.querySelector('[data-toc-container]');
+            tocElement = tocRef.current;
             if (tocElement) {
               const rect = tocElement.getBoundingClientRect();
               initialTop = window.scrollY + rect.top;
@@ -88,11 +85,16 @@ export function ComponentPage({ title, description, children, tableOfContents }:
             const scrollY = window.scrollY;
             const shouldOffset = scrollY > initialTop - 32; // 32px is top-8 in Tailwind
 
+            let newOffset = 0;
             if (shouldOffset) {
-              const newOffset = scrollY - initialTop + 32;
-              setTocOffset(Math.max(0, newOffset));
-            } else {
-              setTocOffset(0);
+              newOffset = scrollY - initialTop + 32;
+              newOffset = Math.max(0, newOffset);
+            }
+
+            // Only update if the change is significant (reduce flickering)
+            if (Math.abs(newOffset - lastOffset) > 1) {
+              setTocOffset(newOffset);
+              lastOffset = newOffset;
             }
           }
 
@@ -115,7 +117,7 @@ export function ComponentPage({ title, description, children, tableOfContents }:
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setIsTocOpen(false); // Close mobile TOC after clicking
-      
+
       // Update URL hash
       window.history.pushState(null, '', `#${id}`);
       setActiveSection(id);
@@ -180,7 +182,11 @@ export function ComponentPage({ title, description, children, tableOfContents }:
           {/* Desktop TOC */}
           {tableOfContents?.length && (
             <div className='hidden lg:block w-64 flex-shrink-0'>
-              <div data-toc-container className='sticky top-8' style={{ transform: `translateY(${tocOffset}px)` }}>
+              <div 
+                ref={tocRef} 
+                className='sticky top-8 transition-transform duration-75 ease-out' 
+                style={{ transform: `translateY(${tocOffset}px)` }}
+              >
                 <div className='bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6'>
                   <h2 className='text-lg font-semibold text-white mb-4'>Table of Contents</h2>
                   <nav className='space-y-2'>
