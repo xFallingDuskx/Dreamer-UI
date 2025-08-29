@@ -1,5 +1,22 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+export function useCopyToClipboard(text: string) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+
+      setTimeout(() => setCopied(false), 3000);
+    } catch (err) {
+      console.error('Failed to copy code:', err);
+    }
+  }, [text]);
+
+  return { copied, handleCopy };
+}
+
 /**
  * Hook for managing fullscreen mode with focus management and body scroll prevention
  */
@@ -40,44 +57,6 @@ export function useFullscreenMode(isFullscreen: boolean, setIsFullscreen: (value
   }, [isFullscreen, setIsFullscreen]);
 
   return { containerRef };
-}
-
-/**
- * Hook for managing copy functionality with temporary feedback
- */
-export function useCopyToClipboard(text: string) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
-    } catch (err) {
-      console.error('Failed to copy code:', err);
-    }
-  }, [text]);
-
-  return { copied, handleCopy };
-}
-
-/**
- * Hook for handling file downloads
- */
-export function useDownloadFile() {
-  const handleDownload = useCallback((content: string, filename: string) => {
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }, []);
-
-  return { handleDownload };
 }
 
 /**

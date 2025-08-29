@@ -1,5 +1,5 @@
+import { CodeBlock, TokenClasses } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
-import { CodeBlock, type TokenClasses } from '../code-block';
 
 export const DraftPage = () => {
   const tsCode = `interface User {

@@ -1,17 +1,15 @@
-import { Check } from '@moondreamsdev/dreamer-ui/symbols';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { useCallback, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { Check, Copy, Dash, Download, Window } from '../../symbols';
+import { downloadFile, join } from '../../utils';
 import {
   useCopyToClipboard,
-  useDownloadFile,
   useFullscreenMode,
   useKeyboardShortcuts,
   useTokenClasses,
   useTypeScriptTokenizer,
   type TokenClasses,
 } from './hooks';
-import { Copy, Dash, Download, Window } from './icons';
 
 export interface CodeBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   /** The code content to display */
@@ -67,7 +65,6 @@ export function CodeBlock({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const { containerRef } = useFullscreenMode(isFullscreen, setIsFullscreen);
   const { copied, handleCopy } = useCopyToClipboard(code);
-  const { handleDownload: downloadFile } = useDownloadFile();
   const { mergedTokenClasses } = useTokenClasses(customTokenClasses);
   const { tokenizeTypeScript } = useTypeScriptTokenizer();
 
@@ -76,7 +73,7 @@ export function CodeBlock({
   const handleDownload = useCallback(() => {
     const downloadFilename = filename || `code.${getFileExtension(language)}`;
     downloadFile(code, downloadFilename);
-  }, [code, filename, language, downloadFile]);
+  }, [code, filename, language]);
 
   const { handleKeyDown } = useKeyboardShortcuts(allowCopy, allowFullscreen, handleCopy, () =>
     setIsFullscreen(!isFullscreen)
