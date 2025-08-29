@@ -201,8 +201,8 @@ export function CodeBlock({
         continue;
       }
 
-      // Function calls (word followed by opening parenthesis)
-      const func = remaining.match(/^([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=\()/);
+      // Function calls (word followed by opening parenthesis or optional chaining)
+      const func = remaining.match(/^([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=(\?\.)?\()/);
       if (func) {
         tokens.push({ text: func[1], type: 'function' });
         remaining = remaining.slice(func[1].length);
