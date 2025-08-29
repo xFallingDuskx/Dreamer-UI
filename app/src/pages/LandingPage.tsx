@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export const LandingPage = () => {
   return (
-    <div className='min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden'>
+    <div className='flex-1 flex flex-col items-center justify-center p-4 relative overflow-hidden'>
       {/* Main Content Container */}
       <div className='text-center space-y-8 max-w-2xl mx-auto z-10'>
         {/* App Title */}
@@ -35,7 +35,7 @@ export const LandingPage = () => {
         <div className='pt-8 space-y-4'>
           <Link
             to='/getting-started'
-            className='inline-block px-8 py-4 bg-gradient-to-r from-primary to-accent text-white font-semibold rounded-xl shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/40 transform hover:scale-105 transition-all duration-200 text-lg border border-primary/30'
+            className='inline-block px-8 py-4 bg-gradient-to-r from-primary to-accent text-white font-semibold rounded-xl shadow-lg shadow-secondary/25 hover:shadow-2xl hover:shadow-primary/40 transform hover:scale-105 transition-all duration-200 '
           >
             Get Started
           </Link>
@@ -57,7 +57,7 @@ export const LandingPage = () => {
       </div>
 
       {/* Quick Stats */}
-      <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-8 text-center z-10'>
+      <div className='absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-8 text-center z-10'>
         <div className='text-gray-400'>
           <div className='text-2xl font-bold text-primary'>22+</div>
           <div className='text-sm'>Components</div>
@@ -69,6 +69,10 @@ export const LandingPage = () => {
         <div className='text-gray-400'>
           <div className='text-2xl font-bold text-secondary'>100%</div>
           <div className='text-sm'>TypeScript</div>
+        </div>
+        <div className='text-gray-400'>
+          <div className='text-2xl font-bold text-secondary'>0</div>
+          <div className='text-sm'>Dependencies</div>
         </div>
       </div>
     </div>
