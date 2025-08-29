@@ -79,10 +79,11 @@ export function CodeBlock({
     return extensions[lang] || 'ts';
   };
 
-  const tokenizeTypeScript = (code: string) => {
+  const tokenizeTypeScript = (code: string, inheritedJSXContext: boolean = false, inheritedBraceDepth: number = 0) => {
     const tokens: Array<{text: string, type: string}> = [];
     let remaining = code;
-    let isInJSX = false;
+    let isInJSX = inheritedJSXContext;
+    let jsxBraceDepth = inheritedBraceDepth; // Track JSX expression depth
 
     while (remaining.length > 0) {
       // Multi-line comments
@@ -131,31 +132,36 @@ export function CodeBlock({
       }
 
       // JSX self-closing or tag end
-      if (isInJSX && remaining.match(/^\/?>/) ) {
+      if (remaining.match(/^\/?>/) ) {
         const tagEnd = remaining.match(/^(\/?>\s*)/);
         if (tagEnd) {
           tokens.push({ text: tagEnd[1].trim(), type: 'jsx-bracket' });
           remaining = remaining.slice(tagEnd[1].length);
-          isInJSX = false;
+          if (tagEnd[1].includes('>')) {
+            isInJSX = false;
+          }
           continue;
         }
       }
 
-      // JSX attribute (when in JSX context)
-      if (isInJSX) {
-        const jsxAttr = remaining.match(/^([a-zA-Z][a-zA-Z0-9]*)\s*=/);
-        if (jsxAttr) {
-          tokens.push({ text: jsxAttr[1], type: 'jsx-attribute' });
-          tokens.push({ text: '=', type: 'plain' });
-          remaining = remaining.slice(jsxAttr[0].length);
-          continue;
-        }
+      // JSX attribute (only when explicitly in JSX context, followed by =, and not inside braces)
+      const jsxAttr = remaining.match(/^([a-zA-Z][a-zA-Z0-9]*)\s*=/);
+      if (jsxAttr && isInJSX && jsxBraceDepth === 0) {
+        tokens.push({ text: jsxAttr[1], type: 'jsx-attribute' });
+        tokens.push({ text: '=', type: 'plain' });
+        remaining = remaining.slice(jsxAttr[0].length);
+        continue;
       }
 
       // JSX expression braces
       const jsxBrace = remaining.match(/^[{}]/);
-      if (jsxBrace && isInJSX) {
+      if (jsxBrace) {
         tokens.push({ text: jsxBrace[0], type: 'jsx-brace' });
+        if (jsxBrace[0] === '{') {
+          jsxBraceDepth++;
+        } else if (jsxBrace[0] === '}') {
+          jsxBraceDepth--;
+        }
         remaining = remaining.slice(1);
         continue;
       }
@@ -168,11 +174,19 @@ export function CodeBlock({
         continue;
       }
 
-      // React hooks
+      // React hooks (before function calls to avoid conflicts)
       const hook = remaining.match(/^(use[A-Z][a-zA-Z]*)\b/);
       if (hook) {
         tokens.push({ text: hook[0], type: 'hook' });
         remaining = remaining.slice(hook[0].length);
+        continue;
+      }
+
+      // Function calls (word followed by opening parenthesis)
+      const func = remaining.match(/^([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=\()/);
+      if (func) {
+        tokens.push({ text: func[1], type: 'function' });
+        remaining = remaining.slice(func[1].length);
         continue;
       }
 
@@ -184,14 +198,6 @@ export function CodeBlock({
         continue;
       }
 
-      // Function names (before parentheses)
-      const func = remaining.match(/^([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=\()/);
-      if (func) {
-        tokens.push({ text: func[1], type: 'function' });
-        remaining = remaining.slice(func[1].length);
-        continue;
-      }
-
       // Numbers
       const number = remaining.match(/^(\d+\.?\d*)/);
       if (number) {
@@ -200,7 +206,7 @@ export function CodeBlock({
         continue;
       }
 
-      // Object properties (word followed by colon)
+      // Object properties (word followed by colon, not in JSX)
       const property = remaining.match(/^([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=:)/);
       if (property && !isInJSX) {
         tokens.push({ text: property[1], type: 'property' });
@@ -218,6 +224,9 @@ export function CodeBlock({
 
   const renderHighlightedCode = () => {
     const lines = code.split('\n');
+    let globalJSXContext = false; // Track JSX context across lines
+    let globalBraceDepth = 0; // Track JSX expression depth across lines
+    
     return lines.map((line, lineIndex) => {
       // Handle empty lines by adding a non-breaking space
       if (line.trim() === '') {
@@ -228,7 +237,23 @@ export function CodeBlock({
         );
       }
 
-      const tokens = tokenizeTypeScript(line);
+      const tokens = tokenizeTypeScript(line, globalJSXContext, globalBraceDepth);
+      
+      // Update global JSX context based on this line's content
+      if (line.includes('<') && line.match(/<[a-zA-Z]/)) {
+        globalJSXContext = true;
+      }
+      if (line.includes('>') && !line.includes('<')) {
+        globalJSXContext = false;
+        globalBraceDepth = 0; // Reset brace depth when exiting JSX
+      }
+      
+      // Update global brace depth
+      const openBraces = (line.match(/\{/g) || []).length;
+      const closeBraces = (line.match(/\}/g) || []).length;
+      globalBraceDepth += openBraces - closeBraces;
+      if (globalBraceDepth < 0) globalBraceDepth = 0;
+      
       return (
         <div key={lineIndex} className="leading-6">
           {tokens.map((token, tokenIndex) => {
@@ -244,7 +269,7 @@ export function CodeBlock({
               property: 'text-amber-400',
               number: 'text-orange-400 font-medium',
               comment: 'text-gray-500 italic',
-              function: 'text-violet-400 font-medium',
+              function: 'text-yellow-300 font-semibold',
               hook: 'text-pink-400 font-semibold',
               plain: 'text-gray-100'
             };
