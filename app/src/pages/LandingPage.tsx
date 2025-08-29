@@ -57,7 +57,7 @@ export const LandingPage = () => {
       </div>
 
       {/* Quick Stats */}
-      <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-8 text-center z-10'>
+      <div className='absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-8 text-center z-10'>
         <div className='text-gray-400'>
           <div className='text-2xl font-bold text-primary'>22+</div>
           <div className='text-sm'>Components</div>
@@ -69,6 +69,10 @@ export const LandingPage = () => {
         <div className='text-gray-400'>
           <div className='text-2xl font-bold text-secondary'>100%</div>
           <div className='text-sm'>TypeScript</div>
+        </div>
+        <div className='text-gray-400'>
+          <div className='text-2xl font-bold text-secondary'>0</div>
+          <div className='text-sm'>Dependencies</div>
         </div>
       </div>
     </div>
