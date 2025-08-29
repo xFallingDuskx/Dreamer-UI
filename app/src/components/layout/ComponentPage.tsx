@@ -26,7 +26,13 @@ export function ComponentPage({ title, description, children, tableOfContents }:
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+            const newActiveSection = entry.target.id;
+            setActiveSection(newActiveSection);
+            
+            // Update URL hash without triggering scroll
+            if (newActiveSection && window.location.hash !== `#${newActiveSection}`) {
+              window.history.replaceState(null, '', `#${newActiveSection}`);
+            }
           }
         });
       },
@@ -41,6 +47,23 @@ export function ComponentPage({ title, description, children, tableOfContents }:
     });
 
     return () => observer.disconnect();
+  }, [tableOfContents]);
+
+  // Handle initial hash on page load
+  useEffect(() => {
+    if (!tableOfContents?.length) return;
+
+    const hash = window.location.hash.slice(1); // Remove the '#'
+    if (hash) {
+      const element = document.getElementById(hash);
+      if (element) {
+        // Small delay to ensure the page has rendered
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setActiveSection(hash);
+        }, 100);
+      }
+    }
   }, [tableOfContents]);
 
   useEffect(() => {
@@ -92,6 +115,10 @@ export function ComponentPage({ title, description, children, tableOfContents }:
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setIsTocOpen(false); // Close mobile TOC after clicking
+      
+      // Update URL hash
+      window.history.pushState(null, '', `#${id}`);
+      setActiveSection(id);
     }
   };
 
