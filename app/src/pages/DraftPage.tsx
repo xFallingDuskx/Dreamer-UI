@@ -1,4 +1,4 @@
-import { CodeBlock, TokenClasses } from '@moondreamsdev/dreamer-ui/components';
+import { CodeBlock, CodeBlockTokenClasses } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
 
 export const DraftPage = () => {
@@ -76,12 +76,12 @@ export default function Counter({
   );
 }`;
 
-  const customTokenClasses: TokenClasses = {
+  const customCodeBlockTokenClasses: CodeBlockTokenClasses = {
     keyword: 'text-red-400 font-bold',
     function: 'text-green-600 font-semibold',
     string: 'text-green-400',
     type: 'text-orange-400 font-medium',
-    comment: 'text-gray-400 italic'
+    comment: 'text-gray-400 italic',
   };
   return (
     <ComponentPage
@@ -117,14 +117,14 @@ export default function Counter({
           <div className='space-y-6'>
             <div>
               <h3 className='text-lg font-medium text-white mb-3'>CodeBlock Component Testing</h3>
-              
+
               {/* TypeScript Example */}
               <div className='mb-6'>
                 <h4 className='text-md font-medium text-gray-300 mb-3'>TypeScript Interface & Class</h4>
-                <CodeBlock 
+                <CodeBlock
                   code={tsCode}
-                  language="typescript"
-                  filename="UserService.ts"
+                  language='typescript'
+                  filename='UserService.ts'
                   showLineNumbers={true}
                   maxHeight={300}
                   allowDownload={true}
@@ -135,10 +135,10 @@ export default function Counter({
               {/* TSX Example */}
               <div className='mb-6'>
                 <h4 className='text-md font-medium text-gray-300 mb-3'>React TSX Component</h4>
-                <CodeBlock 
+                <CodeBlock
                   code={tsxCode}
-                  language="tsx"
-                  filename="Counter.tsx"
+                  language='tsx'
+                  filename='Counter.tsx'
                   showTrafficLights={false}
                   showLineNumbers={true}
                   allowDownload={true}
@@ -148,29 +148,29 @@ export default function Counter({
               {/* Basic TypeScript Example */}
               <div className='mb-6'>
                 <h4 className='text-md font-medium text-gray-300 mb-3'>Basic Example (No Line Numbers)</h4>
-                <CodeBlock 
+                <CodeBlock
                   code={`const message: string = 'Hello, TypeScript!';\nconsole.log(message);`}
-                  language="ts"
+                  language='ts'
                 />
               </div>
 
               {/* Custom Token Classes Example */}
               <div className='mb-6'>
                 <h4 className='text-md font-medium text-gray-300 mb-3'>Custom Token Colors Example</h4>
-                <CodeBlock 
+                <CodeBlock
                   code={`// Custom color scheme example\nconst greet = (name: string): string => {\n  return \`Hello, \${name}!\`;\n};\n\nconsole.log(greet('World'));`}
-                  language="ts"
-                  filename="custom-colors.ts"
-                  tokenClasses={customTokenClasses}
+                  language='ts'
+                  filename='custom-colors.ts'
+                  tokenClasses={customCodeBlockTokenClasses}
                 />
               </div>
 
               {/* Hidden Header Example */}
               <div className='mb-6'>
                 <h4 className='text-md font-medium text-gray-300 mb-3'>Hidden Header Example</h4>
-                <CodeBlock 
+                <CodeBlock
                   code={`// No header bar - buttons float in corner\nconst example = "Clean minimal look";\nconsole.log(example);`}
-                  language="ts"
+                  language='ts'
                   hideHeader={true}
                 />
               </div>

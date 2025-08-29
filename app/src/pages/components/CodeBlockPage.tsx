@@ -1,4 +1,4 @@
-import { CodeBlock, type TokenClasses } from '@moondreamsdev/dreamer-ui/components';
+import { CodeBlock, type CodeBlockTokenClasses } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
 
@@ -86,12 +86,12 @@ export default function Counter({
   }
 }`;
 
-  const customTokenClasses: TokenClasses = {
+  const customTokenClasses: CodeBlockTokenClasses = {
     keyword: 'text-purple-400 font-bold',
     function: 'text-blue-400 font-semibold',
     string: 'text-green-400',
     type: 'text-yellow-400 font-medium',
-    comment: 'text-gray-500 italic'
+    comment: 'text-gray-500 italic',
   };
 
   return (
@@ -99,67 +99,42 @@ export default function Counter({
       title='Code Block'
       description='A syntax-highlighted code display component with TypeScript/TSX support, copy functionality, download options, and fullscreen viewing.'
     >
-      <ExampleSection 
-        title='Basic Usage'
-        description='Simple code blocks with different configurations.'
-      >
+      <ExampleSection title='Basic Usage' description='Simple code blocks with different configurations.'>
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>Basic TypeScript Code</h4>
-            <CodeBlock 
-              code={basicTypeScript}
-              language="typescript"
-            />
+            <CodeBlock code={basicTypeScript} language='typescript' />
           </div>
 
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>With Filename</h4>
-            <CodeBlock 
-              code={basicTypeScript}
-              language="ts"
-              filename="user.ts"
-            />
+            <CodeBlock code={basicTypeScript} language='ts' filename='user.ts' />
           </div>
 
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>React TSX Component</h4>
-            <CodeBlock 
-              code={reactExample}
-              language="tsx"
-              filename="Counter.tsx"
-            />
+            <CodeBlock code={reactExample} language='tsx' filename='Counter.tsx' />
           </div>
         </div>
       </ExampleSection>
 
-      <ExampleSection 
-        title='Line Numbers'
-        description='Display line numbers for easier code reference.'
-      >
+      <ExampleSection title='Line Numbers' description='Display line numbers for easier code reference.'>
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>With Line Numbers</h4>
-            <CodeBlock 
-              code={reactExample}
-              language="tsx"
-              filename="Counter.tsx"
-              showLineNumbers={true}
-            />
+            <CodeBlock code={reactExample} language='tsx' filename='Counter.tsx' showLineNumbers={true} />
           </div>
         </div>
       </ExampleSection>
 
-      <ExampleSection 
-        title='Interactive Features'
-        description='Copy, download, and fullscreen functionality.'
-      >
+      <ExampleSection title='Interactive Features' description='Copy, download, and fullscreen functionality.'>
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>With Download & Fullscreen</h4>
-            <CodeBlock 
+            <CodeBlock
               code={complexExample}
-              language="typescript"
-              filename="UserService.ts"
+              language='typescript'
+              filename='UserService.ts'
               allowDownload={true}
               allowFullscreen={true}
               showLineNumbers={true}
@@ -168,34 +143,28 @@ export default function Counter({
 
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>Copy Only</h4>
-            <CodeBlock 
-              code={`const message = "Hello, World!";\nconsole.log(message);`}
-              language="ts"
-            />
+            <CodeBlock code={`const message = "Hello, World!";\nconsole.log(message);`} language='ts' />
           </div>
         </div>
       </ExampleSection>
 
-      <ExampleSection 
-        title='Styling Options'
-        description='Different visual configurations and customizations.'
-      >
+      <ExampleSection title='Styling Options' description='Different visual configurations and customizations.'>
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>No Traffic Lights</h4>
-            <CodeBlock 
+            <CodeBlock
               code={`interface Config {\n  theme: 'light' | 'dark';\n  debug: boolean;\n}`}
-              language="ts"
-              filename="config.ts"
+              language='ts'
+              filename='config.ts'
               showTrafficLights={false}
             />
           </div>
 
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>Hidden Header (Floating Buttons)</h4>
-            <CodeBlock 
+            <CodeBlock
               code={`// Clean minimal appearance\nconst greeting = "Hello from floating buttons!";\nconsole.log(greeting);`}
-              language="ts"
+              language='ts'
               hideHeader={true}
               allowFullscreen={true}
             />
@@ -203,10 +172,10 @@ export default function Counter({
 
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>Custom Token Colors</h4>
-            <CodeBlock 
+            <CodeBlock
               code={`// Custom syntax highlighting\nfunction greet(name: string): string {\n  return \`Hello, \${name}!\`;\n}\n\nconst result = greet('Developer');\nconsole.log(result);`}
-              language="ts"
-              filename="custom-colors.ts"
+              language='ts'
+              filename='custom-colors.ts'
               tokenClasses={customTokenClasses}
               showLineNumbers={true}
             />
@@ -214,10 +183,10 @@ export default function Counter({
 
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>With Max Height (Scrollable)</h4>
-            <CodeBlock 
+            <CodeBlock
               code={complexExample}
-              language="typescript"
-              filename="UserService.ts"
+              language='typescript'
+              filename='UserService.ts'
               maxHeight={200}
               showLineNumbers={true}
             />
@@ -225,17 +194,14 @@ export default function Counter({
         </div>
       </ExampleSection>
 
-      <ExampleSection 
-        title='Advanced Examples'
-        description='Real-world usage patterns and complex configurations.'
-      >
+      <ExampleSection title='Advanced Examples' description='Real-world usage patterns and complex configurations.'>
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>Full-Featured Code Block</h4>
-            <CodeBlock 
+            <CodeBlock
               code={complexExample}
-              language="typescript"
-              filename="UserService.ts"
+              language='typescript'
+              filename='UserService.ts'
               showLineNumbers={true}
               allowDownload={true}
               allowFullscreen={true}
@@ -245,7 +211,7 @@ export default function Counter({
 
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>API Response Example</h4>
-            <CodeBlock 
+            <CodeBlock
               code={`// API Response Handler
 interface ApiResponse<T> {
   data: T;
@@ -288,8 +254,8 @@ async function handleApiCall<T>(
     };
   }
 }`}
-              language="typescript"
-              filename="api-handler.ts"
+              language='typescript'
+              filename='api-handler.ts'
               showLineNumbers={true}
               allowDownload={true}
               allowFullscreen={true}
@@ -298,17 +264,21 @@ async function handleApiCall<T>(
         </div>
       </ExampleSection>
 
-      <ExampleSection 
-        title='Accessibility & Usage'
-        description='Keyboard shortcuts and accessibility features.'
-      >
+      <ExampleSection title='Accessibility & Usage' description='Keyboard shortcuts and accessibility features.'>
         <div className='space-y-4'>
           <div className='bg-slate-700 p-4 rounded-lg'>
             <h5 className='font-medium mb-2'>Keyboard Shortcuts</h5>
             <ul className='space-y-1 text-sm text-gray-300'>
-              <li><kbd className='bg-slate-600 px-2 py-0.5 rounded text-xs'>Cmd/Ctrl + C</kbd> - Copy code to clipboard</li>
-              <li><kbd className='bg-slate-600 px-2 py-0.5 rounded text-xs'>F</kbd> - Toggle fullscreen mode (when enabled)</li>
-              <li><kbd className='bg-slate-600 px-2 py-0.5 rounded text-xs'>Escape</kbd> - Exit fullscreen mode</li>
+              <li>
+                <kbd className='bg-slate-600 px-2 py-0.5 rounded text-xs'>Cmd/Ctrl + C</kbd> - Copy code to clipboard
+              </li>
+              <li>
+                <kbd className='bg-slate-600 px-2 py-0.5 rounded text-xs'>F</kbd> - Toggle fullscreen mode (when
+                enabled)
+              </li>
+              <li>
+                <kbd className='bg-slate-600 px-2 py-0.5 rounded text-xs'>Escape</kbd> - Exit fullscreen mode
+              </li>
             </ul>
           </div>
           <div className='bg-slate-700 p-4 rounded-lg'>
