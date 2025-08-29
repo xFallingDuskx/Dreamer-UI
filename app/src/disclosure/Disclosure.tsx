@@ -53,6 +53,12 @@ export function Disclosure({ children, label, open, onToggle, id, ref, disabled 
           disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
         )}
         onClick={handleToggle}
+        onKeyDown={e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleToggle();
+          }
+        }}
         data-open={isOpen}
         data-label={typeof label === 'string' ? label : undefined}
       >
