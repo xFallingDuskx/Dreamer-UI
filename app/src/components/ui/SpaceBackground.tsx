@@ -66,7 +66,7 @@ export const SpaceBackground = ({ children, className = '' }: SpaceBackgroundPro
       <div className='absolute top-2/3 right-1/3 w-20 h-20 bg-success/10 rounded-full blur-lg nebula-drift nebula-delay-6'></div>
 
       {/* Content */}
-      <div className='relative z-10'>
+      <div className='relative z-10 flex flex-col flex-1'>
         {children}
       </div>
     </div>

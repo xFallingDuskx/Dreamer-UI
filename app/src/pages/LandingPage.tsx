@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export const LandingPage = () => {
   return (
-    <div className='min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden'>
+    <div className='flex-1 flex flex-col items-center justify-center p-4 relative overflow-hidden'>
       {/* Main Content Container */}
       <div className='text-center space-y-8 max-w-2xl mx-auto z-10'>
         {/* App Title */}

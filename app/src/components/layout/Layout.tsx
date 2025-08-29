@@ -4,9 +4,9 @@ import { SpaceBackground } from '../ui/SpaceBackground';
 
 export const Layout = () => {
   return (
-    <SpaceBackground>
+    <SpaceBackground className='flex flex-col min-h-screen'>
       <Navigation />
-      <main>
+      <main className='flex flex-col flex-1'>
         <Outlet />
       </main>
     </SpaceBackground>
