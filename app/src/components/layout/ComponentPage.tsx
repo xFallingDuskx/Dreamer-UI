@@ -1,6 +1,6 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import { Disclosure } from '../../disclosure';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Disclosure } from '../../disclosure';
 
 interface TableOfContentsItem {
   id: string;
@@ -78,6 +78,17 @@ export function ComponentPage({ title, description, children, tableOfContents }:
     }
   };
 
+  const getButtonClass = (id: string, level: number) => {
+    return join(
+      'block w-full text-left text-sm py-1 px-2 transition-colors border-l',
+      activeSection === id
+        ? 'text-white bg-accent-medium/20 border-accent-medium'
+        : 'text-gray-300 hover:text-white border-transparent opacity-60 hover:opacity-100',
+      level === 2 && 'pl-4',
+      level === 3 && 'pl-6'
+    );
+  };
+
   return (
     <div className='min-h-screen pb-24'>
       <div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
@@ -95,25 +106,14 @@ export function ComponentPage({ title, description, children, tableOfContents }:
             <Disclosure
               isOpen={isTocOpen}
               label='Table of Contents'
-              className='bg-gray-800/50 border border-accent-medium/50 rounded-xl text-white'
+              className='bg-accent-medium/10 border border-accent-medium/50 rounded-xl text-white'
               buttonClassName='p-4 text-left w-full'
               onToggle={setIsTocOpen}
             >
               <div className='mt-4'>
                 <nav className='space-y-2'>
                   {tableOfContents.map(({ id, title: tocTitle, level }) => (
-                    <button
-                      key={id}
-                      onClick={() => scrollToSection(id)}
-                      className={join(
-                        'block w-full text-left py-1 px-2 rounded transition-colors',
-                        activeSection === id
-                          ? 'text-primary bg-primary/10'
-                          : 'text-gray-300 hover:text-white hover:bg-gray-700/50',
-                        level === 2 && 'pl-4',
-                        level === 3 && 'pl-6'
-                      )}
-                    >
+                    <button key={id} onClick={() => scrollToSection(id)} className={getButtonClass(id, level)}>
                       {tocTitle}
                     </button>
                   ))}
@@ -141,22 +141,11 @@ export function ComponentPage({ title, description, children, tableOfContents }:
               zIndex: 30,
             }}
           >
-            <div className='bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6'>
+            <div className='bg-accent-medium/10 backdrop-blur-sm border border-accent-medium/50 rounded-2xl p-6'>
               <h2 className='text-lg font-semibold text-white mb-4'>Table of Contents</h2>
               <nav className='space-y-2'>
                 {tableOfContents.map(({ id, title: tocTitle, level }) => (
-                  <button
-                    key={id}
-                    onClick={() => scrollToSection(id)}
-                    className={join(
-                      'block w-full text-left text-sm py-1 px-2 rounded transition-colors',
-                      activeSection === id
-                        ? 'text-primary bg-primary/10'
-                        : 'text-gray-300 hover:text-white hover:bg-gray-700/50',
-                      level === 2 && 'pl-4',
-                      level === 3 && 'pl-6'
-                    )}
-                  >
+                  <button key={id} onClick={() => scrollToSection(id)} className={getButtonClass(id, level)}>
                     {tocTitle}
                   </button>
                 ))}
