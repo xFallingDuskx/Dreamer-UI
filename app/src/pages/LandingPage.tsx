@@ -35,7 +35,7 @@ export const LandingPage = () => {
         <div className='pt-8 space-y-4'>
           <Link
             to='/getting-started'
-            className='inline-block px-8 py-4 bg-gradient-to-r from-primary to-accent text-white font-semibold rounded-xl shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/40 transform hover:scale-105 transition-all duration-200 text-lg border border-primary/30'
+            className='inline-block px-8 py-4 bg-gradient-to-r from-primary to-accent text-white font-semibold rounded-xl shadow-lg shadow-secondary/25 hover:shadow-2xl hover:shadow-primary/40 transform hover:scale-105 transition-all duration-200 '
           >
             Get Started
           </Link>
