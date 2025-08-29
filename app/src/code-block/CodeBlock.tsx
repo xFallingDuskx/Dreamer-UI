@@ -1,43 +1,17 @@
 import { Check } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
+import {
+  useCopyToClipboard,
+  useDownloadFile,
+  useFullscreenMode,
+  useKeyboardShortcuts,
+  useTokenClasses,
+  useTypeScriptTokenizer,
+  type TokenClasses,
+} from './hooks';
 import { Copy, Dash, Download, Window } from './icons';
-
-export interface TokenClasses {
-  /** CSS classes for keywords like 'const', 'let', 'function', 'if', etc. @example 'text-purple-400 font-semibold' */
-  keyword?: string;
-  /** CSS classes for types like 'string', 'number', 'boolean', 'Promise', etc. @example 'text-cyan-400 font-medium' */
-  type?: string;
-  /** CSS classes for string literals including template literals @example 'text-green-400' */
-  string?: string;
-  /** CSS classes for JSX brackets like '<', '>', '/>' @example 'text-gray-400' */
-  'jsx-bracket'?: string;
-  /** CSS classes for JSX tag names like 'div', 'button', 'Component' @example 'text-blue-400 font-medium' */
-  'jsx-tag'?: string;
-  /** CSS classes for JSX attributes like 'className', 'onClick' @example 'text-amber-400' */
-  'jsx-attribute'?: string;
-  /** CSS classes for JSX expression braces '{}' @example 'text-yellow-400' */
-  'jsx-brace'?: string;
-  /** CSS classes for JSX elements (fallback) @example 'text-blue-400 font-medium' */
-  jsx?: string;
-  /** CSS classes for object properties and keys @example 'text-amber-400' */
-  property?: string;
-  /** CSS classes for numeric literals @example 'text-orange-400 font-medium' */
-  number?: string;
-  /** CSS classes for comments (both single-line and multi-line) @example 'text-gray-500 italic' */
-  comment?: string;
-  /** CSS classes for function calls like 'console.log', 'useState' @example 'text-yellow-300 font-semibold' */
-  function?: string;
-  /** CSS classes for React hooks like 'useState', 'useEffect' @example 'text-pink-400 font-semibold' */
-  hook?: string;
-  /** CSS classes for operators like '=>', '===', '&&', '+' @example 'text-gray-300' */
-  operator?: string;
-  /** CSS classes for plain text and unmatched content @example 'text-gray-100' */
-  plain?: string;
-}
-
-type TokenType = keyof TokenClasses;
 
 export interface CodeBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   /** The code content to display */
@@ -90,103 +64,23 @@ export function CodeBlock({
   ref,
   ...props
 }: CodeBlockProps) {
-  const [copied, setCopied] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const previousActiveElement = useRef<HTMLElement | null>(null);
+  const { containerRef } = useFullscreenMode(isFullscreen, setIsFullscreen);
+  const { copied, handleCopy } = useCopyToClipboard(code);
+  const { handleDownload: downloadFile } = useDownloadFile();
+  const { mergedTokenClasses } = useTokenClasses(customTokenClasses);
+  const { tokenizeTypeScript } = useTypeScriptTokenizer();
 
-  // Focus management for fullscreen mode
-  useEffect(() => {
-    if (isFullscreen) {
-      previousActiveElement.current = document.activeElement as HTMLElement;
-
-      // Prevent document scrolling
-      document.body.style.overflow = 'hidden';
-
-      // Focus the container in fullscreen mode
-      setTimeout(() => {
-        containerRef.current?.focus();
-      }, 100);
-
-      // Trap focus within the fullscreen container
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-          setIsFullscreen(false);
-        }
-      };
-
-      document.addEventListener('keydown', handleKeyDown);
-      return () => {
-        document.removeEventListener('keydown', handleKeyDown);
-        // Restore document scrolling
-        document.body.style.overflow = '';
-      };
-    } else if (previousActiveElement.current) {
-      // Restore focus when exiting fullscreen
-      previousActiveElement.current.focus();
-      previousActiveElement.current = null;
-    }
-  }, [isFullscreen]);
-
-  const handleCopy = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
-    } catch (err) {
-      console.error('Failed to copy code:', err);
-    }
-  }, [code]);
+  const codeLines = useMemo(() => code.split('\n'), [code]);
 
   const handleDownload = useCallback(() => {
-    const blob = new Blob([code], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename || `code.${getFileExtension(language)}`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }, [code, filename, language]);
+    const downloadFilename = filename || `code.${getFileExtension(language)}`;
+    downloadFile(code, downloadFilename);
+  }, [code, filename, language, downloadFile]);
 
-  // Keyboard navigation handler
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === 'c' && (e.metaKey || e.ctrlKey) && allowCopy) {
-        e.preventDefault();
-        handleCopy();
-      } else if (e.key === 'f' && allowFullscreen) {
-        e.preventDefault();
-        setIsFullscreen(!isFullscreen);
-      }
-    },
-    [allowCopy, allowFullscreen, isFullscreen, handleCopy]
+  const { handleKeyDown } = useKeyboardShortcuts(allowCopy, allowFullscreen, handleCopy, () =>
+    setIsFullscreen(!isFullscreen)
   );
-
-  const mergedTokenClasses = useMemo<TokenClasses>(() => {
-    const defaultTokenClasses: TokenClasses = {
-      keyword: 'text-purple-400 font-semibold',
-      type: 'text-cyan-400 font-medium',
-      string: 'text-green-400',
-      'jsx-bracket': 'text-gray-400',
-      'jsx-tag': 'text-blue-400 font-medium',
-      'jsx-attribute': 'text-amber-400',
-      'jsx-brace': 'text-yellow-400',
-      jsx: 'text-blue-400 font-medium', // fallback for old jsx type
-      property: 'text-amber-400',
-      number: 'text-orange-400 font-medium',
-      comment: 'text-gray-500 italic',
-      function: 'text-rose-400 font-semibold',
-      hook: 'text-rose-400 font-semibold',
-      operator: 'text-gray-300',
-      plain: 'text-gray-100',
-    };
-    return { ...defaultTokenClasses, ...customTokenClasses };
-  }, [customTokenClasses]);
-
-  // Memoize code lines to avoid repeated splitting
-  const codeLines = useMemo(() => code.split('\n'), [code]);
 
   const getFileExtension = (lang: string): string => {
     const extensions: Record<string, string> = {
@@ -256,176 +150,6 @@ export function CodeBlock({
       handleCopy,
       copied,
     ]
-  );
-
-  const tokenizeTypeScript = useCallback(
-    (code: string, inheritedJSXContext: boolean = false, inheritedBraceDepth: number = 0) => {
-      const tokens: Array<{ text: string; type: TokenType }> = [];
-      let remaining = code;
-      let isInJSX = inheritedJSXContext;
-      let jsxBraceDepth = inheritedBraceDepth; // Track JSX expression depth
-
-      while (remaining.length > 0) {
-        // Multi-line comments
-        const multiComment = remaining.match(/^\/\*[\s\S]*?\*\//);
-        if (multiComment) {
-          tokens.push({ text: multiComment[0], type: 'comment' });
-          remaining = remaining.slice(multiComment[0].length);
-          continue;
-        }
-
-        // Single line comments
-        const singleComment = remaining.match(/^\/\/.*$/m);
-        if (singleComment) {
-          tokens.push({ text: singleComment[0], type: 'comment' });
-          remaining = remaining.slice(singleComment[0].length);
-          continue;
-        }
-
-        // Strings
-        const stringMatch = remaining.match(/^(`[^`]*`|"[^"]*"|'[^']*')/);
-        if (stringMatch) {
-          tokens.push({ text: stringMatch[0], type: 'string' });
-          remaining = remaining.slice(stringMatch[0].length);
-          continue;
-        }
-
-        // JSX opening tag start
-        const jsxOpenStart = remaining.match(/^<([a-zA-Z][a-zA-Z0-9]*)/);
-        if (jsxOpenStart) {
-          tokens.push({ text: '<', type: 'jsx-bracket' });
-          tokens.push({ text: jsxOpenStart[1], type: 'jsx-tag' });
-          remaining = remaining.slice(jsxOpenStart[0].length);
-          isInJSX = true;
-          continue;
-        }
-
-        // JSX closing tag
-        const jsxClose = remaining.match(/^<\/([a-zA-Z][a-zA-Z0-9]*)>/);
-        if (jsxClose) {
-          tokens.push({ text: '</', type: 'jsx-bracket' });
-          tokens.push({ text: jsxClose[1], type: 'jsx-tag' });
-          tokens.push({ text: '>', type: 'jsx-bracket' });
-          remaining = remaining.slice(jsxClose[0].length);
-          isInJSX = false;
-          continue;
-        }
-
-        // JSX self-closing or tag end
-        if (remaining.match(/^\/?>/)) {
-          const tagEnd = remaining.match(/^(\/?>\s*)/);
-          if (tagEnd) {
-            tokens.push({ text: tagEnd[1].trim(), type: 'jsx-bracket' });
-            remaining = remaining.slice(tagEnd[1].length);
-            if (tagEnd[1].includes('>')) {
-              isInJSX = false;
-            }
-            continue;
-          }
-        }
-
-        // JSX attribute (only when explicitly in JSX context, followed by =, and not inside braces)
-        const jsxAttr = remaining.match(/^([a-zA-Z][a-zA-Z0-9]*)(\s*)(=)/);
-        if (jsxAttr && isInJSX && jsxBraceDepth === 0) {
-          tokens.push({ text: jsxAttr[1], type: 'jsx-attribute' });
-          if (jsxAttr[2]) {
-            // Whitespace before =
-            tokens.push({ text: jsxAttr[2], type: 'plain' });
-          }
-          tokens.push({ text: '=', type: 'plain' });
-          remaining = remaining.slice(jsxAttr[0].length);
-          continue;
-        }
-
-        // JSX expression braces
-        const jsxBrace = remaining.match(/^[{}]/);
-        if (jsxBrace) {
-          tokens.push({ text: jsxBrace[0], type: 'jsx-brace' });
-          if (jsxBrace[0] === '{') {
-            jsxBraceDepth++;
-          } else if (jsxBrace[0] === '}') {
-            jsxBraceDepth--;
-          }
-          remaining = remaining.slice(1);
-          continue;
-        }
-
-        // Whitespace (preserve spaces)
-        const whitespace = remaining.match(/^\s+/);
-        if (whitespace) {
-          tokens.push({ text: whitespace[0], type: 'plain' });
-          remaining = remaining.slice(whitespace[0].length);
-          continue;
-        }
-
-        // Operators (including arrow functions)
-        const operator = remaining.match(/^(=>|===|!==|==|!=|<=|>=|&&|\|\||[+\-*/%=<>!&|^~?:;,()[\]{}.])/);
-        if (operator) {
-          tokens.push({ text: operator[0], type: 'operator' });
-          remaining = remaining.slice(operator[0].length);
-          continue;
-        }
-
-        // Keywords
-        const keyword = remaining.match(
-          /^(const|let|var|function|if|else|for|while|return|import|export|class|extends|interface|type|enum|async|await|public|private|protected|static|from|as|default|new|this|super|try|catch|finally|throw|break|continue|switch|case|typeof|instanceof)\b/
-        );
-        if (keyword) {
-          tokens.push({ text: keyword[0], type: 'keyword' });
-          remaining = remaining.slice(keyword[0].length);
-          continue;
-        }
-
-        // React hooks (before function calls to avoid conflicts)
-        const hook = remaining.match(/^(use[A-Z][a-zA-Z]*)\b/);
-        if (hook) {
-          tokens.push({ text: hook[0], type: 'hook' });
-          remaining = remaining.slice(hook[0].length);
-          continue;
-        }
-
-        // Function calls (word followed by opening parenthesis or optional chaining)
-        const func = remaining.match(/^([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=(\?\.)?\()/);
-        if (func) {
-          tokens.push({ text: func[1], type: 'function' });
-          remaining = remaining.slice(func[1].length);
-          continue;
-        }
-
-        // Types
-        const type = remaining.match(
-          /^(string|number|boolean|object|any|void|never|unknown|null|undefined|Promise|Array|React\.FC|FC|JSX\.Element|HTMLElement|Event|MouseEvent|KeyboardEvent|ChangeEvent)\b/
-        );
-        if (type) {
-          tokens.push({ text: type[0], type: 'type' });
-          remaining = remaining.slice(type[0].length);
-          continue;
-        }
-
-        // Numbers
-        const number = remaining.match(/^(\d+\.?\d*)/);
-        if (number) {
-          tokens.push({ text: number[0], type: 'number' });
-          remaining = remaining.slice(number[0].length);
-          continue;
-        }
-
-        // Object properties (word followed by colon, not in JSX)
-        const property = remaining.match(/^([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=:)/);
-        if (property && !isInJSX) {
-          tokens.push({ text: property[1], type: 'property' });
-          remaining = remaining.slice(property[1].length);
-          continue;
-        }
-
-        // If nothing matched, take one character as plain text
-        tokens.push({ text: remaining[0], type: 'plain' });
-        remaining = remaining.slice(1);
-      }
-
-      return tokens;
-    },
-    []
   );
 
   const formattedCode = useMemo(() => {

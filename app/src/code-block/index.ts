@@ -1,1 +1,2 @@
-export { CodeBlock, type CodeBlockProps, type TokenClasses } from './CodeBlock';
+export { CodeBlock, type CodeBlockProps } from './CodeBlock';
+export { type TokenClasses } from './hooks';
