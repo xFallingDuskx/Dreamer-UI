@@ -8,7 +8,7 @@ export interface DisclosureProps {
   /** The label for the disclosure button. */
   label: React.ReactNode;
   /** Controls the open state (uncontrolled if not provided).*/
-  open?: boolean;
+  isOpen?: boolean;
   /**Called when disclosure is toggled.*/
   onToggle?: (open: boolean) => void;
   /** Optional id for accessibility and testing. */
@@ -26,7 +26,7 @@ export interface DisclosureProps {
 export function Disclosure({
   children,
   label,
-  open,
+  isOpen: open,
   onToggle,
   id,
   ref,
@@ -52,7 +52,7 @@ export function Disclosure({
   }, [open]);
 
   return (
-    <div ref={ref} id={activeId} data-open={isOpen} className={join('group space-y-0.5', className)}>
+    <div ref={ref} id={activeId} data-open={isOpen} className={join('overflow-hidden', className)}>
       <button
         id={`${activeId}-button`}
         type='button'
@@ -84,14 +84,7 @@ export function Disclosure({
         </div>
       </button>
 
-      <div
-        id={`${activeId}-panel`}
-        role='region'
-        aria-labelledby={activeId}
-        className={join('transition-all', isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-1 h-0')}
-        aria-live='polite'
-        aria-hidden={!isOpen}
-      >
+      <div id={`${activeId}-panel`} role='region' aria-labelledby={activeId} aria-live='polite' hidden={!isOpen}>
         {children}
       </div>
     </div>

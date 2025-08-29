@@ -1,4 +1,5 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
+import { Disclosure } from '../../disclosure';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 interface TableOfContentsItem {
@@ -88,18 +89,17 @@ export function ComponentPage({ title, description, children, tableOfContents }:
           <p className='text-xl text-gray-300 max-w-2xl mx-auto'>{description}</p>
         </div>
 
-        {/* Mobile TOC Toggle */}
+        {/* Mobile TOC Toggle using Disclosure */}
         {tableOfContents?.length && (
           <div className='lg:hidden mb-6'>
-            <button
-              onClick={() => setIsTocOpen(!isTocOpen)}
-              className='w-full bg-gray-800/50 border border-gray-600 rounded-xl p-4 text-left text-white hover:bg-gray-700/50 transition-colors'
+            <Disclosure
+              isOpen={isTocOpen}
+              label='Table of Contents'
+              className='bg-gray-800/50 border border-accent-medium/50 rounded-xl text-white'
+              buttonClassName='p-4 text-left w-full'
+              onToggle={setIsTocOpen}
             >
-              <span className='font-semibold'>Table of Contents</span>
-              <span className='float-right'>{isTocOpen ? '-' : '+'}</span>
-            </button>
-            {isTocOpen && (
-              <div className='mt-2 bg-gray-800/50 border border-gray-600 rounded-xl p-4'>
+              <div className='mt-4'>
                 <nav className='space-y-2'>
                   {tableOfContents.map(({ id, title: tocTitle, level }) => (
                     <button
@@ -119,7 +119,7 @@ export function ComponentPage({ title, description, children, tableOfContents }:
                   ))}
                 </nav>
               </div>
-            )}
+            </Disclosure>
           </div>
         )}
 
