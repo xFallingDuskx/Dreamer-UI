@@ -1,15 +1,26 @@
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
 
-export const JoinPage = () => {
+const tableOfContents = [
+  { id: 'installation', title: 'Installation', level: 1 },
+  { id: 'basic-usage', title: 'Basic Usage', level: 1 },
+  { id: 'advanced-features', title: 'Advanced Features', level: 1 },
+  { id: 'real-world-examples', title: 'Real-World Examples', level: 1 },
+  { id: 'comparison-with-alternatives', title: 'Comparison with Alternatives', level: 1 },
+  { id: 'api-reference', title: 'API Reference', level: 1 },
+];
+
+export function JoinPage() {
   return (
     <ComponentPage
       title='join'
       description='A utility function for conditionally joining CSS class names with proper handling of falsy values and arrays.'
+      tableOfContents={tableOfContents}
     >
       <ExampleSection 
         title='Installation'
         description='Import the utility function.'
+        id='installation'
       >
         <div className='bg-gray-700 p-4 rounded-lg'>
           <h4 className='text-white font-semibold mb-2'>Import</h4>
@@ -218,4 +229,4 @@ join(baseClass, a && 'a', b && 'b', c && 'c')
       </ExampleSection>
     </ComponentPage>
   );
-};
+}

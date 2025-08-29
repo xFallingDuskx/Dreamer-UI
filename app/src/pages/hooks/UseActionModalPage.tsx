@@ -3,7 +3,14 @@ import { useActionModal } from '@moondreamsdev/dreamer-ui/hooks';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
 
-export const UseActionModalPage = () => {
+const tableOfContents = [
+  { id: 'installation-setup', title: 'Installation & Setup', level: 1 },
+  { id: 'basic-usage', title: 'Basic Usage', level: 1 },
+  { id: 'advanced-options', title: 'Advanced Options', level: 1 },
+  { id: 'api-reference', title: 'API Reference', level: 1 },
+];
+
+export function UseActionModalPage() {
   const { alert, confirm } = useActionModal();
 
   const handleAlert = async () => {
@@ -43,10 +50,12 @@ export const UseActionModalPage = () => {
     <ComponentPage
       title='useActionModal'
       description='A React hook that provides programmatic access to alert and confirmation modals with async/await support.'
+      tableOfContents={tableOfContents}
     >
       <ExampleSection 
         title='Installation & Setup'
         description='Import the hook and set up the required provider.'
+        id='installation-setup'
       >
         <div className='space-y-4'>
           <div className='bg-gray-700 p-4 rounded-lg'>
@@ -75,6 +84,7 @@ function App() {
       <ExampleSection 
         title='Basic Usage'
         description='Simple alert and confirm examples.'
+        id='basic-usage'
       >
         <div className='space-y-4'>
           <div className='flex gap-4'>
@@ -117,6 +127,7 @@ if (result) {
       <ExampleSection 
         title='Advanced Options'
         description='Destructive actions and custom button text.'
+        id='advanced-options'
       >
         <div className='space-y-4'>
           <div className='flex gap-4'>
@@ -143,6 +154,7 @@ const result = await confirm({
       <ExampleSection 
         title='API Reference'
         description='Complete API documentation for the useActionModal hook.'
+        id='api-reference'
       >
         <div className='space-y-4'>
           <div className='bg-gray-700 p-4 rounded-lg'>
@@ -173,4 +185,4 @@ interface ConfirmOptions extends AlertOptions {
       </ExampleSection>
     </ComponentPage>
   );
-};
+}
