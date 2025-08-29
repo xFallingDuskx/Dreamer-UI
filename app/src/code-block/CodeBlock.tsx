@@ -35,6 +35,9 @@ export interface TokenClasses {
   /** CSS classes for plain text and unmatched content @example 'text-gray-100' */
   plain?: string;
 }
+
+type TokenType = keyof TokenClasses;
+
 export interface CodeBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   /** The code content to display */
   code: string;
@@ -109,13 +112,13 @@ export function CodeBlock({
     const extensions: Record<string, string> = {
       typescript: 'ts',
       tsx: 'tsx',
-      ts: 'ts'
+      ts: 'ts',
     };
     return extensions[lang] || 'ts';
   };
 
   const tokenizeTypeScript = (code: string, inheritedJSXContext: boolean = false, inheritedBraceDepth: number = 0) => {
-    const tokens: Array<{text: string, type: string}> = [];
+    const tokens: Array<{ text: string; type: TokenType }> = [];
     let remaining = code;
     let isInJSX = inheritedJSXContext;
     let jsxBraceDepth = inheritedBraceDepth; // Track JSX expression depth
@@ -167,7 +170,7 @@ export function CodeBlock({
       }
 
       // JSX self-closing or tag end
-      if (remaining.match(/^\/?>/) ) {
+      if (remaining.match(/^\/?>/)) {
         const tagEnd = remaining.match(/^(\/?>\s*)/);
         if (tagEnd) {
           tokens.push({ text: tagEnd[1].trim(), type: 'jsx-bracket' });
@@ -183,7 +186,8 @@ export function CodeBlock({
       const jsxAttr = remaining.match(/^([a-zA-Z][a-zA-Z0-9]*)(\s*)(=)/);
       if (jsxAttr && isInJSX && jsxBraceDepth === 0) {
         tokens.push({ text: jsxAttr[1], type: 'jsx-attribute' });
-        if (jsxAttr[2]) { // Whitespace before =
+        if (jsxAttr[2]) {
+          // Whitespace before =
           tokens.push({ text: jsxAttr[2], type: 'plain' });
         }
         tokens.push({ text: '=', type: 'plain' });
@@ -221,7 +225,9 @@ export function CodeBlock({
       }
 
       // Keywords
-      const keyword = remaining.match(/^(const|let|var|function|if|else|for|while|return|import|export|class|extends|interface|type|enum|async|await|public|private|protected|static|from|as|default|new|this|super|try|catch|finally|throw|break|continue|switch|case|typeof|instanceof)\b/);
+      const keyword = remaining.match(
+        /^(const|let|var|function|if|else|for|while|return|import|export|class|extends|interface|type|enum|async|await|public|private|protected|static|from|as|default|new|this|super|try|catch|finally|throw|break|continue|switch|case|typeof|instanceof)\b/
+      );
       if (keyword) {
         tokens.push({ text: keyword[0], type: 'keyword' });
         remaining = remaining.slice(keyword[0].length);
@@ -245,7 +251,9 @@ export function CodeBlock({
       }
 
       // Types
-      const type = remaining.match(/^(string|number|boolean|object|any|void|never|unknown|null|undefined|Promise|Array|React\.FC|FC|JSX\.Element|HTMLElement|Event|MouseEvent|KeyboardEvent|ChangeEvent)\b/);
+      const type = remaining.match(
+        /^(string|number|boolean|object|any|void|never|unknown|null|undefined|Promise|Array|React\.FC|FC|JSX\.Element|HTMLElement|Event|MouseEvent|KeyboardEvent|ChangeEvent)\b/
+      );
       if (type) {
         tokens.push({ text: type[0], type: 'type' });
         remaining = remaining.slice(type[0].length);
@@ -280,19 +288,19 @@ export function CodeBlock({
     const lines = code.split('\n');
     let globalJSXContext = false; // Track JSX context across lines
     let globalBraceDepth = 0; // Track JSX expression depth across lines
-    
+
     return lines.map((line, lineIndex) => {
       // Handle empty lines by adding a non-breaking space
       if (line.trim() === '') {
         return (
-          <div key={lineIndex} className="leading-6">
+          <div key={lineIndex} className='leading-6'>
             &nbsp;
           </div>
         );
       }
 
       const tokens = tokenizeTypeScript(line, globalJSXContext, globalBraceDepth);
-      
+
       // Update global JSX context based on this line's content
       if (line.includes('<') && line.match(/<[a-zA-Z]/)) {
         globalJSXContext = true;
@@ -301,15 +309,15 @@ export function CodeBlock({
         globalJSXContext = false;
         globalBraceDepth = 0; // Reset brace depth when exiting JSX
       }
-      
+
       // Update global brace depth
       const openBraces = (line.match(/\{/g) || []).length;
       const closeBraces = (line.match(/\}/g) || []).length;
       globalBraceDepth += openBraces - closeBraces;
       if (globalBraceDepth < 0) globalBraceDepth = 0;
-      
+
       return (
-        <div key={lineIndex} className="leading-6">
+        <div key={lineIndex} className='leading-6'>
           {tokens.map((token, tokenIndex) => {
             const defaultTokenClasses: TokenClasses = {
               keyword: 'text-purple-400 font-semibold',
@@ -326,16 +334,13 @@ export function CodeBlock({
               function: 'text-rose-400 font-semibold',
               hook: 'text-rose-400 font-semibold',
               operator: 'text-gray-300',
-              plain: 'text-gray-100'
+              plain: 'text-gray-100',
             };
 
-            const tokenClasses = { ...defaultTokenClasses, ...customTokenClasses };
-            
+            const tokenClasses: TokenClasses = { ...defaultTokenClasses, ...customTokenClasses };
+
             return (
-              <span 
-                key={tokenIndex} 
-                className={tokenClasses[token.type as keyof typeof tokenClasses] || 'text-gray-100'}
-              >
+              <span key={tokenIndex} className={tokenClasses[token.type] || 'text-gray-100'}>
                 {token.text}
               </span>
             );
@@ -349,10 +354,7 @@ export function CodeBlock({
     if (!showLineNumbers) return null;
     const lines = code.split('\n');
     return lines.map((_, index) => (
-      <div 
-        key={index} 
-        className="text-gray-500 text-right pl-3 pr-1 select-none min-w-8 text-sm font-mono leading-6"
-      >
+      <div key={index} className='text-gray-500 text-right pl-3 pr-1 select-none min-w-8 text-sm font-mono leading-6'>
         {index + 1}
       </div>
     ));
@@ -366,18 +368,13 @@ export function CodeBlock({
 
   const codeStyle = {
     maxHeight: maxHeight && !isFullscreen ? `${maxHeight}px` : isFullscreen ? '100vh' : undefined,
-    overflow: maxHeight || isFullscreen ? 'auto' : 'visible'
+    overflow: maxHeight || isFullscreen ? 'auto' : 'visible',
   };
 
   return (
     <>
-      {isFullscreen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-[9998]"
-          onClick={() => setIsFullscreen(false)}
-        />
-      )}
-      <div 
+      {isFullscreen && <div className='fixed inset-0 bg-black/50 z-[9998]' onClick={() => setIsFullscreen(false)} />}
+      <div
         id={id}
         ref={ref}
         className={codeBlockClasses}
@@ -387,30 +384,26 @@ export function CodeBlock({
         {...props}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700">
-          <div className="flex items-center space-x-3">
+        <div className='flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700'>
+          <div className='flex items-center space-x-3'>
             {showTrafficLights && (
-              <div className="flex space-x-2">
-                <div className="w-3 h-3 bg-red-500 rounded-full" />
-                <div className="w-3 h-3 bg-yellow-500 rounded-full" />
-                <div className="w-3 h-3 bg-green-500 rounded-full" />
+              <div className='flex space-x-2'>
+                <div className='w-3 h-3 bg-red-500 rounded-full' />
+                <div className='w-3 h-3 bg-yellow-500 rounded-full' />
+                <div className='w-3 h-3 bg-green-500 rounded-full' />
               </div>
             )}
-            {filename && (
-              <span className="text-sm text-gray-300 font-medium">{filename}</span>
-            )}
+            {filename && <span className='text-sm text-gray-300 font-medium'>{filename}</span>}
           </div>
-          
-          <div className="flex items-center space-x-2">
-            <span className="text-xs text-gray-400 uppercase tracking-wide font-medium">
-              {language}
-            </span>
+
+          <div className='flex items-center space-x-2'>
+            <span className='text-xs text-gray-400 uppercase tracking-wide font-medium'>{language}</span>
             {allowFullscreen && (
               <button
                 onClick={() => setIsFullscreen(!isFullscreen)}
-                className="p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
-                title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
-                aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen mode"}
+                className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors'
+                title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+                aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen mode'}
               >
                 {isFullscreen ? <Dash size={14} /> : <Window size={14} />}
               </button>
@@ -418,9 +411,9 @@ export function CodeBlock({
             {allowDownload && (
               <button
                 onClick={handleDownload}
-                className="p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
-                title="Download code"
-                aria-label="Download code as file"
+                className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors'
+                title='Download code'
+                aria-label='Download code as file'
               >
                 <Download size={14} />
               </button>
@@ -428,33 +421,27 @@ export function CodeBlock({
             {allowCopy && (
               <button
                 onClick={handleCopy}
-                className="p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
-                title="Copy code"
-                aria-label="Copy code to clipboard"
+                className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors'
+                title='Copy code'
+                aria-label='Copy code to clipboard'
               >
-                {copied ? (
-                  <Check size={14} className="text-green-400" />
-                ) : (
-                  <Copy size={14} />
-                )}
+                {copied ? <Check size={14} className='text-green-400' /> : <Copy size={14} />}
               </button>
             )}
           </div>
         </div>
-        
+
         {/* Code Content */}
-        <div className="flex overflow-hidden" style={codeStyle}>
-          <div className="flex-1 overflow-x-auto">
-            <div className="flex">
+        <div className='flex overflow-hidden' style={codeStyle}>
+          <div className='flex-1 overflow-x-auto'>
+            <div className='flex'>
               {showLineNumbers && (
-                <div className="bg-gray-800 py-4 border-r border-gray-700 flex flex-col flex-shrink-0">
+                <div className='bg-gray-800 py-4 border-r border-gray-700 flex flex-col flex-shrink-0'>
                   {getLineNumbers()}
                 </div>
               )}
-              <div className="flex-1 p-4">
-                <pre className="text-sm font-mono">
-                  {renderHighlightedCode()}
-                </pre>
+              <div className='flex-1 p-4'>
+                <pre className='text-sm font-mono'>{renderHighlightedCode()}</pre>
               </div>
             </div>
           </div>
