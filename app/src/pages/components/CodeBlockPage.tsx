@@ -171,9 +171,6 @@ export default function Counter({
             <CodeBlock 
               code={`const message = "Hello, World!";\nconsole.log(message);`}
               language="ts"
-              allowCopy={true}
-              allowDownload={false}
-              allowFullscreen={false}
             />
           </div>
         </div>
@@ -200,7 +197,6 @@ export default function Counter({
               code={`// Clean minimal appearance\nconst greeting = "Hello from floating buttons!";\nconsole.log(greeting);`}
               language="ts"
               hideHeader={true}
-              allowCopy={true}
               allowFullscreen={true}
             />
           </div>
@@ -241,7 +237,6 @@ export default function Counter({
               language="typescript"
               filename="UserService.ts"
               showLineNumbers={true}
-              allowCopy={true}
               allowDownload={true}
               allowFullscreen={true}
               maxHeight={300}

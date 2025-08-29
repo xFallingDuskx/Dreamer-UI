@@ -210,10 +210,17 @@ export function CodeBlock({
 
   const codeStyle = useMemo(
     () => ({
-      maxHeight: maxHeight && !isFullscreen ? `${maxHeight}px` : isFullscreen ? 'fit-content' : undefined,
+      maxHeight:
+        maxHeight && !isFullscreen
+          ? `${maxHeight}px`
+          : isFullscreen
+          ? hideHeader
+            ? 'calc(100vh - 5px)'
+            : 'calc(100vh - 45px)'
+          : undefined,
       overflow: maxHeight || isFullscreen ? 'auto' : 'visible',
     }),
-    [maxHeight, isFullscreen]
+    [maxHeight, isFullscreen, hideHeader]
   );
 
   const codeBlockContent = (
