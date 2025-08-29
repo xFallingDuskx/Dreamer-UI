@@ -19,9 +19,21 @@ export interface DisclosureProps {
   disabled?: boolean;
   /** Optional class name for the root div. */
   className?: string;
+  /** Optional class name for the button. */
+  buttonClassName?: string;
 }
 
-export function Disclosure({ children, label, open, onToggle, id, ref, disabled = false, className }: DisclosureProps) {
+export function Disclosure({
+  children,
+  label,
+  open,
+  onToggle,
+  id,
+  ref,
+  disabled = false,
+  className,
+  buttonClassName,
+}: DisclosureProps) {
   const generatedId = useId();
   const activeId = id ?? generatedId;
   const [internalOpen, setInternalOpen] = useState(false);
@@ -49,8 +61,8 @@ export function Disclosure({ children, label, open, onToggle, id, ref, disabled 
         disabled={disabled}
         tabIndex={0}
         className={join(
-          'w-full px-4 py-3 font-medium hover:bg-primary/10',
-          disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+          'w-full px-4 py-3 font-medium hover:bg-primary/10 disabled:opacity-50 disabled:cursor-not-allowed',
+          buttonClassName
         )}
         onClick={handleToggle}
         onKeyDown={(e) => {

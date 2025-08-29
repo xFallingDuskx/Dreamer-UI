@@ -41,34 +41,39 @@ export const DraftPage = () => {
                 {/* Default variant */}
                 <div>
                   <h4 className='text-md font-medium text-gray-300 mb-2'>Default Variant</h4>
-                  <Disclosure label='Show more (default)' id='disclosure-default'>
+                  <Disclosure label='Show more (default)'>
                     <div className='p-2 text-gray-800 dark:text-gray-200'>
                       This is the default disclosure content. You can put any React node here.
                     </div>
                   </Disclosure>
                 </div>
-                {/* Subtle variant */}
+                {/* Danger */}
                 <div>
-                  <h4 className='text-md font-medium text-gray-300 mb-2'>Subtle Variant</h4>
-                  <Disclosure label='Show more (subtle)' id='disclosure-subtle'>
-                    <div className='p-2 text-gray-800 dark:text-gray-200'>
-                      This is the subtle disclosure content. Useful for less prominent sections.
-                    </div>
-                  </Disclosure>
-                </div>
-                {/* Danger variant */}
-                <div>
-                  <h4 className='text-md font-medium text-gray-300 mb-2'>Danger Variant</h4>
-                  <Disclosure label='Show more (danger)' id='disclosure-danger'>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Danger Area</h4>
+                  <Disclosure label='Show more (danger)'>
                     <div className='p-2 text-red-700 dark:text-red-300 bg-red-300 dark:bg-red-700'>
                       This is the danger disclosure content. Use for warnings or destructive actions.
                     </div>
                   </Disclosure>
                 </div>
+                {/* Styled Button */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Styled Button</h4>
+                  <Disclosure
+                    label='Show more (styled button)'
+                    buttonClassName='rounded-full border border-accent-medium light:text-indigo-700 dark:text-indigo-300 bg-accent-medium/10'
+                    className='md:w-1/2 mx-auto'
+                  >
+                    <div className='p-2 text-gray-800 dark:text-gray-200 text-center'>
+                      This is the styled button disclosure content. You can put any React node here.
+                    </div>
+                  </Disclosure>
+                </div>
+
                 {/* Disabled state */}
                 <div>
                   <h4 className='text-md font-medium text-gray-300 mb-2'>Disabled State</h4>
-                  <Disclosure label='Disabled disclosure' id='disclosure-disabled' disabled>
+                  <Disclosure label='Disabled disclosure' disabled>
                     <div className='p-2 text-gray-400'>This disclosure is disabled and cannot be opened.</div>
                   </Disclosure>
                 </div>
