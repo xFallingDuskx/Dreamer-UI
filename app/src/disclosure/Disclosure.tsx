@@ -40,7 +40,7 @@ export function Disclosure({ children, label, open, onToggle, id, ref, disabled 
   }, [open]);
 
   return (
-    <div ref={ref} id={activeId} data-open={isOpen} className={join('group overflow-hidden', className)}>
+    <div ref={ref} id={activeId} data-open={isOpen} className={join('group space-y-0.5', className)}>
       <button
         id={`${activeId}-button`}
         type='button'
@@ -49,11 +49,11 @@ export function Disclosure({ children, label, open, onToggle, id, ref, disabled 
         disabled={disabled}
         tabIndex={0}
         className={join(
-          'w-full px-4 py-3 gap-2 font-medium focus:outline-none hover:bg-primary/10',
+          'w-full px-4 py-3 font-medium hover:bg-primary/10',
           disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
         )}
         onClick={handleToggle}
-        onKeyDown={e => {
+        onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             handleToggle();

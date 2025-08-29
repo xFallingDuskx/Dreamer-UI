@@ -60,7 +60,7 @@ export const DraftPage = () => {
                 <div>
                   <h4 className='text-md font-medium text-gray-300 mb-2'>Danger Variant</h4>
                   <Disclosure label='Show more (danger)' id='disclosure-danger'>
-                    <div className='p-2 text-red-700 dark:text-red-300'>
+                    <div className='p-2 text-red-700 dark:text-red-300 bg-red-300 dark:bg-red-700'>
                       This is the danger disclosure content. Use for warnings or destructive actions.
                     </div>
                   </Disclosure>
