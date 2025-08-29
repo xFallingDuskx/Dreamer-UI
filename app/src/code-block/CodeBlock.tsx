@@ -145,9 +145,12 @@ export function CodeBlock({
       }
 
       // JSX attribute (only when explicitly in JSX context, followed by =, and not inside braces)
-      const jsxAttr = remaining.match(/^([a-zA-Z][a-zA-Z0-9]*)\s*=/);
+      const jsxAttr = remaining.match(/^([a-zA-Z][a-zA-Z0-9]*)(\s*)(=)/);
       if (jsxAttr && isInJSX && jsxBraceDepth === 0) {
         tokens.push({ text: jsxAttr[1], type: 'jsx-attribute' });
+        if (jsxAttr[2]) { // Whitespace before =
+          tokens.push({ text: jsxAttr[2], type: 'plain' });
+        }
         tokens.push({ text: '=', type: 'plain' });
         remaining = remaining.slice(jsxAttr[0].length);
         continue;
@@ -163,6 +166,22 @@ export function CodeBlock({
           jsxBraceDepth--;
         }
         remaining = remaining.slice(1);
+        continue;
+      }
+
+      // Whitespace (preserve spaces)
+      const whitespace = remaining.match(/^\s+/);
+      if (whitespace) {
+        tokens.push({ text: whitespace[0], type: 'plain' });
+        remaining = remaining.slice(whitespace[0].length);
+        continue;
+      }
+
+      // Operators (including arrow functions)
+      const operator = remaining.match(/^(=>|===|!==|==|!=|<=|>=|&&|\|\||[+\-*/%=<>!&|^~?:;,()[\]{}.])/);
+      if (operator) {
+        tokens.push({ text: operator[0], type: 'operator' });
+        remaining = remaining.slice(operator[0].length);
         continue;
       }
 
@@ -271,6 +290,7 @@ export function CodeBlock({
               comment: 'text-gray-500 italic',
               function: 'text-yellow-300 font-semibold',
               hook: 'text-pink-400 font-semibold',
+              operator: 'text-gray-300',
               plain: 'text-gray-100'
             };
             
