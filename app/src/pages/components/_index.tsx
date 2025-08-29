@@ -1,60 +1,60 @@
 import { Link } from 'react-router-dom';
-import { ComponentPage } from '../components/layout/ComponentPage';
-import { ExampleSection } from '../components/ui/ExampleSection';
+import { ComponentPage } from '../../components/layout/ComponentPage';
+import { ExampleSection } from '../../components/ui/ExampleSection';
 
 const components = [
   {
     name: 'Button',
     path: '/components/button',
     description: 'Versatile button component with multiple variants, sizes, and states.',
-    category: 'Form'
+    category: 'Form',
   },
   {
     name: 'Input',
     path: '/components/input',
     description: 'Flexible input component with validation states and different types.',
-    category: 'Form'
+    category: 'Form',
   },
   {
     name: 'Modal',
     path: '/components/modal',
     description: 'Overlay component for forms, confirmations, and interactive content.',
-    category: 'Overlay'
+    category: 'Overlay',
   },
   {
     name: 'Skeleton',
     path: '/components/skeleton',
     description: 'Loading placeholders that mimic the structure of your content.',
-    category: 'Feedback'
+    category: 'Feedback',
   },
   // Placeholder for future components
   {
     name: 'Textarea',
     path: '/components/textarea',
     description: 'Multi-line text input with auto-expand and character limit features.',
-    category: 'Form'
+    category: 'Form',
   },
   {
     name: 'Select',
     path: '/components/select',
     description: 'Dropdown selection component with search and keyboard navigation.',
-    category: 'Form'
+    category: 'Form',
   },
   {
     name: 'Checkbox',
     path: '/components/checkbox',
     description: 'Customizable checkbox with different sizes and colors.',
-    category: 'Form'
+    category: 'Form',
   },
   {
     name: 'Toast',
     path: '/components/toast',
     description: 'Notification component for displaying temporary messages.',
-    category: 'Feedback'
+    category: 'Feedback',
   },
 ];
 
-const categories = Array.from(new Set(components.map(c => c.category)));
+const categories = Array.from(new Set(components.map((c) => c.category)));
 
 export const ComponentsPage = () => {
   return (
@@ -62,15 +62,15 @@ export const ComponentsPage = () => {
       title='Components'
       description='A comprehensive collection of React components built with Tailwind CSS for modern web applications.'
     >
-      {categories.map(category => (
-        <ExampleSection 
+      {categories.map((category) => (
+        <ExampleSection
           key={category}
           title={`${category} Components`}
           description={`Components related to ${category.toLowerCase()} functionality.`}
         >
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
             {components
-              .filter(component => component.category === category)
+              .filter((component) => component.category === category)
               .map((component) => (
                 <Link
                   key={component.path}
@@ -80,19 +80,15 @@ export const ComponentsPage = () => {
                   <h3 className='text-xl font-semibold text-white group-hover:text-primary transition-colors mb-2'>
                     {component.name}
                   </h3>
-                  <p className='text-gray-400 text-sm mb-4'>
-                    {component.description}
-                  </p>
-                  <div className='flex items-center text-primary text-sm'>
-                    View Component →
-                  </div>
+                  <p className='text-gray-400 text-sm mb-4'>{component.description}</p>
+                  <div className='flex items-center text-primary text-sm'>View Component →</div>
                 </Link>
               ))}
           </div>
         </ExampleSection>
       ))}
 
-      <ExampleSection 
+      <ExampleSection
         title='Component Philosophy'
         description='Our approach to building reusable and accessible components.'
       >

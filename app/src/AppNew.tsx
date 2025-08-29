@@ -6,11 +6,11 @@ import { Layout } from './components/layout/Layout';
 
 // Pages
 import { LandingPage } from './pages/LandingPage';
-import { GettingStartedPage } from './pages/GettingStartedPage';
-import { ComponentsPage } from './pages/ComponentsIndexPage';
-import { HooksPage } from './pages/HooksIndexPage';
-import { UtilsPage } from './pages/UtilsIndexPage';
-import { DraftPage } from './pages/DraftPage';
+import { GettingStartedPage } from './pages/getting-started/_index';
+import { ComponentsPage } from './pages/components/_index';
+import { HooksPage } from './pages/hooks/_index';
+import { UtilsPage } from './pages/utils/_index';
+import { DraftPage } from './pages/draft/_index';
 
 // Component Pages
 import { ButtonPage } from './pages/components/ButtonPage';
