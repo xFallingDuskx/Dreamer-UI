@@ -1,6 +1,6 @@
 import { Check } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Copy, Dash, Download, Window } from './icons';
 
 export interface TokenClasses {
@@ -91,6 +91,35 @@ export function CodeBlock({
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const previousActiveElement = useRef<HTMLElement | null>(null);
+
+  // Focus management for fullscreen mode
+  useEffect(() => {
+    if (isFullscreen) {
+      previousActiveElement.current = document.activeElement as HTMLElement;
+      // Focus the container in fullscreen mode
+      setTimeout(() => {
+        containerRef.current?.focus();
+      }, 100);
+
+      // Trap focus within the fullscreen container
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          setIsFullscreen(false);
+        }
+      };
+
+      document.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+      };
+    } else if (previousActiveElement.current) {
+      // Restore focus when exiting fullscreen
+      previousActiveElement.current.focus();
+      previousActiveElement.current = null;
+    }
+  }, [isFullscreen]);
 
   const handleCopy = useCallback(async () => {
     try {
@@ -113,6 +142,20 @@ export function CodeBlock({
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }, [code, filename, language]);
+
+  // Keyboard navigation handler
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'c' && (e.metaKey || e.ctrlKey) && allowCopy) {
+        e.preventDefault();
+        handleCopy();
+      } else if (e.key === 'f' && allowFullscreen) {
+        e.preventDefault();
+        setIsFullscreen(!isFullscreen);
+      }
+    },
+    [allowCopy, allowFullscreen, isFullscreen, handleCopy]
+  );
 
   const mergedTokenClasses = useMemo<TokenClasses>(() => {
     const defaultTokenClasses: TokenClasses = {
@@ -150,13 +193,22 @@ export function CodeBlock({
   const renderButtons = useCallback(
     (inHeader = true) => (
       <div className={join('flex items-center space-x-2', !inHeader && 'absolute top-2 right-2 z-10')}>
-        {!hideFiletype && <span className='text-xs text-gray-400 uppercase tracking-wide font-medium'>{language}</span>}
+        {!hideFiletype && (
+          <span
+            className='text-xs text-gray-400 uppercase tracking-wide font-medium'
+            aria-label={`Code language: ${language}`}
+          >
+            {language}
+          </span>
+        )}
         {allowFullscreen && (
           <button
             onClick={() => setIsFullscreen(!isFullscreen)}
-            className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors'
+            className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors motion-reduce:transition-none min-h-[44px] min-w-[44px] flex items-center justify-center md:min-h-auto md:min-w-auto md:p-1.5'
             title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
-            aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen mode'}
+            aria-label={isFullscreen ? 'Exit fullscreen mode' : 'Enter fullscreen mode'}
+            aria-pressed={isFullscreen}
+            type='button'
           >
             {isFullscreen ? <Dash size={14} /> : <Window size={14} />}
           </button>
@@ -164,9 +216,10 @@ export function CodeBlock({
         {allowDownload && (
           <button
             onClick={handleDownload}
-            className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors'
+            className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors motion-reduce:transition-none min-h-[44px] min-w-[44px] flex items-center justify-center md:min-h-auto md:min-w-auto md:p-1.5'
             title='Download code'
             aria-label='Download code as file'
+            type='button'
           >
             <Download size={14} />
           </button>
@@ -174,9 +227,11 @@ export function CodeBlock({
         {allowCopy && (
           <button
             onClick={handleCopy}
-            className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors'
-            title='Copy code'
-            aria-label='Copy code to clipboard'
+            className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors motion-reduce:transition-none min-h-[44px] min-w-[44px] flex items-center justify-center md:min-h-auto md:min-w-auto md:p-1.5'
+            title={copied ? 'Code copied!' : 'Copy code'}
+            aria-label={copied ? 'Code copied to clipboard' : 'Copy code to clipboard'}
+            aria-live='polite'
+            type='button'
           >
             {copied ? <Check size={14} className='text-green-400' /> : <Copy size={14} />}
           </button>
@@ -414,7 +469,12 @@ export function CodeBlock({
   const lineNumbers = useMemo(() => {
     if (!showLineNumbers) return null;
     return codeLines.map((_, index) => (
-      <div key={index} className='text-gray-500 text-right pl-3 pr-1 select-none min-w-8 text-sm font-mono leading-6'>
+      <div
+        key={index}
+        className='text-gray-500 text-right pl-3 pr-1 select-none min-w-8 text-sm font-mono leading-6'
+        aria-hidden='true'
+        role='presentation'
+      >
         {index + 1}
       </div>
     ));
@@ -423,7 +483,7 @@ export function CodeBlock({
   const codeBlockClasses = useMemo(
     () =>
       join(
-        'bg-gray-900 rounded-lg border border-gray-700 overflow-hidden',
+        'bg-gray-900 rounded-lg border border-gray-700 overflow-hidden motion-reduce:transition-none',
         isFullscreen && 'fixed inset-0 z-[9999]',
         className
       ),
@@ -440,16 +500,42 @@ export function CodeBlock({
 
   return (
     <>
-      {isFullscreen && <div className='fixed inset-0 bg-black/50 z-[9998]' onClick={() => setIsFullscreen(false)} />}
+      {isFullscreen && (
+        <div className='fixed inset-0 bg-black/50 z-[9998]' onClick={() => setIsFullscreen(false)} aria-hidden='true' />
+      )}
       <div
         id={id}
-        ref={ref}
+        ref={(node) => {
+          containerRef.current = node;
+          if (typeof ref === 'function') {
+            ref(node);
+          } else if (ref) {
+            ref.current = node;
+          }
+        }}
         className={codeBlockClasses}
         data-language={language}
         data-filename={filename}
         data-fullscreen={isFullscreen}
+        role='region'
+        aria-label={`Code block${filename ? ` for ${filename}` : ''} in ${language}`}
+        aria-describedby={showLineNumbers ? `${id}-description` : undefined}
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
         {...props}
       >
+        {showLineNumbers && (
+          <div id={`${id}-description`} className='sr-only'>
+            Code block with line numbers. Use Cmd+C or Ctrl+C to copy code.
+            {allowFullscreen && ' Press F to toggle fullscreen.'}
+          </div>
+        )}
+
+        {/* Live region for copy feedback */}
+        <div aria-live='polite' aria-atomic='true' className='sr-only'>
+          {copied && 'Code copied to clipboard'}
+        </div>
+
         {/* Header */}
         {!hideHeader && (
           <div className='flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700'>
@@ -473,12 +559,23 @@ export function CodeBlock({
           <div className='flex-1 overflow-x-auto'>
             <div className='flex'>
               {showLineNumbers && (
-                <div className='bg-gray-800 py-4 border-r border-gray-700 flex flex-col flex-shrink-0'>
+                <div
+                  className='bg-gray-800 py-4 border-r border-gray-700 flex flex-col flex-shrink-0'
+                  aria-hidden='true'
+                  role='presentation'
+                >
                   {lineNumbers}
                 </div>
               )}
               <div className='flex-1 p-4'>
-                <pre className='text-sm font-mono'>{formattedCode}</pre>
+                <pre
+                  className='text-sm font-mono focus:outline-none'
+                  role='code'
+                  aria-label={`${language} code content`}
+                  tabIndex={-1}
+                >
+                  <code>{formattedCode}</code>
+                </pre>
               </div>
             </div>
           </div>
