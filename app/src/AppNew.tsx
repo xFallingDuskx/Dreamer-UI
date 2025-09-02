@@ -1,23 +1,23 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 // Layout
 import { Layout } from './components/layout/Layout';
 
 // Pages
-import { LandingPage } from './pages/LandingPage';
+import { DraftPage } from './pages/DraftPage';
 import { GettingStartedPage } from './pages/GettingStartedPage';
+import { LandingPage } from './pages/LandingPage';
 import { ComponentsPage } from './pages/components/_ComponentsPage';
 import { HooksPage } from './pages/hooks/_HooksPage';
 import { UtilsPage } from './pages/utils/_UtilsPage';
-import { DraftPage } from './pages/DraftPage';
 
 // Component Pages
 import { ButtonPage } from './pages/components/ButtonPage';
-import { SkeletonPage } from './pages/components/SkeletonPage';
+import { CodeBlockPage } from './pages/components/CodeBlockPage';
 import { InputPage } from './pages/components/InputPage';
 import { ModalPage } from './pages/components/ModalPage';
-import { CodeBlockPage } from './pages/components/CodeBlockPage';
+import { SkeletonPage } from './pages/components/SkeletonPage';
 
 // Hook Pages
 import { UseActionModalPage } from './pages/hooks/UseActionModalPage';
@@ -27,6 +27,7 @@ import { UseToastPage } from './pages/hooks/UseToastPage';
 import { JoinPage } from './pages/utils/JoinPage';
 
 // Utils
+import { DisclosurePage } from './pages/components/DisclosurePage';
 import { isLocalhost } from './utils/isLocalhost';
 
 function App() {
@@ -37,36 +38,35 @@ function App() {
       <ToastProvider position='top-center'>
         <Router>
           <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route path='/' element={<Layout />}>
               {/* Landing Page */}
               <Route index element={<LandingPage />} />
-              
+
               {/* Getting Started Page */}
-              <Route path="getting-started" element={<GettingStartedPage />} />
-              
+              <Route path='getting-started' element={<GettingStartedPage />} />
+
               {/* Components Index */}
-              <Route path="components" element={<ComponentsPage />} />
-              
+              <Route path='components' element={<ComponentsPage />} />
+
               {/* Component Pages */}
-              <Route path="components/button" element={<ButtonPage />} />
-              <Route path="components/skeleton" element={<SkeletonPage />} />
-              <Route path="components/input" element={<InputPage />} />
-              <Route path="components/modal" element={<ModalPage />} />
-              <Route path="components/codeblock" element={<CodeBlockPage />} />
-              
+              <Route path='components/button' element={<ButtonPage />} />
+              <Route path='components/disclosure' element={<DisclosurePage />} />
+              <Route path='components/skeleton' element={<SkeletonPage />} />
+              <Route path='components/input' element={<InputPage />} />
+              <Route path='components/modal' element={<ModalPage />} />
+              <Route path='components/codeblock' element={<CodeBlockPage />} />
+
               {/* Hook Pages */}
-              <Route path="hooks" element={<HooksPage />} />
-              <Route path="hooks/useactionmodal" element={<UseActionModalPage />} />
-              <Route path="hooks/usetoast" element={<UseToastPage />} />
-              
+              <Route path='hooks' element={<HooksPage />} />
+              <Route path='hooks/useactionmodal' element={<UseActionModalPage />} />
+              <Route path='hooks/usetoast' element={<UseToastPage />} />
+
               {/* Utils Pages */}
-              <Route path="utils" element={<UtilsPage />} />
-              <Route path="utils/join" element={<JoinPage />} />
+              <Route path='utils' element={<UtilsPage />} />
+              <Route path='utils/join' element={<JoinPage />} />
 
               {/* Draft Page - Only available on localhost */}
-              {showDraftRoute && (
-                <Route path="draft" element={<DraftPage />} />
-              )}
+              {showDraftRoute && <Route path='draft' element={<DraftPage />} />}
             </Route>
           </Routes>
         </Router>

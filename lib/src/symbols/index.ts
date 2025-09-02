@@ -1,3 +1,5 @@
+export { CaretCollapse } from './CaretCollapse';
+export { CaretExpand } from './CaretExpand';
 export { Check } from './Check';
 export { CheckCircled } from './CheckCircled';
 export { ChevronDoubleLeft } from './ChevronDoubleLeft';
