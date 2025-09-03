@@ -95,6 +95,17 @@ export default function Counter({
   }
 }`;
 
+  const basicJson = `{
+  "id": 123,
+  "name": "Dreamer UI",
+  "active": true,
+  "tags": ["react", "ui", "json"],
+  "meta": {
+    "created": "2025-09-02T12:00:00Z",
+    "contributors": ["Alice", "Bob"]
+  }
+}`;
+
   const customTokenClasses: CodeBlockTokenClasses = {
     keyword: 'text-purple-400 font-bold',
     function: 'text-blue-400 font-semibold',
@@ -104,12 +115,16 @@ export default function Counter({
   };
 
   return (
-        <ComponentPage
+    <ComponentPage
       title='Code Block'
       description='A syntax-highlighted code block component with copy, download, and interactive features.'
       tableOfContents={tableOfContents}
     >
-      <ExampleSection title='Basic Usage' description='Simple code blocks with different configurations.' id='basic-usage'>
+      <ExampleSection
+        title='Basic Usage'
+        description='Simple code blocks with different configurations.'
+        id='basic-usage'
+      >
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>Basic TypeScript Code</h4>
@@ -125,10 +140,18 @@ export default function Counter({
             <h4 className='text-md font-medium text-gray-300 mb-3'>React TSX Component</h4>
             <CodeBlock code={reactExample} language='tsx' filename='Counter.tsx' />
           </div>
+          <div>
+            <h4 className='text-md font-medium text-gray-300 mb-3'>Basic JSON Example</h4>
+            <CodeBlock code={basicJson} language='json' filename='data.json' showLineNumbers={true} />
+          </div>
         </div>
       </ExampleSection>
 
-      <ExampleSection title='Line Numbers' description='Display line numbers for easier code reference.' id='line-numbers'>
+      <ExampleSection
+        title='Line Numbers'
+        description='Display line numbers for easier code reference.'
+        id='line-numbers'
+      >
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>With Line Numbers</h4>
@@ -137,7 +160,11 @@ export default function Counter({
         </div>
       </ExampleSection>
 
-      <ExampleSection title='Interactive Features' description='Copy, download, and fullscreen functionality.' id='interactive-features'>
+      <ExampleSection
+        title='Interactive Features'
+        description='Copy, download, and fullscreen functionality.'
+        id='interactive-features'
+      >
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>With Download & Fullscreen</h4>
@@ -158,7 +185,11 @@ export default function Counter({
         </div>
       </ExampleSection>
 
-      <ExampleSection title='Styling Options' description='Different visual configurations and customizations.' id='styling-options'>
+      <ExampleSection
+        title='Styling Options'
+        description='Different visual configurations and customizations.'
+        id='styling-options'
+      >
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>No Traffic Lights</h4>
@@ -204,7 +235,11 @@ export default function Counter({
         </div>
       </ExampleSection>
 
-      <ExampleSection title='Advanced Examples' description='Real-world usage patterns and complex configurations.' id='advanced-examples'>
+      <ExampleSection
+        title='Advanced Examples'
+        description='Real-world usage patterns and complex configurations.'
+        id='advanced-examples'
+      >
         <div className='space-y-6'>
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>Full-Featured Code Block</h4>
@@ -274,7 +309,11 @@ async function handleApiCall<T>(
         </div>
       </ExampleSection>
 
-      <ExampleSection title='Accessibility & Usage' description='Keyboard shortcuts and accessibility features.' id='accessibility-usage'>
+      <ExampleSection
+        title='Accessibility & Usage'
+        description='Keyboard shortcuts and accessibility features.'
+        id='accessibility-usage'
+      >
         <div className='space-y-4'>
           <div className='bg-slate-700 p-4 rounded-lg'>
             <h5 className='font-medium mb-2'>Keyboard Shortcuts</h5>
