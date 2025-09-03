@@ -1,6 +1,26 @@
-import { defaultJsonTokenClasses, defaultTSTokenClasses } from './constants';
-import { tokenizeJSON, tokenizeTypeScript } from './tokenize';
-import { JsonTokenClasses, TSTokenClasses } from './types';
+import { defaultBashTokenClasses, defaultJsonTokenClasses, defaultTSTokenClasses } from './constants';
+import { tokenizeBash, tokenizeJSON, tokenizeTypeScript } from './tokenize';
+import { BashTokenClasses, JsonTokenClasses, TSTokenClasses } from './types';
+
+export function formatBash(codeLines: string[], customTokenClasses?: BashTokenClasses) {
+  const mergedTokenClasses = {
+    ...defaultBashTokenClasses,
+    ...customTokenClasses,
+  };
+
+  return codeLines.map((line, lineIndex) => {
+    const tokens = tokenizeBash(line);
+    return (
+      <div key={lineIndex} className='leading-6'>
+        {tokens.map((token, tokenIndex) => (
+          <span key={tokenIndex} className={mergedTokenClasses[token.type] || 'text-gray-100'}>
+            {token.text}
+          </span>
+        ))}
+      </div>
+    );
+  });
+}
 
 export function formatJson(codeLines: string[], customTokenClasses?: JsonTokenClasses) {
   const mergedTokenClasses = { ...defaultJsonTokenClasses, ...customTokenClasses };

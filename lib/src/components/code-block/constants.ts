@@ -1,4 +1,4 @@
-import { JsonTokenClasses, TSTokenClasses } from './types';
+import { BashTokenClasses, JsonTokenClasses, TSTokenClasses } from './types';
 
 export const defaultTSTokenClasses: TSTokenClasses = {
   keyword: 'text-purple-400 font-semibold',
@@ -25,4 +25,16 @@ export const defaultJsonTokenClasses: JsonTokenClasses = {
   boolean: 'text-cyan-400 font-medium',
   punctuation: 'text-gray-400',
   plain: 'text-gray-100',
+};
+
+export const defaultBashTokenClasses: BashTokenClasses = {
+  keyword: 'text-rose-400',
+  comment: 'text-gray-500/80',
+  command: 'text-gray-100',
+  variable: 'text-blue-400',
+  string: 'text-white/70',
+  option: 'text-purple-400',
+  plain: 'text-gray-200',
+  operator: 'text-pink-500',
+  substitution: 'text-green-300',
 };

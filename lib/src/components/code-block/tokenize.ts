@@ -1,4 +1,81 @@
-import { JsonTokenClasses, TSTokenType } from './types';
+import { BashTokenType, JsonTokenClasses, TSTokenType } from './types';
+
+const BASH_KEYWORDS = new Set(['for', 'in', 'do', 'done', 'else', 'if', 'fi', 'then', 'while', 'until', 'case', 'esac']);
+export function tokenizeBash(codeLine: string): { text: string; type: BashTokenType }[] {
+  const tokens: { text: string; type: BashTokenType }[] = [];
+
+  if (codeLine.trim() === '') {
+    tokens.push({ text: '\u00A0', type: 'plain' });
+    return tokens;
+  }
+
+  if (codeLine.trim().startsWith('#')) {
+    tokens.push({ text: codeLine, type: 'comment' });
+    return tokens;
+  }
+
+  const regex = /([a-zA-Z_]\w*=?|\$[\w_]+|\$\([^)]*\)|"[^"]*"|'[^']*'|--?[\w-]+|>>|>|#.*|\s+|[^\s]+)/g;
+
+  const processToken = (token: string): { text: string; type: BashTokenType }[] => {
+    // Handle command substitution recursively
+    if (/^\$\([^)]*\)$/.test(token)) {
+      const inner = token.slice(2, -1);
+      return [
+        { text: '$(', type: 'operator' },
+        ...tokenizeBash(inner),
+        { text: ')', type: 'operator' },
+      ];
+    }
+
+    // Handle double-quoted strings with variables inside
+    if (/^".*"$/.test(token)) {
+      const inner = token.slice(1, -1);
+      const innerTokens: { text: string; type: BashTokenType }[] = [];
+      let lastIndex = 0;
+      const varRegex = /\$[\w_]+/g;
+      let match;
+      while ((match = varRegex.exec(inner)) !== null) {
+        if (match.index > lastIndex) {
+          innerTokens.push({
+            text: inner.slice(lastIndex, match.index),
+            type: 'string',
+          });
+        }
+        innerTokens.push({ text: match[0], type: 'variable' });
+        lastIndex = match.index + match[0].length;
+      }
+      if (lastIndex < inner.length) {
+        innerTokens.push({ text: inner.slice(lastIndex), type: 'string' });
+      }
+      return [
+        { text: '"', type: 'string' },
+        ...innerTokens,
+        { text: '"', type: 'string' },
+      ];
+    }
+
+    // Single-quoted strings are literal
+    if (/^'.*'$/.test(token)) {
+      return [{ text: token, type: 'string' }];
+    }
+
+    if (/^\$[\w_]+$/.test(token)) return [{ text: token, type: 'variable' }];
+    if (/^[a-zA-Z_]\w*=$/.test(token)) return [{ text: token, type: 'variable' }];
+    if (/^--?[\w-]+$/.test(token)) return [{ text: token, type: 'option' }];
+    if (/^>>|>$/.test(token)) return [{ text: token, type: 'operator' }];
+    if (/^#.*$/.test(token)) return [{ text: token, type: 'comment' }];
+    if (/^\s+$/.test(token)) return [{ text: token, type: 'plain' }];
+    if (BASH_KEYWORDS.has(token)) return [{ text: token, type: 'keyword' }];
+    return [{ text: token, type: 'command' }];
+  };
+
+  let match;
+  while ((match = regex.exec(codeLine)) !== null) {
+    tokens.push(...processToken(match[0]));
+  }
+
+  return tokens;
+}
 
 export function tokenizeJSON(codeLine: string) {
   const regex = /("[^"]*")\s*(:)|("[^"]*")|(\d+)|(true|false|null)|(\{|\}|\[|\]|,)/g;
