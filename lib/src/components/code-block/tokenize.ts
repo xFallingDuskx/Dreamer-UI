@@ -1,14 +1,13 @@
 import { JsonTokenClasses, TSTokenType } from './types';
 
-export function tokenizeJSON(line: string) {
-  // Updated regex: match key and colon separately
+export function tokenizeJSON(codeLine: string) {
   const regex = /("[^"]*")\s*(:)|("[^"]*")|(\d+)|(true|false|null)|(\{|\}|\[|\]|,)/g;
   const tokens: { text: string; type: keyof JsonTokenClasses }[] = [];
   let lastIndex = 0;
   let match;
-  while ((match = regex.exec(line)) !== null) {
+  while ((match = regex.exec(codeLine)) !== null) {
     if (match.index > lastIndex) {
-      tokens.push({ text: line.slice(lastIndex, match.index), type: 'plain' });
+      tokens.push({ text: codeLine.slice(lastIndex, match.index), type: 'plain' });
     }
     if (match[1] && match[2]) {
       tokens.push({ text: match[1], type: 'key' });
@@ -24,19 +23,19 @@ export function tokenizeJSON(line: string) {
     }
     lastIndex = regex.lastIndex;
   }
-  if (lastIndex < line.length) {
-    tokens.push({ text: line.slice(lastIndex), type: 'plain' });
+  if (lastIndex < codeLine.length) {
+    tokens.push({ text: codeLine.slice(lastIndex), type: 'plain' });
   }
   return tokens;
 }
 
 export function tokenizeTypeScript(
-  code: string,
+  codeLine: string,
   inheritedJSXContext: boolean = false,
   inheritedBraceDepth: number = 0
 ) {
   const tokens: Array<{ text: string; type: TSTokenType }> = [];
-  let remaining = code;
+  let remaining = codeLine;
   let isInJSX = inheritedJSXContext;
   let jsxBraceDepth = inheritedBraceDepth; // Track JSX expression depth
 

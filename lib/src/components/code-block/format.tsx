@@ -3,7 +3,7 @@ import { tokenizeJSON, tokenizeTypeScript } from './tokenize';
 import { JsonTokenClasses, TSTokenClasses } from './types';
 
 export function formatJson(codeLines: string[], customTokenClasses?: JsonTokenClasses) {
-  const mergedTokenClasses = { ...customTokenClasses, ...defaultJsonTokenClasses };
+  const mergedTokenClasses = { ...defaultJsonTokenClasses, ...customTokenClasses };
 
   return codeLines.map((line, lineIndex) => (
     <div key={lineIndex} className='leading-6'>
@@ -17,7 +17,7 @@ export function formatJson(codeLines: string[], customTokenClasses?: JsonTokenCl
 }
 
 export function formatTypescript(codeLines: string[], customTokenClasses?: TSTokenClasses) {
-  const mergedTokenClasses = { ...customTokenClasses, ...defaultTSTokenClasses };
+  const mergedTokenClasses = { ...defaultTSTokenClasses, ...customTokenClasses };
 
   let globalJSXContext = false; // Track JSX context across lines
   let globalBraceDepth = 0; // Track JSX expression depth across lines
