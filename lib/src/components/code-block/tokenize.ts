@@ -1,7 +1,8 @@
 import { JsonTokenClasses, TSTokenType } from './types';
 
 export function tokenizeJSON(line: string) {
-  const regex = /("[^"]*"\s*:)|("[^"]*")|(\d+)|(true|false|null)|(\{|\}|\[|\]|:|,)/g;
+  // Updated regex: match key and colon separately
+  const regex = /("[^"]*")\s*(:)|("[^"]*")|(\d+)|(true|false|null)|(\{|\}|\[|\]|,)/g;
   const tokens: { text: string; type: keyof JsonTokenClasses }[] = [];
   let lastIndex = 0;
   let match;
@@ -9,16 +10,17 @@ export function tokenizeJSON(line: string) {
     if (match.index > lastIndex) {
       tokens.push({ text: line.slice(lastIndex, match.index), type: 'plain' });
     }
-    if (match[1]) {
+    if (match[1] && match[2]) {
       tokens.push({ text: match[1], type: 'key' });
-    } else if (match[2]) {
-      tokens.push({ text: match[2], type: 'string' });
+      tokens.push({ text: match[2], type: 'punctuation' });
     } else if (match[3]) {
-      tokens.push({ text: match[3], type: 'number' });
+      tokens.push({ text: match[3], type: 'string' });
     } else if (match[4]) {
-      tokens.push({ text: match[4], type: 'boolean' });
+      tokens.push({ text: match[4], type: 'number' });
     } else if (match[5]) {
-      tokens.push({ text: match[5], type: 'punctuation' });
+      tokens.push({ text: match[5], type: 'boolean' });
+    } else if (match[6]) {
+      tokens.push({ text: match[6], type: 'punctuation' });
     }
     lastIndex = regex.lastIndex;
   }
