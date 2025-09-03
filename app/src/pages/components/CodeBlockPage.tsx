@@ -106,6 +106,39 @@ export default function Counter({
   }
 }`;
 
+  const bashExample = `#!/bin/bash
+# This is a sample Bash script
+
+# Define variables
+NAME="Stephon"
+COUNT=3
+
+# Print a greeting
+echo "Hello, $NAME!"
+
+# Loop example
+for i in $(seq 1 $COUNT); do
+  echo "Iteration $i"
+done
+
+# Conditional example
+if [ $COUNT -gt 2 ]; then
+  echo "Count is greater than 2"
+else
+  echo "Count is 2 or less"
+fi
+
+# Using options with a command
+ls -lh --color=auto
+
+# Redirect output to a file
+echo "This will be saved to output.txt" > output.txt
+
+# Append to the same file
+echo "Appending another line" >> output.txt
+
+# End of script`;
+
   const customTokenClasses: CodeBlockTokenClasses = {
     keyword: 'text-purple-400 font-bold',
     function: 'text-blue-400 font-semibold',
@@ -143,6 +176,10 @@ export default function Counter({
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>Basic JSON Example</h4>
             <CodeBlock code={basicJson} language='json' filename='data.json' showLineNumbers={true} />
+          </div>
+          <div>
+            <h4 className='text-md font-medium text-gray-300 mb-3'>Bash Example</h4>
+            <CodeBlock code={bashExample} language='bash' filename='script.sh' showLineNumbers={true} />
           </div>
         </div>
       </ExampleSection>
