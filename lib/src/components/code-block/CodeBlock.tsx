@@ -144,7 +144,7 @@ export function CodeBlock({
       return formatJson(codeLines, customTokenClasses);
     }
 
-    if (language === 'tsx' || language === 'typescript') {
+    if (language === 'tsx' || language === 'ts' || language === 'typescript') {
       return formatTypescript(codeLines, customTokenClasses);
     }
 
