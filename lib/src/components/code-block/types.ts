@@ -27,4 +27,14 @@ export interface JsonTokenClasses {
 }
 export type JsonTokenType = keyof JsonTokenClasses;
 
-export type TokenClasses = TSTokenClasses | JsonTokenClasses;
+export interface BashTokenClasses {
+  comment?: string;
+  command?: string;
+  variable?: string;
+  string?: string;
+  option?: string;
+  plain?: string;
+}
+export type BashTokenType = keyof BashTokenClasses;
+
+export type TokenClasses = TSTokenClasses | JsonTokenClasses | BashTokenClasses;

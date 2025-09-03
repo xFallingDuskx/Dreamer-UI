@@ -2,12 +2,12 @@ import { useCallback, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Check, Copy, Dash, Download, Window } from '../../symbols';
 import { downloadFile, join } from '../../utils';
-import { formatJson, formatTypescript } from './format';
+import { formatBash, formatJson, formatTypescript } from './format';
 import { useCopyToClipboard, useFullscreenMode, useKeyboardShortcuts } from './hooks';
 import { TokenClasses } from './types';
 import { getFileExtension } from './util';
 
-export type CodeBlockLanguages = 'typescript' | 'ts' | 'tsx' | 'json';
+export type CodeBlockLanguages = 'typescript' | 'ts' | 'tsx' | 'json' | 'bash' | 'sh';
 
 export interface CodeBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   /** The code content to display */
@@ -146,6 +146,10 @@ export function CodeBlock({
 
     if (language === 'tsx' || language === 'ts' || language === 'typescript') {
       return formatTypescript(codeLines, customTokenClasses);
+    }
+
+    if (language === 'bash' || language === 'sh') {
+      return formatBash(codeLines, customTokenClasses);
     }
 
     return [

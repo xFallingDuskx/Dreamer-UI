@@ -1,4 +1,40 @@
-import { JsonTokenClasses, TSTokenType } from './types';
+import { BashTokenType, JsonTokenClasses, TSTokenType } from './types';
+
+export function tokenizeBash(codeLine: string) {
+  const tokens: Array<{ text: string; type: BashTokenType }> = [];
+  const remaining = codeLine;
+
+  // Preserve empty lines
+  if (remaining.trim() === '') {
+    tokens.push({ text: '\u00A0', type: 'plain' });
+    return tokens;
+  }
+
+  if (remaining.trim().startsWith('#')) {
+    tokens.push({ text: remaining, type: 'comment' });
+    return tokens;
+  }
+
+  const regex = /(\$[\w_]+|"[^"]*"|'[^']*'|--?[\w-]+|#.*|\s+|[^\s]+)/g;
+  let match;
+  while ((match = regex.exec(remaining)) !== null) {
+    const part = match[0];
+    if (/^\$[\w_]+$/.test(part)) {
+      tokens.push({ text: part, type: 'variable' });
+    } else if (/^--?[\w-]+$/.test(part)) {
+      tokens.push({ text: part, type: 'option' });
+    } else if (/^"[^"]*"$/.test(part) || /^'[^']*'$/.test(part)) {
+      tokens.push({ text: part, type: 'string' });
+    } else if (/^#.*$/.test(part)) {
+      tokens.push({ text: part, type: 'comment' });
+    } else if (/^\s+$/.test(part)) {
+      tokens.push({ text: part, type: 'plain' });
+    } else {
+      tokens.push({ text: part, type: 'command' });
+    }
+  }
+  return tokens;
+}
 
 export function tokenizeJSON(codeLine: string) {
   const regex = /("[^"]*")\s*(:)|("[^"]*")|(\d+)|(true|false|null)|(\{|\}|\[|\]|,)/g;
