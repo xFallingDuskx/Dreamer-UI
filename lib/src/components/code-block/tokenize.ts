@@ -1,6 +1,19 @@
 import { BashTokenType, JsonTokenClasses, TSTokenType } from './types';
 
-const BASH_KEYWORDS = new Set(['for', 'in', 'do', 'done', 'else', 'if', 'fi', 'then', 'while', 'until', 'case', 'esac']);
+const BASH_KEYWORDS = new Set([
+  'for',
+  'in',
+  'do',
+  'done',
+  'else',
+  'if',
+  'fi',
+  'then',
+  'while',
+  'until',
+  'case',
+  'esac',
+]);
 export function tokenizeBash(codeLine: string): { text: string; type: BashTokenType }[] {
   const tokens: { text: string; type: BashTokenType }[] = [];
 
@@ -14,17 +27,14 @@ export function tokenizeBash(codeLine: string): { text: string; type: BashTokenT
     return tokens;
   }
 
-  const regex = /([a-zA-Z_]\w*=?|\$[\w_]+|\$\([^)]*\)|"[^"]*"|'[^']*'|--?[\w-]+|>>|>|#.*|\s+|[^\s]+)/g;
+const regex =
+  /(\$\([^)]*\)|"[^"]*"|'[^']*'|\$[\w_]+|[a-zA-Z_]\w*=|--?[a-zA-Z0-9][\w-]*(?:=.*)?|>>|>|#.*|\s+|[^\s]+)/g;
 
   const processToken = (token: string): { text: string; type: BashTokenType }[] => {
     // Handle command substitution recursively
     if (/^\$\([^)]*\)$/.test(token)) {
       const inner = token.slice(2, -1);
-      return [
-        { text: '$(', type: 'operator' },
-        ...tokenizeBash(inner),
-        { text: ')', type: 'operator' },
-      ];
+      return [{ text: '$(', type: 'operator' }, ...tokenizeBash(inner), { text: ')', type: 'operator' }];
     }
 
     // Handle double-quoted strings with variables inside
@@ -47,11 +57,7 @@ export function tokenizeBash(codeLine: string): { text: string; type: BashTokenT
       if (lastIndex < inner.length) {
         innerTokens.push({ text: inner.slice(lastIndex), type: 'string' });
       }
-      return [
-        { text: '"', type: 'string' },
-        ...innerTokens,
-        { text: '"', type: 'string' },
-      ];
+      return [{ text: '"', type: 'string' }, ...innerTokens, { text: '"', type: 'string' }];
     }
 
     // Single-quoted strings are literal
@@ -61,7 +67,7 @@ export function tokenizeBash(codeLine: string): { text: string; type: BashTokenT
 
     if (/^\$[\w_]+$/.test(token)) return [{ text: token, type: 'variable' }];
     if (/^[a-zA-Z_]\w*=$/.test(token)) return [{ text: token, type: 'variable' }];
-    if (/^--?[\w-]+$/.test(token)) return [{ text: token, type: 'option' }];
+    if (/^--?[a-zA-Z0-9][\w-]*(=.*)?$/.test(token)) return [{ text: token, type: 'option' }];
     if (/^>>|>$/.test(token)) return [{ text: token, type: 'operator' }];
     if (/^#.*$/.test(token)) return [{ text: token, type: 'comment' }];
     if (/^\s+$/.test(token)) return [{ text: token, type: 'plain' }];
