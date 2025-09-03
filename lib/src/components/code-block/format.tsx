@@ -2,7 +2,6 @@ import { defaultBashTokenClasses, defaultJsonTokenClasses, defaultTSTokenClasses
 import { tokenizeBash, tokenizeJSON, tokenizeTypeScript } from './tokenize';
 import { BashTokenClasses, JsonTokenClasses, TSTokenClasses } from './types';
 
-// TASK: create a `formatSimple` func
 export function formatBash(codeLines: string[], customTokenClasses?: BashTokenClasses) {
   const mergedTokenClasses = {
     ...defaultBashTokenClasses,
