@@ -29,12 +29,12 @@ export const defaultJsonTokenClasses: JsonTokenClasses = {
 
 export const defaultBashTokenClasses: BashTokenClasses = {
   keyword: 'text-rose-400',
-  comment: 'text-gray-400/80',
+  comment: 'text-gray-500/80',
   command: 'text-gray-100',
-  variable: 'text-cyan-400',
-  string: 'text-yellow-400',
+  variable: 'text-blue-400',
+  string: 'text-white/70',
   option: 'text-purple-400',
-  plain: 'text-gray-100',
-  operator: 'text-pink-400',
-  substitution: 'text-green-400',
+  plain: 'text-gray-200',
+  operator: 'text-pink-500',
+  substitution: 'text-green-300',
 };
