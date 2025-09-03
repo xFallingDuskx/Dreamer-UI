@@ -28,10 +28,13 @@ export const defaultJsonTokenClasses: JsonTokenClasses = {
 };
 
 export const defaultBashTokenClasses: BashTokenClasses = {
+  keyword: 'text-rose-400',
   comment: 'text-gray-400/80',
-  command: 'text-blue-400',
+  command: 'text-gray-100',
   variable: 'text-cyan-400',
   string: 'text-yellow-400',
   option: 'text-purple-400',
   plain: 'text-gray-100',
+  operator: 'text-pink-400',
+  substitution: 'text-green-400',
 };
