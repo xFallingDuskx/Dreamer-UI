@@ -2,20 +2,18 @@ import { useCallback, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Check, Copy, Dash, Download, Window } from '../../symbols';
 import { downloadFile, join } from '../../utils';
-import {
-  useCopyToClipboard,
-  useFullscreenMode,
-  useKeyboardShortcuts,
-  useTokenClasses,
-  useTypeScriptTokenizer,
-  type TokenClasses,
-} from './hooks';
+import { formatJson, formatTypescript } from './format';
+import { useCopyToClipboard, useFullscreenMode, useKeyboardShortcuts } from './hooks';
+import { TokenClasses } from './types';
+import { getFileExtension } from './util';
+
+export type CodeBlockLanguages = 'typescript' | 'ts' | 'tsx' | 'json';
 
 export interface CodeBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   /** The code content to display */
   code: string;
-  /** Programming language for syntax highlighting (only TS/TSX supported) */
-  language?: 'typescript' | 'ts' | 'tsx';
+  /** Programming language for syntax highlighting (TS/TSX/JSON supported) */
+  language?: CodeBlockLanguages;
   /** Whether to show copy button */
   allowCopy?: boolean;
   /** Whether to show download button */
@@ -65,28 +63,19 @@ export function CodeBlock({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const { containerRef } = useFullscreenMode(isFullscreen, setIsFullscreen);
   const { copied, handleCopy } = useCopyToClipboard(code);
-  const { mergedTokenClasses } = useTokenClasses(customTokenClasses);
-  const { tokenizeTypeScript } = useTypeScriptTokenizer();
-
-  const codeLines = useMemo(() => code.split('\n'), [code]);
 
   const handleDownload = useCallback(() => {
     const downloadFilename = filename || `code.${getFileExtension(language)}`;
     downloadFile(code, downloadFilename);
   }, [code, filename, language]);
 
-  const { handleKeyDown } = useKeyboardShortcuts(allowCopy, allowFullscreen, handleCopy, () =>
-    setIsFullscreen(!isFullscreen)
-  );
+  const toggleFullScreen = useCallback(() => {
+    setIsFullscreen((prev) => !prev);
+  }, []);
 
-  const getFileExtension = (lang: string): string => {
-    const extensions: Record<string, string> = {
-      typescript: 'ts',
-      tsx: 'tsx',
-      ts: 'ts',
-    };
-    return extensions[lang] || 'ts';
-  };
+  const { handleKeyDown } = useKeyboardShortcuts(allowCopy, allowFullscreen, handleCopy, toggleFullScreen);
+
+  const codeLines = useMemo(() => code.split('\n'), [code]);
 
   const renderButtons = useCallback(
     (inHeader = true) => (
@@ -101,7 +90,7 @@ export function CodeBlock({
         )}
         {allowFullscreen && (
           <button
-            onClick={() => setIsFullscreen(!isFullscreen)}
+            onClick={toggleFullScreen}
             className='p-1.5 leading-0 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors motion-reduce:transition-none min-h-[44px] min-w-[44px] flex items-center justify-center md:min-h-auto md:min-w-auto md:p-1.5'
             title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
             aria-label={isFullscreen ? 'Exit fullscreen mode' : 'Enter fullscreen mode'}
@@ -146,53 +135,25 @@ export function CodeBlock({
       allowCopy,
       handleCopy,
       copied,
+      toggleFullScreen,
     ]
   );
 
   const formattedCode = useMemo(() => {
-    let globalJSXContext = false; // Track JSX context across lines
-    let globalBraceDepth = 0; // Track JSX expression depth across lines
+    if (language === 'json') {
+      return formatJson(codeLines, customTokenClasses);
+    }
 
-    return codeLines.map((line, lineIndex) => {
-      // Handle empty lines by adding a non-breaking space
-      if (line.trim() === '') {
-        return (
-          <div key={lineIndex} className='leading-6'>
-            &nbsp;
-          </div>
-        );
-      }
+    if (language === 'tsx' || language === 'typescript') {
+      return formatTypescript(codeLines, customTokenClasses);
+    }
 
-      const tokens = tokenizeTypeScript(line, globalJSXContext, globalBraceDepth);
-
-      // Update global JSX context based on this line's content
-      if (line.includes('<') && line.match(/<[a-zA-Z]/)) {
-        globalJSXContext = true;
-      }
-      if (line.includes('>') && !line.includes('<')) {
-        globalJSXContext = false;
-        globalBraceDepth = 0; // Reset brace depth when exiting JSX
-      }
-
-      // Update global brace depth
-      const openBraces = (line.match(/\{/g) || []).length;
-      const closeBraces = (line.match(/\}/g) || []).length;
-      globalBraceDepth += openBraces - closeBraces;
-      if (globalBraceDepth < 0) globalBraceDepth = 0;
-
-      return (
-        <div key={lineIndex} className='leading-6'>
-          {tokens.map((token, tokenIndex) => {
-            return (
-              <span key={tokenIndex} className={mergedTokenClasses[token.type] || 'text-gray-100'}>
-                {token.text}
-              </span>
-            );
-          })}
-        </div>
-      );
-    });
-  }, [codeLines, mergedTokenClasses, tokenizeTypeScript]);
+    return [
+      <span key={0} className='text-gray-400'>
+        Unsupported language
+      </span>,
+    ];
+  }, [codeLines, customTokenClasses, language]);
 
   const lineNumbers = useMemo(() => {
     if (!showLineNumbers) return null;
