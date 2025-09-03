@@ -1,4 +1,4 @@
-import { defaultBashTokenClasses, defaultJsonTokenClasses, defaultTSTokenClasses } from './constants';
+import { defaultBashTokenClasses, defaultJsonTokenClasses, defaultTSTokenClasses } from './classes';
 import { tokenizeBash, tokenizeJSON, tokenizeTypeScript } from './tokenize';
 import { BashTokenClasses, JsonTokenClasses, TSTokenClasses } from './types';
 

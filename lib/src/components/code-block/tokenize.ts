@@ -1,19 +1,6 @@
+import { BASH_KEYWORDS, BASH_RUNNERS } from './constants';
 import { BashTokenType, JsonTokenClasses, TSTokenType } from './types';
 
-const BASH_KEYWORDS = new Set([
-  'for',
-  'in',
-  'do',
-  'done',
-  'else',
-  'if',
-  'fi',
-  'then',
-  'while',
-  'until',
-  'case',
-  'esac',
-]);
 export function tokenizeBash(codeLine: string): { text: string; type: BashTokenType }[] {
   const tokens: { text: string; type: BashTokenType }[] = [];
 
@@ -27,8 +14,8 @@ export function tokenizeBash(codeLine: string): { text: string; type: BashTokenT
     return tokens;
   }
 
-const regex =
-  /(\$\([^)]*\)|"[^"]*"|'[^']*'|\$[\w_]+|[a-zA-Z_]\w*=|--?[a-zA-Z0-9][\w-]*(?:=.*)?|>>|>|#.*|\s+|[^\s]+)/g;
+  const regex =
+    /(\$\([^)]*\)|"[^"]*"|'[^']*'|\$[\w_]+|[a-zA-Z_]\w*=|--?[a-zA-Z0-9][\w-]*(?:=.*)?|>>|>|#.*|\s+|[^\s]+)/g;
 
   const processToken = (token: string): { text: string; type: BashTokenType }[] => {
     // Handle command substitution recursively
@@ -72,6 +59,7 @@ const regex =
     if (/^#.*$/.test(token)) return [{ text: token, type: 'comment' }];
     if (/^\s+$/.test(token)) return [{ text: token, type: 'plain' }];
     if (BASH_KEYWORDS.has(token)) return [{ text: token, type: 'keyword' }];
+    if (BASH_RUNNERS.has(token)) return [{ text: token, type: 'runner' }];
     return [{ text: token, type: 'command' }];
   };
 

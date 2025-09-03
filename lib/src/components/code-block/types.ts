@@ -29,6 +29,7 @@ export type JsonTokenType = keyof JsonTokenClasses;
 
 export interface BashTokenClasses {
   keyword?: string;
+  runner?: string;
   comment?: string;
   command?: string;
   variable?: string;
