@@ -96,7 +96,7 @@ pnpm add @moondreamsdev/dreamer-ui`}
             Usage
           </h2>
           <CodeBlock
-            code={`import { Button, Input, Textarea } from 'dreamer-ui';
+            code={`import { Button, Input, Textarea } from '@moondreamsdev/dreamer-ui/components';
 
 function App() {
   return (
