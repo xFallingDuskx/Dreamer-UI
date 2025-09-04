@@ -1,3 +1,41 @@
+export interface BashTokenClasses {
+  keyword?: string;
+  runner?: string;
+  comment?: string;
+  command?: string;
+  variable?: string;
+  string?: string;
+  option?: string;
+  plain?: string;
+  operator?: string;
+  substitution?: string;
+}
+export type BashTokenType = keyof BashTokenClasses;
+
+export interface CSSTokenClasses {
+  selector?: string;
+  property?: string;
+  value?: string;
+  punctuation?: string;
+  atRule?: string;
+  comment?: string;
+  string?: string;
+  number?: string;
+  plain?: string;
+  function?: string;
+}
+export type CSSTokenType = keyof CSSTokenClasses;
+
+export interface JsonTokenClasses {
+  key?: string;
+  string?: string;
+  number?: string;
+  boolean?: string;
+  punctuation?: string;
+  plain?: string;
+}
+export type JsonTokenType = keyof JsonTokenClasses;
+
 export interface TSTokenClasses {
   keyword?: string;
   type?: string;
@@ -17,28 +55,4 @@ export interface TSTokenClasses {
 }
 export type TSTokenType = keyof TSTokenClasses;
 
-export interface JsonTokenClasses {
-  key?: string;
-  string?: string;
-  number?: string;
-  boolean?: string;
-  punctuation?: string;
-  plain?: string;
-}
-export type JsonTokenType = keyof JsonTokenClasses;
-
-export interface BashTokenClasses {
-  keyword?: string;
-  runner?: string;
-  comment?: string;
-  command?: string;
-  variable?: string;
-  string?: string;
-  option?: string;
-  plain?: string;
-  operator?: string;
-  substitution?: string;
-}
-export type BashTokenType = keyof BashTokenClasses;
-
-export type TokenClasses = TSTokenClasses | JsonTokenClasses | BashTokenClasses;
+export type TokenClasses = TSTokenClasses | JsonTokenClasses | BashTokenClasses | CSSTokenClasses;

@@ -57,7 +57,7 @@ pnpm add @moondreamsdev/dreamer-ui`}
 
 /* for TailwindCSS styles in library to be processed */
 @source "../node_modules/@moondreamsdev/dreamer-ui/dist/**/*.{js,jsx,ts,tsx}";`}
-                language='bash'
+                language='css'
               />
             </div>
           </div>

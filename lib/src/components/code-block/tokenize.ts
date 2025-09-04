@@ -1,5 +1,5 @@
 import { BASH_KEYWORDS, BASH_RUNNERS } from './constants';
-import { BashTokenType, JsonTokenClasses, TSTokenType } from './types';
+import { BashTokenType, CSSTokenClasses, JsonTokenClasses, TSTokenType } from './types';
 
 export function tokenizeBash(codeLine: string): { text: string; type: BashTokenType }[] {
   const tokens: { text: string; type: BashTokenType }[] = [];
@@ -69,6 +69,107 @@ export function tokenizeBash(codeLine: string): { text: string; type: BashTokenT
   }
 
   return tokens;
+}
+
+export function tokenizeCSS(codeLine: string, isInComment: boolean = false) {
+  const tokens: Array<{ text: string; type: keyof CSSTokenClasses }> = [];
+  let inMultilineComment = isInComment;
+
+  // Preserve empty lines as a non-breaking space
+  if (codeLine.trim() === '') {
+    tokens.push({ text: '\u00A0', type: 'plain' });
+    return { tokens, inComment: inMultilineComment };
+  }
+
+  // Context tracking - initialize based on line content
+  let context: 'selector' | 'property' | 'value' = 'selector';
+  let braceDepth = 0;
+  
+  // If line starts with whitespace and has a colon, likely a property declaration
+  if (codeLine.match(/^\s+/) && codeLine.includes(':') && !codeLine.includes('{')) {
+    context = 'property';
+    braceDepth = 1; // Assume we're inside a rule block
+  }
+
+  const regex = /(\/\*[\s\S]*?\*\/|\/\*[\s\S]*$|\*\/)|(@[a-zA-Z-]+)|(\{|\}|:|;|,|\(|\))|("(?:[^"]*)"|'(?:[^']*)')|([a-zA-Z-]+)(?=\()|([0-9.]+(?:px|rem|em|%|vh|vw|deg|s|ms|fr)?)|(#[a-fA-F0-9]{3,8})|([a-zA-Z0-9_-]+|[.#][a-zA-Z0-9_-]+)|(\s+)|(\S+)/g;
+
+  let match;
+  while ((match = regex.exec(codeLine))) {
+    const [, comment, atRule, punctuation, str, func, number, hexColor, identifier, whitespace, plain] = match;
+
+    if (comment) {
+      // Handle multiline comments
+      if (comment.includes('/*') && !comment.includes('*/')) {
+        inMultilineComment = true;
+      } else if (comment.includes('*/')) {
+        inMultilineComment = false;
+      }
+      tokens.push({ text: comment, type: 'comment' });
+    } else if (inMultilineComment) {
+      // Everything is a comment until we see */
+      if (match[0].includes('*/')) {
+        inMultilineComment = false;
+      }
+      tokens.push({ text: match[0], type: 'comment' });
+    } else if (atRule) {
+      tokens.push({ text: atRule, type: 'atRule' });
+    } else if (func) {
+      tokens.push({ text: func, type: 'function' });
+    } else if (punctuation) {
+      if (punctuation === '{') {
+        braceDepth++;
+        context = 'property';
+      } else if (punctuation === '}') {
+        braceDepth--;
+        context = braceDepth > 0 ? 'property' : 'selector';
+      } else if (punctuation === ':') {
+        // Only switch to value context if we're currently in property context
+        if (context === 'property') {
+          context = 'value';
+        }
+      } else if (punctuation === ';') {
+        if (braceDepth > 0) {
+          context = 'property';
+        }
+      } else if (punctuation === ',') {
+        // Comma in selector context or value context - maintain current context
+        if (braceDepth === 0) {
+          context = 'selector';
+        }
+      }
+      tokens.push({ text: punctuation, type: 'punctuation' });
+    } else if (str) {
+      tokens.push({ text: str, type: 'string' });
+    } else if (number) {
+      tokens.push({ text: number, type: 'number' });
+    } else if (hexColor) {
+      tokens.push({ text: hexColor, type: 'value' });
+    } else if (identifier) {
+      let tokenType: keyof CSSTokenClasses;
+      
+      // Special handling for selectors (class/id prefixes)
+      if (identifier.startsWith('.') || identifier.startsWith('#')) {
+        tokenType = 'selector';
+      } else if (context === 'selector') {
+        tokenType = 'selector';
+      } else if (context === 'property') {
+        tokenType = 'property';
+      } else {
+        // context === 'value'
+        tokenType = 'value';
+      }
+      
+      tokens.push({ text: identifier, type: tokenType });
+    } else if (whitespace) {
+      tokens.push({ text: whitespace.replace(/ /g, '\u00A0'), type: 'plain' });
+    } else if (plain) {
+      // Default unknown tokens to value if we're in value context, otherwise plain
+      const type = context === 'value' ? 'value' : 'plain';
+      tokens.push({ text: plain, type });
+    }
+  }
+
+  return { tokens, inComment: inMultilineComment };
 }
 
 export function tokenizeJSON(codeLine: string) {

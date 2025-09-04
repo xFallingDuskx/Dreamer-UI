@@ -1,6 +1,11 @@
-import { defaultBashTokenClasses, defaultJsonTokenClasses, defaultTSTokenClasses } from './classes';
-import { tokenizeBash, tokenizeJSON, tokenizeTypeScript } from './tokenize';
-import { BashTokenClasses, JsonTokenClasses, TSTokenClasses } from './types';
+import {
+  defaultBashTokenClasses,
+  defaultCSSTokenClasses,
+  defaultJsonTokenClasses,
+  defaultTSTokenClasses,
+} from './classes';
+import { tokenizeBash, tokenizeCSS, tokenizeJSON, tokenizeTypeScript } from './tokenize';
+import { BashTokenClasses, CSSTokenClasses, JsonTokenClasses, TSTokenClasses } from './types';
 
 export function formatBash(codeLines: string[], customTokenClasses?: BashTokenClasses) {
   const mergedTokenClasses = {
@@ -10,6 +15,26 @@ export function formatBash(codeLines: string[], customTokenClasses?: BashTokenCl
 
   return codeLines.map((line, lineIndex) => {
     const tokens = tokenizeBash(line);
+    return (
+      <div key={lineIndex} className='leading-6'>
+        {tokens.map((token, tokenIndex) => (
+          <span key={tokenIndex} className={mergedTokenClasses[token.type] || 'text-gray-100'}>
+            {token.text}
+          </span>
+        ))}
+      </div>
+    );
+  });
+}
+
+export function formatCSS(codeLines: string[], customTokenClasses?: CSSTokenClasses) {
+  const mergedTokenClasses = { ...defaultCSSTokenClasses, ...customTokenClasses };
+
+  let inMultilineComment = false;
+
+  return codeLines.map((line, lineIndex) => {
+    const { tokens, inComment } = tokenizeCSS(line, inMultilineComment);
+    inMultilineComment = inComment;
     return (
       <div key={lineIndex} className='leading-6'>
         {tokens.map((token, tokenIndex) => (
