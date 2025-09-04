@@ -13,4 +13,4 @@ export const BASH_KEYWORDS = new Set([
   'case',
   'esac',
 ]);
-export const BASH_RUNNERS = new Set(['npm', 'npx', 'pnpm', 'vite']);
+export const BASH_RUNNERS = new Set(['npm', 'npx', 'pnpm', 'yarn', 'vite']);
