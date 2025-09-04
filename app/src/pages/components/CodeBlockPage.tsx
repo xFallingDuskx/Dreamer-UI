@@ -139,6 +139,29 @@ echo "Appending another line" >> output.txt
 
 # End of script`;
 
+const cssExample = `@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/*
+This is a multiline comment in CSS.
+You can write multiple lines of text here
+to explain your code or temporarily disable a block of styles.
+*/
+
+
+body {
+  font-family: 'Roboto', Arial, sans-serif; /* Apply the Roboto font */
+  background-color: #f0f0f0;
+}
+
+h1 {
+  color: #333;
+}
+
+p {
+  line-height: 1.5;
+}
+`;
+
   const customTokenClasses: CodeBlockTokenClasses = {
     keyword: 'text-purple-400 font-bold',
     function: 'text-blue-400 font-semibold',
@@ -180,6 +203,10 @@ echo "Appending another line" >> output.txt
           <div>
             <h4 className='text-md font-medium text-gray-300 mb-3'>Bash Example</h4>
             <CodeBlock code={bashExample} language='bash' filename='script.sh' showLineNumbers={true} />
+          </div>
+          <div>
+            <h4 className='text-md font-medium text-gray-300 mb-3'>Basic CSS Example</h4>
+            <CodeBlock code={cssExample} language='css' filename='styles.css' showLineNumbers={true} />
           </div>
         </div>
       </ExampleSection>
