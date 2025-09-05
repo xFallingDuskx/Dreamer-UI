@@ -11,7 +11,7 @@ export type AlertVariants = 'base' | 'info' | 'destructive' | 'success' | 'warni
 export const AlertVariants: Record<AlertVariants, AlertVariantStyles> = {
   info: {
     border: 'border-blue-600',
-    interior: 'bg-blue-700/20',
+    interior: 'bg-blue-800/20',
     icon: 'text-blue-400',
     title: 'text-blue-400',
     description: 'text-blue-200',
@@ -31,8 +31,8 @@ export const AlertVariants: Record<AlertVariants, AlertVariantStyles> = {
     description: 'text-success/80',
   },
   warning: {
-    border: 'border-yellow-600',
-    interior: 'bg-yellow-700/20',
+    border: 'border-yellow-700',
+    interior: 'bg-yellow-800/20',
     icon: 'text-yellow-400',
     title: 'text-yellow-400',
     description: 'text-yellow-200',

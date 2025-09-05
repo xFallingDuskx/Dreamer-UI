@@ -25,11 +25,11 @@ const VariantIcons: Record<AlertVariants, React.ReactNode> = {
   info: <InfoCircled size={22} />,
   destructive: <CrossCircled size={22} />,
   success: <CheckCircled size={22} />,
-  warning: <ExclamationTriangle size={18} />,
-  base: <DeepRing size={20} />,
+  warning: <ExclamationTriangle size={20} />,
+  base: <DeepRing size={22} />,
 };
 
-export function Alert({ id, ref, variant = 'info', icon, title, description, className }: AlertProps) {
+export function Alert({ id, ref, variant = 'base', icon, title, description, className }: AlertProps) {
   const variantStyles = AlertVariants[variant];
   const variantIcon = VariantIcons[variant];
 
@@ -40,13 +40,17 @@ export function Alert({ id, ref, variant = 'info', icon, title, description, cla
       className={join('rounded-lg p-4 border', variantStyles.border, variantStyles.interior, className)}
       data-variant={variant}
     >
-      <div className='flex items-center space-x-2'>
+      <div className='flex items-baseline space-x-2'>
         {icon && (
           <span className={join('leading-0', variantStyles.icon)}>{icon === 'default' ? variantIcon : icon}</span>
         )}
-        {title && <h3 className={join('font-medium', variantStyles.title)}>{title}</h3>}
+        {(title || description) && (
+          <div className='flex-1'>
+            {title && <div className={join('font-medium', variantStyles.title)}>{title}</div>}
+            {description && <div className={join('mt-0.5 font-light', variantStyles.description)}>{description}</div>}
+          </div>
+        )}
       </div>
-      {description && <div className={join('mt-2', variantStyles.description)}>{description}</div>}
     </div>
   );
 }
