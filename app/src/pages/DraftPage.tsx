@@ -88,34 +88,35 @@ export const DraftPage = () => {
                 <Alert
                   id='info-alert'
                   variant='info'
-                  icon={<span>ℹ️</span>}
+                  icon='default'
                   title='Info Alert'
                   description='This is an informational alert.'
                 />
                 <Alert
                   id='danger-alert'
                   variant='destructive'
-                  icon={<span>⚠️</span>}
+                  icon='default'
                   title='Danger Alert'
                   description='This is a danger alert.'
                 />
                 <Alert
                   id='success-alert'
                   variant='success'
-                  icon={<span>✅</span>}
+                  icon='default'
                   title='Success Alert'
                   description='This is a success alert.'
                 />
                 <Alert
                   id='warning-alert'
                   variant='warning'
-                  icon={<span>⚠️</span>}
+                  icon='default'
                   title='Warning Alert'
                   description='This is a warning alert.'
                 />
                 <Alert
                   id='base-alert'
                   variant='base'
+                  icon='default'
                   title='Base Alert'
                   description='This is a base alert with no specific color, using whatever custom styles are set.'
                   className='text-purple-500 bg-purple-700/10'
@@ -123,7 +124,6 @@ export const DraftPage = () => {
                 <Alert
                   id='accent-alert'
                   variant='accent'
-                  icon={<span>⭐</span>}
                   title='Accent Alert'
                   description='This is an accent alert with custom purple styles.'
                 />
