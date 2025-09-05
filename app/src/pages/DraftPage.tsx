@@ -1,4 +1,5 @@
 import { Disclosure } from '@moondreamsdev/dreamer-ui/components';
+import { Alert } from '../alert';
 import { ComponentPage } from '../components/layout/ComponentPage';
 
 export const DraftPage = () => {
@@ -77,6 +78,47 @@ export const DraftPage = () => {
                     <div className='p-2 text-gray-400'>This disclosure is disabled and cannot be opened.</div>
                   </Disclosure>
                 </div>
+              </div>
+            </div>
+
+            {/* Alert Component Testing */}
+            <div>
+              <h3 className='text-lg font-medium text-white mb-3'>Alert Component Testing</h3>
+              <div className='space-y-4'>
+                <Alert
+                  id='info-alert'
+                  variant='info'
+                  icon={<span>ℹ️</span>}
+                  title='Info Alert'
+                  description='This is an informational alert.'
+                />
+                <Alert
+                  id='danger-alert'
+                  variant='destructive'
+                  icon={<span>⚠️</span>}
+                  title='Danger Alert'
+                  description='This is a danger alert.'
+                />
+                <Alert
+                  id='warning-alert'
+                  variant='warning'
+                  icon={<span>⚠️</span>}
+                  title='Warning Alert'
+                  description='This is a warning alert.'
+                />
+                <Alert
+                  id='primary-alert'
+                  variant='primary'
+                  icon={<span>🌟</span>}
+                  title='Primary Alert'
+                  description='This is a primary alert.'
+                />
+                <Alert
+                  id='base-alert'
+                  variant='base'
+                  title='Base Alert'
+                  description='This is a base alert with no specific color.'
+                />
               </div>
             </div>
           </div>
