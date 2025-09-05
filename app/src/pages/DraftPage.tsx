@@ -121,12 +121,6 @@ export const DraftPage = () => {
                   description='This is a base alert with no specific color, using whatever custom styles are set.'
                   className='text-purple-500 bg-purple-700/10'
                 />
-                <Alert
-                  id='accent-alert'
-                  variant='accent'
-                  title='Accent Alert'
-                  description='This is an accent alert with custom purple styles.'
-                />
               </div>
             </div>
           </div>

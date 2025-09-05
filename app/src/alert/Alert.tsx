@@ -27,7 +27,6 @@ const VariantIcons: Record<AlertVariants, React.ReactNode> = {
   success: <CheckCircled size={22} />,
   warning: <ExclamationTriangle size={18} />,
   base: <DeepRing size={20} />,
-  accent: <DeepRing size={20} />,
 };
 
 export function Alert({ id, ref, variant = 'info', icon, title, description, className }: AlertProps) {

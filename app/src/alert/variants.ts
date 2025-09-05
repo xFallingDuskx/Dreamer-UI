@@ -6,7 +6,7 @@ interface AlertVariantStyles {
   description: string;
 }
 
-export type AlertVariants = 'base' | 'info' | 'destructive' | 'success' | 'warning' | 'accent';
+export type AlertVariants = 'base' | 'info' | 'destructive' | 'success' | 'warning';
 
 export const AlertVariants: Record<AlertVariants, AlertVariantStyles> = {
   info: {
@@ -43,12 +43,5 @@ export const AlertVariants: Record<AlertVariants, AlertVariantStyles> = {
     icon: '',
     title: '',
     description: 'opacity-80',
-  },
-  accent: {
-    border: 'border-accent',
-    interior: 'bg-accent/10',
-    icon: 'text-accent',
-    title: 'text-accent',
-    description: 'text-accent/80',
-  },
+  }
 };
