@@ -6,10 +6,12 @@ interface AlertVariantStyles {
   description: string;
 }
 
-export const AlertVariants: Record<string, AlertVariantStyles> = {
+export type AlertVariants = 'base' | 'info' | 'destructive' | 'success' | 'warning' | 'accent';
+
+export const AlertVariants: Record<AlertVariants, AlertVariantStyles> = {
   info: {
-    border: 'border-blue-500',
-    interior: 'bg-blue-500/80',
+    border: 'border-blue-600',
+    interior: 'bg-blue-700/20',
     icon: 'text-blue-400',
     title: 'text-blue-400',
     description: 'text-blue-200',
@@ -21,26 +23,32 @@ export const AlertVariants: Record<string, AlertVariantStyles> = {
     title: 'text-destructive',
     description: 'text-destructive/80',
   },
+  success: {
+    border: 'border-success',
+    interior: 'bg-success/10',
+    icon: 'text-success',
+    title: 'text-success',
+    description: 'text-success/80',
+  },
   warning: {
-    border: 'border-yellow-700',
-    interior: 'bg-yellow-900/20',
+    border: 'border-yellow-600',
+    interior: 'bg-yellow-700/20',
     icon: 'text-yellow-400',
     title: 'text-yellow-400',
     description: 'text-yellow-200',
   },
-  primary: {
-    border: 'border-primary',
-    interior: 'bg-primary/80',
-    icon: 'text-primary-400',
-    title: 'text-primary-400',
-    description: 'text-primary-200',
-  },
   base: {
-    border: 'border-gray-300',
-    interior: 'bg-gray-300/80',
-    icon: 'text-gray-400',
-    title: 'text-gray-400',
-    description: 'text-gray-200',
+    border: '',
+    interior: '',
+    icon: '',
+    title: '',
+    description: 'opacity-80',
+  },
+  accent: {
+    border: 'border-accent',
+    interior: 'bg-accent/10',
+    icon: 'text-accent',
+    title: 'text-accent',
+    description: 'text-accent/80',
   },
 };
-export type AlertVariants = keyof typeof AlertVariants;

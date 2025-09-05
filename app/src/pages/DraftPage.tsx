@@ -100,6 +100,13 @@ export const DraftPage = () => {
                   description='This is a danger alert.'
                 />
                 <Alert
+                  id='success-alert'
+                  variant='success'
+                  icon={<span>✅</span>}
+                  title='Success Alert'
+                  description='This is a success alert.'
+                />
+                <Alert
                   id='warning-alert'
                   variant='warning'
                   icon={<span>⚠️</span>}
@@ -107,17 +114,18 @@ export const DraftPage = () => {
                   description='This is a warning alert.'
                 />
                 <Alert
-                  id='primary-alert'
-                  variant='primary'
-                  icon={<span>🌟</span>}
-                  title='Primary Alert'
-                  description='This is a primary alert.'
-                />
-                <Alert
                   id='base-alert'
                   variant='base'
                   title='Base Alert'
-                  description='This is a base alert with no specific color.'
+                  description='This is a base alert with no specific color, using whatever custom styles are set.'
+                  className='text-purple-500 bg-purple-700/10'
+                />
+                <Alert
+                  id='accent-alert'
+                  variant='accent'
+                  icon={<span>⭐</span>}
+                  title='Accent Alert'
+                  description='This is an accent alert with custom purple styles.'
                 />
               </div>
             </div>

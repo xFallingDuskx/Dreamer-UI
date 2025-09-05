@@ -19,34 +19,21 @@ export interface AlertProps {
   className?: string;
 }
 
-export function Alert({
-  id,
-  ref,
-  variant = 'base',
-  icon,
-  title,
-  description,
-  className,
-}: AlertProps) {
+export function Alert({ id, ref, variant = 'info', icon, title, description, className }: AlertProps) {
   const variantStyles = AlertVariants[variant];
 
   return (
     <div
       id={id}
       ref={ref}
-      className={join(
-        'rounded-lg p-4 border',
-        variantStyles.border,
-        variantStyles.interior,
-        className
-      )}
+      className={join('rounded-lg p-4 border', variantStyles.border, variantStyles.interior, className)}
       data-variant={variant}
     >
-      <div className="flex items-center space-x-2">
-        {icon && <div className={join('w-5 h-5', variantStyles.icon)}>{icon}</div>}
+      <div className='flex items-center space-x-2'>
+        {icon && <span className={variantStyles.icon}>{icon}</span>}
         {title && <h3 className={join('font-medium', variantStyles.title)}>{title}</h3>}
       </div>
-      {description && <p className={join('mt-2', variantStyles.description)}>{description}</p>}
+      {description && <div className={join('mt-2', variantStyles.description)}>{description}</div>}
     </div>
   );
 }
