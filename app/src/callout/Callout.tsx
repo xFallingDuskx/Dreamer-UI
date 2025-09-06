@@ -1,6 +1,6 @@
 import { CheckCircled, CrossCircled, ExclamationTriangle, InfoCircled, X } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 import { DeepRing } from './icons.tsx';
 import { CalloutVariants } from './variants.ts';
 
@@ -44,6 +44,8 @@ export function Callout({
   dismissible = false,
   onDismiss,
 }: CalloutProps) {
+  const generatedId = useId()
+  const calloutId = id || `callout-${generatedId}`;
   const [isDismissed, setIsDismissed] = useState(false);
   const variantStyles = CalloutVariants[variant];
   const variantIcon = VariantIcons[variant];
@@ -61,17 +63,20 @@ export function Callout({
 
   return (
     <div
-      id={id}
+      id={calloutId}
       ref={ref}
       className={join('relative rounded-lg p-2 sm:p-4 border', variantStyles.border, variantStyles.interior, className)}
       data-variant={variant}
+      role='note'
+      aria-describedby={description ? `${calloutId}-description` : undefined}
+      aria-labelledby={title ? `${calloutId}-title` : undefined}
     >
       <div className='flex items-start gap-x-2'>
         {icon && <span className={variantStyles.core}>{icon === 'default' ? variantIcon : icon}</span>}
         {(title || description) && (
           <div className='flex-1'>
-            {title && <div className={join('font-medium', variantStyles.core)}>{title}</div>}
-            {description && <div className={join('mt-0.5 font-light', variantStyles.description)}>{description}</div>}
+            {title && <div id={`${calloutId}-title`} className={join('font-medium', variantStyles.core)}>{title}</div>}
+            {description && <div id={`${calloutId}-description`} className={join('mt-0.5 font-light', variantStyles.description)}>{description}</div>}
           </div>
         )}
       </div>
