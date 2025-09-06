@@ -148,7 +148,7 @@ export const DraftPage = () => {
                 {/* Adjust to text size */}
                 <div>
                   <h4 className='text-md font-medium text-gray-300 mb-2'>Adjust to Text Size</h4>
-                  <p className='text-3xl'>
+                  <p className='md:text-2xl lg:text-4xl'>
                     The <Code variant='accent' content='Code' /> component should adjust its font size and line height
                     based on the surrounding text.
                   </p>

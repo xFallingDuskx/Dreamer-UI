@@ -1,7 +1,7 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useId } from 'react';
-import { CodeVariant, codeVariants } from './variants.ts';
 import { useFontMetrics } from './hooks.ts';
+import { CodeVariant, codeVariants } from './variants.ts';
 
 export interface CodeProps extends Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
   id?: string;
@@ -11,10 +11,10 @@ export interface CodeProps extends Omit<React.HTMLAttributes<HTMLElement>, 'chil
 }
 
 export function Code({ id, ref, content, variant = 'accent', className, style, ...props }: CodeProps) {
-  const generatedId = useId()
-  const codeId  = id || `code-${generatedId}`;
+  const generatedId = useId();
+  const codeId = id || `code-${generatedId}`;
   const fontMetrics = useFontMetrics(codeId);
-  
+
   return (
     <code
       id={codeId}
