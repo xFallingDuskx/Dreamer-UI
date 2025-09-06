@@ -74,7 +74,6 @@ export const CalloutPage = () => {
               icon='default'
               title='System Maintenance Notification'
               description='We will be performing scheduled maintenance this Sunday at 2 AM. During this time, the platform will be temporarily unavailable. The maintenance is expected to last approximately two hours. We apologize for any inconvenience this may cause and appreciate your understanding.'
-              className='text-purple-500 bg-purple-700/10'
             />
           </div>
         </div>

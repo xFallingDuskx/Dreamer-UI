@@ -18,13 +18,13 @@ export const CalloutVariants: Record<CalloutVariants, CalloutVariantStyles> = {
     border: 'border-destructive',
     interior: 'bg-destructive/10',
     core: 'text-destructive',
-    description: 'text-destructive/80',
+    description: 'text-destructive',
   },
   success: {
     border: 'border-success',
     interior: 'bg-success/10',
     core: 'text-success',
-    description: 'text-success/80',
+    description: 'text-success',
   },
   warning: {
     border: 'border-yellow-700',
