@@ -10,6 +10,7 @@ export { ChevronRight } from './ChevronRight';
 export { Copy } from './Copy';
 export { CrossCircled } from './CrossCircled';
 export { Dash } from './Dash';
+export { DeepRing } from './DeepRing';
 export { Download } from './Download';
 export { ExclamationTriangle } from './ExclamationTriangle';
 export { EyeClosed } from './EyeClosed';

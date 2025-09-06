@@ -26,32 +26,6 @@
     -moz-osx-font-smoothing: grayscale;
     @apply bg-background-light text-foreground-light transition-colors duration-300 dark:bg-background-dark dark:text-foreground-dark;
   }
-
-  p {
-    @apply font-light 2xl:text-lg;
-  }
-
-  small {
-    @apply font-light opacity-70 2xl:text-base;
-  }
-
-  /* Heading styles */
-  h1 {
-    @apply text-5xl font-semibold;
-  }
-  h2 {
-    @apply text-3xl font-semibold 2xl:text-2xl;
-  }
-  h3 {
-    @apply text-2xl font-medium 2xl:text-xl;
-  }
-  h4 {
-    @apply text-xl font-medium;
-  }
-}
-
-.example-container h2, h3 {
-  @apply text-center
 }
 
 @source "../node_modules/@moondreamsdev/dreamer-ui/dist/**/*.{js,jsx,ts,tsx}";

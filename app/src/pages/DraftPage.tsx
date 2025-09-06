@@ -1,4 +1,4 @@
-import { Disclosure } from '@moondreamsdev/dreamer-ui/components';
+import { Disclosure, Callout } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
 
 export const DraftPage = () => {
@@ -8,22 +8,12 @@ export const DraftPage = () => {
       description='A testing ground for developing and prototyping new components. This page is only available in development.'
     >
       <div className='space-y-8'>
-        {/* Development Notice */}
-        <div className='bg-yellow-900/20 border border-yellow-700 rounded-lg p-4'>
-          <div className='flex items-center space-x-2'>
-            <svg className='w-5 h-5 text-yellow-400' fill='currentColor' viewBox='0 0 20 20'>
-              <path
-                fillRule='evenodd'
-                d='M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z'
-                clipRule='evenodd'
-              />
-            </svg>
-            <h3 className='text-yellow-400 font-medium'>Development Mode</h3>
-          </div>
-          <p className='text-yellow-200 mt-2'>
-            This page is only accessible on localhost and is intended for component development and testing.
-          </p>
-        </div>
+        <Callout
+          variant='warning'
+          icon='default'
+          title='Development Mode'
+          description='This page is only accessible on localhost and is intended for component development and testing.'
+        />
 
         {/* Placeholder Content */}
         <div className='bg-gray-900/50 border border-gray-700 rounded-lg p-8'>
@@ -77,6 +67,57 @@ export const DraftPage = () => {
                     <div className='p-2 text-gray-400'>This disclosure is disabled and cannot be opened.</div>
                   </Disclosure>
                 </div>
+              </div>
+            </div>
+
+            {/* Callout Component Testing */}
+            <div>
+              <h3 className='text-lg font-medium text-white mb-3'>Callout Component Testing</h3>
+              <div className='space-y-4'>
+                <Callout
+                  variant='info'
+                  icon='default'
+                  title='Info Callout'
+                  description='This is an informational alert.'
+                />
+                <Callout
+                  variant='destructive'
+                  icon='default'
+                  title='Danger Callout'
+                  description='This is a danger alert.'
+                />
+                <Callout
+                  variant='success'
+                  icon='default'
+                  title='Success Callout'
+                  description='This is a success alert.'
+                />
+                <Callout
+                  variant='warning'
+                  icon='default'
+                  title='Warning Callout'
+                  description='This is a warning alert.'
+                />
+                <Callout
+                  variant='base'
+                  icon='default'
+                  title='Base Callout'
+                  description='This is a base alert with custom styles.'
+                  className='text-purple-500 bg-purple-700/10'
+                />
+                <Callout
+                  variant='base'
+                  icon='default'
+                  description='This is a base alert with no specific color.'
+                />
+                <Callout
+                  variant='info'
+                  icon='default'
+                  title='Dismissible Callout'
+                  description='This callout can be dismissed.'
+                  dismissible
+                  onDismiss={() => alert('Callout dismissed!')}
+                />
               </div>
             </div>
           </div>
