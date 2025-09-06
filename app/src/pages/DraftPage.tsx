@@ -1,4 +1,4 @@
-import { Disclosure, Callout } from '@moondreamsdev/dreamer-ui/components';
+import { Callout, Code, Disclosure } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
 
 export const DraftPage = () => {
@@ -105,11 +105,7 @@ export const DraftPage = () => {
                   description='This is a base alert with custom styles.'
                   className='text-purple-500 bg-purple-700/10'
                 />
-                <Callout
-                  variant='base'
-                  icon='default'
-                  description='This is a base alert with no specific color.'
-                />
+                <Callout variant='base' icon='default' description='This is a base alert with no specific color.' />
                 <Callout
                   variant='info'
                   icon='default'
@@ -118,6 +114,48 @@ export const DraftPage = () => {
                   dismissible
                   onDismiss={() => alert('Callout dismissed!')}
                 />
+              </div>
+            </div>
+
+            {/* Code Component Testing */}
+            <div className='mb-6'>
+              <h3 className='text-lg font-medium text-white mb-3'>Code Component Testing</h3>
+              <div className='space-y-4'>
+                {/* Modest Variant */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Modest Variant</h4>
+                  With text <Code variant='modest' content='<SomeComponent />' /> around it.
+                </div>
+
+                {/* Accent Variant */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Accent Variant</h4>
+                  <Code variant='accent' content='This is the accent variant of the Code component.' />
+                </div>
+
+                {/* Base Variant */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Base Variant</h4>
+                  <Code variant='base' content='This is the base variant of the Code component.' />
+                </div>
+                {/* Current Variant */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Current Variant</h4>
+                  <Code
+                    variant='current'
+                    content='This is the current variant of the Code component.'
+                    className='text-orange-500'
+                  />
+                </div>
+
+                {/* Adjust to text size */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Adjust to Text Size</h4>
+                  <p className='md:text-2xl lg:text-4xl'>
+                    The <Code variant='accent' content='Code' /> component should adjust its font size and line height
+                    based on the surrounding text.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
