@@ -22,27 +22,58 @@ export const CalloutPage = () => {
         <div id='variants'>
           <h2 className='text-2xl font-bold mb-4'>Variants</h2>
           <p className='text-gray-300 mb-4'>
-            A set of built-in variants for the Callout component. All use their "default" icon.
+            A set of built-in variants for the Callout component. Each variant is tailored for specific use cases and
+            includes a default icon.
           </p>
 
           <div className='space-y-6'>
-            <Callout variant='info' icon='default' title='Info Callout' description='This is an informational alert.' />
+            <Callout
+              variant='info'
+              icon='default'
+              title='Upcoming Feature Update'
+              description='We are excited to announce that a new dashboard will be available next month. This update will bring a host of new features designed to enhance your experience and improve productivity. Stay tuned for detailed information in the coming weeks.'
+            />
 
             <Callout
               variant='destructive'
               icon='default'
-              title='Danger Callout'
-              description='This is a danger alert.'
+              title='Account Deletion Warning'
+              description={
+                <div>
+                  <p>Please be aware that deleting your account is a permanent action.</p>
+                  <ul className='list-disc pl-5'>
+                    <li>All of your user data will be erased.</li>
+                    <li>Any ongoing subscriptions will be canceled.</li>
+                  </ul>
+                  <p className='mt-2 font-semibold'>Ensure you have saved any important information before proceeding.</p>
+                </div>
+              }
             />
 
-            <Callout variant='success' icon='default' title='Success Callout' description='This is a success alert.' />
-            <Callout variant='warning' icon='default' title='Warning Callout' description='This is a warning alert.' />
+            <Callout
+              variant='success'
+              icon='default'
+              title='Profile Updated Successfully'
+              description={
+                <ul className='list-disc pl-5'>
+                  <li>Your profile information has been successfully saved to our system.</li>
+                  <li>You can now continue using the platform with your updated details.</li>
+                </ul>
+              }
+            />
+
+            <Callout
+              variant='warning'
+              icon='default'
+              title='Subscription Expiry Notice'
+              description='Your subscription is set to expire in three days. To ensure uninterrupted access to our services, we recommend renewing your subscription as soon as possible. Failure to do so may result in a temporary loss of access to premium features.'
+            />
 
             <Callout
               variant='base'
               icon='default'
-              title='Base Callout'
-              description='This is a base alert with custom styles.'
+              title='System Maintenance Notification'
+              description='We will be performing scheduled maintenance this Sunday at 2 AM. During this time, the platform will be temporarily unavailable. The maintenance is expected to last approximately two hours. We apologize for any inconvenience this may cause and appreciate your understanding.'
               className='text-purple-500 bg-purple-700/10'
             />
           </div>
@@ -68,7 +99,9 @@ export const CalloutPage = () => {
             description='This callout can be dismissed by the user.'
             onDismiss={() => setCalloutDismissed(true)}
           />
-          {calloutDismissed && <p className='text-center text-yellow-500 underline'>This callout has been dismissed!</p>}
+          {calloutDismissed && (
+            <p className='text-center text-yellow-500 underline'>This callout has been dismissed!</p>
+          )}
         </div>
       </div>
     </ComponentPage>
