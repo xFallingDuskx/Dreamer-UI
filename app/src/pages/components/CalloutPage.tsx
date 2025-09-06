@@ -18,7 +18,6 @@ export const CalloutPage = () => {
       tableOfContents={tableOfContents}
     >
       <div className='space-y-8'>
-        {/* Variants Section */}
         <div id='variants'>
           <h2 className='text-2xl font-bold mb-4'>Variants</h2>
           <p className='text-gray-300 mb-4'>
@@ -80,7 +79,6 @@ export const CalloutPage = () => {
           </div>
         </div>
 
-        {/* Icon (Hidden) Section */}
         <div id='icon' className='space-y-4'>
           <h2 className='text-2xl font-bold mb-4'>Icon</h2>
 
@@ -89,7 +87,6 @@ export const CalloutPage = () => {
             <p className='text-gray-300 mb-4'>Icons can be hidden in the Callout component for a cleaner look.</p>
             <Callout
               variant='info'
-              icon={false}
               title='Hidden Icon'
               description='This callout has no icon displayed.'
             />
@@ -107,7 +104,6 @@ export const CalloutPage = () => {
           </div>
         </div>
 
-        {/* Dismissible Section */}
         <div id='dismissible'>
           <h2 className='text-2xl font-bold mb-4'>Dismissible</h2>
           <p className='text-gray-300 mb-4'>
