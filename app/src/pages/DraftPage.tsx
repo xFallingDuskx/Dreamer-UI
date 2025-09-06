@@ -106,11 +106,7 @@ export const DraftPage = () => {
                   description='This is a base alert with custom styles.'
                   className='text-purple-500 bg-purple-700/10'
                 />
-                <Callout
-                  variant='base'
-                  icon='default'
-                  description='This is a base alert with no specific color.'
-                />
+                <Callout variant='base' icon='default' description='This is a base alert with no specific color.' />
                 <Callout
                   variant='info'
                   icon='default'
@@ -142,6 +138,15 @@ export const DraftPage = () => {
                 <div>
                   <h4 className='text-md font-medium text-gray-300 mb-2'>Base Variant</h4>
                   <Code variant='base' content='This is the base variant of the Code component.' />
+                </div>
+
+                {/* Adjust to text size */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Adjust to Text Size</h4>
+                  <p className='text-3xl'>
+                    The <Code variant='accent' content='Code' /> component should adjust its font size and line height
+                    based on the surrounding text.
+                  </p>
                 </div>
               </div>
             </div>
