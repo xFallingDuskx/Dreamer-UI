@@ -4,7 +4,7 @@ import { ComponentPage } from '../../components/layout/ComponentPage';
 
 const tableOfContents = [
   { id: 'variants', title: 'Variants', level: 1 },
-  { id: 'icon-hidden', title: 'Icon (Hidden)', level: 1 },
+  { id: 'icon', title: 'Icon', level: 1 },
   { id: 'dismissible', title: 'Dismissible', level: 1 },
 ];
 
@@ -45,7 +45,9 @@ export const CalloutPage = () => {
                     <li>All of your user data will be erased.</li>
                     <li>Any ongoing subscriptions will be canceled.</li>
                   </ul>
-                  <p className='mt-2 font-semibold'>Ensure you have saved any important information before proceeding.</p>
+                  <p className='mt-2 font-semibold'>
+                    Ensure you have saved any important information before proceeding.
+                  </p>
                 </div>
               }
             />
@@ -79,10 +81,30 @@ export const CalloutPage = () => {
         </div>
 
         {/* Icon (Hidden) Section */}
-        <div id='icon-hidden'>
-          <h2 className='text-2xl font-bold mb-4'>Icon (Hidden)</h2>
-          <p className='text-gray-300 mb-4'>Icons can be hidden in the Callout component for a cleaner look.</p>
-          <Callout variant='info' icon={false} title='Hidden Icon' description='This callout has no icon displayed.' />
+        <div id='icon' className='space-y-4'>
+          <h2 className='text-2xl font-bold mb-4'>Icon</h2>
+
+          <div>
+            <h3 className='text-lg font-medium mb-1'>Hide icon</h3>
+            <p className='text-gray-300 mb-4'>Icons can be hidden in the Callout component for a cleaner look.</p>
+            <Callout
+              variant='info'
+              icon={false}
+              title='Hidden Icon'
+              description='This callout has no icon displayed.'
+            />
+          </div>
+
+          <div>
+            <h3 className='text-lg font-medium mb-1'>Custom icon</h3>
+            <p className='text-gray-300 mb-4'>You can also use custom content, such as an emoji, as the icon.</p>
+            <Callout
+              icon='🚀'
+              title='Custom Icon'
+              description='This callout uses a custom emoji as its icon.'
+              className='text-amber-600 bg-amber-700/10'
+            />
+          </div>
         </div>
 
         {/* Dismissible Section */}
@@ -93,9 +115,10 @@ export const CalloutPage = () => {
           </p>
           <Callout
             variant='warning'
-            dismissible={true}
+            icon='default'
             title='Dismissible Callout'
             description='This callout can be dismissed by the user.'
+            dismissible={true}
             onDismiss={() => setCalloutDismissed(true)}
           />
           {calloutDismissed && (

@@ -36,6 +36,6 @@ export const CalloutVariants: Record<CalloutVariants, CalloutVariantStyles> = {
     border: '',
     interior: '',
     core: '',
-    description: 'opacity-80',
+    description: 'opacity-90',
   }
 };
