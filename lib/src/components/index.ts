@@ -5,6 +5,7 @@ export * from './callout';
 export * from './carousel';
 export * from './checkbox';
 export * from './clickable';
+export * from './code';
 export * from './code-block';
 export * from './disclosure';
 export * from './input';

@@ -1,6 +1,5 @@
+import { Code, CodeBlock } from '@moondreamsdev/dreamer-ui/components';
 import { Link } from 'react-router-dom';
-import { CodeBlock } from '@moondreamsdev/dreamer-ui/components';
-import { Code } from '../Code';
 
 export const GettingStartedPage = () => {
   return (
@@ -68,10 +67,8 @@ pnpm add @moondreamsdev/dreamer-ui`}
         <section className='mb-12'>
           <h3 className='text-2xl font-medium text-foreground mb-4'>Tailwind Class Name Auto-Detection</h3>
           <p className='text-foreground mb-4'>
-            To enable Tailwind CSS IntelliSense for component classnames like{' '}
-            <Code content='targetClassName' /> and when using{' '}
-            <Code content='join()' />, add the following to your VS Code
-            settings.json:
+            To enable Tailwind CSS IntelliSense for component classnames like <Code content='targetClassName' /> and
+            when using <Code content='join()' />, add the following to your VS Code settings.json:
           </p>
           <CodeBlock
             code={`{
@@ -83,8 +80,7 @@ pnpm add @moondreamsdev/dreamer-ui`}
           <p className='text-sm text-muted-foreground mt-4'>
             This configuration allows the Tailwind CSS extension to provide autocomplete and validation for any
             attribute that contains "className" in its name, including custom props like{' '}
-            <Code content='targetClassName' />,{' '}
-            <Code content='containerClassName' />, etc.
+            <Code content='targetClassName' />, <Code content='containerClassName' />, etc.
           </p>
         </section>
 

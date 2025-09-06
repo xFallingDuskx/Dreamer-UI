@@ -1,7 +1,7 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useId } from 'react';
-import { useFontMetrics } from './hooks.ts';
-import { CodeVariant, codeVariants } from './variants.ts';
+import { join } from '../../utils';
+import { useFontMetrics } from './hooks';
+import { CodeVariant, codeVariants } from './variants';
 
 export interface CodeProps extends Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
   id?: string;

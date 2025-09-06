@@ -1,6 +1,5 @@
-import { Disclosure, Callout } from '@moondreamsdev/dreamer-ui/components';
+import { Callout, Code, Disclosure } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
-import { Code } from '../Code';
 
 export const DraftPage = () => {
   return (
@@ -122,9 +121,9 @@ export const DraftPage = () => {
             <div className='mb-6'>
               <h3 className='text-lg font-medium text-white mb-3'>Code Component Testing</h3>
               <div className='space-y-4'>
-                {/* Default Variant */}
+                {/* Modest Variant */}
                 <div>
-                  <h4 className='text-md font-medium text-gray-300 mb-2'>Default Variant</h4>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Modest Variant</h4>
                   With text <Code variant='modest' content='<SomeComponent />' /> around it.
                 </div>
 
@@ -142,7 +141,11 @@ export const DraftPage = () => {
                 {/* Current Variant */}
                 <div>
                   <h4 className='text-md font-medium text-gray-300 mb-2'>Current Variant</h4>
-                  <Code variant='current' content='This is the current variant of the Code component.' className='text-orange-500' />
+                  <Code
+                    variant='current'
+                    content='This is the current variant of the Code component.'
+                    className='text-orange-500'
+                  />
                 </div>
 
                 {/* Adjust to text size */}
