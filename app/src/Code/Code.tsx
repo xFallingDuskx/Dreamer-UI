@@ -10,7 +10,7 @@ export interface CodeProps extends Omit<React.HTMLAttributes<HTMLElement>, 'chil
   variant?: CodeVariant;
 }
 
-export function Code({ id, ref, content, variant = 'default', className, style, ...props }: CodeProps) {
+export function Code({ id, ref, content, variant = 'accent', className, style, ...props }: CodeProps) {
   const generatedId = useId()
   const codeId  = id || `code-${generatedId}`;
   const fontMetrics = useFontMetrics(codeId);

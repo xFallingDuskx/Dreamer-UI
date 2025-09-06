@@ -125,7 +125,7 @@ export const DraftPage = () => {
                 {/* Default Variant */}
                 <div>
                   <h4 className='text-md font-medium text-gray-300 mb-2'>Default Variant</h4>
-                  With text <Code variant='default' content='<SomeComponent />' /> around it.
+                  With text <Code variant='modest' content='<SomeComponent />' /> around it.
                 </div>
 
                 {/* Accent Variant */}
