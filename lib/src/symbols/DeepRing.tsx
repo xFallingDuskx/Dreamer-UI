@@ -1,4 +1,4 @@
-import { SymbolProps } from '@moondreamsdev/dreamer-ui/symbols';
+import { SymbolProps } from './props';
 
 export function DeepRing({ size = 15, color = 'currentColor', className = 'inline', ...props }: SymbolProps) {
   return (

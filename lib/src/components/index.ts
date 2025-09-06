@@ -1,6 +1,7 @@
 export * from './accordion';
 export * from './actionmodal';
 export * from './button';
+export * from './callout';
 export * from './carousel';
 export * from './checkbox';
 export * from './clickable';

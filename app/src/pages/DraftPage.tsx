@@ -1,5 +1,4 @@
-import { Disclosure } from '@moondreamsdev/dreamer-ui/components';
-import { Callout } from '../callout';
+import { Disclosure, Callout } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
 
 export const DraftPage = () => {

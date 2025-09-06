@@ -1,8 +1,7 @@
-import { CheckCircled, CrossCircled, ExclamationTriangle, InfoCircled, X } from '@moondreamsdev/dreamer-ui/symbols';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useId, useState } from 'react';
-import { DeepRing } from './icons.tsx';
-import { CalloutVariants } from './variants.ts';
+import { CheckCircled, CrossCircled, DeepRing, ExclamationTriangle, InfoCircled, X } from '../../symbols';
+import { join } from '../../utils';
+import { CalloutVariants } from './variants';
 
 export interface CalloutProps {
   /**The id of the Callout. */
@@ -44,7 +43,7 @@ export function Callout({
   dismissible = false,
   onDismiss,
 }: CalloutProps) {
-  const generatedId = useId()
+  const generatedId = useId();
   const calloutId = id || `callout-${generatedId}`;
   const [isDismissed, setIsDismissed] = useState(false);
   const variantStyles = CalloutVariants[variant];
@@ -55,7 +54,7 @@ export function Callout({
     if (onDismiss) {
       onDismiss();
     }
-  }
+  };
 
   if (isDismissed) {
     return null;
@@ -75,8 +74,16 @@ export function Callout({
         {icon && <span className={variantStyles.core}>{icon === 'default' ? variantIcon : icon}</span>}
         {(title || description) && (
           <div className='flex-1'>
-            {title && <div id={`${calloutId}-title`} className={join('font-medium', variantStyles.core)}>{title}</div>}
-            {description && <div id={`${calloutId}-description`} className={join('mt-0.5 font-light', variantStyles.description)}>{description}</div>}
+            {title && (
+              <div id={`${calloutId}-title`} className={join('font-medium', variantStyles.core)}>
+                {title}
+              </div>
+            )}
+            {description && (
+              <div id={`${calloutId}-description`} className={join('mt-0.5 font-light', variantStyles.description)}>
+                {description}
+              </div>
+            )}
           </div>
         )}
       </div>
