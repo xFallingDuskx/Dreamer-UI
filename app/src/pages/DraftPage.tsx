@@ -139,6 +139,11 @@ export const DraftPage = () => {
                   <h4 className='text-md font-medium text-gray-300 mb-2'>Base Variant</h4>
                   <Code variant='base' content='This is the base variant of the Code component.' />
                 </div>
+                {/* Current Variant */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Current Variant</h4>
+                  <Code variant='current' content='This is the current variant of the Code component.' className='text-orange-500' />
+                </div>
 
                 {/* Adjust to text size */}
                 <div>
