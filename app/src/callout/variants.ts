@@ -1,8 +1,7 @@
 interface CalloutVariantStyles {
   border: string;
   interior: string;
-  icon: string;
-  title: string;
+  core: string; // used for icon, title, and close button
   description: string;
 }
 
@@ -12,36 +11,31 @@ export const CalloutVariants: Record<CalloutVariants, CalloutVariantStyles> = {
   info: {
     border: 'border-blue-600',
     interior: 'bg-blue-800/20',
-    icon: 'text-blue-400',
-    title: 'text-blue-400',
+    core: 'text-blue-400',
     description: 'text-blue-200',
   },
   destructive: {
     border: 'border-destructive',
     interior: 'bg-destructive/10',
-    icon: 'text-destructive',
-    title: 'text-destructive',
+    core: 'text-destructive',
     description: 'text-destructive/80',
   },
   success: {
     border: 'border-success',
     interior: 'bg-success/10',
-    icon: 'text-success',
-    title: 'text-success',
+    core: 'text-success',
     description: 'text-success/80',
   },
   warning: {
     border: 'border-yellow-700',
     interior: 'bg-yellow-800/20',
-    icon: 'text-yellow-400',
-    title: 'text-yellow-400',
+    core: 'text-yellow-400',
     description: 'text-yellow-200',
   },
   base: {
     border: '',
     interior: '',
-    icon: '',
-    title: '',
+    core: '',
     description: 'opacity-80',
   }
 };

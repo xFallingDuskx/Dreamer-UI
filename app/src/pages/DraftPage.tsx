@@ -111,6 +111,14 @@ export const DraftPage = () => {
                   icon='default'
                   description='This is a base alert with no specific color.'
                 />
+                <Callout
+                  variant='info'
+                  icon='default'
+                  title='Dismissible Callout'
+                  description='This callout can be dismissed.'
+                  dismissible
+                  onDismiss={() => alert('Callout dismissed!')}
+                />
               </div>
             </div>
           </div>
