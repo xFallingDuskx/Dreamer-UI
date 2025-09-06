@@ -1,5 +1,6 @@
 import { Disclosure, Callout } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
+import { Code } from '../Code';
 
 export const DraftPage = () => {
   return (
@@ -118,6 +119,30 @@ export const DraftPage = () => {
                   dismissible
                   onDismiss={() => alert('Callout dismissed!')}
                 />
+              </div>
+            </div>
+
+            {/* Code Component Testing */}
+            <div className='mb-6'>
+              <h3 className='text-lg font-medium text-white mb-3'>Code Component Testing</h3>
+              <div className='space-y-4'>
+                {/* Default Variant */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Default Variant</h4>
+                  With text <Code variant='default' content='<SomeComponent />' /> around it.
+                </div>
+
+                {/* Accent Variant */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Accent Variant</h4>
+                  <Code variant='accent' content='This is the accent variant of the Code component.' />
+                </div>
+
+                {/* Base Variant */}
+                <div>
+                  <h4 className='text-md font-medium text-gray-300 mb-2'>Base Variant</h4>
+                  <Code variant='base' content='This is the base variant of the Code component.' />
+                </div>
               </div>
             </div>
           </div>
