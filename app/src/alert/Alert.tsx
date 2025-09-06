@@ -37,12 +37,12 @@ export function Alert({ id, ref, variant = 'base', icon, title, description, cla
     <div
       id={id}
       ref={ref}
-      className={join('rounded-lg p-4 border', variantStyles.border, variantStyles.interior, className)}
+      className={join('rounded-lg p-2 sm:p-4 border', variantStyles.border, variantStyles.interior, className)}
       data-variant={variant}
     >
-      <div className='flex items-baseline space-x-2'>
+      <div className='flex items-start gap-x-2'>
         {icon && (
-          <span className={join('leading-0', variantStyles.icon)}>{icon === 'default' ? variantIcon : icon}</span>
+          <span className={variantStyles.icon}>{icon === 'default' ? variantIcon : icon}</span>
         )}
         {(title || description) && (
           <div className='flex-1'>

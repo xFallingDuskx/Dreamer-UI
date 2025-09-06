@@ -108,7 +108,7 @@ export const DraftPage = () => {
                 />
                 <Alert
                   variant='base'
-                  title='Base Alert (no styling)'
+                  icon='default'
                   description='This is a base alert with no specific color.'
                 />
               </div>
