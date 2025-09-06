@@ -1,5 +1,5 @@
 import { Disclosure } from '@moondreamsdev/dreamer-ui/components';
-import { Alert } from '../alert';
+import { Callout } from '../callout';
 import { ComponentPage } from '../components/layout/ComponentPage';
 
 export const DraftPage = () => {
@@ -9,7 +9,7 @@ export const DraftPage = () => {
       description='A testing ground for developing and prototyping new components. This page is only available in development.'
     >
       <div className='space-y-8'>
-        <Alert
+        <Callout
           variant='warning'
           icon='default'
           title='Development Mode'
@@ -71,42 +71,42 @@ export const DraftPage = () => {
               </div>
             </div>
 
-            {/* Alert Component Testing */}
+            {/* Callout Component Testing */}
             <div>
-              <h3 className='text-lg font-medium text-white mb-3'>Alert Component Testing</h3>
+              <h3 className='text-lg font-medium text-white mb-3'>Callout Component Testing</h3>
               <div className='space-y-4'>
-                <Alert
+                <Callout
                   variant='info'
                   icon='default'
-                  title='Info Alert'
+                  title='Info Callout'
                   description='This is an informational alert.'
                 />
-                <Alert
+                <Callout
                   variant='destructive'
                   icon='default'
-                  title='Danger Alert'
+                  title='Danger Callout'
                   description='This is a danger alert.'
                 />
-                <Alert
+                <Callout
                   variant='success'
                   icon='default'
-                  title='Success Alert'
+                  title='Success Callout'
                   description='This is a success alert.'
                 />
-                <Alert
+                <Callout
                   variant='warning'
                   icon='default'
-                  title='Warning Alert'
+                  title='Warning Callout'
                   description='This is a warning alert.'
                 />
-                <Alert
+                <Callout
                   variant='base'
                   icon='default'
-                  title='Base Alert'
+                  title='Base Callout'
                   description='This is a base alert with custom styles.'
                   className='text-purple-500 bg-purple-700/10'
                 />
-                <Alert
+                <Callout
                   variant='base'
                   icon='default'
                   description='This is a base alert with no specific color.'
