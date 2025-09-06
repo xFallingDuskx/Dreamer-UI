@@ -30,6 +30,7 @@ const components = [
   { name: 'Carousel', path: '/components/carousel' },
   { name: 'Scroll Area', path: '/components/scroll-area' },
   { name: 'Clickable', path: '/components/clickable' },
+  { name: 'Callout', path: '/components/callout' },
 ];
 
 const hooks = [

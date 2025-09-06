@@ -58,6 +58,12 @@ const components = [
     description: 'Notification component for displaying temporary messages.',
     category: 'Feedback',
   },
+  {
+    name: 'Callout',
+    path: '/components/callout',
+    description: 'Versatile component for displaying alerts, warnings, and informational messages.',
+    category: 'Feedback',
+  },
 ];
 
 const categories = Array.from(new Set(components.map((c) => c.category)));
