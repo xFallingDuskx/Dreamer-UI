@@ -5,7 +5,7 @@ import { CodeVariant, codeVariants } from './variants';
 
 export interface CodeProps extends Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
   id?: string;
-  ref?: React.Ref<HTMLDivElement>;
+  ref?: React.Ref<HTMLElement>;
   content: string;
   variant?: CodeVariant;
 }
