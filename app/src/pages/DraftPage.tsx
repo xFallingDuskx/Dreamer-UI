@@ -1,6 +1,5 @@
-import { Callout, Code, Disclosure } from '@moondreamsdev/dreamer-ui/components';
+import { Callout, Code, Disclosure, Popover } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
-import { Popover } from '../../popover/Popover';
 
 export const DraftPage = () => {
   return (

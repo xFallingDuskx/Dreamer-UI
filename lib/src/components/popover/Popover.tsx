@@ -1,6 +1,5 @@
 import React, { useEffect, useId, useRef } from 'react';
-import { join } from '../../lib/src/utils/join';
-import { mergeRefs } from './util';
+import { join, mergeRefs } from '../../utils';
 
 export type PopoverAlignment = 'left' | 'center' | 'right';
 
