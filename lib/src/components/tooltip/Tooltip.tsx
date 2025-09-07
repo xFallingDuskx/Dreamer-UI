@@ -106,7 +106,7 @@ export function Tooltip({
             id={tooltipId}
             role='tooltip'
             className={join(
-              'fixed z-50 px-2 py-1 text-sm rounded shadow-lg bg-popover pointer-events-auto transition-all duration-150 ease-out',
+              'fixed z-50 px-2 py-1 text-sm rounded shadow-lg bg-popover text-popover-foreground pointer-events-auto transition-all duration-150 ease-out',
               isVisible ? 'opacity-100' : 'opacity-0',
               className
             )}

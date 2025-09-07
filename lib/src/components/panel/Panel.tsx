@@ -124,7 +124,7 @@ export function Panel({
               ref={ref}
               tabIndex={-1}
               className={join(
-                'relative h-full transform shadow-xl bg-popover transition-transform duration-300 ease-in-out',
+                'relative h-full transform shadow-xl bg-popover text-popover-foreground transition-transform duration-300 ease-in-out',
                 size !== 'screen' && 'border-l border-border',
                 panelVariants.size[size],
                 show ? 'translate-x-0' : 'translate-x-full',

@@ -17,5 +17,5 @@
   --color-success: var(--color-green-500);
   --color-border: var(--color-slate-600); /* for input/textarea borders and dividers */
   --color-popover: var(--color-slate-900); /* for popover backgrounds (tooltip, dropdowns, modals, etc) */
-  --color-popover-foreground: var(--color-slate-900); /* for popover text */
+  --color-popover-foreground: var(--color-white); /* for popover text */
 }
