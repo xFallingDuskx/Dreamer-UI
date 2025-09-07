@@ -13,6 +13,7 @@ export * from './label';
 export * from './modal';
 export * from './pagination';
 export * from './panel';
+export * from './popover';
 export * from './radiogroup';
 export * from './scroll-area';
 export * from './select';

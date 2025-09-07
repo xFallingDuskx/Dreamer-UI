@@ -108,7 +108,7 @@ export function Modal({
                 id={modalId}
                 tabIndex={-1}
                 className={join(
-                  'relative w-full max-w-xl transform rounded-lg shadow-xl bg-popover transition-all p-6 focus:ring ease-in duration-75',
+                  'relative w-full max-w-xl transform rounded-lg shadow-xl bg-popover text-popover-foreground transition-all p-6 focus:ring ease-in duration-75',
                   show ? 'opacity-100 scale-100' : 'opacity-0 scale-90',
                   className
                 )}

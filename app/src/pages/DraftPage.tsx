@@ -1,4 +1,4 @@
-import { Callout, Code, Disclosure } from '@moondreamsdev/dreamer-ui/components';
+import { Callout, Code, Disclosure, Popover } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
 
 export const DraftPage = () => {
@@ -155,6 +155,61 @@ export const DraftPage = () => {
                     The <Code variant='accent' content='Code' /> component should adjust its font size and line height
                     based on the surrounding text.
                   </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Popover Component Testing */}
+            <div>
+              <h3 className='text-xl font-bold text-white mb-3'>Popover Component Testing</h3>
+              <div className='space-y-4'>
+                {/* Uncontrolled Popover */}
+                <div>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Uncontrolled Popover</h4>
+                  <Popover
+                    className='p-2 whitespace-nowrap w-fit'
+                    trigger={<button className='font-light'>Open Uncontrolled Popover</button>}
+                  >
+                    This is an uncontrolled Popover.
+                  </Popover>
+                </div>
+
+                {/* Controlled Popover */}
+                <div>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Controlled Popover</h4>
+                  <Popover
+                    isOpen={true}
+                    className='p-2 w-80'
+                    trigger={<button className='font-light'>Open Controlled Popover</button>}
+                  >
+                    This is a controlled Popover.
+                  </Popover>
+                </div>
+
+                {/* Right Aligned Popover */}
+                <div>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Right Aligned Popover</h4>
+                  <Popover
+                    className='p-2'
+                    alignment='right'
+                    trigger={<button className='font-light'>Open Right Aligned Popover</button>}
+                    closeOnOverlayClick={false}
+                  >
+                    To the right.
+                  </Popover>
+                </div>
+
+                {/* Left Aligned Popover */}
+                <div>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Left Aligned Popover</h4>
+                  <Popover
+                    className='p-2'
+                    alignment='left'
+                    trigger={<button className='font-light'>Open Left Aligned Popover</button>}
+                    closeOnTriggerClick={false}
+                  >
+                    To the left.
+                  </Popover>
                 </div>
               </div>
             </div>

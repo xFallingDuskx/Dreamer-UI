@@ -221,7 +221,7 @@ export function Select({
         <div
           ref={dropdownRef}
           className={join(
-            'absolute z-50 w-full mt-1 bg-popover border border-border rounded-md shadow-lg transition-all duration-150',
+            'absolute z-50 w-full mt-1 bg-popover text-popover-foreground border border-border rounded-md shadow-lg transition-all duration-150',
             show ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2',
             dropdownClassName
           )}
