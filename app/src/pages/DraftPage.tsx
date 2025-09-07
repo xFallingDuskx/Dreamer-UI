@@ -1,7 +1,11 @@
 import { Callout, Code, Disclosure } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
+import { Popover } from '../../popover/Popover';
+import { useState } from 'react';
 
 export const DraftPage = () => {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
   return (
     <ComponentPage
       title='Draft'
@@ -155,6 +159,35 @@ export const DraftPage = () => {
                     The <Code variant='accent' content='Code' /> component should adjust its font size and line height
                     based on the surrounding text.
                   </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Popover Component Testing */}
+            <div>
+              <h3 className='text-xl font-bold text-white mb-3'>Popover Component Testing</h3>
+              <div className='space-y-4'>
+                {/* Controlled Popover */}
+                <div>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Controlled Popover</h4>
+                  <Popover
+                    isOpen={isPopoverOpen}
+                    onClose={() => setIsPopoverOpen(false)}
+                    trigger={<button className='font-light'>Open Controlled Popover</button>}
+                  >
+                    <div className='p-4'>This is a controlled Popover.</div>
+                  </Popover>
+                </div>
+
+                {/* Uncontrolled Popover */}
+                <div>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Uncontrolled Popover</h4>
+                  <Popover
+                    onClose={() => alert('Popover closed!')}
+                    trigger={<button className='font-light'>Open Uncontrolled Popover</button>}
+                  >
+                    <div className='p-4'>This is an uncontrolled Popover.</div>
+                  </Popover>
                 </div>
               </div>
             </div>
