@@ -180,10 +180,36 @@ export const DraftPage = () => {
                   <h4 className='text-lg font-semibold text-gray-300 mb-2'>Controlled Popover</h4>
                   <Popover
                     isOpen={true}
-                    className='p-2 w-96'
+                    className='p-2'
                     trigger={<button className='font-light'>Open Controlled Popover</button>}
                   >
                     This is a controlled Popover.
+                  </Popover>
+                </div>
+
+                {/* Right Aligned Popover */}
+                <div>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Right Aligned Popover</h4>
+                  <Popover
+                    className='p-2'
+                    alignment='right'
+                    trigger={<button className='font-light'>Open Right Aligned Popover</button>}
+                    closeOnOverlayClick={false}
+                  >
+                    To the right.
+                  </Popover>
+                </div>
+
+                {/* Left Aligned Popover */}
+                <div>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Left Aligned Popover</h4>
+                  <Popover
+                    className='p-2'
+                    alignment='left'
+                    trigger={<button className='font-light'>Open Left Aligned Popover</button>}
+                    closeOnOverlayClick={false}
+                  >
+                    To the left.
                   </Popover>
                 </div>
               </div>

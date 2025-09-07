@@ -3,12 +3,15 @@ import React from 'react';
 import { join } from '../../lib/src/utils/join';
 import { mergeRefs } from './util';
 
+export type PopoverAlignment = 'left' | 'center' | 'right';
+
 export interface PopoverProps {
   isOpen?: boolean;
   children: React.ReactNode;
   className?: string;
   closeOnOverlayClick?: boolean;
   trigger: React.ReactElement
+  alignment?: PopoverAlignment;
 }
 
 interface TriggerProps {
@@ -18,12 +21,19 @@ interface TriggerProps {
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
+const POPOVER_ALIGNMENT_CLASSES: Record<PopoverAlignment, string> = {
+  left: 'left-0',
+  center: 'left-1/2 -translate-x-1/2',
+  right: 'right-0',
+};
+
 export function Popover({
   isOpen,
   children,
   className,
   closeOnOverlayClick = true,
   trigger,
+  alignment = 'center',
 }: PopoverProps) {
   const [internalIsOpen, setInternalIsOpen] = React.useState(isOpen !== undefined ? isOpen : false);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -140,6 +150,7 @@ export function Popover({
           ref={popoverRef}
           className={join(
             'bg-popover text-popover-foreground z-[90] absolute top-full mt-2 origin-top transform rounded-md py-1 shadow-lg transition-transform duration-1000 ease-out',
+            POPOVER_ALIGNMENT_CLASSES[alignment],
             className,
           )}
           role="dialog"
