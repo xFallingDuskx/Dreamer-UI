@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useId, useRef } from 'react';
 import { join } from '../../lib/src/utils/join';
 import { mergeRefs } from './util';
 
@@ -12,13 +12,6 @@ export interface PopoverProps {
   className?: string;
   closeOnOverlayClick?: boolean;
   closeOnTriggerClick?: boolean;
-}
-
-interface TriggerProps {
-  'aria-expanded': boolean | undefined;
-  'aria-haspopup': 'dialog';
-  ref?: React.Ref<HTMLElement>;
-  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 const POPOVER_ALIGNMENT_CLASSES: Record<PopoverAlignment, string> = {
@@ -40,6 +33,7 @@ export function Popover({
   const popoverRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  const popoverId = useId();
 
   useEffect(() => {
     if (isOpen !== undefined) {
@@ -121,12 +115,16 @@ export function Popover({
     }
   }, [internalIsOpen]);
 
-  const triggerProps = trigger.props as TriggerProps;
+  const triggerProps = trigger.props as {
+    ref?: React.Ref<HTMLElement>;
+    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  };
   const triggerElement = React.cloneElement(
     trigger as React.ReactElement,
     {
       'aria-expanded': internalIsOpen,
       'aria-haspopup': 'dialog',
+      'aria-controls': popoverId,
       ref: mergeRefs(triggerRef, triggerProps.ref),
       onClick: (e: React.MouseEvent<HTMLElement>) => {
         if (triggerProps.onClick) {
@@ -152,6 +150,7 @@ export function Popover({
     <div className='relative inline-block'>
       {triggerElement}
       <div
+        id={popoverId}
         ref={popoverRef}
         className={join(
           'bg-popover text-popover-foreground z-[90] absolute top-full mt-2 origin-top transform rounded-md shadow-lg transition-all ease-out',
