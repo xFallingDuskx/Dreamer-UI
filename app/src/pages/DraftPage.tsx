@@ -1,7 +1,16 @@
 import { Callout, Code, Disclosure, Popover } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
+import { Drawer } from '../../drawer/Drawer';
+import { useState } from 'react';
 
 export const DraftPage = () => {
+  const [drawerState, setDrawerState] = useState({
+    basic: false,
+    withFooter: false,
+    fullscreen: false,
+    nonDraggable: false,
+  });
+
   return (
     <ComponentPage
       title='Draft'
@@ -210,6 +219,73 @@ export const DraftPage = () => {
                   >
                     To the left.
                   </Popover>
+                </div>
+              </div>
+            </div>
+
+            {/* Drawer Component Testing */}
+            <div>
+              <h3 className='text-lg font-medium text-white mb-3'>Drawer Component Testing</h3>
+              <div className='space-y-4'>
+                {/* Example 1: Basic Drawer */}
+                <div>
+                  <button onClick={() => setDrawerState({ ...drawerState, basic: true })}>Open Basic Drawer</button>
+                  <Drawer
+                    isOpen={drawerState.basic}
+                    onClose={() => setDrawerState({ ...drawerState, basic: false })}
+                    title='Basic Drawer'
+                    size='md'
+                  >
+                    <div className='p-4'>This is a basic drawer with medium size.</div>
+                  </Drawer>
+                </div>
+
+                {/* Example 2: Drawer with Footer */}
+                <div>
+                  <button onClick={() => setDrawerState({ ...drawerState, withFooter: true })}>
+                    Open Drawer with Footer
+                  </button>
+                  <Drawer
+                    isOpen={drawerState.withFooter}
+                    onClose={() => setDrawerState({ ...drawerState, withFooter: false })}
+                    title='Drawer with Footer'
+                    size='lg'
+                    footer={<div className='text-center'>Footer Content</div>}
+                  >
+                    <div className='p-4'>This drawer includes a footer.</div>
+                  </Drawer>
+                </div>
+
+                {/* Example 3: Fullscreen Drawer */}
+                <div>
+                  <button onClick={() => setDrawerState({ ...drawerState, fullscreen: true })}>
+                    Open Fullscreen Drawer
+                  </button>
+                  <Drawer
+                    isOpen={drawerState.fullscreen}
+                    onClose={() => setDrawerState({ ...drawerState, fullscreen: false })}
+                    title='Fullscreen Drawer'
+                    size='screen'
+                    hideCloseButton={true}
+                  >
+                    <div className='p-4'>This is a fullscreen drawer without a close button.</div>
+                  </Drawer>
+                </div>
+
+                {/* Example 4: Drawer with Drag Gestures Disabled */}
+                <div>
+                  <button onClick={() => setDrawerState({ ...drawerState, nonDraggable: true })}>
+                    Open Non-Draggable Drawer
+                  </button>
+                  <Drawer
+                    isOpen={drawerState.nonDraggable}
+                    onClose={() => setDrawerState({ ...drawerState, nonDraggable: false })}
+                    title='Non-Draggable Drawer'
+                    size='sm'
+                    enableDragGestures={false}
+                  >
+                    <div className='p-4'>This drawer has drag gestures disabled.</div>
+                  </Drawer>
                 </div>
               </div>
             </div>
