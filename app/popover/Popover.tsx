@@ -1,5 +1,4 @@
-import { useEffect, useRef } from 'react';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { join } from '../../lib/src/utils/join';
 import { mergeRefs } from './util';
 
@@ -8,10 +7,11 @@ export type PopoverAlignment = 'left' | 'center' | 'right';
 export interface PopoverProps {
   isOpen?: boolean;
   children: React.ReactNode;
+  trigger: React.ReactElement;
+  alignment?: PopoverAlignment;
   className?: string;
   closeOnOverlayClick?: boolean;
-  trigger: React.ReactElement
-  alignment?: PopoverAlignment;
+  closeOnTriggerClick?: boolean;
 }
 
 interface TriggerProps {
@@ -34,6 +34,7 @@ export function Popover({
   closeOnOverlayClick = true,
   trigger,
   alignment = 'center',
+  closeOnTriggerClick = true,
 }: PopoverProps) {
   const [internalIsOpen, setInternalIsOpen] = React.useState(isOpen !== undefined ? isOpen : false);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -67,7 +68,7 @@ export function Popover({
 
     const handleMouseAction = (event: MouseEvent) => {
       const target = event.target as Node;
-      
+
       if (
         popoverRef.current &&
         !popoverRef.current.contains(target) &&
@@ -80,7 +81,7 @@ export function Popover({
 
     const handlePointerAction = (event: PointerEvent) => {
       const target = event.target as Node;
-      
+
       if (
         popoverRef.current &&
         !popoverRef.current.contains(target) &&
@@ -104,7 +105,7 @@ export function Popover({
     if (internalIsOpen) {
       // Store the currently focused element
       previousFocusRef.current = document.activeElement as HTMLElement;
-      
+
       // Focus popover after it's rendered
       setTimeout(() => {
         if (popoverRef.current) {
@@ -121,45 +122,49 @@ export function Popover({
   }, [internalIsOpen]);
 
   const triggerProps = trigger.props as TriggerProps;
-  const triggerElement = React.cloneElement(trigger as React.ReactElement, {
-    'aria-expanded': internalIsOpen,
-    'aria-haspopup': 'dialog',
-    ref: mergeRefs(triggerRef, triggerProps.ref),
-    onClick: (e: React.MouseEvent<HTMLElement>) => {
-      if (triggerProps.onClick) {
-        triggerProps.onClick(e);
-      }
-      if (isOpen === undefined) {
+  const triggerElement = React.cloneElement(
+    trigger as React.ReactElement,
+    {
+      'aria-expanded': internalIsOpen,
+      'aria-haspopup': 'dialog',
+      ref: mergeRefs(triggerRef, triggerProps.ref),
+      onClick: (e: React.MouseEvent<HTMLElement>) => {
+        if (triggerProps.onClick) {
+          triggerProps.onClick(e);
+        }
+
+        // If clicking the trigger should not close the popover when it's open
+        if (!closeOnTriggerClick && internalIsOpen) {
+          return;
+        }
+
         // Uncontrolled mode
-        if (e.defaultPrevented) return;
-        if (popoverRef.current?.contains(e.target as Node)) return;
-        setInternalIsOpen((prev) => !prev);
-      } else {
-        // Controlled mode
-        if (e.defaultPrevented) return;
-        if (popoverRef.current?.contains(e.target as Node)) return;
-      }
-    }
-  } as Record<string, unknown>);
+        if (isOpen === undefined) {
+          if (e.defaultPrevented) return;
+          if (popoverRef.current?.contains(e.target as Node)) return;
+          setInternalIsOpen((prev) => !prev);
+        }
+      },
+    } as Record<string, unknown>
+  );
 
   return (
-    <div className="relative inline-block">
+    <div className='relative inline-block'>
       {triggerElement}
-      {internalIsOpen && (
-        <div
-          ref={popoverRef}
-          className={join(
-            'bg-popover text-popover-foreground z-[90] absolute top-full mt-2 origin-top transform rounded-md py-1 shadow-lg transition-transform duration-1000 ease-out',
-            POPOVER_ALIGNMENT_CLASSES[alignment],
-            className,
-          )}
-          role="dialog"
-          aria-modal="true"
-          tabIndex={-1}
-        >
-          {children}
-        </div>
-      )}
+      <div
+        ref={popoverRef}
+        className={join(
+          'bg-popover text-popover-foreground z-[90] absolute top-full mt-2 origin-top transform rounded-md shadow-lg transition-all ease-out',
+          internalIsOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none',
+          POPOVER_ALIGNMENT_CLASSES[alignment],
+          className
+        )}
+        role='dialog'
+        aria-modal='true'
+        tabIndex={-1}
+      >
+        {children}
+      </div>
     </div>
   );
 }
