@@ -4,6 +4,8 @@ import { join, mergeRefs } from '../../utils';
 export type PopoverAlignment = 'left' | 'center' | 'right';
 
 export interface PopoverProps {
+  id?: string;
+  ref?: React.Ref<HTMLDivElement>;
   isOpen?: boolean;
   children: React.ReactNode;
   trigger: React.ReactElement;
@@ -20,6 +22,8 @@ const POPOVER_ALIGNMENT_CLASSES: Record<PopoverAlignment, string> = {
 };
 
 export function Popover({
+  id,
+  ref,
   isOpen,
   children,
   className,
@@ -59,7 +63,7 @@ export function Popover({
   useEffect(() => {
     if (!internalIsOpen || !closeOnOverlayClick) return;
 
-    const handleMouseAction = (event: MouseEvent) => {
+    const handleAction = (event: PointerEvent | MouseEvent) => {
       const target = event.target as Node;
 
       if (
@@ -72,24 +76,11 @@ export function Popover({
       }
     };
 
-    const handlePointerAction = (event: PointerEvent) => {
-      const target = event.target as Node;
-
-      if (
-        popoverRef.current &&
-        !popoverRef.current.contains(target) &&
-        triggerRef.current &&
-        !triggerRef.current.contains(target)
-      ) {
-        setInternalIsOpen(false);
-      }
-    };
-
-    document.addEventListener('pointerdown', handlePointerAction);
-    document.addEventListener('mousedown', handleMouseAction);
+    document.addEventListener('pointerdown', handleAction);
+    document.addEventListener('mousedown', handleAction);
     return () => {
-      document.removeEventListener('pointerdown', handlePointerAction);
-      document.removeEventListener('mousedown', handleMouseAction);
+      document.removeEventListener('pointerdown', handleAction);
+      document.removeEventListener('mousedown', handleAction);
     };
   }, [internalIsOpen, closeOnOverlayClick]);
 
@@ -100,11 +91,9 @@ export function Popover({
       previousFocusRef.current = document.activeElement as HTMLElement;
 
       // Focus popover after it's rendered
-      setTimeout(() => {
-        if (popoverRef.current) {
-          popoverRef.current.focus();
-        }
-      }, 0);
+      if (popoverRef.current) {
+        popoverRef.current.focus();
+      }
     } else {
       // Return focus to previously focused element
       if (previousFocusRef.current) {
@@ -146,7 +135,7 @@ export function Popover({
   );
 
   return (
-    <div className='relative inline-block'>
+    <div id={id} ref={ref} className='relative inline-block'>
       {triggerElement}
       <div
         id={popoverId}
