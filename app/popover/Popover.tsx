@@ -5,7 +5,6 @@ import { mergeRefs } from './util';
 
 export interface PopoverProps {
   isOpen?: boolean;
-  onClose?: () => void;
   children: React.ReactNode;
   className?: string;
   closeOnOverlayClick?: boolean;
@@ -21,7 +20,6 @@ interface TriggerProps {
 
 export function Popover({
   isOpen,
-  onClose,
   children,
   className,
   closeOnOverlayClick = true,
@@ -45,13 +43,13 @@ export function Popover({
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault();
-        onClose?.();
+        setInternalIsOpen(false);
       }
     };
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [internalIsOpen, onClose]);
+  }, [internalIsOpen]);
 
   // Handle click outside
   useEffect(() => {
@@ -66,7 +64,7 @@ export function Popover({
         triggerRef.current &&
         !triggerRef.current.contains(target)
       ) {
-        onClose?.();
+        setInternalIsOpen(false);
       }
     };
 
@@ -79,7 +77,7 @@ export function Popover({
         triggerRef.current &&
         !triggerRef.current.contains(target)
       ) {
-        onClose?.();
+        setInternalIsOpen(false);
       }
     };
 
@@ -89,7 +87,7 @@ export function Popover({
       document.removeEventListener('pointerdown', handlePointerAction);
       document.removeEventListener('mousedown', handleMouseAction);
     };
-  }, [internalIsOpen, onClose, closeOnOverlayClick]);
+  }, [internalIsOpen, closeOnOverlayClick]);
 
   // Handle focus management
   useEffect(() => {
@@ -125,18 +123,11 @@ export function Popover({
         // Uncontrolled mode
         if (e.defaultPrevented) return;
         if (popoverRef.current?.contains(e.target as Node)) return;
-
-        if (internalIsOpen) {
-          onClose?.();
-        }
         setInternalIsOpen((prev) => !prev);
       } else {
         // Controlled mode
         if (e.defaultPrevented) return;
         if (popoverRef.current?.contains(e.target as Node)) return;
-        if (internalIsOpen) {
-          onClose?.();
-        }
       }
     }
   } as Record<string, unknown>);
@@ -148,7 +139,7 @@ export function Popover({
         <div
           ref={popoverRef}
           className={join(
-            'bg-popover text-popover-foreground z-[90] absolute top-full mt-2 w-48 origin-top transform rounded-md py-1 shadow-lg transition-transform duration-1000 ease-out',
+            'bg-popover text-popover-foreground z-[90] absolute top-full mt-2 origin-top transform rounded-md py-1 shadow-lg transition-transform duration-1000 ease-out',
             className,
           )}
           role="dialog"

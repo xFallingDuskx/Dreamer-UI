@@ -1,11 +1,8 @@
 import { Callout, Code, Disclosure } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { Popover } from '../../popover/Popover';
-import { useState } from 'react';
 
 export const DraftPage = () => {
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
   return (
     <ComponentPage
       title='Draft'
@@ -167,26 +164,26 @@ export const DraftPage = () => {
             <div>
               <h3 className='text-xl font-bold text-white mb-3'>Popover Component Testing</h3>
               <div className='space-y-4'>
-                {/* Controlled Popover */}
-                <div>
-                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Controlled Popover</h4>
-                  <Popover
-                    isOpen={isPopoverOpen}
-                    onClose={() => setIsPopoverOpen(false)}
-                    trigger={<button className='font-light'>Open Controlled Popover</button>}
-                  >
-                    <div className='p-4'>This is a controlled Popover.</div>
-                  </Popover>
-                </div>
-
                 {/* Uncontrolled Popover */}
                 <div>
                   <h4 className='text-lg font-semibold text-gray-300 mb-2'>Uncontrolled Popover</h4>
                   <Popover
-                    onClose={() => alert('Popover closed!')}
+                    className='p-2 w-96'
                     trigger={<button className='font-light'>Open Uncontrolled Popover</button>}
                   >
-                    <div className='p-4'>This is an uncontrolled Popover.</div>
+                    This is an uncontrolled Popover.
+                  </Popover>
+                </div>
+
+                {/* Controlled Popover */}
+                <div>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Controlled Popover</h4>
+                  <Popover
+                    isOpen={true}
+                    className='p-2 w-96'
+                    trigger={<button className='font-light'>Open Controlled Popover</button>}
+                  >
+                    This is a controlled Popover.
                   </Popover>
                 </div>
               </div>
