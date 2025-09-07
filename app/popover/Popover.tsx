@@ -15,9 +15,9 @@ export interface PopoverProps {
 }
 
 const POPOVER_ALIGNMENT_CLASSES: Record<PopoverAlignment, string> = {
-  left: 'left-0',
-  center: 'left-1/2 -translate-x-1/2',
-  right: 'right-0',
+  left: 'left-0 origin-top-left',
+  center: 'left-1/2 -translate-x-1/2 origin-top',
+  right: 'right-0 origin-top-right',
 };
 
 export function Popover({
@@ -153,8 +153,8 @@ export function Popover({
         id={popoverId}
         ref={popoverRef}
         className={join(
-          'bg-popover text-popover-foreground z-[90] absolute top-full mt-2 origin-top transform rounded-md shadow-lg transition-all ease-out',
-          internalIsOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none',
+          'bg-popover text-popover-foreground z-[90] absolute top-full mt-2 transform rounded-md shadow-lg transition-all ease-out',
+          internalIsOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none',
           POPOVER_ALIGNMENT_CLASSES[alignment],
           className
         )}
