@@ -20,4 +20,9 @@ export interface DropdownSeparator {
   __type: 'separator';
 }
 
-export type DropdownItem = DropdownOption | DropdownOptionGroup | DropdownSeparator;
+export interface DropdownCustomItem {
+  __type: 'custom';
+  render: () => React.ReactNode;
+}
+
+export type DropdownItem = DropdownOption | DropdownOptionGroup | DropdownSeparator | DropdownCustomItem ;

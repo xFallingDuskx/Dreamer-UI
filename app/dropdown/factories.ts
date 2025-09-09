@@ -1,4 +1,4 @@
-import { DropdownItem, DropdownOption, DropdownOptionGroup, DropdownSeparator } from './types';
+import { DropdownCustomItem, DropdownItem, DropdownOption, DropdownOptionGroup, DropdownSeparator } from './types';
 
 export const option = (item: Omit<DropdownOption, '__type'>): DropdownOption => ({
   __type: 'option',
@@ -13,6 +13,11 @@ export const group = (items: DropdownItem[], title?: string): DropdownOptionGrou
 
 export const separator = (): DropdownSeparator => ({
   __type: 'separator',
+});
+
+export const custom = (render: () => React.ReactNode): DropdownCustomItem => ({
+  __type: 'custom',
+  render,
 });
 
 // Example usage // REMOVE
