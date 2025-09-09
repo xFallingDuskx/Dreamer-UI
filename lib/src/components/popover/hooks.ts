@@ -83,8 +83,14 @@ export function useAutoSwitchPlacement({
     window.addEventListener('scroll', handleScrollOrResize, true);
     window.addEventListener('resize', handleScrollOrResize);
 
+    // Listen for size changes in trigger or popover
     const resizeObserver = new ResizeObserver(updatePlacement);
-    resizeObserver.observe(document.body);
+    if (triggerRef.current) {
+      resizeObserver.observe(triggerRef.current);
+    }
+    if (popoverRef.current) {
+      resizeObserver.observe(popoverRef.current);
+    }
 
     return () => {
       window.removeEventListener('scroll', handleScrollOrResize, true);

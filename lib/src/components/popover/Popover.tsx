@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import { join, mergeRefs } from '../../utils';
 import { useAutoSwitchPlacement } from './hooks';
 import { placementVariants, PopoverAlignment, PopoverPlacement } from './variants';
@@ -18,6 +18,21 @@ export interface PopoverProps {
   offset?: number;
   /** Automatically switch placement to opposite side if there is not enough space in the viewport */
   autoSwitchPlacement?: boolean;
+}
+
+function getOffsetStyle(effectivePlacement: PopoverPlacement, offset: number) {
+  switch (effectivePlacement) {
+    case 'top':
+      return { marginBottom: `${offset}px` };
+    case 'bottom':
+      return { marginTop: `${offset}px` };
+    case 'left':
+      return { marginRight: `${offset}px` };
+    case 'right':
+      return { marginLeft: `${offset}px` };
+    default:
+      return {};
+  }
 }
 
 export function Popover({
@@ -96,21 +111,6 @@ export function Popover({
     }
   }, [internalIsOpen]);
 
-  const offsetStyle = useMemo(() => {
-    switch (effectivePlacement) {
-      case 'top':
-        return { marginBottom: `${offset}px` };
-      case 'bottom':
-        return { marginTop: `${offset}px` };
-      case 'left':
-        return { marginRight: `${offset}px` };
-      case 'right':
-        return { marginLeft: `${offset}px` };
-      default:
-        return {};
-    }
-  }, [effectivePlacement, offset]);
-
   // Trigger cloning
   const triggerProps = trigger.props as {
     ref?: React.Ref<HTMLElement>;
@@ -144,7 +144,7 @@ export function Popover({
           placementVariants[effectivePlacement][alignment],
           className
         )}
-        style={offsetStyle}
+        style={getOffsetStyle(effectivePlacement, offset)}
         role='dialog'
         aria-modal='true'
         tabIndex={-1}
