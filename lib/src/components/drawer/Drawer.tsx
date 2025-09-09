@@ -22,8 +22,8 @@ export interface DrawerProps {
   className?: string;
   /** Additional CSS classes for the overlay */
   overlayClassName?: string;
-  /** Whether to hide the close button */
-  hideCloseButton?: boolean;
+  /** Whether to show the close button */
+  showCloseButton?: boolean;
   /** Whether to disable closing when clicking the overlay */
   disableCloseOnOverlayClick?: boolean;
   /** Whether to enable drag gestures on the notch */
@@ -48,7 +48,7 @@ export function Drawer({
   footer,
   className,
   overlayClassName,
-  hideCloseButton = false,
+  showCloseButton = false,
   disableCloseOnOverlayClick = false,
   enableDragGestures = true,
   ariaLabelledBy,
@@ -59,7 +59,7 @@ export function Drawer({
   const titleId = `${generatedId}-title`;
 
   const { show, shouldRender } = useAnimationSlideIn(isOpen);
-  const { dragHandlers, translateY } = useDrawerDrag({
+  const { dragHandlers, translateY, isDragging } = useDrawerDrag({
     isOpen,
     onClose,
     enabled: enableDragGestures,
@@ -138,28 +138,30 @@ export function Drawer({
               }}
             >
               <div className='flex h-full flex-col'>
-                {/* Draggable notch handle */}
-                <div
-                  className={join(
-                    'flex justify-center pt-3 pb-2 cursor-grab active:cursor-grabbing',
-                    enableDragGestures && 'select-none'
-                  )}
-                  {...dragHandlers}
-                  role={enableDragGestures ? 'button' : undefined}
-                  tabIndex={enableDragGestures ? 0 : undefined}
-                  aria-label={enableDragGestures ? 'Drag to resize drawer' : undefined}
-                >
+                {enableDragGestures && (
                   <div
                     className={join(
-                      'w-12 h-1.5 bg-gray-300 rounded-full transition-colors',
-                      enableDragGestures && 'hover:bg-gray-400'
+                      'flex justify-center pt-3 pb-2 cursor-grab active:cursor-grabbing',
+                      enableDragGestures && 'select-none'
                     )}
-                  />
-                </div>
+                    {...dragHandlers}
+                    role={enableDragGestures ? 'button' : undefined}
+                    tabIndex={enableDragGestures ? 0 : undefined}
+                    aria-label={enableDragGestures ? 'Drag to resize drawer' : undefined}
+                  >
+                    <div
+                      className={join(
+                        'w-12 h-1.5 bg-popover-foreground/25 rounded-full transition-colors',
+                        enableDragGestures && 'hover:bg-popover-foreground/50',
+                        isDragging && 'bg-popover-foreground/50'
+                      )}
+                    />
+                  </div>
+                )}
 
                 {title && <div className='px-6 pt-4'>{renderTitle()}</div>}
 
-                {!hideCloseButton && (
+                {showCloseButton && (
                   <button
                     type='button'
                     onClick={onClose}
