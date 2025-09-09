@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { PopoverPlacement } from './Popover';
+import { PopoverPlacement } from './variants';
 
 interface UseAutoSwitchPlacementProps {
   internalIsOpen: boolean;
