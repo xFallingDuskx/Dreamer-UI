@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useRef } from 'react';
+import React, { useEffect, useId, useMemo, useRef } from 'react';
 import { join, mergeRefs } from '@moondreamsdev/dreamer-ui/utils';
 
 export type PopoverPlacement = 'top' | 'bottom' | 'left' | 'right';
@@ -15,6 +15,8 @@ export interface PopoverProps {
   className?: string;
   closeOnOverlayClick?: boolean;
   closeOnTriggerClick?: boolean;
+  /** Offset of the popover from the trigger element in pixel */
+  offset?: number;
 }
 
 const POPOVER_POSITION_CLASSES: Record<PopoverPlacement, Record<PopoverAlignment, string>> = {
@@ -51,12 +53,28 @@ export function Popover({
   placement = 'bottom',
   alignment = 'center',
   closeOnTriggerClick = true,
+  offset = 8,
 }: PopoverProps) {
   const [internalIsOpen, setInternalIsOpen] = React.useState(isOpen !== undefined ? isOpen : false);
   const popoverRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const popoverId = useId();
+
+  const offsetStyle = useMemo(() => {
+    switch (placement) {
+      case 'top':
+        return { marginBottom: `${offset}px` };
+      case 'bottom':
+        return { marginTop: `${offset}px` };
+      case 'left':
+        return { marginRight: `${offset}px` };
+      case 'right':
+        return { marginLeft: `${offset}px` };
+      default:
+        return {};
+    }
+  }, [placement, offset]);
 
   useEffect(() => {
     if (isOpen !== undefined) {
@@ -148,6 +166,7 @@ export function Popover({
           POPOVER_POSITION_CLASSES[placement][alignment],
           className
         )}
+        style={offsetStyle}
         role='dialog'
         aria-modal='true'
         tabIndex={-1}
