@@ -1,9 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { DrawerSize } from './variants';
 
-/**
- * Hook to manage slide-in animation state
- */
 export function useAnimationSlideIn(isOpen: boolean) {
   const [show, setShow] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
@@ -25,85 +21,37 @@ export function useAnimationSlideIn(isOpen: boolean) {
   return { show, shouldRender };
 }
 
-/**
- * Hook to manage drag gestures for drawer resizing
- */
 export function useDrawerDrag({
   isOpen,
-  initialSize,
   onClose,
-  onSizeChange,
   enabled = true,
 }: {
   isOpen: boolean;
-  initialSize: DrawerSize;
   onClose: () => void;
-  onSizeChange?: (size: DrawerSize) => void;
   enabled?: boolean;
 }) {
-  const [currentSize, setCurrentSize] = useState<DrawerSize>(initialSize);
   const [isDragging, setIsDragging] = useState(false);
   const [translateY, setTranslateY] = useState(0);
   const [startY, setStartY] = useState(0);
-  const initialHeight = useRef(0);
-
-  // Update current size when prop changes
-  useEffect(() => {
-    if (!isDragging) {
-      setCurrentSize(initialSize);
-    }
-  }, [initialSize, isDragging]);
-
-  const getSizeFromHeight = useCallback((height: number): DrawerSize => {
-    const vh = window.innerHeight;
-    const percentage = (height / vh) * 100;
-    
-    if (percentage >= 95) return 'screen';
-    if (percentage >= 80) return 'xl';
-    if (percentage >= 70) return 'lg';
-    if (percentage >= 55) return 'md';
-    return 'sm'
-  }, []);
-
-  const getHeightFromSize = useCallback((size: DrawerSize): number => {
-    const vh = window.innerHeight;
-    switch (size) {
-      case 'sm': return vh * 0.4;
-      case 'md': return vh * 0.6;
-      case 'lg': return vh * 0.75;
-      case 'xl': return vh * 0.85;
-      case 'screen': return vh;
-      default: return vh * 0.6;
-    }
-  }, []);
 
   const handleStart = useCallback((clientY: number) => {
     if (!enabled || !isOpen) return;
     
     setIsDragging(true);
     setStartY(clientY);
-    initialHeight.current = getHeightFromSize(currentSize);
     
     // Prevent text selection during drag
     document.body.style.userSelect = 'none';
-  }, [enabled, isOpen, currentSize, getHeightFromSize]);
+  }, [enabled, isOpen]);
 
   const handleMove = useCallback((clientY: number) => {
     if (!isDragging || !enabled) return;
 
-    const deltaY = startY - clientY; // Inverted: dragging up increases height
-    const newHeight = Math.max(100, initialHeight.current + deltaY);
-    const maxHeight = window.innerHeight;
-    const clampedHeight = Math.min(newHeight, maxHeight);
+    const deltaY = clientY - startY; // Positive when dragging down
+    const clampedDeltaY = Math.max(0, deltaY); // Only allow downward drag
     
-    // Calculate translate for smooth dragging
-    const targetTranslateY = Math.max(0, initialHeight.current - clampedHeight);
-    setTranslateY(targetTranslateY);
-
-    // Update size based on height
-    const newSize = getSizeFromHeight(clampedHeight);
-    setCurrentSize(newSize);
-  }, [isDragging, enabled, startY, getSizeFromHeight]);
+    setTranslateY(clampedDeltaY);
+  }, [isDragging, enabled, startY]);
 
   const handleEnd = useCallback(() => {
     if (!isDragging || !enabled) return;
@@ -111,31 +59,22 @@ export function useDrawerDrag({
     setIsDragging(false);
     document.body.style.userSelect = '';
 
-    // Determine final action based on drag distance and velocity
-    const dragDistance = translateY;
-    const threshold = getHeightFromSize(currentSize) * 0.3;
-
-    if (dragDistance > threshold) {
-      // Dragged down significantly - close drawer
+    // Close drawer if dragged down more than threshold
+    const threshold = 100; // pixels
+    if (translateY > threshold) {
       onClose();
-    } else {
-      // Snap to current size
-      if (onSizeChange && currentSize !== initialSize) {
-        onSizeChange(currentSize);
-      }
     }
 
     // Reset translate
     setTranslateY(0);
-  }, [isDragging, enabled, translateY, currentSize, initialSize, onClose, onSizeChange, getHeightFromSize]);
+  }, [isDragging, enabled, translateY, onClose]);
 
-  // Mouse events
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     handleStart(e.clientY);
   }, [handleStart]);
 
-  const handleMouseMove = useCallback((e: MouseEvent) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
     handleMove(e.clientY);
   }, [handleMove]);
 
@@ -143,13 +82,12 @@ export function useDrawerDrag({
     handleEnd();
   }, [handleEnd]);
 
-  // Touch events
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     e.preventDefault();
     handleStart(e.touches[0].clientY);
   }, [handleStart]);
 
-  const handleTouchMove = useCallback((e: TouchEvent) => {
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
     e.preventDefault();
     handleMove(e.touches[0].clientY);
   }, [handleMove]);
@@ -158,39 +96,32 @@ export function useDrawerDrag({
     handleEnd();
   }, [handleEnd]);
 
-  // Add global event listeners when dragging
-  useEffect(() => {
-    if (!isDragging) return;
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (!enabled) return;
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('touchmove', handleTouchMove, { passive: false });
-    document.addEventListener('touchend', handleTouchEnd);
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
-    };
-  }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd]);
+    if (e.key === 'ArrowDown' || e.key === 'Escape') {
+      e.preventDefault();
+      onClose();
+    }
+  }, [enabled, onClose]);
 
   const dragHandlers = enabled ? {
     onMouseDown: handleMouseDown,
+    onMouseMove: handleMouseMove,
+    onMouseUp: handleMouseUp,
     onTouchStart: handleTouchStart,
+    onTouchMove: handleTouchMove,
+    onTouchEnd: handleTouchEnd,
+    onKeyDown: handleKeyDown,
   } : {};
 
   return {
     dragHandlers,
-    currentSize,
     translateY,
     isDragging,
   };
 }
 
-/**
- * Hook to manage focus trapping within the drawer
- */
 export function useDrawerFocus(drawerId: string, shouldRender: boolean) {
   const previousActiveElement = useRef<Element | null>(null);
 
@@ -241,9 +172,6 @@ export function useDrawerFocus(drawerId: string, shouldRender: boolean) {
   }, [drawerId, shouldRender]);
 }
 
-/**
- * Hook to manage document changes when drawer is open (prevent body scroll, handle escape key)
- */
 export function useDrawerDocumentChanges(shouldRender: boolean, onClose: () => void) {
   useEffect(() => {
     if (!shouldRender) return;

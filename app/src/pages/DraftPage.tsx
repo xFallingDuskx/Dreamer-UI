@@ -234,9 +234,8 @@ export const DraftPage = () => {
                     isOpen={drawerState.basic}
                     onClose={() => setDrawerState({ ...drawerState, basic: false })}
                     title='Basic Drawer'
-                    size='md'
                   >
-                    <div className='p-4'>This is a basic drawer with medium size.</div>
+                    <div className='p-4 min-h-screen'>This is a basic drawer with medium size.</div>
                   </Drawer>
                 </div>
 
@@ -249,7 +248,6 @@ export const DraftPage = () => {
                     isOpen={drawerState.withFooter}
                     onClose={() => setDrawerState({ ...drawerState, withFooter: false })}
                     title='Drawer with Footer'
-                    size='lg'
                     footer={<div className='text-center'>Footer Content</div>}
                   >
                     <div className='p-4'>This drawer includes a footer.</div>
@@ -265,7 +263,6 @@ export const DraftPage = () => {
                     isOpen={drawerState.fullscreen}
                     onClose={() => setDrawerState({ ...drawerState, fullscreen: false })}
                     title='Fullscreen Drawer'
-                    size='screen'
                     hideCloseButton={true}
                   >
                     <div className='p-4'>This is a fullscreen drawer without a close button.</div>
@@ -281,7 +278,6 @@ export const DraftPage = () => {
                     isOpen={drawerState.nonDraggable}
                     onClose={() => setDrawerState({ ...drawerState, nonDraggable: false })}
                     title='Non-Draggable Drawer'
-                    size='sm'
                     enableDragGestures={false}
                   >
                     <div className='p-4'>This drawer has drag gestures disabled.</div>

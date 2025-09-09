@@ -2,7 +2,6 @@ import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useId } from 'react';
 import { createPortal } from 'react-dom';
 import { useAnimationSlideIn, useDrawerDocumentChanges, useDrawerFocus, useDrawerDrag } from './hooks';
-import { DrawerSize, drawerVariants } from './variants';
 import { X } from '../../lib/src/symbols/X';
 
 export interface DrawerProps {
@@ -19,8 +18,6 @@ export interface DrawerProps {
   children: React.ReactNode;
   /** Drawer footer - can be a string or React node */
   footer?: React.ReactNode;
-  /** Drawer size variant */
-  size?: DrawerSize;
   /** Additional CSS classes for the drawer */
   className?: string;
   /** Additional CSS classes for the overlay */
@@ -31,8 +28,6 @@ export interface DrawerProps {
   disableCloseOnOverlayClick?: boolean;
   /** Whether to enable drag gestures on the notch */
   enableDragGestures?: boolean;
-  /** Callback when drawer size changes via drag */
-  onSizeChange?: (size: DrawerSize) => void;
   /** ARIA labelledby attribute */
   ariaLabelledBy?: string;
   /** ARIA describedby attribute */
@@ -51,50 +46,26 @@ export function Drawer({
   title,
   children,
   footer,
-  size = 'md',
   className,
   overlayClassName,
   hideCloseButton = false,
   disableCloseOnOverlayClick = false,
   enableDragGestures = true,
-  onSizeChange,
   ariaLabelledBy,
   ariaDescribedBy,
 }: DrawerProps) {
   const generatedId = useId();
   const drawerId = id || `drawer-${generatedId}`;
-  const titleId = id ? `${id}-title` : `drawer-title-${generatedId}`;
+  const titleId = `${generatedId}-title`;
 
   const { show, shouldRender } = useAnimationSlideIn(isOpen);
-  const { dragHandlers, currentSize, translateY } = useDrawerDrag({
+  const { dragHandlers, translateY } = useDrawerDrag({
     isOpen,
-    initialSize: size,
     onClose,
-    onSizeChange,
     enabled: enableDragGestures,
   });
   useDrawerFocus(drawerId, shouldRender);
   useDrawerDocumentChanges(shouldRender, onClose);
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowUp' && onSizeChange) {
-      e.preventDefault();
-      const sizes: DrawerSize[] = ['sm', 'md', 'lg', 'xl', 'screen'];
-      const currentIndex = sizes.indexOf(currentSize);
-      if (currentIndex < sizes.length - 1) {
-        onSizeChange(sizes[currentIndex + 1]);
-      }
-    } else if (e.key === 'ArrowDown' && onSizeChange) {
-      e.preventDefault();
-      const sizes: DrawerSize[] = ['sm', 'md', 'lg', 'xl', 'screen'];
-      const currentIndex = sizes.indexOf(currentSize);
-      if (currentIndex > 0) {
-        onSizeChange(sizes[currentIndex - 1]);
-      } else {
-        onClose();
-      }
-    }
-  };
 
   if (!shouldRender) return null;
 
@@ -157,37 +128,33 @@ export function Drawer({
               ref={ref}
               tabIndex={-1}
               className={join(
-                'relative w-full transform shadow-xl bg-popover text-popover-foreground transition-transform duration-300 ease-in-out',
-                currentSize !== 'screen' && 'border-t border-border rounded-t-lg',
-                drawerVariants.size[currentSize],
+                'relative w-screen transform shadow-xl bg-popover text-popover-foreground transition-transform duration-300 ease-in-out border-t border-border rounded-t-lg',
                 show ? 'translate-y-0' : 'translate-y-full',
                 className
               )}
-              data-drawer-size={currentSize}
               style={{
-                transform: enableDragGestures && translateY !== 0 
-                  ? `translateY(${translateY}px)` 
-                  : undefined,
+                transform: enableDragGestures && translateY !== 0 ? `translateY(${translateY}px)` : undefined,
                 transition: translateY !== 0 ? 'none' : undefined,
               }}
             >
               <div className='flex h-full flex-col'>
                 {/* Draggable notch handle */}
-                <div 
+                <div
                   className={join(
                     'flex justify-center pt-3 pb-2 cursor-grab active:cursor-grabbing',
                     enableDragGestures && 'select-none'
                   )}
                   {...dragHandlers}
-                  role="button"
+                  role='button'
                   tabIndex={0}
-                  aria-label="Drag to resize drawer"
-                  onKeyDown={handleKeyDown}
+                  aria-label='Drag to resize drawer'
                 >
-                  <div className={join(
-                    'w-12 h-1.5 bg-gray-300 rounded-full transition-colors',
-                    enableDragGestures && 'hover:bg-gray-400'
-                  )} />
+                  <div
+                    className={join(
+                      'w-12 h-1.5 bg-gray-300 rounded-full transition-colors',
+                      enableDragGestures && 'hover:bg-gray-400'
+                    )}
+                  />
                 </div>
 
                 {title && <div className='px-6 pt-4'>{renderTitle()}</div>}
