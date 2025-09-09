@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "devh": "vite --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@moondreamsdev/dreamer-ui": "^1.7.10-test.55",
+    "@moondreamsdev/dreamer-ui": "^1.7.10-test.56",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.8.2"
