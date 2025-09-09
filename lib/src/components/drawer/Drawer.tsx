@@ -1,8 +1,8 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useId } from 'react';
 import { createPortal } from 'react-dom';
-import { useAnimationSlideIn, useDrawerDocumentChanges, useDrawerFocus, useDrawerDrag } from './hooks';
-import { X } from '../../lib/src/symbols/X';
+import { X } from '../../symbols';
+import { join } from '../../utils';
+import { useAnimationSlideIn, useDrawerDocumentChanges, useDrawerDrag, useDrawerFocus } from './hooks';
 
 export interface DrawerProps {
   ref?: React.Ref<HTMLDivElement>;

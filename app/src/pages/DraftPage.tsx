@@ -1,7 +1,6 @@
-import { Callout, Code, Disclosure, Popover } from '@moondreamsdev/dreamer-ui/components';
-import { ComponentPage } from '../components/layout/ComponentPage';
-import { Drawer } from '../../drawer/Drawer';
+import { Callout, Code, Disclosure, Drawer, Popover } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
+import { ComponentPage } from '../components/layout/ComponentPage';
 
 export const DraftPage = () => {
   const [drawerState, setDrawerState] = useState({
