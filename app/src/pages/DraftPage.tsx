@@ -1,6 +1,7 @@
-import { Callout, Code, Disclosure, Drawer, Popover } from '@moondreamsdev/dreamer-ui/components';
+import { Callout, Code, Disclosure, Drawer } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
+import { Popover } from '../../popover';
 
 export const DraftPage = () => {
   const [drawerState, setDrawerState] = useState({
@@ -169,7 +170,7 @@ export const DraftPage = () => {
 
             {/* Popover Component Testing */}
             <div>
-              <h3 className='text-xl font-bold text-white mb-3'>Popover Component Testing</h3>
+              <h3 className='text-lg font-medium text-white mb-3'>Popover Component Testing</h3>
               <div className='space-y-4'>
                 {/* Uncontrolled Popover */}
                 <div>
@@ -194,29 +195,65 @@ export const DraftPage = () => {
                   </Popover>
                 </div>
 
-                {/* Right Aligned Popover */}
+                {/* Start Aligned Popover */}
                 <div>
-                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Right Aligned Popover</h4>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Start Aligned Popover</h4>
                   <Popover
                     className='p-2'
-                    alignment='right'
-                    trigger={<button className='font-light'>Open Right Aligned Popover</button>}
+                    alignment='start'
+                    trigger={<button className='font-light'>Open Start Aligned Popover</button>}
                     closeOnOverlayClick={false}
                   >
                     To the right.
                   </Popover>
                 </div>
 
-                {/* Left Aligned Popover */}
+                {/* End Aligned Popover */}
                 <div>
-                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Left Aligned Popover</h4>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>End Aligned Popover</h4>
                   <Popover
                     className='p-2'
-                    alignment='left'
-                    trigger={<button className='font-light'>Open Left Aligned Popover</button>}
+                    alignment='end'
+                    trigger={<button className='font-light'>Open End Aligned Popover</button>}
                     closeOnTriggerClick={false}
                   >
                     To the left.
+                  </Popover>
+                </div>
+
+                {/* Top Placement */}
+                <div>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Top Placement</h4>
+                  <Popover
+                    placement='top'
+                    alignment='center'
+                    trigger={<button className='font-light'>Open Top Popover</button>}
+                  >
+                    This is a Popover with top placement.
+                  </Popover>
+                </div>
+
+                {/* Left Placement */}
+                <div>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Left Placement</h4>
+                  <Popover
+                    placement='left'
+                    alignment='start'
+                    trigger={<button className='font-light'>Open Left Popover</button>}
+                  >
+                    This is a Popover with left placement.
+                  </Popover>
+                </div>
+
+                {/* Right Placement */}
+                <div>
+                  <h4 className='text-lg font-semibold text-gray-300 mb-2'>Right Placement</h4>
+                  <Popover
+                    placement='right'
+                    alignment='start'
+                    trigger={<button className='font-light'>Open Right Popover</button>}
+                  >
+                    This is a Popover with right placement.
                   </Popover>
                 </div>
               </div>
