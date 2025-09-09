@@ -145,9 +145,9 @@ export function Drawer({
                     enableDragGestures && 'select-none'
                   )}
                   {...dragHandlers}
-                  role='button'
-                  tabIndex={0}
-                  aria-label='Drag to resize drawer'
+                  role={enableDragGestures ? 'button' : undefined}
+                  tabIndex={enableDragGestures ? 0 : undefined}
+                  aria-label={enableDragGestures ? 'Drag to resize drawer' : undefined}
                 >
                   <div
                     className={join(
