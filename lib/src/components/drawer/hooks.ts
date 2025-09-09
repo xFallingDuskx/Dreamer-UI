@@ -74,7 +74,7 @@ export function useDrawerDrag({
     handleStart(e.clientY);
   }, [handleStart]);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     handleMove(e.clientY);
   }, [handleMove]);
 
@@ -87,7 +87,7 @@ export function useDrawerDrag({
     handleStart(e.touches[0].clientY);
   }, [handleStart]);
 
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+  const handleTouchMove = useCallback((e: TouchEvent) => {
     e.preventDefault();
     handleMove(e.touches[0].clientY);
   }, [handleMove]);
@@ -95,6 +95,23 @@ export function useDrawerDrag({
   const handleTouchEnd = useCallback(() => {
     handleEnd();
   }, [handleEnd]);
+
+  // Add global event listeners when dragging for when it goes outside the drawer
+  useEffect(() => {
+    if (!isDragging) return;
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.addEventListener('touchend', handleTouchEnd);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (!enabled) return;
@@ -107,11 +124,7 @@ export function useDrawerDrag({
 
   const dragHandlers = enabled ? {
     onMouseDown: handleMouseDown,
-    onMouseMove: handleMouseMove,
-    onMouseUp: handleMouseUp,
     onTouchStart: handleTouchStart,
-    onTouchMove: handleTouchMove,
-    onTouchEnd: handleTouchEnd,
     onKeyDown: handleKeyDown,
   } : {};
 
