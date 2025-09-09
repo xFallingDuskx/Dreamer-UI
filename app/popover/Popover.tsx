@@ -1,5 +1,6 @@
-import React, { useEffect, useId, useMemo, useRef } from 'react';
+import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { join, mergeRefs } from '@moondreamsdev/dreamer-ui/utils';
+import { useAutoSwitchPlacement } from './hooks';
 
 export type PopoverPlacement = 'top' | 'bottom' | 'left' | 'right';
 export type PopoverAlignment = 'start' | 'center' | 'end';
@@ -17,28 +18,30 @@ export interface PopoverProps {
   closeOnTriggerClick?: boolean;
   /** Offset of the popover from the trigger element in pixel */
   offset?: number;
+  /** Automatically switch placement to opposite side if there is not enough space in the viewport */
+  autoSwitchPlacement?: boolean;
 }
 
 const POPOVER_POSITION_CLASSES: Record<PopoverPlacement, Record<PopoverAlignment, string>> = {
   bottom: {
-    start: 'top-full left-0 mt-2 origin-top-left',
-    center: 'top-full left-1/2 mt-2 -translate-x-1/2 origin-top',
-    end: 'top-full right-0 mt-2 origin-top-right',
+    start: 'top-full left-0 origin-top-left',
+    center: 'top-full left-1/2 -translate-x-1/2 origin-top',
+    end: 'top-full right-0 origin-top-right',
   },
   top: {
-    start: 'bottom-full left-0 mb-2 origin-bottom-left',
-    center: 'bottom-full left-1/2 mb-2 -translate-x-1/2 origin-bottom',
-    end: 'bottom-full right-0 mb-2 origin-bottom-right',
+    start: 'bottom-full left-0 origin-bottom-left',
+    center: 'bottom-full left-1/2 -translate-x-1/2 origin-bottom',
+    end: 'bottom-full right-0 origin-bottom-right',
   },
   left: {
-    start: 'right-full top-0 mr-2 origin-top-right',
-    center: 'right-full top-1/2 mr-2 -translate-y-1/2 origin-right',
-    end: 'right-full bottom-0 mr-2 origin-bottom-right',
+    start: 'right-full top-0 origin-top-right',
+    center: 'right-full top-1/2 -translate-y-1/2 origin-right',
+    end: 'right-full bottom-0 origin-bottom-right',
   },
   right: {
-    start: 'left-full top-0 ml-2 origin-top-left',
-    center: 'left-full top-1/2 ml-2 -translate-y-1/2 origin-left',
-    end: 'left-full bottom-0 ml-2 origin-bottom-left',
+    start: 'left-full top-0 origin-top-left',
+    center: 'left-full top-1/2 -translate-y-1/2 origin-left',
+    end: 'left-full bottom-0 origin-bottom-left',
   },
 };
 
@@ -54,27 +57,22 @@ export function Popover({
   alignment = 'center',
   closeOnTriggerClick = true,
   offset = 8,
+  autoSwitchPlacement = true,
 }: PopoverProps) {
-  const [internalIsOpen, setInternalIsOpen] = React.useState(isOpen !== undefined ? isOpen : false);
+  const [internalIsOpen, setInternalIsOpen] = useState(isOpen ?? false);
   const popoverRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const popoverId = useId();
 
-  const offsetStyle = useMemo(() => {
-    switch (placement) {
-      case 'top':
-        return { marginBottom: `${offset}px` };
-      case 'bottom':
-        return { marginTop: `${offset}px` };
-      case 'left':
-        return { marginRight: `${offset}px` };
-      case 'right':
-        return { marginLeft: `${offset}px` };
-      default:
-        return {};
-    }
-  }, [placement, offset]);
+  const effectivePlacement = useAutoSwitchPlacement({
+    internalIsOpen,
+    autoSwitchPlacement,
+    placement,
+    offset,
+    triggerRef,
+    popoverRef,
+  });
 
   useEffect(() => {
     if (isOpen !== undefined) {
@@ -87,7 +85,6 @@ export function Popover({
     if (!internalIsOpen) return;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        event.preventDefault();
         setInternalIsOpen(false);
       }
     };
@@ -98,7 +95,7 @@ export function Popover({
   // Handle click outside
   useEffect(() => {
     if (!internalIsOpen || !closeOnOverlayClick) return;
-    const handleAction = (event: PointerEvent | MouseEvent) => {
+    const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
       if (
         popoverRef.current &&
@@ -109,50 +106,56 @@ export function Popover({
         setInternalIsOpen(false);
       }
     };
-    document.addEventListener('pointerdown', handleAction);
-    document.addEventListener('mousedown', handleAction);
-    return () => {
-      document.removeEventListener('pointerdown', handleAction);
-      document.removeEventListener('mousedown', handleAction);
-    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [internalIsOpen, closeOnOverlayClick]);
 
   // Handle focus management
   useEffect(() => {
     if (internalIsOpen) {
       previousFocusRef.current = document.activeElement as HTMLElement;
-      if (popoverRef.current) popoverRef.current.focus();
+      popoverRef.current?.focus();
     } else {
-      if (previousFocusRef.current) {
-        previousFocusRef.current.focus();
-        previousFocusRef.current = null;
-      }
+      previousFocusRef.current?.focus();
+      previousFocusRef.current = null;
     }
   }, [internalIsOpen]);
 
+  const offsetStyle = useMemo(() => {
+    switch (effectivePlacement) {
+      case 'top':
+        return { marginBottom: `${offset}px` };
+      case 'bottom':
+        return { marginTop: `${offset}px` };
+      case 'left':
+        return { marginRight: `${offset}px` };
+      case 'right':
+        return { marginLeft: `${offset}px` };
+      default:
+        return {};
+    }
+  }, [effectivePlacement, offset]);
+
+  // Trigger cloning
   const triggerProps = trigger.props as {
     ref?: React.Ref<HTMLElement>;
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   };
-  const triggerElement = React.cloneElement(
-    trigger as React.ReactElement,
-    {
-      'aria-expanded': internalIsOpen,
-      'aria-haspopup': 'dialog',
-      'aria-controls': popoverId,
-      ref: mergeRefs(triggerRef, triggerProps.ref),
-      onClick: (e: React.MouseEvent<HTMLElement>) => {
-        if (triggerProps.onClick) triggerProps.onClick(e);
-        if (!closeOnTriggerClick && internalIsOpen) return;
-        if (isOpen === undefined) {
-          // Uncontrolled case
-          if (e.defaultPrevented) return;
-          if (popoverRef.current?.contains(e.target as Node)) return;
-          setInternalIsOpen((prev) => !prev);
-        }
-      },
-    } as Record<string, unknown>
-  );
+  const triggerElement = React.cloneElement(trigger, {
+    'aria-expanded': internalIsOpen,
+    'aria-haspopup': 'dialog',
+    'aria-controls': popoverId,
+    ref: mergeRefs(triggerRef, triggerProps.ref),
+    onClick: (e: React.MouseEvent<HTMLElement>) => {
+      triggerProps.onClick?.(e);
+      if (!closeOnTriggerClick && internalIsOpen) return;
+      if (isOpen === undefined) {
+        if (e.defaultPrevented) return;
+        if (popoverRef.current?.contains(e.target as Node)) return;
+        setInternalIsOpen((prev) => !prev);
+      }
+    },
+  } as Record<string, unknown>);
 
   return (
     <div id={id} ref={ref} className='relative inline-block'>
@@ -161,9 +164,9 @@ export function Popover({
         id={popoverId}
         ref={popoverRef}
         className={join(
-          'bg-popover text-popover-foreground z-[90] absolute transform rounded-md shadow-lg transition-all ease-out',
+          'absolute z-[90] transform rounded-md shadow-lg bg-popover text-popover-foreground transition-all ease-out',
           internalIsOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none',
-          POPOVER_POSITION_CLASSES[placement][alignment],
+          POPOVER_POSITION_CLASSES[effectivePlacement][alignment],
           className
         )}
         style={offsetStyle}
