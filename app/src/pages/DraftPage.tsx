@@ -262,9 +262,9 @@ export const DraftPage = () => {
                     isOpen={drawerState.fullscreen}
                     onClose={() => setDrawerState({ ...drawerState, fullscreen: false })}
                     title='Fullscreen Drawer'
-                    hideCloseButton={true}
+                    showCloseButton={true}
                   >
-                    <div className='p-4'>This is a fullscreen drawer without a close button.</div>
+                    <div className='p-4'>This is a fullscreen drawer with a close button.</div>
                   </Drawer>
                 </div>
 
@@ -278,6 +278,7 @@ export const DraftPage = () => {
                     onClose={() => setDrawerState({ ...drawerState, nonDraggable: false })}
                     title='Non-Draggable Drawer'
                     enableDragGestures={false}
+                    showCloseButton={true}
                   >
                     <div className='p-4'>This drawer has drag gestures disabled.</div>
                   </Drawer>
