@@ -1,27 +1,27 @@
-import { DropdownCustomItem, DropdownItem, DropdownOption, DropdownOptionGroup, DropdownSeparator } from './types';
+import { DropdownMenuCustomItem, DropdownMenuItem, DropdownMenuOption, DropdownMenuOptionGroup, DropdownMenuSeparator } from './types';
 
-export const option = (item: Omit<DropdownOption, '__type'>): DropdownOption => ({
+export const option = (item: Omit<DropdownMenuOption, '__type'>): DropdownMenuOption => ({
   __type: 'option',
   ...item,
 });
 
-export const group = (items: DropdownItem[], title?: string): DropdownOptionGroup => ({
+export const group = (items: DropdownMenuItem[], title?: string): DropdownMenuOptionGroup => ({
   __type: 'group',
   title,
   items,
 });
 
-export const separator = (): DropdownSeparator => ({
+export const separator = (): DropdownMenuSeparator => ({
   __type: 'separator',
 });
 
-export const custom = (render: () => React.ReactNode): DropdownCustomItem => ({
+export const custom = (render: () => React.ReactNode): DropdownMenuCustomItem => ({
   __type: 'custom',
   render,
 });
 
 // Example usage // REMOVE
-export const exampleGroups: DropdownItem[] = [
+export const exampleGroups: DropdownMenuItem[] = [
   group([
     option({ label: 'Option 1', value: 'option1' }),
     option({ label: 'Option 2', value: 'option2', disabled: true }),
