@@ -15,7 +15,7 @@ const DropdownDemo = () => {
           value: 'new-file',
           icon: <div className='w-4 h-4 bg-blue-500 rounded' />,
           description: 'Create a new file',
-          
+          keyboardShortcut: '⌘N',
         }),
         option({
           label: 'Open',
@@ -27,6 +27,7 @@ const DropdownDemo = () => {
           label: 'Export',
           value: 'export',
           icon: <div className='w-4 h-4 bg-orange-500 rounded' />,
+          keyboardShortcut: '⌘E',
           subItems: [
             option({ label: 'Export as PDF', value: 'export-pdf' }),
             option({ label: 'Export as CSV', value: 'export-csv' }),
@@ -52,7 +53,7 @@ const DropdownDemo = () => {
             option({ label: 'Import XML', value: 'import-xml' }),
           ],
         }),
-      ]),
+      ], 'File system'),
 
     group(
       [

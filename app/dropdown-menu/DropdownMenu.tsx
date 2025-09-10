@@ -19,7 +19,7 @@ interface SubMenuProps {
 
 const getOptionClasses = (disabled?: boolean, additionalClasses?: string) => {
   return join(
-    'flex items-center gap-2 px-3 py-2 text-sm',
+    'flex items-center gap-1 px-3 py-2 text-sm',
     disabled ? 'opacity-50 cursor-default' : 'hover:bg-popover-foreground/10 cursor-pointer',
     additionalClasses
   );
@@ -53,13 +53,14 @@ function SubMenu({ option, onItemSelect, onClose }: SubMenuProps) {
   return (
     <div ref={itemRef} className='relative' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <div
-        className={getOptionClasses(option.disabled, 'justify-between')}
+        className={getOptionClasses(option.disabled)}
         onClick={!option.disabled ? handleItemClick : undefined}
       >
-        <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-2 flex-1'>
           {option.icon && <span className='size-4'>{option.icon}</span>}
           <span>{option.label}</span>
         </div>
+        {option.keyboardShortcut && <div className='text-xs text-popover-foreground/60'>{option.keyboardShortcut}</div>}
         {option.subItems && option.subItems.length > 0 && <ChevronRight className='size-4' />}
       </div>
 
@@ -119,6 +120,7 @@ function MenuBody({ items, onItemSelect, onClose, className = '' }: MenuBodyProp
               <div>{item.label}</div>
               {item.description && <div className='text-xs text-popover-foreground/60'>{item.description}</div>}
             </div>
+            {item.keyboardShortcut && <div className='text-xs text-popover-foreground/60'>{item.keyboardShortcut}</div>}
           </div>
         );
 
@@ -146,7 +148,12 @@ function MenuBody({ items, onItemSelect, onClose, className = '' }: MenuBodyProp
   };
 
   return (
-    <div className={join('border py-1 border-popover-foreground/20 rounded-md min-w-48 shadow-lg bg-popover text-popover-foreground', className)}>
+    <div
+      className={join(
+        'border py-1 border-popover-foreground/20 rounded-md min-w-52 shadow-lg bg-popover text-popover-foreground',
+        className
+      )}
+    >
       {items.map((item, index) => renderItem(item, String(index)))}
     </div>
   );

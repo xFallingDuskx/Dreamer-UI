@@ -5,6 +5,7 @@ export interface DropdownMenuOption {
   disabled?: boolean;
   icon?: React.ReactElement;
   description?: string;
+  keyboardShortcut?: string;
   href?: string;
   onClick?: () => void;
   subItems?: DropdownMenuItem[];
