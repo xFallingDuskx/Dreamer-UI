@@ -1,6 +1,7 @@
 import { Popover, PopoverProps } from '@moondreamsdev/dreamer-ui/components';
-import { ChevronRight } from '@moondreamsdev/dreamer-ui/symbols';
+import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useCallback, useRef, useState } from 'react';
+import { ChevronRight } from '../../lib/src/symbols';
 import { DropdownMenuItem, DropdownMenuOption } from './types';
 
 export interface DropdownMenuProps extends Omit<PopoverProps, 'children'> {
@@ -16,8 +17,16 @@ interface SubMenuProps {
   onClose?: () => void;
 }
 
+const getOptionClasses = (disabled?: boolean, additionalClasses?: string) => {
+  return join(
+    'flex items-center gap-2 px-3 py-2 text-sm',
+    disabled ? 'opacity-50 cursor-default' : 'hover:bg-popover-foreground/10 cursor-pointer',
+    additionalClasses
+  );
+};
+
 // Sub-menu component
-export function SubMenu({ option, onItemSelect, onClose }: SubMenuProps) {
+function SubMenu({ option, onItemSelect, onClose }: SubMenuProps) {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const itemRef = useRef<HTMLDivElement>(null);
 
@@ -44,37 +53,33 @@ export function SubMenu({ option, onItemSelect, onClose }: SubMenuProps) {
   return (
     <div ref={itemRef} className='relative' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <div
-        className={`
-          flex items-center justify-between px-3 py-2 text-sm cursor-pointer
-          hover:bg-gray-100 dark:hover:bg-gray-700
-          ${option.disabled ? 'opacity-50 cursor-not-allowed' : ''}
-        `}
+        className={getOptionClasses(option.disabled, 'justify-between')}
         onClick={!option.disabled ? handleItemClick : undefined}
       >
         <div className='flex items-center gap-2'>
-          {option.icon && <span className='w-4 h-4'>{option.icon}</span>}
+          {option.icon && <span className='size-4'>{option.icon}</span>}
           <span>{option.label}</span>
         </div>
-        {option.subItems && option.subItems.length > 0 && <ChevronRight className='w-4 h-4' />}
+        {option.subItems && option.subItems.length > 0 && <ChevronRight className='size-4' />}
       </div>
 
       {isSubMenuOpen && option.subItems && option.subItems.length > 0 && (
-        <div className='absolute left-full top-0 ml-1 z-30'>
-          <MainMenu items={option.subItems} onItemSelect={onItemSelect} onClose={onClose} className='min-w-48' />
+        <div className='absolute left-full top-0 z-30'>
+          <MenuBody items={option.subItems} onItemSelect={onItemSelect} onClose={onClose} />
         </div>
       )}
     </div>
   );
 }
 
-interface MainMenuProps {
+interface MenuBodyProps {
   items: DropdownMenuItem[];
   onItemSelect?: (value: string) => void;
   onClose?: () => void;
   className?: string;
 }
 
-export function MainMenu({ items, onItemSelect, onClose, className = '' }: MainMenuProps) {
+function MenuBody({ items, onItemSelect, onClose, className = '' }: MenuBodyProps) {
   const handleItemSelect = useCallback(
     (value: string) => {
       if (onItemSelect) {
@@ -91,17 +96,13 @@ export function MainMenu({ items, onItemSelect, onClose, className = '' }: MainM
     switch (item.__type) {
       case 'option':
         if (item.subItems && item.subItems.length > 0) {
-          return <SubMenu key={key} option={item} onItemSelect={handleItemSelect} onClose={onClose} />;
+          return <SubMenu key={key} option={item} onItemSelect={onItemSelect} onClose={onClose} />;
         }
 
         return (
           <div
             key={key}
-            className={`
-              flex items-center gap-2 px-3 py-2 text-sm cursor-pointer
-              hover:bg-gray-100 dark:hover:bg-gray-700
-              ${item.disabled ? 'opacity-50 cursor-not-allowed' : ''}
-            `}
+            className={getOptionClasses(item.disabled)}
             onClick={() => {
               if (!item.disabled) {
                 if (item.onClick) {
@@ -113,10 +114,10 @@ export function MainMenu({ items, onItemSelect, onClose, className = '' }: MainM
               }
             }}
           >
-            {item.icon && <span className='w-4 h-4'>{item.icon}</span>}
+            {item.icon && <span className='size-4'>{item.icon}</span>}
             <div className='flex-1'>
               <div>{item.label}</div>
-              {item.description && <div className='text-xs text-gray-500 dark:text-gray-400'>{item.description}</div>}
+              {item.description && <div className='text-xs text-popover-foreground/60'>{item.description}</div>}
             </div>
           </div>
         );
@@ -134,7 +135,7 @@ export function MainMenu({ items, onItemSelect, onClose, className = '' }: MainM
         );
 
       case 'separator':
-        return <div key={key} className='my-1 border-t border-gray-200 dark:border-gray-600' />;
+        return <div key={key} className='my-1 mx-2 border-t border-popover-foreground/20' />;
 
       case 'custom':
         return <div key={key}>{item.render()}</div>;
@@ -145,13 +146,7 @@ export function MainMenu({ items, onItemSelect, onClose, className = '' }: MainM
   };
 
   return (
-    <div
-      className={`
-      bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 
-      rounded-md shadow-lg py-1 min-w-48 max-h-96 overflow-y-auto
-      ${className}
-    `}
-    >
+    <div className={join('border py-1 border-popover-foreground/20 rounded-md min-w-48 shadow-lg bg-popover text-popover-foreground', className)}>
       {items.map((item, index) => renderItem(item, String(index)))}
     </div>
   );
@@ -165,6 +160,7 @@ export function DropdownMenu({
   placement = 'bottom',
   alignment = 'start',
   onOpenChange,
+  className = '',
   ...popoverProps
 }: DropdownMenuProps) {
   const [internalOpen, setInternalOpen] = useState(false);
@@ -217,9 +213,10 @@ export function DropdownMenu({
       placement={placement}
       alignment={alignment}
       onOpenChange={handleOpenChange}
+      className={join('min-w-52', className)}
       {...popoverProps}
     >
-      <MainMenu items={items} onItemSelect={handleItemSelect} onClose={handleClose} />
+      <MenuBody items={items} onItemSelect={handleItemSelect} onClose={handleClose} className={className} />
     </Popover>
   );
 }

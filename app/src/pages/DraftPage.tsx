@@ -15,6 +15,7 @@ const DropdownDemo = () => {
           value: 'new-file',
           icon: <div className='w-4 h-4 bg-blue-500 rounded' />,
           description: 'Create a new file',
+          
         }),
         option({
           label: 'Open',
@@ -51,9 +52,7 @@ const DropdownDemo = () => {
             option({ label: 'Import XML', value: 'import-xml' }),
           ],
         }),
-      ],
-      'File Operations'
-    ),
+      ]),
 
     group(
       [
