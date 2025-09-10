@@ -19,7 +19,7 @@ interface SubMenuProps {
 
 const getOptionClasses = (disabled?: boolean, additionalClasses?: string) => {
   return join(
-    'flex items-center gap-1 px-3 py-2 text-sm',
+    'flex items-center gap-2 px-3 py-2 text-sm',
     disabled ? 'opacity-50 cursor-default' : 'hover:bg-popover-foreground/10 cursor-pointer',
     additionalClasses
   );
@@ -52,16 +52,17 @@ function SubMenu({ option, onItemSelect, onClose }: SubMenuProps) {
 
   return (
     <div ref={itemRef} className='relative' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <div
-        className={getOptionClasses(option.disabled)}
-        onClick={!option.disabled ? handleItemClick : undefined}
-      >
+      <div className={getOptionClasses(option.disabled)} onClick={!option.disabled ? handleItemClick : undefined}>
         <div className='flex items-center gap-2 flex-1'>
           {option.icon && <span className='size-4'>{option.icon}</span>}
           <span>{option.label}</span>
         </div>
-        {option.keyboardShortcut && <div className='text-xs text-popover-foreground/60'>{option.keyboardShortcut}</div>}
-        {option.subItems && option.subItems.length > 0 && <ChevronRight className='size-4' />}
+        <div className='flex items-center gap-0.5'>
+          {option.keyboardShortcut && (
+            <div className='text-xs text-popover-foreground/60'>{option.keyboardShortcut}</div>
+          )}
+          {option.subItems && option.subItems.length > 0 && <ChevronRight className='size-4' />}
+        </div>
       </div>
 
       {isSubMenuOpen && option.subItems && option.subItems.length > 0 && (
