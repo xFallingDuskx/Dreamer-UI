@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { join, mergeRefs } from '../../utils';
 import { useAutoSwitchPlacement } from './hooks';
 import { placementVariants, PopoverAlignment, PopoverPlacement } from './variants';
@@ -7,6 +7,7 @@ export interface PopoverProps {
   id?: string;
   ref?: React.Ref<HTMLDivElement>;
   isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
   trigger: React.ReactElement;
   placement?: PopoverPlacement;
@@ -39,6 +40,7 @@ export function Popover({
   id,
   ref,
   isOpen,
+  onOpenChange,
   children,
   className,
   closeOnOverlayClick = true,
@@ -64,6 +66,18 @@ export function Popover({
     popoverRef,
   });
 
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      if (isOpen === undefined) {
+        setInternalIsOpen(open);
+      }
+      if (onOpenChange) {
+        onOpenChange(open);
+      }
+    },
+    [isOpen, onOpenChange]
+  );
+
   useEffect(() => {
     if (isOpen !== undefined) {
       setInternalIsOpen(isOpen);
@@ -75,12 +89,12 @@ export function Popover({
     if (!internalIsOpen) return;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setInternalIsOpen(false);
+        handleOpenChange(false);
       }
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [internalIsOpen]);
+  }, [internalIsOpen, handleOpenChange]);
 
   // Handle click outside
   useEffect(() => {
@@ -93,12 +107,12 @@ export function Popover({
         triggerRef.current &&
         !triggerRef.current.contains(target)
       ) {
-        setInternalIsOpen(false);
+        handleOpenChange(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [internalIsOpen, closeOnOverlayClick]);
+  }, [internalIsOpen, closeOnOverlayClick, handleOpenChange]);
 
   // Handle focus management
   useEffect(() => {
@@ -127,7 +141,7 @@ export function Popover({
       if (isOpen === undefined) {
         if (e.defaultPrevented) return;
         if (popoverRef.current?.contains(e.target as Node)) return;
-        setInternalIsOpen((prev) => !prev);
+        handleOpenChange(!internalIsOpen);
       }
     },
   } as Record<string, unknown>);
