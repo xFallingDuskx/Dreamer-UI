@@ -33,6 +33,7 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
   const [hasExited, setHasExited] = useState(false); // if submenu was exited with keyboard
   const itemRef = useRef<HTMLDivElement>(null);
   const previousLevelRef = useRef<number | undefined>(undefined);
+  const submenuId = useId()
 
   const handleMouseEnter = () => {
     if (option.disabled) return;
@@ -58,7 +59,7 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
     if (e.key === 'ArrowRight') {
       e.preventDefault();
       if (option.disabled) return;
-      setHasExited(false)
+      setHasExited(false);
     }
   };
 
@@ -87,6 +88,8 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
     previousLevelRef.current = focusLevel;
   }, [focus, level]); // include entire object to reset when index changes as well (allows reopening same submenu item)
 
+  const hasSubitems = option.subItems !== undefined && option.subItems.length > 0;
+  const showingSubmenu = isSubMenuOpen && !hasExited && hasSubitems;
   return (
     <div
       ref={itemRef}
@@ -100,7 +103,11 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
       data-menu-item={option.value}
       data-level={level}
       data-index={index}
-      data-disabled={option.disabled ? 'true' : undefined}
+      aria-haspopup={hasSubitems ? 'true' : undefined}
+      aria-expanded={showingSubmenu ? 'true' : 'false'}
+      aria-disabled={option.disabled ? 'true' : undefined}
+      aria-label={option.label}
+      aria-controls={showingSubmenu ? submenuId : undefined}
     >
       <div className={getOptionClasses(option.disabled)} onClick={!option.disabled ? handleItemClick : undefined}>
         <div className='flex items-center gap-2 flex-1'>
@@ -111,20 +118,20 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
           {option.keyboardShortcut && (
             <div className='text-xs text-popover-foreground/60'>{option.keyboardShortcut}</div>
           )}
-          {option.subItems && option.subItems.length > 0 && <ChevronRight className='size-4' />}
+          {hasSubitems && <ChevronRight className='size-4' />}
         </div>
       </div>
 
-      {isSubMenuOpen && !hasExited && option.subItems && option.subItems.length > 0 && (
+      {showingSubmenu && (
         <div className='absolute left-full top-0 z-30'>
-          <MenuBody items={option.subItems} level={level + 1} />
+          <MenuBody items={option.subItems ?? []} level={level + 1} id={submenuId} />
         </div>
       )}
     </div>
   );
 }
 
-function MenuBody({ items, level }: { items: DropdownMenuItem[]; level: number }) {
+function MenuBody({ items, level, id }: { items: DropdownMenuItem[]; level: number; id?: string }) {
   const { setFocus, onItemSelect, className = '' } = useDropdownMenuContext();
   let itemIndex = 0;
 
@@ -153,7 +160,7 @@ function MenuBody({ items, level }: { items: DropdownMenuItem[]; level: number }
             data-level={level}
             data-index={itemIndex++}
             tabIndex={-1}
-            data-disabled={item.disabled ? 'true' : undefined}
+            aria-disabled={item.disabled ? 'true' : undefined}
             onMouseOver={(e: React.MouseEvent) => {
               e.preventDefault();
               if (item.disabled) return;
@@ -185,7 +192,7 @@ function MenuBody({ items, level }: { items: DropdownMenuItem[]; level: number }
         );
 
       case 'separator':
-        return <div key={key} className='my-1 mx-2 border-t border-popover-foreground/20' />;
+        return <div key={key} aria-hidden={true} className='my-1 mx-2 border-t border-popover-foreground/20' />;
 
       case 'custom':
         return <div key={key}>{item.render()}</div>;
@@ -197,6 +204,7 @@ function MenuBody({ items, level }: { items: DropdownMenuItem[]; level: number }
 
   return (
     <div
+      id={id}
       className={join(
         'border py-1 border-popover-foreground/20 rounded-md min-w-52 shadow-lg bg-popover text-popover-foreground',
         className
@@ -204,6 +212,8 @@ function MenuBody({ items, level }: { items: DropdownMenuItem[]; level: number }
       tabIndex={0}
       data-level={level}
       data-menu
+      role='menu'
+      aria-label={`Dropdown menu level ${level}`}
     >
       {items.map((item, index) => renderItem(item, String(index)))}
     </div>
@@ -211,7 +221,9 @@ function MenuBody({ items, level }: { items: DropdownMenuItem[]; level: number }
 }
 
 function getMenuItem(dropdownId: string, level: number, index: number): HTMLElement | null {
-  return document.querySelector<HTMLElement>(`#${dropdownId} [data-menu-item][data-level="${level}"][data-index="${index}"]`);
+  return document.querySelector<HTMLElement>(
+    `#${dropdownId} [data-menu-item][data-level="${level}"][data-index="${index}"]`
+  );
 }
 
 export function DropdownMenu({
@@ -226,7 +238,7 @@ export function DropdownMenu({
   className = '',
   ...popoverProps
 }: DropdownMenuProps) {
-  const generatedId = useId()
+  const generatedId = useId();
   const dropdownId = id || `dropdown-menu-${generatedId}`;
   const [focus, setFocus] = useState<DropdownMenuContextFocus | null>(null);
   const [internalOpen, setInternalOpen] = useState(false);

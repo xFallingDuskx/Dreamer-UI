@@ -68,11 +68,11 @@ export function Popover({
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
-      if (isOpen === undefined) {
-        setInternalIsOpen(open);
-      }
       if (onOpenChange) {
         onOpenChange(open);
+      }
+      if (isOpen === undefined) {
+        setInternalIsOpen(open);
       }
     },
     [isOpen, onOpenChange]

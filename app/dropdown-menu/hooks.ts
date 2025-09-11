@@ -12,7 +12,7 @@ function getNextMenuItemIndex(menuItems: HTMLElement[], currentIndex: number | n
   for (let i = 0; i < menuItems.length; i++) {
     const index = (startIndex + i) % menuItems.length;
     const item = menuItems[index];
-    if (!item.hasAttribute('data-disabled')) {
+    if (!item.hasAttribute('aria-disabled')) {
       return index;
     }
   }
@@ -26,7 +26,7 @@ function getPreviousMenuItemIndex(menuItems: HTMLElement[], currentIndex: number
   for (let i = 0; i < menuItems.length; i++) {
     const index = (startIndex - i + menuItems.length) % menuItems.length;
     const item = menuItems[index];
-    if (!item.hasAttribute('data-disabled')) {
+    if (!item.hasAttribute('aria-disabled')) {
       return index;
     }
   }
