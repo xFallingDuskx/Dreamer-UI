@@ -1,8 +1,36 @@
 import { useCallback, useEffect } from 'react';
 import { DropdownMenuContextFocus } from './DropdownContext';
 
-export function getItemElements(menuEl: HTMLElement, level: number) {
+function getItemElements(menuEl: HTMLElement, level: number) {
   return Array.from(menuEl.querySelectorAll<HTMLElement>(`[data-menu-item][data-level="${level}"]`));
+}
+
+function getNextMenuItemIndex(menuItems: HTMLElement[], currentIndex: number | null) {
+  const startIndex =
+    currentIndex === null ? 0 : (currentIndex + 1) % menuItems.length;
+
+  for (let i = 0; i < menuItems.length; i++) {
+    const index = (startIndex + i) % menuItems.length;
+    const item = menuItems[index];
+    if (!item.hasAttribute('data-disabled')) {
+      return index;
+    }
+  }
+  return -1;
+}
+
+function getPreviousMenuItemIndex(menuItems: HTMLElement[], currentIndex: number | null) {
+  const startIndex =
+    currentIndex === null ? menuItems.length - 1 : (currentIndex - 1 + menuItems.length) % menuItems.length;
+
+  for (let i = 0; i < menuItems.length; i++) {
+    const index = (startIndex - i + menuItems.length) % menuItems.length;
+    const item = menuItems[index];
+    if (!item.hasAttribute('data-disabled')) {
+      return index;
+    }
+  }
+  return -1;
 }
 
 interface UseKeyboardNavigationProps {
@@ -29,16 +57,15 @@ export function useKeyboardNavigation({ focus, setFocus, isOpen, onItemSelect, o
       switch (event.key) {
         case 'ArrowDown': {
           event.preventDefault();
-          const nextIndex = focusedIndex === null ? 0 : (focusedIndex + 1) % itemElements.length;
+          const nextIndex = getNextMenuItemIndex(itemElements, focusedIndex);
+          if (nextIndex === -1) return;
           setFocus({ level: focusLevel, index: nextIndex });
           break;
         }
         case 'ArrowUp': {
           event.preventDefault();
-          const prevIndex =
-            focusedIndex === null
-              ? itemElements.length - 1
-              : (focusedIndex - 1 + itemElements.length) % itemElements.length;
+          const prevIndex = getPreviousMenuItemIndex(itemElements, focusedIndex);
+          if (prevIndex === -1) return;
           setFocus({ level: focusLevel, index: prevIndex });
           break;
         }

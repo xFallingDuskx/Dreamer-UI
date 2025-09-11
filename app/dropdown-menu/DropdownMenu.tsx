@@ -21,7 +21,7 @@ export interface DropdownMenuProps extends Omit<PopoverProps, 'children'> {
 const getOptionClasses = (disabled?: boolean, additionalClasses?: string) => {
   return join(
     'flex items-center gap-2 px-3 py-2 text-sm focus:outline-none focus:bg-popover-foreground/10',
-    disabled ? 'opacity-50 cursor-default' : 'hover:bg-popover-foreground/10 cursor-pointer',
+    disabled ? 'opacity-50 cursor-default' : 'cursor-pointer',
     additionalClasses
   );
 };
@@ -33,6 +33,7 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
   const itemRef = useRef<HTMLDivElement>(null);
 
   const handleMouseEnter = () => {
+    if (option.disabled) return;
     setFocus({ level, index });
     handleOpen();
   };
@@ -74,11 +75,7 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
       data-menu-item={option.value}
       data-level={level}
       data-index={index}
-      onMouseOver={(e: React.MouseEvent) => {
-        e.preventDefault();
-        const index = Number(e.currentTarget.getAttribute('data-index'));
-        setFocus({ level, index });
-      }}
+      data-disabled={option.disabled ? 'true' : undefined}
     >
       <div className={getOptionClasses(option.disabled)} onClick={!option.disabled ? handleItemClick : undefined}>
         <div className='flex items-center gap-2 flex-1'>
@@ -131,8 +128,10 @@ function MenuBody({ items, level }: { items: DropdownMenuItem[]; level: number }
             data-level={level}
             data-index={itemIndex++}
             tabIndex={-1}
+            data-disabled={item.disabled ? 'true' : undefined}
             onMouseOver={(e: React.MouseEvent) => {
               e.preventDefault();
+              if (item.disabled) return;
               const index = Number(e.currentTarget.getAttribute('data-index'));
               setFocus({ level, index });
             }}
@@ -242,7 +241,7 @@ export function DropdownMenu({
       onClose: handleClose,
       className,
     }),
-    [focus, handleItemSelect, handleClose, className, isOpen]
+    [focus, setFocus, handleItemSelect, handleClose, className, isOpen]
   );
 
   useKeyboardNavigation({
