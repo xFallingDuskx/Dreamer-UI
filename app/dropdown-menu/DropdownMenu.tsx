@@ -53,6 +53,15 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
     setIsSubMenuOpen(false);
   };
 
+  // Can re-open submenu if it was exited with keyboard
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      if (option.disabled) return;
+      setHasExited(false)
+    }
+  };
+
   const handleItemClick = () => {
     if (option.onClick) {
       option.onClick();
@@ -86,6 +95,7 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
       onMouseLeave={handleMouseLeave}
       onFocus={handleOpen}
       onBlur={handleClose}
+      onKeyDown={handleKeyDown}
       tabIndex={0}
       data-menu-item={option.value}
       data-level={level}
