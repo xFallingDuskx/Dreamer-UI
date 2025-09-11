@@ -9,8 +9,8 @@ interface UseKeyboardNavigationProps {
   focus: DropdownMenuContextFocus | null;
   setFocus: (focus: DropdownMenuContextFocus | null) => void;
   isOpen: boolean;
-  onItemSelect?: (value: string) => void;
-  onClose?: () => void;
+  onItemSelect: (value: string) => void;
+  onClose: () => void;
 }
 
 export function useKeyboardNavigation({ focus, setFocus, isOpen, onItemSelect, onClose }: UseKeyboardNavigationProps) {
@@ -31,7 +31,6 @@ export function useKeyboardNavigation({ focus, setFocus, isOpen, onItemSelect, o
           event.preventDefault();
           const nextIndex = focusedIndex === null ? 0 : (focusedIndex + 1) % itemElements.length;
           setFocus({ level: focusLevel, index: nextIndex });
-          itemElements[nextIndex]?.focus();
           break;
         }
         case 'ArrowUp': {
@@ -41,7 +40,6 @@ export function useKeyboardNavigation({ focus, setFocus, isOpen, onItemSelect, o
               ? itemElements.length - 1
               : (focusedIndex - 1 + itemElements.length) % itemElements.length;
           setFocus({ level: focusLevel, index: prevIndex });
-          itemElements[prevIndex]?.focus();
           break;
         }
         case 'ArrowRight': {
@@ -56,7 +54,6 @@ export function useKeyboardNavigation({ focus, setFocus, isOpen, onItemSelect, o
 
               if (firstSubItem) {
                 setFocus({ level: focusLevel + 1, index: 0 });
-                firstSubItem.focus();
               }
             }
           }
@@ -66,19 +63,18 @@ export function useKeyboardNavigation({ focus, setFocus, isOpen, onItemSelect, o
           event.preventDefault();
           // go back to parent menu if inside submenu
           const parentMenuItem = menu.parentElement?.closest<HTMLElement>('[data-menu-item]') as HTMLElement;
-          const parentMenu = parentMenuItem?.closest<HTMLElement>('[data-menu]') as HTMLElement;
 
-          if (!parentMenu || !parentMenuItem) {
+          if (!parentMenuItem) {
             console.error(`No parent menu found leaving menu level ${focusLevel}`);
             return;
           }
 
-          const parentMenuItems = getItemElements(parentMenu, focusLevel - 1);
-          const parentMenuIndex = parentMenuItems.indexOf(parentMenuItem);
+          const parentMenuIndex = parentMenuItem.getAttribute('data-index')
+            ? Number(parentMenuItem.getAttribute('data-index'))
+            : -1;
 
           if (parentMenuItem) {
             setFocus({ level: focusLevel - 1, index: parentMenuIndex === -1 ? 0 : parentMenuIndex });
-            parentMenuItem.focus();
           }
           break;
         }
@@ -103,8 +99,7 @@ export function useKeyboardNavigation({ focus, setFocus, isOpen, onItemSelect, o
           break;
         }
         case 'Tab': {
-          onClose?.();
-          setFocus(null);
+          onClose();
           break;
         }
       }

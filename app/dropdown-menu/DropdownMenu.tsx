@@ -1,6 +1,6 @@
 import { Popover, PopoverProps } from '@moondreamsdev/dreamer-ui/components';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronRight } from '../../lib/src/symbols';
 import {
   DropdownMenuContext,
@@ -20,17 +20,27 @@ export interface DropdownMenuProps extends Omit<PopoverProps, 'children'> {
 
 const getOptionClasses = (disabled?: boolean, additionalClasses?: string) => {
   return join(
-    'flex items-center gap-2 px-3 py-2 text-sm',
+    'flex items-center gap-2 px-3 py-2 text-sm focus:outline-none focus:bg-popover-foreground/10',
     disabled ? 'opacity-50 cursor-default' : 'hover:bg-popover-foreground/10 cursor-pointer',
     additionalClasses
   );
 };
 
 // Sub-menu component
-function SubMenu({ option, level }: { option: DropdownMenuOption; level: number }) {
-  const { onItemSelect, onClose } = useDropdownMenuContext();
+function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: number; index: number }) {
+  const { setFocus, onItemSelect, onClose } = useDropdownMenuContext();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const itemRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseEnter = () => {
+    setFocus({ level, index });
+    handleOpen();
+  };
+
+  const handleMouseLeave = () => {
+    setFocus(null);
+    handleClose();
+  };
 
   const handleOpen = () => {
     setIsSubMenuOpen(true);
@@ -55,14 +65,20 @@ function SubMenu({ option, level }: { option: DropdownMenuOption; level: number 
   return (
     <div
       ref={itemRef}
-      className='relative'
-      onMouseEnter={handleOpen}
-      onMouseLeave={handleClose}
+      className='relative focus-within:outline-none focus-within:bg-popover-foreground/10'
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       onFocus={handleOpen}
       onBlur={handleClose}
       tabIndex={0}
       data-menu-item={option.value}
       data-level={level}
+      data-index={index}
+      onMouseOver={(e: React.MouseEvent) => {
+        e.preventDefault();
+        const index = Number(e.currentTarget.getAttribute('data-index'));
+        setFocus({ level, index });
+      }}
     >
       <div className={getOptionClasses(option.disabled)} onClick={!option.disabled ? handleItemClick : undefined}>
         <div className='flex items-center gap-2 flex-1'>
@@ -87,13 +103,14 @@ function SubMenu({ option, level }: { option: DropdownMenuOption; level: number 
 }
 
 function MenuBody({ items, level }: { items: DropdownMenuItem[]; level: number }) {
-  const { onItemSelect, className = '' } = useDropdownMenuContext();
+  const { setFocus, onItemSelect, className = '' } = useDropdownMenuContext();
+  let itemIndex = 0;
 
   const renderItem = (item: DropdownMenuItem, key: string) => {
     switch (item.__type) {
       case 'option':
         if (item.subItems && item.subItems.length > 0) {
-          return <SubMenu key={key} option={item} level={level} />;
+          return <SubMenu key={key} option={item} level={level} index={itemIndex++} />;
         }
 
         return (
@@ -112,7 +129,17 @@ function MenuBody({ items, level }: { items: DropdownMenuItem[]; level: number }
             }}
             data-menu-item={item.value}
             data-level={level}
+            data-index={itemIndex++}
             tabIndex={-1}
+            onMouseOver={(e: React.MouseEvent) => {
+              e.preventDefault();
+              const index = Number(e.currentTarget.getAttribute('data-index'));
+              setFocus({ level, index });
+            }}
+            onMouseLeave={(e: React.MouseEvent) => {
+              e.preventDefault();
+              setFocus(null);
+            }}
           >
             {item.icon && <span className='size-4'>{item.icon}</span>}
             <div className='flex-1'>
@@ -159,6 +186,10 @@ function MenuBody({ items, level }: { items: DropdownMenuItem[]; level: number }
   );
 }
 
+function getMenuItem(level: number, index: number): HTMLElement | null {
+  return document.querySelector<HTMLElement>(`[data-menu-item][data-level="${level}"][data-index="${index}"]`);
+}
+
 export function DropdownMenu({
   items,
   onItemSelect,
@@ -186,6 +217,7 @@ export function DropdownMenu({
   );
 
   const handleClose = useCallback(() => {
+    setFocus(null);
     setInternalOpen(false);
   }, []);
 
@@ -236,6 +268,16 @@ export function DropdownMenu({
       },
     } as Record<string, unknown>);
   }, [isUncontrolled, setInternalOpen, trigger]);
+
+  useEffect(() => {
+    console.log('focus', focus); // REMOVE
+    if (focus) {
+      const el = getMenuItem(focus.level, focus.index);
+      if (el) {
+        el.focus();
+      }
+    }
+  }, [focus]);
 
   return (
     <Popover
