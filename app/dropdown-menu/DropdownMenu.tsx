@@ -18,17 +18,52 @@ export interface DropdownMenuProps extends Omit<PopoverProps, 'children'> {
   onItemSelect?: (value: string) => void;
 }
 
-const getOptionClasses = (disabled?: boolean, additionalClasses?: string) => {
-  return join(
+interface MenuOptionProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onClick'> {
+  option: DropdownMenuOption;
+}
+
+function MenuOption({
+  option,
+  ...props
+}: MenuOptionProps) {
+  const { onItemSelect, onClose } = useDropdownMenuContext();
+
+  const handleItemClick = () => {
+    if (option.onClick) {
+      option.onClick();
+    }
+    if (option.value) {
+      onItemSelect(option.value);
+    }
+    onClose();
+  };
+
+  const hasSubitems = option.subItems && option.subItems.length > 0;
+  return (
+    <div
+      className={join(
     'flex items-center gap-2 px-3 py-2 text-sm focus:outline-none focus:bg-popover-foreground/10',
-    disabled ? 'opacity-50 cursor-default' : 'cursor-pointer',
-    additionalClasses
+    option.disabled ? 'opacity-50 cursor-default' : 'cursor-pointer'
+  )}
+      onClick={!option.disabled ? handleItemClick : undefined}
+      {...props}
+    >
+      {option.icon && <span className='size-4'>{option.icon}</span>}
+      <div className='flex-1'>
+        <div>{option.label}</div>
+        {option.description && <div className='text-xs text-popover-foreground/60'>{option.description}</div>}
+      </div>
+      {option.keyboardShortcut && (
+        <div className='text-xs text-popover-foreground/60'>{option.keyboardShortcut}</div>
+      )}
+      {hasSubitems && <ChevronRight className='size-4' />}
+    </div>
   );
-};
+}
 
 // Sub-menu component
 function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: number; index: number }) {
-  const { focus, setFocus, onItemSelect, onClose } = useDropdownMenuContext();
+  const { focus, setFocus } = useDropdownMenuContext();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [hasExited, setHasExited] = useState(false); // if submenu was exited with keyboard
   const itemRef = useRef<HTMLDivElement>(null);
@@ -61,16 +96,6 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
       if (option.disabled) return;
       setHasExited(false);
     }
-  };
-
-  const handleItemClick = () => {
-    if (option.onClick) {
-      option.onClick();
-    }
-    if (option.value) {
-      onItemSelect(option.value);
-    }
-    onClose();
   };
 
   // Detect if submenu was exited with keyboard navigation
@@ -107,18 +132,7 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
       aria-label={option.label}
       aria-controls={showingSubmenu ? submenuId : undefined}
     >
-      <div className={getOptionClasses(option.disabled)} onClick={!option.disabled ? handleItemClick : undefined}>
-        <div className='flex items-center gap-2 flex-1'>
-          {option.icon && <span className='size-4'>{option.icon}</span>}
-          <span>{option.label}</span>
-        </div>
-        <div className='flex items-center gap-0.5'>
-          {option.keyboardShortcut && (
-            <div className='text-xs text-popover-foreground/60'>{option.keyboardShortcut}</div>
-          )}
-          {hasSubitems && <ChevronRight className='size-4' />}
-        </div>
-      </div>
+      <MenuOption option={option} />
 
       {showingSubmenu && (
         <div className='absolute left-full top-0 z-30'>
@@ -130,7 +144,7 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
 }
 
 function MenuBody({ items, level, id }: { items: DropdownMenuItem[]; level: number; id?: string }) {
-  const { setFocus, onItemSelect, className = '' } = useDropdownMenuContext();
+  const { setFocus, className = '' } = useDropdownMenuContext();
   let itemIndex = 0;
 
   const renderItem = (item: DropdownMenuItem, key: string) => {
@@ -141,25 +155,15 @@ function MenuBody({ items, level, id }: { items: DropdownMenuItem[]; level: numb
         }
 
         return (
-          <div
+          <MenuOption
             key={key}
-            className={getOptionClasses(item.disabled)}
-            onClick={() => {
-              if (item.disabled) return;
-
-              if (item.onClick) {
-                item.onClick();
-              }
-              if (item.value) {
-                onItemSelect(item.value);
-              }
-            }}
+            option={item}
             data-menu-item={item.value}
             data-level={level}
             data-index={itemIndex++}
             tabIndex={-1}
             aria-disabled={item.disabled ? 'true' : undefined}
-            onMouseOver={(e: React.MouseEvent) => {
+            onMouseEnter={(e: React.MouseEvent) => {
               e.preventDefault();
               if (item.disabled) return;
               const index = Number(e.currentTarget.getAttribute('data-index'));
@@ -169,14 +173,7 @@ function MenuBody({ items, level, id }: { items: DropdownMenuItem[]; level: numb
               e.preventDefault();
               setFocus(null);
             }}
-          >
-            {item.icon && <span className='size-4'>{item.icon}</span>}
-            <div className='flex-1'>
-              <div>{item.label}</div>
-              {item.description && <div className='text-xs text-popover-foreground/60'>{item.description}</div>}
-            </div>
-            {item.keyboardShortcut && <div className='text-xs text-popover-foreground/60'>{item.keyboardShortcut}</div>}
-          </div>
+          />
         );
 
       case 'group':
