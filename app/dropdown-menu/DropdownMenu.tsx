@@ -1,20 +1,16 @@
 import { Popover, PopoverProps } from '@moondreamsdev/dreamer-ui/components';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { ChevronRight } from '../../lib/src/symbols';
 import { DropdownMenuItem, DropdownMenuOption } from './types';
+import { DropdownMenuContext, DropdownMenuContextValue, useDropdownMenuContext } from './DropdownContext';
+import { getItemElements, useKeyboardNavigation } from './hooks';
 
 export interface DropdownMenuProps extends Omit<PopoverProps, 'children'> {
   /** Dropdown options, separators, groups, or custom items */
   items: DropdownMenuItem[];
   /** Callback when an item is selected, returns the value of the selected item */
   onItemSelect?: (value: string) => void;
-}
-
-interface SubMenuProps {
-  option: DropdownMenuOption;
-  onItemSelect?: (value: string) => void;
-  onClose?: () => void;
 }
 
 const getOptionClasses = (disabled?: boolean, additionalClasses?: string) => {
@@ -26,15 +22,16 @@ const getOptionClasses = (disabled?: boolean, additionalClasses?: string) => {
 };
 
 // Sub-menu component
-function SubMenu({ option, onItemSelect, onClose }: SubMenuProps) {
+function SubMenu({ option, level }: { option: DropdownMenuOption, level: number }) {
+  const { onItemSelect, onClose } = useDropdownMenuContext();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const itemRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseEnter = () => {
+  const handleOpen = () => {
     setIsSubMenuOpen(true);
   };
 
-  const handleMouseLeave = () => {
+  const handleClose = () => {
     setIsSubMenuOpen(false);
   };
 
@@ -51,7 +48,17 @@ function SubMenu({ option, onItemSelect, onClose }: SubMenuProps) {
   };
 
   return (
-    <div ref={itemRef} className='relative' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div
+      ref={itemRef}
+      className='relative'
+      onMouseEnter={handleOpen}
+      onMouseLeave={handleClose}
+      onFocus={handleOpen}
+      onBlur={handleClose}
+      tabIndex={0}
+      data-menu-item={option.value}
+      data-level={level}
+    >
       <div className={getOptionClasses(option.disabled)} onClick={!option.disabled ? handleItemClick : undefined}>
         <div className='flex items-center gap-2 flex-1'>
           {option.icon && <span className='size-4'>{option.icon}</span>}
@@ -67,38 +74,37 @@ function SubMenu({ option, onItemSelect, onClose }: SubMenuProps) {
 
       {isSubMenuOpen && option.subItems && option.subItems.length > 0 && (
         <div className='absolute left-full top-0 z-30'>
-          <MenuBody items={option.subItems} onItemSelect={onItemSelect} onClose={onClose} />
+          <MenuBody items={option.subItems} level={level + 1} />
         </div>
       )}
     </div>
   );
 }
 
-interface MenuBodyProps {
-  items: DropdownMenuItem[];
-  onItemSelect?: (value: string) => void;
-  onClose?: () => void;
-  className?: string;
-}
+function MenuBody({ items, level }: { items: DropdownMenuItem[], level: number }) {
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+  const { onItemSelect, className = '' } = useDropdownMenuContext();
+  const { handleKeyDown } = useKeyboardNavigation({
+    focusedIndex,
+    setFocusedIndex,
+    level
+  });
 
-function MenuBody({ items, onItemSelect, onClose, className = '' }: MenuBodyProps) {
-  const handleItemSelect = useCallback(
-    (value: string) => {
-      if (onItemSelect) {
-        onItemSelect(value);
-      }
-      if (onClose) {
-        onClose();
-      }
-    },
-    [onItemSelect, onClose]
-  );
+  const handleFocus = (event: React.FocusEvent<HTMLElement>) => {
+    console.log('focused'); // REMOVE
+    if (focusedIndex === null && items.length > 0) {
+      const itemElements = getItemElements(event.currentTarget, level);
+      console.log('setting focus'); // REMOVE
+      setFocusedIndex(0);
+      itemElements[0]?.focus();
+    }
+  }
 
   const renderItem = (item: DropdownMenuItem, key: string) => {
     switch (item.__type) {
       case 'option':
         if (item.subItems && item.subItems.length > 0) {
-          return <SubMenu key={key} option={item} onItemSelect={onItemSelect} onClose={onClose} />;
+          return <SubMenu key={key} option={item} level={level} />;
         }
 
         return (
@@ -111,10 +117,13 @@ function MenuBody({ items, onItemSelect, onClose, className = '' }: MenuBodyProp
                   item.onClick();
                 }
                 if (item.value) {
-                  handleItemSelect(item.value);
+                  onItemSelect?.(item.value);
                 }
               }
             }}
+            data-menu-item={item.value}
+            data-level={level}
+            tabIndex={-1}
           >
             {item.icon && <span className='size-4'>{item.icon}</span>}
             <div className='flex-1'>
@@ -129,9 +138,7 @@ function MenuBody({ items, onItemSelect, onClose, className = '' }: MenuBodyProp
         return (
           <div key={key}>
             {item.title && (
-              <div className='px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase'>
-                {item.title}
-              </div>
+              <div className='px-3 py-2 text-xs font-semibold text-popover-foreground/50 uppercase'>{item.title}</div>
             )}
             {item.items.map((groupItem, groupIndex) => renderItem(groupItem, `${key}-${groupIndex}`))}
           </div>
@@ -154,6 +161,11 @@ function MenuBody({ items, onItemSelect, onClose, className = '' }: MenuBodyProp
         'border py-1 border-popover-foreground/20 rounded-md min-w-52 shadow-lg bg-popover text-popover-foreground',
         className
       )}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      onFocus={handleFocus}
+      data-level={level}
+      data-menu
     >
       {items.map((item, index) => renderItem(item, String(index)))}
     </div>
@@ -164,15 +176,17 @@ export function DropdownMenu({
   items,
   onItemSelect,
   trigger,
-  isOpen,
+  isOpen: open,
   placement = 'bottom',
   alignment = 'start',
   onOpenChange,
   className = '',
   ...popoverProps
 }: DropdownMenuProps) {
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const [internalOpen, setInternalOpen] = useState(false);
-  const isUncontrolled = isOpen === undefined;
+  const isUncontrolled = open === undefined;
+  const isOpen = isUncontrolled ? internalOpen : open;
 
   const handleItemSelect = useCallback(
     (value: string) => {
@@ -200,19 +214,33 @@ export function DropdownMenu({
     [isUncontrolled, onOpenChange]
   );
 
-  const dropdownTrigger = React.cloneElement(trigger, {
-    onClick: (e: React.MouseEvent) => {
-      if (isUncontrolled) {
-        setInternalOpen((prev) => !prev);
-      }
-      const props = trigger.props as {
-        onClick?: (e: React.MouseEvent) => void;
-      };
-      if (props.onClick) {
-        props.onClick(e);
-      }
-    },
-  } as Record<string, unknown>);
+  const value = useMemo<DropdownMenuContextValue>(
+    () => ({
+      isOpen,
+      focusedIndex,
+      setFocusedIndex,
+      onItemSelect: handleItemSelect,
+      onClose: handleClose,
+      className,
+    }),
+    [focusedIndex, handleItemSelect, handleClose, className, isOpen]
+  );
+
+  const dropdownTrigger = useMemo(() => {
+    return React.cloneElement(trigger, {
+      onClick: (e: React.MouseEvent) => {
+        if (isUncontrolled) {
+          setInternalOpen((prev) => !prev);
+        }
+        const props = trigger.props as {
+          onClick?: (e: React.MouseEvent) => void;
+        };
+        if (props.onClick) {
+          props.onClick(e);
+        }
+      },
+    } as Record<string, unknown>);
+  }, [isUncontrolled, setInternalOpen, trigger]);
 
   return (
     <Popover
@@ -224,7 +252,9 @@ export function DropdownMenu({
       className={join('min-w-52', className)}
       {...popoverProps}
     >
-      <MenuBody items={items} onItemSelect={handleItemSelect} onClose={handleClose} className={className} />
+      <DropdownMenuContext.Provider value={value}>
+        <MenuBody items={items} level={1} />
+      </DropdownMenuContext.Provider>
     </Popover>
   );
 }
