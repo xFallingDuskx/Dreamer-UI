@@ -33,7 +33,7 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
   const [hasExited, setHasExited] = useState(false); // if submenu was exited with keyboard
   const itemRef = useRef<HTMLDivElement>(null);
   const previousLevelRef = useRef<number | undefined>(undefined);
-  const submenuId = useId()
+  const submenuId = useId();
 
   const handleMouseEnter = () => {
     if (option.disabled) return;
@@ -67,12 +67,10 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
     if (option.onClick) {
       option.onClick();
     }
-    if (option.value && onItemSelect) {
+    if (option.value) {
       onItemSelect(option.value);
     }
-    if (onClose) {
-      onClose();
-    }
+    onClose();
   };
 
   // Detect if submenu was exited with keyboard navigation
@@ -147,13 +145,13 @@ function MenuBody({ items, level, id }: { items: DropdownMenuItem[]; level: numb
             key={key}
             className={getOptionClasses(item.disabled)}
             onClick={() => {
-              if (!item.disabled) {
-                if (item.onClick) {
-                  item.onClick();
-                }
-                if (item.value) {
-                  onItemSelect?.(item.value);
-                }
+              if (item.disabled) return;
+
+              if (item.onClick) {
+                item.onClick();
+              }
+              if (item.value) {
+                onItemSelect(item.value);
               }
             }}
             data-menu-item={item.value}
@@ -245,20 +243,20 @@ export function DropdownMenu({
   const isUncontrolled = open === undefined;
   const isOpen = isUncontrolled ? internalOpen : open;
 
+  const handleClose = useCallback(() => {
+    setFocus(null);
+    setInternalOpen(false);
+  }, []);
+
   const handleItemSelect = useCallback(
     (value: string) => {
       if (onItemSelect) {
         onItemSelect(value);
       }
-      setInternalOpen(false);
+      handleClose();
     },
-    [onItemSelect]
+    [onItemSelect, handleClose]
   );
-
-  const handleClose = useCallback(() => {
-    setFocus(null);
-    setInternalOpen(false);
-  }, []);
 
   const handleOpenChange = useCallback(
     (open: boolean) => {

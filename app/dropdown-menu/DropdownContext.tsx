@@ -10,8 +10,8 @@ export interface DropdownMenuContextValue {
   focus: DropdownMenuContextFocus | null;
   setFocus: (focus: DropdownMenuContextFocus | null) => void;
   isOpen: boolean;
-  onItemSelect?: (value: string) => void;
-  onClose?: () => void;
+  onItemSelect: (value: string) => void;
+  onClose: () => void;
   className?: string;
 }
 
