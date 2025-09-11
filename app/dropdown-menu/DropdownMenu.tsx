@@ -65,16 +65,18 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
     }
   };
 
+  // Detect if submenu was exited with keyboard navigation
   useEffect(() => {
-    const focusLevel = focus?.level
+    const focusLevel = focus?.level;
     const previousLevel = previousLevelRef.current;
-    if (focusLevel && previousLevel && focusLevel < previousLevel) {
+    const submenuLevel = level + 1;
+    if (focusLevel && previousLevel && previousLevel === submenuLevel && focusLevel === previousLevel - 1) {
       setHasExited(true);
     } else {
       setHasExited(false);
     }
     previousLevelRef.current = focusLevel;
-  }, [focus]); // include entire object to reset when index changes as well (allows reopening same submenu item)
+  }, [focus, level]); // include entire object to reset when index changes as well (allows reopening same submenu item)
 
   return (
     <div
@@ -103,7 +105,7 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
         </div>
       </div>
 
-      {(isSubMenuOpen && !hasExited) && option.subItems && option.subItems.length > 0 && (
+      {isSubMenuOpen && !hasExited && option.subItems && option.subItems.length > 0 && (
         <div className='absolute left-full top-0 z-30'>
           <MenuBody items={option.subItems} level={level + 1} />
         </div>
@@ -284,7 +286,7 @@ export function DropdownMenu({
   useEffect(() => {
     if (focus) {
       const el = getMenuItem(focus.level, focus.index);
-      el?.focus()
+      el?.focus();
     }
   }, [focus]);
 
