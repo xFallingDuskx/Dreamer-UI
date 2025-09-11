@@ -162,6 +162,8 @@ export function Popover({
         role='dialog'
         aria-modal='true'
         tabIndex={-1}
+        inert={!internalIsOpen ? true : undefined} // prevents focus and interaction when popover is closed
+        aria-hidden={!internalIsOpen ? true : undefined} // hide from screen readers when popover is closed
       >
         {children}
       </div>
