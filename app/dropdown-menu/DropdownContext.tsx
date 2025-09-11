@@ -6,6 +6,7 @@ export interface DropdownMenuContextFocus {
 }
 
 export interface DropdownMenuContextValue {
+  id: string;
   focus: DropdownMenuContextFocus | null;
   setFocus: (focus: DropdownMenuContextFocus | null) => void;
   isOpen: boolean;

@@ -1,6 +1,6 @@
 import { Popover, PopoverProps } from '@moondreamsdev/dreamer-ui/components';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ChevronRight } from '../../lib/src/symbols';
 import {
   DropdownMenuContext,
@@ -210,11 +210,12 @@ function MenuBody({ items, level }: { items: DropdownMenuItem[]; level: number }
   );
 }
 
-function getMenuItem(level: number, index: number): HTMLElement | null {
-  return document.querySelector<HTMLElement>(`[data-menu-item][data-level="${level}"][data-index="${index}"]`);
+function getMenuItem(dropdownId: string, level: number, index: number): HTMLElement | null {
+  return document.querySelector<HTMLElement>(`#${dropdownId} [data-menu-item][data-level="${level}"][data-index="${index}"]`);
 }
 
 export function DropdownMenu({
+  id,
   items,
   onItemSelect,
   trigger,
@@ -225,6 +226,8 @@ export function DropdownMenu({
   className = '',
   ...popoverProps
 }: DropdownMenuProps) {
+  const generatedId = useId()
+  const dropdownId = id || `dropdown-menu-${generatedId}`;
   const [focus, setFocus] = useState<DropdownMenuContextFocus | null>(null);
   const [internalOpen, setInternalOpen] = useState(false);
   const isUncontrolled = open === undefined;
@@ -259,6 +262,7 @@ export function DropdownMenu({
 
   const value = useMemo<DropdownMenuContextValue>(
     () => ({
+      id: dropdownId,
       focus,
       setFocus,
       isOpen,
@@ -266,10 +270,11 @@ export function DropdownMenu({
       onClose: handleClose,
       className,
     }),
-    [focus, setFocus, handleItemSelect, handleClose, className, isOpen]
+    [focus, setFocus, handleItemSelect, handleClose, className, isOpen, dropdownId]
   );
 
   useKeyboardNavigation({
+    dropdownId,
     focus,
     setFocus,
     isOpen,
@@ -295,13 +300,14 @@ export function DropdownMenu({
 
   useEffect(() => {
     if (focus) {
-      const el = getMenuItem(focus.level, focus.index);
+      const el = getMenuItem(dropdownId, focus.level, focus.index);
       el?.focus();
     }
-  }, [focus]);
+  }, [focus, dropdownId]);
 
   return (
     <Popover
+      id={dropdownId}
       isOpen={isUncontrolled ? internalOpen : isOpen}
       trigger={dropdownTrigger}
       placement={placement}

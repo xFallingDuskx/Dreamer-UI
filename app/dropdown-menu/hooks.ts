@@ -34,6 +34,7 @@ function getPreviousMenuItemIndex(menuItems: HTMLElement[], currentIndex: number
 }
 
 interface UseKeyboardNavigationProps {
+  dropdownId: string;
   focus: DropdownMenuContextFocus | null;
   setFocus: (focus: DropdownMenuContextFocus | null) => void;
   isOpen: boolean;
@@ -41,14 +42,14 @@ interface UseKeyboardNavigationProps {
   onClose: () => void;
 }
 
-export function useKeyboardNavigation({ focus, setFocus, isOpen, onItemSelect, onClose }: UseKeyboardNavigationProps) {
+export function useKeyboardNavigation({ dropdownId, focus, setFocus, isOpen, onItemSelect, onClose }: UseKeyboardNavigationProps) {
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (!isOpen) return;
 
       const { level: focusLevel, index: focusedIndex } = focus || { level: 1, index: null };
 
-      const menu = document.querySelector<HTMLElement>(`[data-menu][data-level="${focusLevel}"]`) as HTMLElement;
+      const menu = document.querySelector<HTMLElement>(`#${dropdownId} [data-menu][data-level="${focusLevel}"]`) as HTMLElement;
       if (!menu) return;
 
       const itemElements = getItemElements(menu, focusLevel);
@@ -131,7 +132,7 @@ export function useKeyboardNavigation({ focus, setFocus, isOpen, onItemSelect, o
         }
       }
     },
-    [isOpen, focus, setFocus, onItemSelect, onClose]
+    [isOpen, focus, setFocus, onItemSelect, onClose, dropdownId]
   );
 
   useEffect(() => {
