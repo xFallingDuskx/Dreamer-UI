@@ -28,9 +28,11 @@ const getOptionClasses = (disabled?: boolean, additionalClasses?: string) => {
 
 // Sub-menu component
 function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: number; index: number }) {
-  const { setFocus, onItemSelect, onClose } = useDropdownMenuContext();
+  const { focus, setFocus, onItemSelect, onClose } = useDropdownMenuContext();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  const [hasExited, setHasExited] = useState(false); // if submenu was exited with keyboard
   const itemRef = useRef<HTMLDivElement>(null);
+  const previousLevelRef = useRef<number | undefined>(undefined);
 
   const handleMouseEnter = () => {
     if (option.disabled) return;
@@ -63,10 +65,21 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
     }
   };
 
+  useEffect(() => {
+    const focusLevel = focus?.level
+    const previousLevel = previousLevelRef.current;
+    if (focusLevel && previousLevel && focusLevel < previousLevel) {
+      setHasExited(true);
+    } else {
+      setHasExited(false);
+    }
+    previousLevelRef.current = focusLevel;
+  }, [focus]); // include entire object to reset when index changes as well (allows reopening same submenu item)
+
   return (
     <div
       ref={itemRef}
-      className='relative focus-within:outline-none focus-within:bg-popover-foreground/10'
+      className='relative focus:outline-none focus:bg-popover-foreground/10'
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onFocus={handleOpen}
@@ -90,7 +103,7 @@ function SubMenu({ option, level, index }: { option: DropdownMenuOption; level: 
         </div>
       </div>
 
-      {isSubMenuOpen && option.subItems && option.subItems.length > 0 && (
+      {(isSubMenuOpen && !hasExited) && option.subItems && option.subItems.length > 0 && (
         <div className='absolute left-full top-0 z-30'>
           <MenuBody items={option.subItems} level={level + 1} />
         </div>
@@ -269,12 +282,9 @@ export function DropdownMenu({
   }, [isUncontrolled, setInternalOpen, trigger]);
 
   useEffect(() => {
-    console.log('focus', focus); // REMOVE
     if (focus) {
       const el = getMenuItem(focus.level, focus.index);
-      if (el) {
-        el.focus();
-      }
+      el?.focus()
     }
   }, [focus]);
 
