@@ -1,6 +1,13 @@
 import { createContext, useContext } from 'react';
 
+export interface DropdownMenuContextFocus {
+  level: number;
+  index: number;
+}
+
 export interface DropdownMenuContextValue {
+  focus: DropdownMenuContextFocus | null;
+  setFocus: (focus: DropdownMenuContextFocus | null) => void;
   isOpen: boolean;
   onItemSelect?: (value: string) => void;
   onClose?: () => void;

@@ -1,35 +1,36 @@
-import { useCallback } from 'react';
-import { useDropdownMenuContext } from './DropdownContext';
+import { useCallback, useEffect } from 'react';
+import { DropdownMenuContextFocus } from './DropdownContext';
 
 export function getItemElements(menuEl: HTMLElement, level: number) {
   return Array.from(menuEl.querySelectorAll<HTMLElement>(`[data-menu-item][data-level="${level}"]`));
 }
 
-export function useKeyboardNavigation({
-  focusedIndex,
-  setFocusedIndex,
-  level,
-}: {
-  focusedIndex: number | null;
-  setFocusedIndex: (index: number | null) => void;
-  level: number;
-}) {
-  const { isOpen, onItemSelect, onClose } = useDropdownMenuContext();
+interface UseKeyboardNavigationProps {
+  focus: DropdownMenuContextFocus | null;
+  setFocus: (focus: DropdownMenuContextFocus | null) => void;
+  isOpen: boolean;
+  onItemSelect?: (value: string) => void;
+  onClose?: () => void;
+}
 
+export function useKeyboardNavigation({ focus, setFocus, isOpen, onItemSelect, onClose }: UseKeyboardNavigationProps) {
   const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent) => {
+    (event: KeyboardEvent) => {
       if (!isOpen) return;
 
-      const menu = event.currentTarget as HTMLElement;
+      const { level: focusLevel, index: focusedIndex } = focus || { level: 1, index: null };
 
-      const itemElements = getItemElements(menu, level);
+      const menu = document.querySelector<HTMLElement>(`[data-menu][data-level="${focusLevel}"]`) as HTMLElement;
+      if (!menu) return;
+
+      const itemElements = getItemElements(menu, focusLevel);
       if (itemElements.length === 0) return;
 
       switch (event.key) {
         case 'ArrowDown': {
           event.preventDefault();
           const nextIndex = focusedIndex === null ? 0 : (focusedIndex + 1) % itemElements.length;
-          setFocusedIndex(nextIndex);
+          setFocus({ level: focusLevel, index: nextIndex });
           itemElements[nextIndex]?.focus();
           break;
         }
@@ -39,7 +40,7 @@ export function useKeyboardNavigation({
             focusedIndex === null
               ? itemElements.length - 1
               : (focusedIndex - 1 + itemElements.length) % itemElements.length;
-          setFocusedIndex(prevIndex);
+          setFocus({ level: focusLevel, index: prevIndex });
           itemElements[prevIndex]?.focus();
           break;
         }
@@ -49,12 +50,14 @@ export function useKeyboardNavigation({
             const el = itemElements[focusedIndex];
             const submenu = el.querySelector<HTMLElement>('[data-menu]');
 
-            console.log('el', el); // REMOVE
-            console.log('submenu', submenu); // REMOVE
             if (submenu) {
               // focus first submenu item
               const firstSubItem = submenu.querySelector<HTMLElement>('[data-menu-item]');
-              firstSubItem?.focus();
+
+              if (firstSubItem) {
+                setFocus({ level: focusLevel + 1, index: 0 });
+                firstSubItem.focus();
+              }
             }
           }
           break;
@@ -62,8 +65,19 @@ export function useKeyboardNavigation({
         case 'ArrowLeft': {
           event.preventDefault();
           // go back to parent menu if inside submenu
-          const parentMenuItem = menu.parentElement?.closest<HTMLElement>('[data-menu-item]');
+          const parentMenuItem = menu.parentElement?.closest<HTMLElement>('[data-menu-item]') as HTMLElement;
+          const parentMenu = parentMenuItem?.closest<HTMLElement>('[data-menu]') as HTMLElement;
+
+          if (!parentMenu || !parentMenuItem) {
+            console.error(`No parent menu found leaving menu level ${focusLevel}`);
+            return;
+          }
+
+          const parentMenuItems = getItemElements(parentMenu, focusLevel - 1);
+          const parentMenuIndex = parentMenuItems.indexOf(parentMenuItem);
+
           if (parentMenuItem) {
+            setFocus({ level: focusLevel - 1, index: parentMenuIndex === -1 ? 0 : parentMenuIndex });
             parentMenuItem.focus();
           }
           break;
@@ -78,18 +92,35 @@ export function useKeyboardNavigation({
             if (value) {
               onItemSelect?.(value);
             }
+            setFocus(null);
           }
           break;
         }
         case 'Escape': {
           event.preventDefault();
           onClose?.();
+          setFocus(null);
+          break;
+        }
+        case 'Tab': {
+          onClose?.();
+          setFocus(null);
           break;
         }
       }
     },
-    [isOpen, focusedIndex, setFocusedIndex, onItemSelect, onClose, level]
+    [isOpen, focus, setFocus, onItemSelect, onClose]
   );
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown, isOpen]);
 
   return { handleKeyDown };
 }

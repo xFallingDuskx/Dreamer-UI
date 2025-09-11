@@ -2,9 +2,14 @@ import { Popover, PopoverProps } from '@moondreamsdev/dreamer-ui/components';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { ChevronRight } from '../../lib/src/symbols';
+import {
+  DropdownMenuContext,
+  DropdownMenuContextFocus,
+  DropdownMenuContextValue,
+  useDropdownMenuContext,
+} from './DropdownContext';
+import { useKeyboardNavigation } from './hooks';
 import { DropdownMenuItem, DropdownMenuOption } from './types';
-import { DropdownMenuContext, DropdownMenuContextValue, useDropdownMenuContext } from './DropdownContext';
-import { getItemElements, useKeyboardNavigation } from './hooks';
 
 export interface DropdownMenuProps extends Omit<PopoverProps, 'children'> {
   /** Dropdown options, separators, groups, or custom items */
@@ -22,7 +27,7 @@ const getOptionClasses = (disabled?: boolean, additionalClasses?: string) => {
 };
 
 // Sub-menu component
-function SubMenu({ option, level }: { option: DropdownMenuOption, level: number }) {
+function SubMenu({ option, level }: { option: DropdownMenuOption; level: number }) {
   const { onItemSelect, onClose } = useDropdownMenuContext();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const itemRef = useRef<HTMLDivElement>(null);
@@ -81,24 +86,8 @@ function SubMenu({ option, level }: { option: DropdownMenuOption, level: number 
   );
 }
 
-function MenuBody({ items, level }: { items: DropdownMenuItem[], level: number }) {
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+function MenuBody({ items, level }: { items: DropdownMenuItem[]; level: number }) {
   const { onItemSelect, className = '' } = useDropdownMenuContext();
-  const { handleKeyDown } = useKeyboardNavigation({
-    focusedIndex,
-    setFocusedIndex,
-    level
-  });
-
-  const handleFocus = (event: React.FocusEvent<HTMLElement>) => {
-    console.log('focused'); // REMOVE
-    if (focusedIndex === null && items.length > 0) {
-      const itemElements = getItemElements(event.currentTarget, level);
-      console.log('setting focus'); // REMOVE
-      setFocusedIndex(0);
-      itemElements[0]?.focus();
-    }
-  }
 
   const renderItem = (item: DropdownMenuItem, key: string) => {
     switch (item.__type) {
@@ -162,8 +151,6 @@ function MenuBody({ items, level }: { items: DropdownMenuItem[], level: number }
         className
       )}
       tabIndex={0}
-      onKeyDown={handleKeyDown}
-      onFocus={handleFocus}
       data-level={level}
       data-menu
     >
@@ -183,7 +170,7 @@ export function DropdownMenu({
   className = '',
   ...popoverProps
 }: DropdownMenuProps) {
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+  const [focus, setFocus] = useState<DropdownMenuContextFocus | null>(null);
   const [internalOpen, setInternalOpen] = useState(false);
   const isUncontrolled = open === undefined;
   const isOpen = isUncontrolled ? internalOpen : open;
@@ -216,15 +203,23 @@ export function DropdownMenu({
 
   const value = useMemo<DropdownMenuContextValue>(
     () => ({
+      focus,
+      setFocus,
       isOpen,
-      focusedIndex,
-      setFocusedIndex,
       onItemSelect: handleItemSelect,
       onClose: handleClose,
       className,
     }),
-    [focusedIndex, handleItemSelect, handleClose, className, isOpen]
+    [focus, handleItemSelect, handleClose, className, isOpen]
   );
+
+  useKeyboardNavigation({
+    focus,
+    setFocus,
+    isOpen,
+    onItemSelect: handleItemSelect,
+    onClose: handleClose,
+  });
 
   const dropdownTrigger = useMemo(() => {
     return React.cloneElement(trigger, {
