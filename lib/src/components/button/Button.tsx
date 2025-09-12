@@ -10,7 +10,7 @@ interface ButtonButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttribute
   loading?: boolean;
 }
 
-interface ButtonLinkProps extends Partial<ButtonVariants>, Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
+interface ButtonLinkProps extends Partial<ButtonVariants>, Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'role'> {
   href: string;
   ref?: Ref<HTMLAnchorElement>;
   loading?: never;
@@ -47,15 +47,14 @@ export function Button({
     className
   );
 
-  if (rest.href) {
+  if (rest.href && !rest.disabled) {
     return (
       <a
         {...rest}
-        role={rest.role ?? 'button'}
+        rel={rest.rel ? rest.rel : rest.target === '_blank' ? 'noopener noreferrer' : undefined}
         aria-label={rest['aria-label']}
         aria-description={rest['aria-description']}
-        aria-disabled={rest.disabled}
-        href={rest.disabled ? undefined : rest.href}
+        href={rest.href}
         className={buttonClasses}
       >
         {rest.children}

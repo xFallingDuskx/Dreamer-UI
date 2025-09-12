@@ -70,9 +70,10 @@ export function Modal({
     return (
       <div className='mt-6 not-sm:grid gap-y-2 sm:flex sm:justify-start sm:flex-row-reverse sm:gap-x-3'>
         {actions.map((action, index) => {
-          const { label, className, ...buttonProps } = action;
+          const { label, ...buttonProps } = action;
+          const buttonRest = buttonProps as ButtonProps;
           return (
-            <Button key={index} className={className} type='button' {...buttonProps} data-modal-action='true'>
+            <Button key={index} {...buttonRest} data-modal-action='true'>
               {label}
             </Button>
           );
