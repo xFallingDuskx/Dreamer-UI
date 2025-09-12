@@ -19,20 +19,3 @@ export const custom = (render: () => React.ReactNode): DropdownMenuCustomItem =>
   __type: 'custom',
   render,
 });
-
-// Example usage // REMOVE
-export const exampleGroups: DropdownMenuItem[] = [
-  group([
-    option({ label: 'Option 1', value: 'option1' }),
-    option({ label: 'Option 2', value: 'option2', disabled: true }),
-    separator(),
-    option({
-      label: 'Option 3',
-      value: 'option3',
-      subItems: [
-        option({ label: 'Sub Option 1', value: 'suboption1' }),
-        option({ label: 'Sub Option 2', value: 'suboption2' }),
-      ],
-    }),
-  ]),
-];
