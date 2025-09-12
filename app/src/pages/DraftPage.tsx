@@ -1,6 +1,132 @@
-import { Callout, Code, Disclosure, Drawer, Popover } from '@moondreamsdev/dreamer-ui/components';
+import { Callout, Code, Disclosure, Drawer, Popover, DropdownMenuItem, DropdownMenuFactories, DropdownMenu } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
+import { ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
+
+const DropdownDemo = () => {
+  const [selectedValue, setSelectedValue] = useState<string>('');
+  const { option, group, separator, custom } = DropdownMenuFactories;
+
+  const exampleItems: DropdownMenuItem[] = [
+    group(
+      [
+        option({
+          label: 'New File',
+          value: 'new-file',
+          icon: <div className='w-4 h-4 bg-blue-500 rounded' />,
+          description: 'Create a new file',
+          keyboardShortcut: '⌘N',
+          onClick: () => console.log('New File clicked!'),
+        }),
+        option({
+          label: 'Open',
+          value: 'open',
+          icon: <div className='w-4 h-4 bg-green-500 rounded' />,
+          href: '/components'
+        }),
+        separator(),
+        option({
+          label: 'Export',
+          value: 'export',
+          icon: <div className='w-4 h-4 bg-orange-500 rounded' />,
+          keyboardShortcut: '⌘E',
+          subItems: [
+            option({ label: 'Export as PDF', value: 'export-pdf' }),
+            option({ label: 'Export as CSV', value: 'export-csv' }),
+            option({ label: 'Export as JSON', value: 'export-json' }),
+            separator(),
+            option({
+              label: 'Advanced Export',
+              value: 'advanced-export',
+              subItems: [
+                option({ label: 'Custom Format', value: 'custom-format' }),
+                option({ label: 'Batch Export', value: 'batch-export' }),
+              ],
+            }),
+          ],
+        }),
+        option({
+          label: 'Import',
+          value: 'import',
+          icon: <div className='w-4 h-4 bg-purple-500 rounded' />,
+          subItems: [
+            option({ label: 'Import CSV', value: 'import-csv' }),
+            option({ label: 'Import JSON', value: 'import-json' }),
+            option({ label: 'Import XML', value: 'import-xml' }),
+          ],
+        }),
+      ], 'File system'),
+
+    group(
+      [
+        option({
+          label: 'Settings',
+          value: 'settings',
+          icon: <div className='w-4 h-4 bg-gray-500 rounded' />,
+        }),
+        option({
+          label: 'Help',
+          value: 'help',
+          icon: <div className='w-4 h-4 bg-yellow-500 rounded' />,
+          disabled: true,
+        }),
+      ],
+      'Other'
+    ),
+
+    separator(),
+
+    custom(() => (
+      <div className='px-3 py-2 text-center'>
+        <button className='text-xs text-blue-600 hover:text-blue-800'>View All Options</button>
+      </div>
+    )),
+  ];
+
+  return (
+    <div className='p-8 space-y-4'>
+      <h1 className='text-2xl font-bold mb-6'>Dropdown Menu with Sub-menus</h1>
+
+      <div className='space-y-4'>
+        <div>
+          <p className='text-sm text-gray-600 mb-2'>Basic dropdown with sub-menus:</p>
+          <DropdownMenu
+            items={exampleItems}
+            onItemSelect={(value) => {
+              setSelectedValue(value);
+              console.log('Selected:', value);
+            }}
+            trigger={
+              <button className='px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center gap-2'>
+                Menu <ChevronDown className='w-4 h-4' />
+              </button>
+            }
+          />
+        </div>
+
+        <div>
+          <p className='text-sm text-gray-600 mb-2'>Right-aligned dropdown:</p>
+          <DropdownMenu
+            items={exampleItems.slice(0, 2)}
+            onItemSelect={setSelectedValue}
+            trigger={
+              <button className='px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center gap-2'>
+                Actions <ChevronDown className='w-4 h-4' />
+              </button>
+            }
+            alignment='end'
+          />
+        </div>
+      </div>
+
+      {selectedValue && (
+        <p className='text-sm'>
+          <strong>Selected:</strong> {selectedValue}
+        </p>
+      )}
+    </div>
+  );
+};
 
 export const DraftPage = () => {
   const [drawerState, setDrawerState] = useState({
@@ -321,6 +447,9 @@ export const DraftPage = () => {
                 </div>
               </div>
             </div>
+
+            {/* Dropdown Menu Testing */}
+            <DropdownDemo />
           </div>
         </div>
       </div>
