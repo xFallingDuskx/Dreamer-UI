@@ -4,21 +4,26 @@ import { join } from '../../utils';
 import { LoadingDots } from './LoadingDots';
 import { ButtonSize, ButtonVariants, buttonDefaults, buttonVariants, roundedVariants, sizeVariants } from './variants';
 
-export interface ButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttributes<HTMLButtonElement> {
+  href?: never;
   ref?: Ref<HTMLButtonElement>;
   loading?: boolean;
-  linkTo?: string;
-  linkProps?: Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>;
 }
+
+interface ButtonLinkProps extends Partial<ButtonVariants>, Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
+  href: string;
+  ref?: Ref<HTMLAnchorElement>;
+  loading?: never;
+  disabled?: boolean;
+}
+
+export type ButtonProps = ButtonButtonProps | ButtonLinkProps;
 
 export function Button({
   variant = buttonDefaults.variant,
   size,
   rounded = buttonDefaults.rounded,
   loading,
-  linkTo,
-  linkProps,
-  type = 'button',
   className,
   ...rest
 }: ButtonProps) {
@@ -39,33 +44,38 @@ export function Button({
     sizeVariants[adjustedSize],
     roundedVariants[rounded],
     loading && 'relative pointer-events-none',
-    linkTo && 'relative',
     className
   );
 
+  if (rest.href) {
+    return (
+      <a
+        {...rest}
+        role={rest.role ?? 'button'}
+        aria-label={rest['aria-label']}
+        aria-description={rest['aria-description']}
+        aria-disabled={rest.disabled}
+        href={rest.disabled ? undefined : rest.href}
+        className={buttonClasses}
+      >
+        {rest.children}
+      </a>
+    )
+  }
+
+  const buttonRest = rest as ButtonButtonProps; // necessary to cast to avoid TS complaining
   return (
     <button
-      {...rest}
-      role={linkTo ? 'link' : rest.role}
-      aria-label={rest['aria-label'] || linkProps?.['aria-label']}
-      aria-description={rest['aria-description'] || linkProps?.['aria-description']}
-      aria-disabled={rest.disabled || loading}
+      {...buttonRest}
+      aria-label={buttonRest['aria-label']}
+      aria-description={buttonRest['aria-description']}
+      aria-disabled={buttonRest.disabled || loading}
       aria-busy={loading}
-      type={type}
+      type={buttonRest.type ?? 'button'}
       className={buttonClasses}
     >
       {loading && <LoadingDots />}
-      <span className={join(loading && 'invisible')}>{rest.children}</span>
-
-      {linkTo && !rest.disabled && (
-        <a
-          {...linkProps}
-          aria-hidden={true} // Hide from screen readers since the button is already accessible
-          href={linkTo}
-          rel={linkProps?.rel || 'noreferrer'}
-          className='absolute inset-0'
-        />
-      )}
+      <span className={join(loading && 'invisible')}>{buttonRest.children}</span>
     </button>
   );
 }
