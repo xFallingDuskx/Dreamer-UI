@@ -1,9 +1,9 @@
-import { Popover, PopoverProps } from '@moondreamsdev/dreamer-ui/components';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
+import { join } from '../../utils';
+import { Popover, PopoverProps } from '../popover';
 import { DropdownMenuContext, DropdownMenuContextFocus, DropdownMenuContextValue } from './DropdownContext';
-import { useKeyboardNavigation } from './hooks';
 import { MenuBody } from './DropdownMenuBody';
+import { useKeyboardNavigation } from './hooks';
 import { DropdownMenuItem } from './types';
 
 export interface DropdownMenuProps extends Omit<PopoverProps, 'children'> {

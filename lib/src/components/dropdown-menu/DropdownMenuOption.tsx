@@ -1,5 +1,5 @@
-import { ChevronRight } from '@moondreamsdev/dreamer-ui/symbols';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
+import { ChevronRight } from '../../symbols';
+import { join } from '../../utils';
 import { useDropdownMenuContext } from './DropdownContext';
 import { DropdownMenuOption } from './types';
 

@@ -1,4 +1,4 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
+import { join } from '../../utils';
 import { useDropdownMenuContext } from './DropdownContext';
 import { MenuOption } from './DropdownMenuOption';
 import { SubMenu } from './DropdownMenuSub';

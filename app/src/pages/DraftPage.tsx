@@ -1,11 +1,11 @@
-import { Callout, Code, Disclosure, Drawer, Popover } from '@moondreamsdev/dreamer-ui/components';
+import { Callout, Code, Disclosure, Drawer, Popover, DropdownMenuItem, DropdownMenuFactories, DropdownMenu } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
-import { custom, DropdownMenu, DropdownMenuItem, group, option, separator } from '../../dropdown-menu';
 
 const DropdownDemo = () => {
   const [selectedValue, setSelectedValue] = useState<string>('');
+  const { option, group, separator, custom } = DropdownMenuFactories;
 
   const exampleItems: DropdownMenuItem[] = [
     group(
