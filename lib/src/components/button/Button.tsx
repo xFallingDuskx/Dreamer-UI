@@ -4,68 +4,79 @@ import { join } from '../../utils';
 import { LoadingDots } from './LoadingDots';
 import { ButtonSize, ButtonVariants, buttonDefaults, buttonVariants, roundedVariants, sizeVariants } from './variants';
 
-export interface ButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttributes<HTMLButtonElement> {
-  ref?: Ref<HTMLButtonElement>;
-  loading?: boolean;
-  linkTo?: string;
-  linkProps?: Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>;
+interface ButtonButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttributes<HTMLButtonElement> {
+	href?: never;
+	ref?: Ref<HTMLButtonElement>;
+	loading?: boolean;
 }
 
+interface ButtonLinkProps
+	extends Partial<ButtonVariants>,
+		Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'role'> {
+	href: string;
+	ref?: Ref<HTMLAnchorElement>;
+	loading?: never;
+	disabled?: boolean;
+}
+
+export type ButtonProps = ButtonButtonProps | ButtonLinkProps;
+
 export function Button({
-  variant = buttonDefaults.variant,
-  size,
-  rounded = buttonDefaults.rounded,
-  loading,
-  linkTo,
-  linkProps,
-  type = 'button',
-  className,
-  ...rest
+	variant = buttonDefaults.variant,
+	size,
+	rounded = buttonDefaults.rounded,
+	loading,
+	className,
+	...rest
 }: ButtonProps) {
-  let adjustedSize: ButtonSize;
-  if (variant === 'link' && !size) {
-    // default links to fitted size
-    adjustedSize = 'fitted';
-  } else {
-    adjustedSize = size || buttonDefaults.size;
-  }
+	let adjustedSize: ButtonSize;
+	if (variant === 'link' && !size) {
+		// default links to fitted size
+		adjustedSize = 'fitted';
+	} else {
+		adjustedSize = size || buttonDefaults.size;
+	}
 
-  const baseClasses =
-    'appearance-none focus:outline-none focus:ring not-disabled:hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-all';
+	const baseClasses =
+		'appearance-none focus:outline-none focus:ring not-disabled:hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-all';
 
-  const buttonClasses = join(
-    baseClasses,
-    buttonVariants[variant],
-    sizeVariants[adjustedSize],
-    roundedVariants[rounded],
-    loading && 'relative pointer-events-none',
-    linkTo && 'relative',
-    className
-  );
+	const buttonClasses = join(
+		baseClasses,
+		buttonVariants[variant],
+		sizeVariants[adjustedSize],
+		roundedVariants[rounded],
+		loading && 'relative pointer-events-none',
+		className
+	);
 
-  return (
-    <button
-      {...rest}
-      role={linkTo ? 'link' : rest.role}
-      aria-label={rest['aria-label'] || linkProps?.['aria-label']}
-      aria-description={rest['aria-description'] || linkProps?.['aria-description']}
-      aria-disabled={rest.disabled || loading}
-      aria-busy={loading}
-      type={type}
-      className={buttonClasses}
-    >
-      {loading && <LoadingDots />}
-      <span className={join(loading && 'invisible')}>{rest.children}</span>
+	if (rest.href && !rest.disabled) {
+		return (
+			<a
+				{...rest}
+				rel={rest.rel ? rest.rel : rest.target === '_blank' ? 'noopener noreferrer' : undefined}
+				aria-label={rest['aria-label']}
+				aria-description={rest['aria-description']}
+				href={rest.href}
+				className={buttonClasses}
+			>
+				{rest.children}
+			</a>
+		);
+	}
 
-      {linkTo && !rest.disabled && (
-        <a
-          {...linkProps}
-          aria-hidden={true} // Hide from screen readers since the button is already accessible
-          href={linkTo}
-          rel={linkProps?.rel || 'noreferrer'}
-          className='absolute inset-0'
-        />
-      )}
-    </button>
-  );
+	const buttonRest = rest as ButtonButtonProps; // necessary to cast to avoid TS complaining
+	return (
+		<button
+			{...buttonRest}
+			aria-label={buttonRest['aria-label']}
+			aria-description={buttonRest['aria-description']}
+			aria-disabled={buttonRest.disabled || loading}
+			aria-busy={loading}
+			type={buttonRest.type ?? 'button'}
+			className={buttonClasses}
+		>
+			{loading && <LoadingDots />}
+			<span className={join(loading && 'invisible')}>{buttonRest.children}</span>
+		</button>
+	);
 }

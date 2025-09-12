@@ -50,10 +50,10 @@ export function ButtonPage() {
         id='links'
       >
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-          <Button linkTo='https://google.com' linkProps={{ target: '_blank' }}>
+          <Button href='https://google.com' target='_blank' rel='noopener noreferrer'>
             External Link
           </Button>
-          <Button linkTo='https://google.com' disabled={true}>
+          <Button href='https://google.com' disabled={true}>
             Disabled Link
           </Button>
         </div>
