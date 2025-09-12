@@ -18,12 +18,12 @@ export interface DropdownMenuProps extends Omit<PopoverProps, 'children'> {
 	onItemSelect?: (value: string) => void;
 }
 
-interface MenuOptionProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onClick' | 'aria-label'> {
+interface MenuOptionProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onClick' | 'aria-label'> {
 	option: DropdownMenuOption;
 }
 
 function MenuOption({ option, ...props }: MenuOptionProps) {
-	const { onItemSelect, onClose } = useDropdownMenuContext();
+	const { onItemSelect } = useDropdownMenuContext();
 
 	const handleItemClick = () => {
 		if (option.onClick) {
@@ -32,16 +32,14 @@ function MenuOption({ option, ...props }: MenuOptionProps) {
 		if (option.value) {
 			onItemSelect(option.value);
 		}
-		if (option.href) {
-			window.location.href = option.href;
-			return;
-		}
-		onClose();
 	};
 
 	const hasSubitems = option.subItems && option.subItems.length > 0;
+	const isLink = option.href && !option.disabled;
+	const Element = isLink ? 'a' : 'div';
 	return (
-		<div
+		<Element
+      href={isLink ? option.href : undefined}
 			className={join(
 				'relative flex items-center gap-2 px-3 py-2 text-sm focus:outline-none focus:bg-popover-foreground/10',
 				option.disabled ? 'opacity-50 cursor-default' : 'cursor-pointer'
@@ -56,18 +54,7 @@ function MenuOption({ option, ...props }: MenuOptionProps) {
 			</div>
 			{option.keyboardShortcut && <div className='text-xs text-popover-foreground/60'>{option.keyboardShortcut}</div>}
 			{hasSubitems && <ChevronRight className='size-4' />}
-
-			{option.href && !option.disabled && (
-				<a
-          onClick={(e) => e.preventDefault()}
-					href={option.href}
-          aria-label={`Link for ${option.label}`}
-					tabIndex={-1} // Not focusable by keyboard
-					className='absolute inset-0'
-					data-menu-link={option.value}
-				/>
-			)}
-		</div>
+		</Element>
 	);
 }
 
@@ -295,7 +282,6 @@ export function DropdownMenu({
 		focus,
 		setFocus,
 		isOpen,
-		onItemSelect: handleItemSelect,
 		onClose: handleClose,
 	});
 

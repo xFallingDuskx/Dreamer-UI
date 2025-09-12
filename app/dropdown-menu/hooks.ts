@@ -38,11 +38,10 @@ interface UseKeyboardNavigationProps {
   focus: DropdownMenuContextFocus | null;
   setFocus: (focus: DropdownMenuContextFocus | null) => void;
   isOpen: boolean;
-  onItemSelect: (value: string) => void;
   onClose: () => void;
 }
 
-export function useKeyboardNavigation({ dropdownId, focus, setFocus, isOpen, onItemSelect, onClose }: UseKeyboardNavigationProps) {
+export function useKeyboardNavigation({ dropdownId, focus, setFocus, isOpen, onClose }: UseKeyboardNavigationProps) {
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (!isOpen) return;
@@ -111,11 +110,6 @@ export function useKeyboardNavigation({ dropdownId, focus, setFocus, isOpen, onI
           if (focusedIndex !== null) {
             const el = itemElements[focusedIndex];
             el?.click();
-
-            const value = el?.getAttribute('data-menu-item');
-            if (value) {
-              onItemSelect?.(value);
-            }
             setFocus(null);
           }
           break;
@@ -132,7 +126,7 @@ export function useKeyboardNavigation({ dropdownId, focus, setFocus, isOpen, onI
         }
       }
     },
-    [isOpen, focus, setFocus, onItemSelect, onClose, dropdownId]
+    [isOpen, focus, setFocus, onClose, dropdownId]
   );
 
   useEffect(() => {
