@@ -16,11 +16,13 @@ const DropdownDemo = () => {
           icon: <div className='w-4 h-4 bg-blue-500 rounded' />,
           description: 'Create a new file',
           keyboardShortcut: '⌘N',
+          onClick: () => console.log('New File clicked!'),
         }),
         option({
           label: 'Open',
           value: 'open',
           icon: <div className='w-4 h-4 bg-green-500 rounded' />,
+          href: '/components'
         }),
         separator(),
         option({
