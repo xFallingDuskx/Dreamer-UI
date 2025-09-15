@@ -17,7 +17,7 @@
 	--color-destructive: var(--color-red-600); /* Slightly stronger red for better visibility */
 	--color-destructive-foreground: var(--color-white);
 
-	--color-border: var(--color-slate-300); /* Lighter border for modern look */
+	--color-border: var(--color-slate-500); /* Neutral border for modern look */
 	--color-popover: var(--color-white); /* Clean white popover background */
 	--color-popover-foreground: var(--color-slate-900); /* Dark text for readability */
 }

@@ -52,7 +52,7 @@ export function Card({
 			data-padding={padding}
 			className={join(
 				// Base styles
-				'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm overflow-hidden',
+				'border border-border rounded-lg shadow-sm overflow-hidden',
 				// Responsive design
 				'w-full max-w-full',
 				// Size-specific styles
