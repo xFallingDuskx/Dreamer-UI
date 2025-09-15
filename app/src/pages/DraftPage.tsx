@@ -12,6 +12,7 @@ import {
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
+import { Calendar } from '../../calendar';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -484,6 +485,54 @@ export const DraftPage = () => {
 								<Badge outline aspect='square'>
 									<ChevronDoubleLeft />
 								</Badge>
+							</div>
+						</div>
+
+						{/* Calendar Component Testing */}
+						<div>
+							<h3 className='text-lg font-medium text-white mb-3'>Calendar Component Testing</h3>
+							<div className='space-y-4'>
+								{/* Default Calendar */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Default Calendar</h4>
+									<Calendar />
+								</div>
+								
+								{/* Small Size */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Small Size</h4>
+									<Calendar size='sm' />
+								</div>
+
+								{/* Large Size with Week Numbers */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Large Size with Week Numbers</h4>
+									<Calendar size='lg' showWeekNumbers />
+								</div>
+
+								{/* Compact Variant */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Compact Variant</h4>
+									<Calendar variant='compact' />
+								</div>
+
+								{/* With Controlled Selection */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>With Selected Date</h4>
+									<Calendar 
+										defaultDate={new Date()} 
+										onDateSelect={(date) => console.log('Selected:', date)}
+									/>
+								</div>
+
+								{/* With Date Restrictions */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>With Date Restrictions</h4>
+									<Calendar 
+										minDate={new Date()} 
+										maxDate={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)}
+									/>
+								</div>
 							</div>
 						</div>
 					</div>
