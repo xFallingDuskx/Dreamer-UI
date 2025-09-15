@@ -12,6 +12,7 @@ import {
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
+import { Form, FormFactories, FormData } from '../../form';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -136,6 +137,254 @@ const DropdownDemo = () => {
 					<strong>Selected:</strong> {selectedValue}
 				</p>
 			)}
+		</div>
+	);
+};
+
+const FormDemo = () => {
+	const [formData, setFormData] = useState<FormData>({});
+	const [submittedData, setSubmittedData] = useState<FormData | null>(null);
+	const { input, textarea, select, checkbox, radio } = FormFactories;
+
+	// Basic contact form
+	const contactForm = [
+		input({
+			name: 'firstName',
+			label: 'First Name',
+			placeholder: 'Enter your first name',
+			required: true,
+			variant: 'outline',
+			isValid: (value: string) => {
+				if (value.length < 2) return 'First name must be at least 2 characters';
+				return true;
+			}
+		}),
+		input({
+			name: 'lastName',
+			label: 'Last Name',
+			placeholder: 'Enter your last name',
+			required: true,
+			variant: 'outline'
+		}),
+		input({
+			name: 'email',
+			label: 'Email',
+			type: 'email',
+			placeholder: 'Enter your email address',
+			required: true,
+			variant: 'outline',
+			isValid: (value: string) => {
+				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				if (!emailRegex.test(value)) return 'Please enter a valid email address';
+				return true;
+			}
+		}),
+		select({
+			name: 'country',
+			label: 'Country',
+			placeholder: 'Select your country',
+			required: true,
+			options: [
+				{ value: 'us', label: 'United States' },
+				{ value: 'ca', label: 'Canada' },
+				{ value: 'uk', label: 'United Kingdom' },
+				{ value: 'de', label: 'Germany' },
+				{ value: 'fr', label: 'France' },
+				{ value: 'jp', label: 'Japan' },
+				{ value: 'au', label: 'Australia' }
+			],
+			searchable: true,
+			clearable: true
+		}),
+		textarea({
+			name: 'message',
+			label: 'Message',
+			placeholder: 'Enter your message',
+			description: 'Tell us about your inquiry',
+			variant: 'outline',
+			rows: 4,
+			characterLimit: 500
+		}),
+		checkbox({
+			name: 'subscribe',
+			label: 'Email Notifications',
+			text: 'I would like to receive email updates and newsletters'
+		}),
+		radio({
+			name: 'contactMethod',
+			label: 'Preferred Contact Method',
+			required: true,
+			options: [
+				{ value: 'email', label: 'Email' },
+				{ value: 'phone', label: 'Phone' },
+				{ value: 'mail', label: 'Postal Mail' }
+			]
+		})
+	];
+
+	// Settings form with different variants
+	const settingsForm = [
+		input({
+			name: 'username',
+			label: 'Username',
+			placeholder: 'Enter username',
+			variant: 'left-line',
+			isValid: (value: string) => {
+				if (value.length < 3) return 'Username must be at least 3 characters';
+				if (!/^[a-zA-Z0-9_]+$/.test(value)) return 'Username can only contain letters, numbers, and underscores';
+				return true;
+			}
+		}),
+		input({
+			name: 'currentPassword',
+			label: 'Current Password',
+			type: 'password',
+			placeholder: 'Enter current password',
+			variant: 'left-line'
+		}),
+		input({
+			name: 'newPassword',
+			label: 'New Password',
+			type: 'password',
+			placeholder: 'Enter new password',
+			variant: 'left-line',
+			isValid: (value: string) => {
+				if (value.length < 8) return 'Password must be at least 8 characters';
+				if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+					return 'Password must contain at least one lowercase letter, one uppercase letter, and one number';
+				}
+				return true;
+			}
+		}),
+		select({
+			name: 'theme',
+			label: 'Theme',
+			options: [
+				{ value: 'light', label: 'Light' },
+				{ value: 'dark', label: 'Dark' },
+				{ value: 'system', label: 'System' }
+			]
+		}),
+		checkbox({
+			name: 'twoFactorAuth',
+			label: 'Two-Factor Authentication',
+			text: 'Enable two-factor authentication for enhanced security'
+		})
+	];
+
+	const handleSubmit = (data: FormData, formType: string) => {
+		console.log(`${formType} submitted:`, data);
+		setSubmittedData({ ...data, _formType: formType });
+	};
+
+	return (
+		<div>
+			<h3 className='text-lg font-medium text-white mb-3'>Form Component Testing</h3>
+			<div className='space-y-8'>
+				{/* Contact Form */}
+				<div>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Contact Form Example</h4>
+					<div className='bg-gray-800/50 p-6 rounded-lg'>
+						<Form
+							form={contactForm}
+							data={formData}
+							onDataChange={setFormData}
+							onSubmit={(data) => handleSubmit(data, 'Contact Form')}
+							spacing='normal'
+							className='max-w-md'
+						/>
+						<button
+							type='submit'
+							form='contact-form'
+							className='mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700'
+						>
+							Submit Contact Form
+						</button>
+					</div>
+				</div>
+
+				{/* Settings Form */}
+				<div>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Settings Form Example</h4>
+					<div className='bg-gray-800/50 p-6 rounded-lg'>
+						<Form
+							form={settingsForm}
+							onSubmit={(data) => handleSubmit(data, 'Settings Form')}
+							spacing='tight'
+							className='max-w-sm'
+						/>
+						<button
+							type='submit'
+							form='settings-form'
+							className='mt-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700'
+						>
+							Save Settings
+						</button>
+					</div>
+				</div>
+
+				{/* Simple validation demo */}
+				<div>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Validation Demo</h4>
+					<div className='bg-gray-800/50 p-6 rounded-lg'>
+						<Form
+							form={[
+								input({
+									name: 'requiredField',
+									label: 'Required Field',
+									placeholder: 'This field is required',
+									required: true,
+									variant: 'outline'
+								}),
+								input({
+									name: 'emailField',
+									label: 'Email Validation',
+									type: 'email',
+									placeholder: 'Must be valid email',
+									variant: 'outline',
+									isValid: (value: string) => {
+										if (!value) return true; // Optional field
+										const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+										return emailRegex.test(value) || 'Invalid email format';
+									}
+								}),
+								input({
+									name: 'numberField',
+									label: 'Number (1-100)',
+									type: 'number',
+									placeholder: 'Enter number between 1-100',
+									variant: 'outline',
+									isValid: (value: string) => {
+										if (!value) return true;
+										const num = parseInt(value);
+										if (num < 1 || num > 100) return 'Number must be between 1 and 100';
+										return true;
+									}
+								})
+							]}
+							onSubmit={(data) => handleSubmit(data, 'Validation Demo')}
+							spacing='normal'
+							className='max-w-md'
+						/>
+						<button
+							type='submit'
+							className='mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700'
+						>
+							Test Validation
+						</button>
+					</div>
+				</div>
+
+				{/* Display submitted data */}
+				{submittedData && (
+					<div className='bg-green-900/20 border border-green-800 p-4 rounded-lg'>
+						<h4 className='text-md font-medium text-green-300 mb-2'>Submitted Data:</h4>
+						<pre className='text-sm text-green-200 overflow-auto'>
+							{JSON.stringify(submittedData, null, 2)}
+						</pre>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 };
@@ -462,6 +711,9 @@ export const DraftPage = () => {
 
 						{/* Dropdown Menu Testing */}
 						<DropdownDemo />
+
+						{/* Form Component Testing */}
+						<FormDemo />
 
 						{/* Badge Component Testing */}
 						<div>
