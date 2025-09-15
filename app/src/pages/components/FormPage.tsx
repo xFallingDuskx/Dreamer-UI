@@ -5,6 +5,7 @@ import { Form, FormFactories, FormData } from '../../../form';
 
 const tableOfContents = [
   { id: 'form-types', title: 'Form Types', level: 1 },
+  { id: 'field-layout', title: 'Field Layout', level: 1 },
   { id: 'field-types', title: 'Field Types', level: 1 },
   { id: 'validation', title: 'Validation', level: 1 },
   { id: 'factories', title: 'Field Factories', level: 1 },
@@ -14,6 +15,7 @@ const tableOfContents = [
 export function FormPage() {
   const [basicFormData, setBasicFormData] = useState<FormData>({});
   const [validationFormData, setValidationFormData] = useState<FormData>({});
+  const [layoutFormData, setLayoutFormData] = useState<FormData>({});
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
   const { input, textarea, select, checkbox, radio } = FormFactories;
 
@@ -146,16 +148,92 @@ export function FormPage() {
       variant: 'outline'
     }),
     input({
-      name: 'leftLine',
-      label: 'Left Line Variant',
-      placeholder: 'Left line style',
-      variant: 'left-line'
+      name: 'underline',
+      label: 'Underline Variant',
+      placeholder: 'Underline style',
+      variant: 'underline'
     }),
     input({
       name: 'base',
       label: 'Base Variant',
       placeholder: 'Base style',
       variant: 'base'
+    })
+  ];
+
+  // Layout examples
+  const multiColumnForm = [
+    input({
+      name: 'firstName',
+      label: 'First Name',
+      placeholder: 'John',
+      variant: 'outline',
+      required: true
+    }),
+    input({
+      name: 'lastName', 
+      label: 'Last Name',
+      placeholder: 'Doe',
+      variant: 'outline',
+      required: true
+    }),
+    input({
+      name: 'email',
+      label: 'Email Address',
+      type: 'email',
+      placeholder: 'john.doe@example.com',
+      variant: 'outline',
+      colSpan: 'full',
+      required: true
+    }),
+    input({
+      name: 'phone',
+      label: 'Phone',
+      type: 'tel',
+      placeholder: '+1 (555) 123-4567',
+      variant: 'outline'
+    }),
+    input({
+      name: 'age',
+      label: 'Age',
+      type: 'number',
+      placeholder: '25',
+      variant: 'outline',
+      maxWidth: 'xs'
+    }),
+    textarea({
+      name: 'comments',
+      label: 'Additional Comments',
+      placeholder: 'Any additional information...',
+      variant: 'outline',
+      colSpan: 'full',
+      rows: 3
+    })
+  ];
+
+  const constrainedWidthForm = [
+    input({
+      name: 'quantity',
+      label: 'Quantity',
+      type: 'number',
+      placeholder: '1',
+      variant: 'outline',
+      maxWidth: 'xs'
+    }),
+    input({
+      name: 'price',
+      label: 'Price',
+      type: 'number',
+      placeholder: '0.00',
+      variant: 'outline',
+      maxWidth: 'sm'
+    }),
+    input({
+      name: 'productName',
+      label: 'Product Name',
+      placeholder: 'Enter product name',
+      variant: 'outline',
+      minWidth: 'md'
     })
   ];
 
@@ -190,6 +268,60 @@ export function FormPage() {
                 form={basicForm.slice(0, 2)}
                 spacing='tight'
                 className='max-w-sm'
+              />
+            </div>
+          </div>
+        </div>
+      </ExampleSection>
+
+      <ExampleSection 
+        title='Field Layout'
+        description='Multi-column layouts and responsive field arrangements with width constraints.'
+        id='field-layout'
+      >
+        <div className='space-y-8'>
+          <div>
+            <h4 className='font-medium mb-4'>Multi-Column Layout (2 columns)</h4>
+            <div className='bg-gray-900/50 p-6 rounded-lg'>
+              <Form
+                form={multiColumnForm}
+                data={layoutFormData}
+                onDataChange={setLayoutFormData}
+                columns={2}
+                spacing='normal'
+              />
+            </div>
+          </div>
+          
+          <div>
+            <h4 className='font-medium mb-4'>Width Constraints</h4>
+            <div className='bg-gray-900/50 p-6 rounded-lg'>
+              <Form
+                form={constrainedWidthForm}
+                columns={3}
+                spacing='normal'
+              />
+            </div>
+          </div>
+
+          <div>
+            <h4 className='font-medium mb-4'>Three Column Layout</h4>
+            <div className='bg-gray-900/50 p-6 rounded-lg'>
+              <Form
+                form={[
+                  input({ name: 'field1', label: 'Field 1', placeholder: 'First', variant: 'outline' }),
+                  input({ name: 'field2', label: 'Field 2', placeholder: 'Second', variant: 'outline' }),
+                  input({ name: 'field3', label: 'Field 3', placeholder: 'Third', variant: 'outline' }),
+                  input({ 
+                    name: 'fullWidth', 
+                    label: 'Full Width Field', 
+                    placeholder: 'This spans all columns', 
+                    variant: 'outline',
+                    colSpan: 'full'
+                  })
+                ]}
+                columns={3}
+                spacing='normal'
               />
             </div>
           </div>

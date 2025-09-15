@@ -228,7 +228,7 @@ const FormDemo = () => {
 			name: 'username',
 			label: 'Username',
 			placeholder: 'Enter username',
-			variant: 'left-line',
+			variant: 'underline',
 			isValid: (value: string) => {
 				if (value.length < 3) return 'Username must be at least 3 characters';
 				if (!/^[a-zA-Z0-9_]+$/.test(value)) return 'Username can only contain letters, numbers, and underscores';
@@ -240,14 +240,14 @@ const FormDemo = () => {
 			label: 'Current Password',
 			type: 'password',
 			placeholder: 'Enter current password',
-			variant: 'left-line'
+			variant: 'underline'
 		}),
 		input({
 			name: 'newPassword',
 			label: 'New Password',
 			type: 'password',
 			placeholder: 'Enter new password',
-			variant: 'left-line',
+			variant: 'underline',
 			isValid: (value: string) => {
 				if (value.length < 8) return 'Password must be at least 8 characters';
 				if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
@@ -372,6 +372,57 @@ const FormDemo = () => {
 						>
 							Test Validation
 						</button>
+					</div>
+				</div>
+
+				{/* Layout Examples */}
+				<div>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Multi-Column Layout</h4>
+					<div className='bg-gray-800/50 p-6 rounded-lg'>
+						<Form
+							form={[
+								input({
+									name: 'firstName',
+									label: 'First Name',
+									placeholder: 'John',
+									variant: 'outline',
+									required: true
+								}),
+								input({
+									name: 'lastName',
+									label: 'Last Name', 
+									placeholder: 'Doe',
+									variant: 'outline',
+									required: true
+								}),
+								input({
+									name: 'email',
+									label: 'Email (Full Width)',
+									type: 'email',
+									placeholder: 'john.doe@example.com',
+									variant: 'outline',
+									colSpan: 'full'
+								}),
+								input({
+									name: 'age',
+									label: 'Age',
+									type: 'number',
+									placeholder: '25',
+									variant: 'outline',
+									maxWidth: 'xs'
+								}),
+								input({
+									name: 'phone',
+									label: 'Phone',
+									type: 'tel',
+									placeholder: '+1 (555) 123-4567',
+									variant: 'outline'
+								})
+							]}
+							columns={2}
+							spacing='normal'
+							onSubmit={(data) => handleSubmit(data, 'Layout Demo')}
+						/>
 					</div>
 				</div>
 

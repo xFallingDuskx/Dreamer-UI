@@ -3,8 +3,7 @@ import {
   TextareaField,
   SelectField,
   CheckboxField,
-  RadioField,
-  BaseFormField
+  RadioField
 } from './types';
 
 const input = (field: Omit<InputField, '__type'>): InputField => ({

@@ -43,10 +43,15 @@ export function useFormValidation(fields: FormField[], data: FormData) {
     if (!field) return;
 
     const error = validateField(field, value);
-    setErrors(prev => ({
-      ...prev,
-      [fieldName]: error || undefined
-    }));
+    setErrors(prev => {
+      const newErrors = { ...prev };
+      if (error) {
+        newErrors[fieldName] = error;
+      } else {
+        delete newErrors[fieldName];
+      }
+      return newErrors;
+    });
 
     return !error;
   }, [fields, validateField]);

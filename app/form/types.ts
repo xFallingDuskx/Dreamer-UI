@@ -10,13 +10,17 @@ export interface BaseFormField {
   required?: boolean;
   disabled?: boolean;
   isValid?: (value: any) => boolean | string; // boolean for valid/invalid, string for error message
+  // Layout properties
+  colSpan?: 1 | 2 | 3 | 4 | 'full'; // Number of columns to span
+  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'none'; // Maximum width constraint
+  minWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'none'; // Minimum width constraint
 }
 
 export interface InputField extends BaseFormField {
   __type: 'input';
   type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
   placeholder?: string;
-  variant?: 'base' | 'left-line' | 'outline';
+  variant?: 'base' | 'default' | 'underline' | 'outline';
   rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
 }
 
@@ -66,4 +70,7 @@ export interface FormProps {
   className?: string;
   id?: string;
   ref?: React.Ref<HTMLFormElement>;
+  // Layout configuration
+  columns?: 1 | 2 | 3 | 4; // Default number of columns in the grid
+  responsive?: boolean; // Whether to collapse to single column on mobile
 }

@@ -1,17 +1,54 @@
 export const formVariants = {
   spacing: {
-    tight: 'space-y-3',
-    normal: 'space-y-4',
-    loose: 'space-y-6',
+    tight: 'gap-3',
+    normal: 'gap-4', 
+    loose: 'gap-6',
+  },
+  columns: {
+    1: 'grid-cols-1',
+    2: 'grid-cols-1 md:grid-cols-2', 
+    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+    4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
+  },
+  colSpan: {
+    1: 'col-span-1',
+    2: 'col-span-1 md:col-span-2',
+    3: 'col-span-1 md:col-span-2 lg:col-span-3', 
+    4: 'col-span-1 md:col-span-2 lg:col-span-4',
+    full: 'col-span-full',
+  },
+  maxWidth: {
+    xs: 'max-w-xs',
+    sm: 'max-w-sm', 
+    md: 'max-w-md',
+    lg: 'max-w-lg',
+    xl: 'max-w-xl',
+    none: '',
+  },
+  minWidth: {
+    xs: 'min-w-[16rem]',
+    sm: 'min-w-[20rem]',
+    md: 'min-w-[24rem]', 
+    lg: 'min-w-[28rem]',
+    xl: 'min-w-[32rem]',
+    none: '',
   },
 } as const;
 
 export type FormSpacing = keyof typeof formVariants.spacing;
+export type FormColumns = keyof typeof formVariants.columns;
+export type FormColSpan = keyof typeof formVariants.colSpan;
+export type FormMaxWidth = keyof typeof formVariants.maxWidth;
+export type FormMinWidth = keyof typeof formVariants.minWidth;
 
 export interface FormVariants {
   spacing: FormSpacing;
+  columns?: FormColumns;
+  responsive?: boolean;
 }
 
 export const formDefaults: FormVariants = {
   spacing: 'normal',
+  columns: 1,
+  responsive: true,
 } as const;
