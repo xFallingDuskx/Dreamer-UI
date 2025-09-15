@@ -10,6 +10,12 @@ const components = [
     category: 'Form',
   },
   {
+    name: 'Card',
+    path: '/components/card',
+    description: 'Flexible container component that supports images, different screen sizes, and customizable padding.',
+    category: 'Layout',
+  },
+  {
     name: 'CodeBlock',
     path: '/components/codeblock',
     description: 'Syntax-highlighted code display with TypeScript support, copy, and fullscreen.',
