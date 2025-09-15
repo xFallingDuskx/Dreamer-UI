@@ -1,7 +1,7 @@
 export type BadgeVariant = 'base' | 'primary' | 'secondary' | 'accent' | 'destructive' | 'muted';
 
 export const BadgeVariants: Record<BadgeVariant, string> = {
-  base: '',
+	base: '',
 	primary: 'bg-primary text-primary-foreground',
 	secondary: 'bg-secondary text-secondary-foreground',
 	accent: 'bg-accent text-accent-foreground',
@@ -10,7 +10,7 @@ export const BadgeVariants: Record<BadgeVariant, string> = {
 };
 
 export const BadgeVariantsOutline: Record<BadgeVariant, string> = {
-  base: '',
+	base: '',
 	primary: 'border border-primary bg-transparent text-primary',
 	secondary: 'border border-secondary bg-transparent text-secondary',
 	accent: 'border border-accent bg-transparent text-accent',
@@ -18,28 +18,28 @@ export const BadgeVariantsOutline: Record<BadgeVariant, string> = {
 	muted: 'border border-muted-foreground bg-transparent text-muted-foreground',
 };
 
-export type BadgeSize = 'xs' | 'sm' | 'md'
+export type BadgeSize = 'xs' | 'sm' | 'md';
 
 interface BadgeSizeStyles {
-  text: string;
-  aspectSquare: string;
-  aspectVideo: string;
+	text: string;
+	aspectSquare: string;
+	aspectVideo: string;
 }
 
 export const BadgeSizes: Record<BadgeSize, BadgeSizeStyles> = {
-  xs: {
-    text: 'text-xs',
-    aspectSquare: 'p-1',
-    aspectVideo: 'px-2 py-0.5',
-  },
-  sm: {
-    text: 'text-sm',
-    aspectSquare: 'p-1.5',
-    aspectVideo: 'px-2.5 py-1',
-  },
-  md: {
-    text: 'text-base',
-    aspectSquare: 'p-2',
-    aspectVideo: 'px-3 py-1.5',
-  },
+	xs: {
+		text: 'text-xs',
+		aspectSquare: 'p-1',
+		aspectVideo: 'px-2 py-0.5',
+	},
+	sm: {
+		text: 'text-sm',
+		aspectSquare: 'p-1.5',
+		aspectVideo: 'px-2.5 py-1',
+	},
+	md: {
+		text: 'text-base',
+		aspectSquare: 'p-2',
+		aspectVideo: 'px-3 py-1.5',
+	},
 };

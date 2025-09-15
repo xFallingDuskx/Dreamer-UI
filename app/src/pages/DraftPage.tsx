@@ -7,11 +7,11 @@ import {
 	DropdownMenuItem,
 	DropdownMenuFactories,
 	DropdownMenu,
+  Badge,
 } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
-import { Badge } from '../../Badge/Badge';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');

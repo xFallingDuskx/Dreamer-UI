@@ -1,5 +1,5 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React from 'react';
+import { join } from '../../utils';
 import { BadgeSize, BadgeSizes, BadgeVariant, BadgeVariants, BadgeVariantsOutline } from './variants';
 
 type BadgeUse = 'decorative' | 'status' | 'alert';
@@ -13,7 +13,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 	aspect?: 'square' | 'video';
 	/** Used for accessibility purposes to define the aria attributes of the badge. */
 	use?: BadgeUse;
-  /** Size of the badge. `md` uses `text-base` */
+	/** Size of the badge. `md` uses `text-base` */
 	size?: BadgeSize;
 }
 
