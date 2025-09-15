@@ -2,20 +2,22 @@
 @import './components/textarea/styles.css';
 
 @theme library {
-  --color-primary: var(--color-violet-400);
-  --color-primary-foreground: var(--color-white);
-  --color-secondary: var(--color-violet-200);
-  --color-secondary-foreground: var(--color-black);
-  --color-destructive: var(--color-red-500);
-  --color-destructive-foreground: var(--color-white);
-  --color-muted: var(--color-gray-200);
-  --color-muted-foreground: var(--color-gray-800);
+	--color-primary: var(--color-violet-400);
+	--color-primary-foreground: var(--color-white);
+	--color-secondary: var(--color-violet-200);
+	--color-secondary-foreground: var(--color-black);
+	--color-muted: var(--color-gray-200);
+	--color-muted-foreground: var(--color-gray-800);
 
-  --color-accent: var(--color-violet-500);
-  --color-accent-foreground: var(--color-white);
+	--color-accent: var(--color-violet-500);
+	--color-accent-foreground: var(--color-white);
 
-  --color-success: var(--color-green-500);
-  --color-border: var(--color-slate-600); /* for input/textarea borders and dividers */
-  --color-popover: var(--color-slate-900); /* for popover backgrounds (tooltip, dropdowns, modals, etc) */
-  --color-popover-foreground: var(--color-white); /* for popover text */
+	--color-success: var(--color-green-500);
+	--color-success-foreground: var(--color-white);
+	--color-destructive: var(--color-red-500);
+	--color-destructive-foreground: var(--color-white);
+
+	--color-border: var(--color-slate-600); /* for input/textarea borders and dividers */
+	--color-popover: var(--color-slate-900); /* for popover backgrounds (tooltip, dropdowns, modals, etc) */
+	--color-popover-foreground: var(--color-white); /* for popover text */
 }
