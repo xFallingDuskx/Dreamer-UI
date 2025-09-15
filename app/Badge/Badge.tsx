@@ -8,14 +8,21 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 	variant?: BadgeVariant;
 	outline?: boolean;
 	children?: React.ReactNode;
+	aspect?: 'square' | 'video';
 }
 
-export function Badge({ id, ref, variant = 'muted', outline = false, children, className, ...props }: BadgeProps) {
+export function Badge({ id, ref, variant = 'muted', outline = false, children, className, aspect = 'video', ...props }: BadgeProps) {
 	return (
 		<span
 			id={id}
 			ref={ref}
-			className={join('min-w-1 min-h-1 rounded-full px-2 py-1', outline ? BadgeVariantsOutline[variant] : BadgeVariants[variant], className)}
+			className={join(
+				'text-sm rounded-full inline-flex',
+        aspect === 'square' && 'p-2',
+        aspect === 'video' && 'px-2.5 py-1',
+				outline ? BadgeVariantsOutline[variant] : BadgeVariants[variant],
+				className
+			)}
 			data-variant={variant}
 			data-outline={outline}
 			{...props}
