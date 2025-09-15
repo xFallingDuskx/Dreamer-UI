@@ -481,7 +481,7 @@ export const DraftPage = () => {
 									Secondary Outline
 								</Badge>
 								<Badge variant='accent' aspect='square' />
-								<Badge outline>
+								<Badge outline aspect='square'>
 									<ChevronDoubleLeft />
 								</Badge>
 							</div>

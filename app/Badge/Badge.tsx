@@ -18,7 +18,7 @@ export function Badge({ id, ref, variant = 'muted', outline = false, children, c
 			ref={ref}
 			className={join(
 				'text-sm rounded-full inline-flex',
-        aspect === 'square' && 'p-2',
+        aspect === 'square' && 'p-1.5',
         aspect === 'video' && 'px-2.5 py-1',
 				outline ? BadgeVariantsOutline[variant] : BadgeVariants[variant],
 				className

@@ -15,5 +15,5 @@ export const BadgeVariantsOutline: Record<BadgeVariant, string> = {
 	secondary: 'border border-secondary bg-transparent text-secondary',
 	accent: 'border border-accent bg-transparent text-accent',
 	destructive: 'border border-destructive bg-transparent text-destructive',
-	muted: 'border border-muted bg-transparent text-muted',
+	muted: 'border border-muted-foreground bg-transparent text-muted-foreground',
 };
