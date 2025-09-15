@@ -145,7 +145,7 @@ export function CardPage() {
               </div>
             }
             footer={
-              <div className="flex justify-between items-center pt-2 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-700">
                 <span className="text-sm text-gray-500 dark:text-gray-400">
                   Last updated: 2 hours ago
                 </span>
