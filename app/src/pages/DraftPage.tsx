@@ -2,6 +2,7 @@ import { Callout, Code, Disclosure, Drawer, Popover, DropdownMenuItem, DropdownM
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
+import { Badge } from '../../Badge/Badge';
 
 const DropdownDemo = () => {
   const [selectedValue, setSelectedValue] = useState<string>('');
@@ -450,6 +451,21 @@ export const DraftPage = () => {
 
             {/* Dropdown Menu Testing */}
             <DropdownDemo />
+
+            {/* Badge Component Testing */}
+            <div>
+              <h3 className='text-lg font-medium text-white mb-3'>Badge Component Testing</h3>
+              <div className='space-x-2'>
+                <Badge variant="primary">Primary</Badge>
+                <Badge variant="secondary">Secondary</Badge>
+                <Badge variant="accent">Accent</Badge>
+                <Badge variant="destructive">Destructive</Badge>
+                <Badge variant="muted">Muted</Badge>
+                <Badge variant="primary" outline>Primary Outline</Badge>
+                <Badge variant="secondary" outline>Secondary Outline</Badge>
+                <Badge variant="accent" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
