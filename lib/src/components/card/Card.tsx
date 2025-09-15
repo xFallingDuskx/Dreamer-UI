@@ -1,4 +1,4 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
+import { join } from '../../utils';
 import { CardSize, CardSizes } from './variants';
 
 export interface CardProps {

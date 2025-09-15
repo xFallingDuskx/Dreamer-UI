@@ -1,5 +1,6 @@
 import {
 	Callout,
+	Card,
 	Code,
 	Disclosure,
 	Drawer,
@@ -12,7 +13,6 @@ import {
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
-import { Card } from '../../card';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
