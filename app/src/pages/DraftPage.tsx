@@ -12,6 +12,7 @@ import {
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
+import { Card } from '../../card';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -484,6 +485,118 @@ export const DraftPage = () => {
 								<Badge outline aspect='square'>
 									<ChevronDoubleLeft />
 								</Badge>
+							</div>
+						</div>
+
+						{/* Card Component Testing */}
+						<div>
+							<h3 className='text-lg font-medium text-white mb-3'>Card Component Testing</h3>
+							<div className='space-y-6'>
+								{/* Basic Card */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Basic Card</h4>
+									<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+										<Card 
+											header="Card Title"
+											footer="Card footer text"
+										>
+											This is the basic card content. It demonstrates how the card component works with different screen sizes.
+										</Card>
+										<Card 
+											size="sm"
+											header="Small Card"
+										>
+											This is a small card with minimal content.
+										</Card>
+										<Card 
+											size="lg"
+											header="Large Card"
+											footer="Large card footer"
+										>
+											This is a large card with more spacing and larger text.
+										</Card>
+									</div>
+								</div>
+
+								{/* Cards with Images */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Cards with Images</h4>
+									<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+										<Card 
+											imageSrc="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&h=200&fit=crop"
+											imageAlt="Mountain landscape"
+											header="Mountain Adventure"
+											footer="Photo by John Doe"
+										>
+											Discover the beauty of mountain landscapes with this stunning view.
+										</Card>
+										<Card 
+											imageSrc="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=200&fit=crop"
+											imageAlt="Forest path"
+											header="Forest Walk"
+											padding={24}
+										>
+											Take a peaceful walk through the forest trails.
+										</Card>
+									</div>
+								</div>
+
+								{/* Custom Padding */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Custom Padding</h4>
+									<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+										<Card 
+											padding={8}
+											header="Tight Padding (8px)"
+										>
+											This card has minimal padding.
+										</Card>
+										<Card 
+											padding={16}
+											header="Default Padding (16px)"
+										>
+											This card uses the default padding.
+										</Card>
+										<Card 
+											padding={32}
+											header="Spacious Padding (32px)"
+										>
+											This card has extra spacious padding.
+										</Card>
+									</div>
+								</div>
+
+								{/* Complex Content */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Complex Content</h4>
+									<Card 
+										header={
+											<div className="flex items-center justify-between">
+												<h3 className="text-xl font-bold">Project Dashboard</h3>
+												<Badge variant="success">Active</Badge>
+											</div>
+										}
+										footer={
+											<div className="flex justify-between items-center">
+												<span className="text-gray-500">Last updated: 2 hours ago</span>
+												<button className="text-blue-500 hover:text-blue-700">View Details</button>
+											</div>
+										}
+										padding={20}
+									>
+										<div className="space-y-3">
+											<p>This card demonstrates complex header and footer content with multiple elements.</p>
+											<div className="grid grid-cols-2 gap-4 text-sm">
+												<div>
+													<strong>Tasks:</strong> 12/15 completed
+												</div>
+												<div>
+													<strong>Progress:</strong> 80%
+												</div>
+											</div>
+										</div>
+									</Card>
+								</div>
 							</div>
 						</div>
 					</div>
