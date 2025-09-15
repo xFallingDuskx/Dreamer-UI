@@ -1,6 +1,6 @@
+import { Card } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
-import { Card } from '../../../card';
 
 const tableOfContents = [
   { id: 'basic-usage', title: 'Basic Usage', level: 1 },
