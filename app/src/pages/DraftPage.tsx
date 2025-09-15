@@ -7,7 +7,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuFactories,
 	DropdownMenu,
-  Badge,
+	Badge,
 } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
@@ -473,7 +473,9 @@ export const DraftPage = () => {
 								<Badge variant='accent'>Accent</Badge>
 								<Badge variant='destructive'>Destructive</Badge>
 								<Badge variant='destructive'>99+</Badge>
-								<Badge variant='success' outline>SUCCESS</Badge>
+								<Badge variant='success' outline>
+									SUCCESS
+								</Badge>
 								<Badge variant='muted'>Muted</Badge>
 								<Badge variant='primary' outline>
 									Primary Outline
@@ -496,23 +498,14 @@ export const DraftPage = () => {
 								<div>
 									<h4 className='text-md font-medium text-gray-300 mb-2'>Basic Card</h4>
 									<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-										<Card 
-											header="Card Title"
-											footer="Card footer text"
-										>
-											This is the basic card content. It demonstrates how the card component works with different screen sizes.
+										<Card header='Card Title' footer='Card footer text'>
+											This is the basic card content. It demonstrates how the card component works with different screen
+											sizes.
 										</Card>
-										<Card 
-											size="sm"
-											header="Small Card"
-										>
+										<Card size='sm' header='Small Card'>
 											This is a small card with minimal content.
 										</Card>
-										<Card 
-											size="lg"
-											header="Large Card"
-											footer="Large card footer"
-										>
+										<Card size='lg' header='Large Card' footer='Large card footer'>
 											This is a large card with more spacing and larger text.
 										</Card>
 									</div>
@@ -522,22 +515,26 @@ export const DraftPage = () => {
 								<div>
 									<h4 className='text-md font-medium text-gray-300 mb-2'>Cards with Images</h4>
 									<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-										<Card 
-											imageSrc="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&h=200&fit=crop"
-											imageAlt="Mountain landscape"
-											header="Mountain Adventure"
-											footer="Photo by John Doe"
+										<Card
+											imageSrc='https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&h=200&fit=crop'
+											imageAlt='Mountain landscape'
+											header='Mountain Adventure'
+											footer='Photo by John Doe'
+											imageToEdge={false}
 										>
 											Discover the beauty of mountain landscapes with this stunning view.
 										</Card>
-										<Card 
-											imageSrc="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=200&fit=crop"
-											imageAlt="Forest path"
-											header="Forest Walk"
-											padding={24}
-										>
-											Take a peaceful walk through the forest trails.
-										</Card>
+										<div>
+											<Card
+												imageSrc='https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=200&fit=crop'
+												imageAlt='Forest path'
+												header='Forest Walk'
+												className='max-h-fit'
+											>
+												Take a peaceful walk through the forest trails.
+											</Card>
+											<small className='text-xs text-gray-500 mt-1 text-center'>Image extends to card edges with max height set to "fit"</small>
+										</div>
 									</div>
 								</div>
 
@@ -545,22 +542,13 @@ export const DraftPage = () => {
 								<div>
 									<h4 className='text-md font-medium text-gray-300 mb-2'>Custom Padding</h4>
 									<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-										<Card 
-											padding={8}
-											header="Tight Padding (8px)"
-										>
+										<Card padding={8} header='Tight Padding (8px)'>
 											This card has minimal padding.
 										</Card>
-										<Card 
-											padding={16}
-											header="Default Padding (16px)"
-										>
+										<Card padding={16} header='Default Padding (16px)'>
 											This card uses the default padding.
 										</Card>
-										<Card 
-											padding={24}
-											header="Spacious Padding (24px)"
-										>
+										<Card padding={24} header='Spacious Padding (24px)'>
 											This card has extra spacious padding.
 										</Card>
 									</div>
@@ -569,24 +557,24 @@ export const DraftPage = () => {
 								{/* Complex Content */}
 								<div>
 									<h4 className='text-md font-medium text-gray-300 mb-2'>Complex Content</h4>
-									<Card 
+									<Card
 										header={
-											<div className="flex items-center justify-between">
-												<h3 className="text-xl font-bold">Project Dashboard</h3>
-												<Badge variant="success">Active</Badge>
+											<div className='flex items-center justify-between'>
+												<h3 className='text-xl font-bold'>Project Dashboard</h3>
+												<Badge variant='success'>Active</Badge>
 											</div>
 										}
 										footer={
-											<div className="flex justify-between items-center">
-												<span className="text-gray-500">Last updated: 2 hours ago</span>
-												<button className="text-blue-500 hover:text-blue-700">View Details</button>
+											<div className='flex justify-between items-center'>
+												<span className='text-gray-500'>Last updated: 2 hours ago</span>
+												<button className='text-blue-500 hover:text-blue-700'>View Details</button>
 											</div>
 										}
 										padding={20}
 									>
-										<div className="space-y-3">
+										<div className='space-y-3'>
 											<p>This card demonstrates complex header and footer content with multiple elements.</p>
-											<div className="grid grid-cols-2 gap-4 text-sm">
+											<div className='grid grid-cols-2 gap-4 text-sm'>
 												<div>
 													<strong>Tasks:</strong> 12/15 completed
 												</div>

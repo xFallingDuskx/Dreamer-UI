@@ -24,6 +24,8 @@ export interface CardProps {
 	imageAlt?: string;
 	/** Custom image component */
 	imageComponent?: React.ReactNode;
+	/** If true, the image will extend to the edges of the card, ignoring padding. Default is false. */
+	imageToEdge?: boolean;
 }
 
 export function Card({
@@ -38,6 +40,7 @@ export function Card({
 	imageSrc,
 	imageAlt,
 	imageComponent,
+	imageToEdge = true,
 	...props
 }: CardProps) {
 	const sizeVariant = CardSizes[size];
@@ -59,29 +62,29 @@ export function Card({
 				sizeVariant.container,
 				className
 			)}
-			style={{ padding }}
 			{...props}
 		>
 			{/* Image Section */}
 			{showImage && (
-				<div className='w-full overflow-hidden'>
+				<div
+					style={imageToEdge ? undefined : { padding, paddingBottom: 0 }}
+					className='w-full overflow-hidden'
+				>
 					{imageComponent ? (
 						imageComponent
 					) : (
-						<img src={imageSrc} alt={imageAlt || ''} className='w-full h-auto object-cover' loading='lazy' />
+						<img src={imageSrc} alt={imageAlt || ''} className='w-full h-auto object-cover rounded-xs' loading='lazy' />
 					)}
 				</div>
 			)}
 
 			{/* Card Content */}
-			<div style={{ paddingTop: showImage ? padding / 2 : undefined, rowGap: padding * sizeVariant.paddingMulti }} className='flex flex-col h-full'>
+			<div style={{ padding, rowGap: padding * sizeVariant.paddingMulti }} className='flex flex-col'>
 				{/* Header */}
 				{header && <div className={sizeVariant.header}>{header}</div>}
 
 				{/* Main Content */}
-				{children && (
-					<div className={sizeVariant.content}>{children}</div>
-				)}
+				{children && <div className={sizeVariant.content}>{children}</div>}
 
 				{/* Footer */}
 				{footer && <div className={sizeVariant.footer}>{footer}</div>}
