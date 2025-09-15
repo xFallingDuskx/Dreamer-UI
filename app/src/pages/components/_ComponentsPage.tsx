@@ -10,6 +10,12 @@ const components = [
     category: 'Form',
   },
   {
+    name: 'Calendar',
+    path: '/components/calendar',
+    description: 'Flexible calendar component for date selection with restrictions and customization.',
+    category: 'Form',
+  },
+  {
     name: 'CodeBlock',
     path: '/components/codeblock',
     description: 'Syntax-highlighted code display with TypeScript support, copy, and fullscreen.',
