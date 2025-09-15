@@ -558,8 +558,8 @@ export const DraftPage = () => {
 											This card uses the default padding.
 										</Card>
 										<Card 
-											padding={32}
-											header="Spacious Padding (32px)"
+											padding={24}
+											header="Spacious Padding (24px)"
 										>
 											This card has extra spacious padding.
 										</Card>
