@@ -1,8 +1,14 @@
 import React from 'react';
 import { join } from '../../utils';
-import { BadgeSize, BadgeSizes, BadgeVariant, BadgeVariants, BadgeVariantsOutline } from './variants';
-
-type BadgeUse = 'decorative' | 'status' | 'alert';
+import {
+	BadgeSize,
+	BadgeSizes,
+	BadgeUse,
+	BadgeUseAriaAttributes,
+	BadgeVariant,
+	BadgeVariants,
+	BadgeVariantsOutline,
+} from './variants';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 	id?: string;
@@ -16,12 +22,6 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 	/** Size of the badge. `md` uses `text-base` */
 	size?: BadgeSize;
 }
-
-const BadgeUseAriaAttributes: Record<BadgeUse, object> = {
-	decorative: { 'aria-hidden': true },
-	status: { role: 'status' },
-	alert: { role: 'alert' },
-};
 
 export function Badge({
 	id,
@@ -52,7 +52,7 @@ export function Badge({
 			data-aspect={aspect}
 			data-use={use}
 			data-size={size}
-			{...(use ? BadgeUseAriaAttributes[use] : {})}
+			{...BadgeUseAriaAttributes[use]}
 			{...props}
 		>
 			{children}

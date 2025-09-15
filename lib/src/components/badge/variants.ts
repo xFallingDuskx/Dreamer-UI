@@ -1,3 +1,13 @@
+// -- Badge Use
+export type BadgeUse = 'decorative' | 'status' | 'alert';
+
+export const BadgeUseAriaAttributes: Record<BadgeUse, object> = {
+	decorative: { 'aria-hidden': true },
+	status: { role: 'status' },
+	alert: { role: 'alert' },
+};
+
+// -- Badge Variant
 export type BadgeVariant = 'base' | 'primary' | 'secondary' | 'accent' | 'destructive' | 'muted';
 
 export const BadgeVariants: Record<BadgeVariant, string> = {
@@ -18,6 +28,7 @@ export const BadgeVariantsOutline: Record<BadgeVariant, string> = {
 	muted: 'border border-muted-foreground bg-transparent text-muted-foreground',
 };
 
+// -- Badge Size
 export type BadgeSize = 'xs' | 'sm' | 'md';
 
 interface BadgeSizeStyles {
