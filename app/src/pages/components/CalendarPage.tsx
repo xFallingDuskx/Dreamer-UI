@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar } from '../../../calendar';
+import { Calendar, DateRange } from '../../../calendar';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
 
@@ -7,6 +7,7 @@ const tableOfContents = [
   { id: 'variants', title: 'Variants', level: 1 },
   { id: 'sizes', title: 'Sizes', level: 1 },
   { id: 'features', title: 'Features', level: 1 },
+  { id: 'range-selection', title: 'Range Selection', level: 1 },
   { id: 'date-restrictions', title: 'Date Restrictions', level: 1 },
   { id: 'controlled-usage', title: 'Controlled Usage', level: 1 },
 ];
@@ -14,10 +15,25 @@ const tableOfContents = [
 export function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [multiSelectDates, setMultiSelectDates] = useState<Date[]>([]);
+  const [selectedRange, setSelectedRange] = useState<DateRange>({ start: null, end: null });
+  const [controlledRange, setControlledRange] = useState<DateRange>({ 
+    start: new Date(), 
+    end: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) 
+  });
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
     console.log('Selected date:', date);
+  };
+
+  const handleRangeSelect = (range: DateRange) => {
+    setSelectedRange(range);
+    console.log('Selected range:', range);
+  };
+
+  const handleControlledRangeSelect = (range: DateRange) => {
+    setControlledRange(range);
+    console.log('Controlled range:', range);
   };
 
   const handleMultiSelect = (date: Date) => {
@@ -92,6 +108,63 @@ export function CalendarPage() {
           <div>
             <h4 className='text-sm font-medium mb-3'>Large with Week Numbers</h4>
             <Calendar size='lg' showWeekNumbers variant='compact' />
+          </div>
+        </div>
+      </ExampleSection>
+
+      <ExampleSection 
+        title='Range Selection'
+        description='Select date ranges for booking systems, date filters, and period selection interfaces.'
+        id='range-selection'
+      >
+        <div className='space-y-6'>
+          <div>
+            <h4 className='text-sm font-medium mb-3'>Basic Range Selection</h4>
+            <div className='space-y-3'>
+              <Calendar 
+                mode='range'
+                onRangeSelect={handleRangeSelect}
+              />
+              <div className='text-sm'>
+                <strong>Selected Range:</strong> 
+                {selectedRange.start && selectedRange.end
+                  ? ` ${selectedRange.start.toLocaleDateString()} - ${selectedRange.end.toLocaleDateString()}`
+                  : selectedRange.start
+                    ? ` ${selectedRange.start.toLocaleDateString()} (selecting end date)`
+                    : ' None'
+                }
+              </div>
+            </div>
+          </div>
+          <div>
+            <h4 className='text-sm font-medium mb-3'>Pre-selected Range</h4>
+            <Calendar 
+              mode='range'
+              defaultRange={{
+                start: new Date(),
+                end: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+              }}
+              onRangeSelect={(range) => console.log('Range selected:', range)}
+            />
+          </div>
+          <div>
+            <h4 className='text-sm font-medium mb-3'>Controlled Range Selection</h4>
+            <div className='space-y-3'>
+              <Calendar 
+                mode='range'
+                selectedRange={controlledRange}
+                onRangeSelect={handleControlledRangeSelect}
+                size='sm'
+                variant='compact'
+              />
+              <div className='text-sm'>
+                <strong>Controlled Range:</strong> 
+                {controlledRange.start && controlledRange.end
+                  ? ` ${controlledRange.start.toLocaleDateString()} - ${controlledRange.end.toLocaleDateString()}`
+                  : ' Incomplete range'
+                }
+              </div>
+            </div>
           </div>
         </div>
       </ExampleSection>

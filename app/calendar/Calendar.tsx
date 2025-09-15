@@ -1,7 +1,7 @@
 import React from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { ChevronLeft, ChevronRight } from '@moondreamsdev/dreamer-ui/symbols';
-import { useCalendar, UseCalendarProps } from './hooks';
+import { useCalendar, UseCalendarProps, DateRange } from './hooks';
 import { CalendarSize, CalendarSizes, CalendarVariant, CalendarVariants } from './variants';
 
 export interface CalendarProps extends UseCalendarProps, React.HTMLAttributes<HTMLDivElement> {
@@ -34,24 +34,34 @@ export function Calendar({
   navigationClassName,
   dayClassName,
   // Separate calendar-specific props from HTML props
+  mode,
   defaultDate,
   selectedDate,
   onDateSelect,
+  defaultRange,
+  selectedRange,
+  onRangeSelect,
   minDate,
   maxDate,
   disabledDates,
   ...htmlProps
 }: CalendarProps) {
   const {
+    mode: calendarMode,
     currentMonth,
     selectedDate: currentSelectedDate,
+    selectedRange: currentSelectedRange,
     calendarData,
     selectDate,
     navigateMonth,
   } = useCalendar({
+    mode,
     defaultDate,
     selectedDate,
     onDateSelect,
+    defaultRange,
+    selectedRange,
+    onRangeSelect,
     minDate,
     maxDate,
     disabledDates,
@@ -157,7 +167,16 @@ export function Calendar({
                 </div>
               )}
               {week.map((dayData, dayIndex) => {
-            const { date, isCurrentMonth, isSelected, isToday, isDisabled } = dayData;
+            const { 
+              date, 
+              isCurrentMonth, 
+              isSelected, 
+              isToday, 
+              isDisabled,
+              isInRange,
+              isRangeStart,
+              isRangeEnd
+            } = dayData;
             
             return (
               <button
@@ -170,8 +189,15 @@ export function Calendar({
                   'hover:bg-muted focus:outline-none focus:ring-2 focus:ring-accent focus:z-10',
                   'disabled:text-muted-foreground disabled:cursor-not-allowed disabled:hover:bg-transparent',
                   !isCurrentMonth && 'text-muted-foreground/50',
-                  isSelected && 'bg-primary text-primary-foreground hover:bg-primary/90',
-                  isToday && !isSelected && 'bg-accent text-accent-foreground',
+                  // Single date selection styling
+                  calendarMode === 'single' && isSelected && 'bg-primary text-primary-foreground hover:bg-primary/90',
+                  // Range selection styling
+                  calendarMode === 'range' && isInRange && !isRangeStart && !isRangeEnd && 'bg-primary/20 text-primary',
+                  calendarMode === 'range' && isRangeStart && 'bg-primary text-primary-foreground hover:bg-primary/90 rounded-r-none',
+                  calendarMode === 'range' && isRangeEnd && 'bg-primary text-primary-foreground hover:bg-primary/90 rounded-l-none',
+                  calendarMode === 'range' && isRangeStart && isRangeEnd && 'rounded', // Single day range
+                  // Today styling (when not selected/in range)
+                  isToday && !isSelected && !isInRange && 'bg-accent text-accent-foreground',
                   dayClassName
                 )}
                 aria-label={date.toLocaleDateString('en-US', { 
@@ -180,11 +206,14 @@ export function Calendar({
                   month: 'long', 
                   day: 'numeric' 
                 })}
-                aria-selected={isSelected}
+                aria-selected={isSelected || isInRange}
                 aria-disabled={isDisabled}
                 data-date={date.toISOString()}
                 data-current-month={isCurrentMonth}
                 data-selected={isSelected}
+                data-in-range={isInRange}
+                data-range-start={isRangeStart}
+                data-range-end={isRangeEnd}
                 data-today={isToday}
                 data-disabled={isDisabled}
               >
