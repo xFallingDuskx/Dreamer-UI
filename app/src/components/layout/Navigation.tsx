@@ -9,6 +9,7 @@ const components = [
   { name: 'Button', path: '/components/button' },
   { name: 'CodeBlock', path: '/components/codeblock' },
   { name: 'Disclosure', path: '/components/disclosure' },
+  { name: 'Form', path: '/components/form' },
   { name: 'Input', path: '/components/input' },
   { name: 'Textarea', path: '/components/textarea' },
   { name: 'Select', path: '/components/select' },

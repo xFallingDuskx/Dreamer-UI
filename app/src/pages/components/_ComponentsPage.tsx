@@ -16,6 +16,12 @@ const components = [
     category: 'Display',
   },
   {
+    name: 'Form',
+    path: '/components/form',
+    description: 'Flexible form component using factory pattern with built-in validation and state management.',
+    category: 'Form',
+  },
+  {
     name: 'Input',
     path: '/components/input',
     description: 'Flexible input component with validation states and different types.',
