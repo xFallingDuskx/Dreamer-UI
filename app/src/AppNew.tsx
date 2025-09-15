@@ -14,6 +14,7 @@ import { UtilsPage } from './pages/utils/_UtilsPage';
 
 // Component Pages
 import { ButtonPage } from './pages/components/ButtonPage';
+import { CalendarPage } from './pages/components/CalendarPage';
 import { CodeBlockPage } from './pages/components/CodeBlockPage';
 import { InputPage } from './pages/components/InputPage';
 import { ModalPage } from './pages/components/ModalPage';
@@ -51,6 +52,7 @@ function App() {
 
               {/* Component Pages */}
               <Route path='components/button' element={<ButtonPage />} />
+              <Route path='components/calendar' element={<CalendarPage />} />
               <Route path='components/disclosure' element={<DisclosurePage />} />
               <Route path='components/skeleton' element={<SkeletonPage />} />
               <Route path='components/input' element={<InputPage />} />
