@@ -8,7 +8,7 @@ export interface CardProps {
 	className?: string;
 	/** React ref for the card container */
 	ref?: React.Ref<HTMLDivElement>;
-	/** Card size variant */
+	/** Card size variant. Affects text styles and internal padding. */
 	size?: CardSize;
 	/** Padding in pixels (defaults to 16). Used for card itself and spacing between its content within the card. */
 	padding?: number;
@@ -42,7 +42,7 @@ export function Card({
 }: CardProps) {
 	const sizeVariant = CardSizes[size];
 	const showImage = imageSrc || imageComponent;
-  
+
 	return (
 		<div
 			id={id}
@@ -74,7 +74,7 @@ export function Card({
 			)}
 
 			{/* Card Content */}
-			<div style={{ paddingTop: showImage ? padding / 2 : undefined, rowGap: padding / 2 }} className='flex flex-col h-full'>
+			<div style={{ paddingTop: showImage ? padding / 2 : undefined, rowGap: padding * sizeVariant.paddingMulti }} className='flex flex-col h-full'>
 				{/* Header */}
 				{header && <div className={sizeVariant.header}>{header}</div>}
 
