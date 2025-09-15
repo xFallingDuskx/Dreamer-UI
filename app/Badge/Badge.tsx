@@ -1,6 +1,6 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React from 'react';
-import { BadgeVariant, BadgeVariants, BadgeVariantsOutline } from './variants';
+import { BadgeSize, BadgeSizes, BadgeVariant, BadgeVariants, BadgeVariantsOutline } from './variants';
 
 type BadgeUse = 'decorative' | 'status' | 'alert';
 
@@ -11,8 +11,10 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 	outline?: boolean;
 	children?: React.ReactNode;
 	aspect?: 'square' | 'video';
-  /** Used for accessibility purposes to define the aria attributes of the badge. */
+	/** Used for accessibility purposes to define the aria attributes of the badge. */
 	use?: BadgeUse;
+  /** Size of the badge. `md` uses `text-base` */
+	size?: BadgeSize;
 }
 
 const BadgeUseAriaAttributes: Record<BadgeUse, object> = {
@@ -30,6 +32,7 @@ export function Badge({
 	className,
 	aspect = 'video',
 	use = 'decorative',
+	size = 'xs',
 	...props
 }: BadgeProps) {
 	return (
@@ -37,9 +40,10 @@ export function Badge({
 			id={id}
 			ref={ref}
 			className={join(
-				'text-sm rounded-full inline-flex',
-				aspect === 'square' && 'p-1.5',
-				aspect === 'video' && 'px-2.5 py-1',
+				'font-medium rounded-full inline-flex select-none',
+				BadgeSizes[size].text,
+				aspect === 'square' && BadgeSizes[size].aspectSquare,
+				aspect === 'video' && BadgeSizes[size].aspectVideo,
 				outline ? BadgeVariantsOutline[variant] : BadgeVariants[variant],
 				className
 			)}
@@ -47,6 +51,7 @@ export function Badge({
 			data-outline={outline}
 			data-aspect={aspect}
 			data-use={use}
+			data-size={size}
 			{...(use ? BadgeUseAriaAttributes[use] : {})}
 			{...props}
 		>

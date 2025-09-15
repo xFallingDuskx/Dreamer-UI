@@ -17,3 +17,29 @@ export const BadgeVariantsOutline: Record<BadgeVariant, string> = {
 	destructive: 'border border-destructive bg-transparent text-destructive',
 	muted: 'border border-muted-foreground bg-transparent text-muted-foreground',
 };
+
+export type BadgeSize = 'xs' | 'sm' | 'md'
+
+interface BadgeSizeStyles {
+  text: string;
+  aspectSquare: string;
+  aspectVideo: string;
+}
+
+export const BadgeSizes: Record<BadgeSize, BadgeSizeStyles> = {
+  xs: {
+    text: 'text-xs',
+    aspectSquare: 'p-1',
+    aspectVideo: 'px-2 py-0.5',
+  },
+  sm: {
+    text: 'text-sm',
+    aspectSquare: 'p-1.5',
+    aspectVideo: 'px-2.5 py-1',
+  },
+  md: {
+    text: 'text-base',
+    aspectSquare: 'p-2',
+    aspectVideo: 'px-3 py-1.5',
+  },
+};
