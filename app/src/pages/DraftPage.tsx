@@ -472,8 +472,8 @@ export const DraftPage = () => {
 								<Badge variant='secondary'>Secondary</Badge>
 								<Badge variant='accent'>Accent</Badge>
 								<Badge variant='destructive'>Destructive</Badge>
-								<Badge variant='destructive'>8</Badge>
 								<Badge variant='destructive'>99+</Badge>
+								<Badge variant='success' outline>SUCCESS</Badge>
 								<Badge variant='muted'>Muted</Badge>
 								<Badge variant='primary' outline>
 									Primary Outline
