@@ -11,6 +11,7 @@ export interface CheckboxProps extends React.ButtonHTMLAttributes<HTMLButtonElem
   rounded?: boolean;
   checked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
+  display?: 'inline' | 'block';
 }
 
 export function Checkbox({
@@ -24,6 +25,7 @@ export function Checkbox({
   onCheckedChange,
   disabled,
   className = '',
+  display = 'inline',
   ...props
 }: CheckboxProps) {
   const generatedId = useId();
@@ -50,7 +52,8 @@ export function Checkbox({
   };
 
   const checkboxClasses = join(
-    'flex items-center justify-center border outline outline-transparent focus:outline-current focus:outline-offset-2',
+    'items-center justify-center border outline outline-transparent focus:outline-current focus:outline-offset-2',
+    display === 'inline' ? 'inline-flex' : 'flex',
     rounded && 'rounded',
     disabled && 'opacity-40 cursor-not-allowed',
     !disabled && 'cursor-pointer',
