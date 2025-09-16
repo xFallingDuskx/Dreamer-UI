@@ -1,7 +1,7 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { ExclamationTriangle, InfoCircled } from '@moondreamsdev/dreamer-ui/symbols';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { ErrorBoundaryVariants } from './variants';
+import { ExclamationTriangle, InfoCircled } from '../../symbols';
+import { join } from '../../utils';
 
 export interface ErrorBoundaryProps {
   /** The id of the ErrorBoundary. */

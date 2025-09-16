@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
-import { ErrorBoundary } from '../../../error-boundary';
+import { ErrorBoundary } from '@moondreamsdev/dreamer-ui/components';
 
 const tableOfContents = [
   { id: 'variants', title: 'Variants', level: 1 },
