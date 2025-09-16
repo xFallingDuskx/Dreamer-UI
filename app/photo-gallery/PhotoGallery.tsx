@@ -72,7 +72,7 @@ export function PhotoGallery({
     <div
       key={photo.id}
       className={join(
-        'relative overflow-hidden cursor-pointer transition-transform hover:scale-105 focus:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+        'relative overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 group',
         layout === 'horizontal' ? `flex-shrink-0 ${sizeConfig.container}` : '',
         layout === 'masonry' ? 'break-inside-avoid mb-4' : sizeConfig.container
       )}
@@ -87,7 +87,7 @@ export function PhotoGallery({
         src={photo.src}
         alt={photo.alt || `Photo ${index + 1}`}
         className={join(
-          'w-full h-full',
+          'w-full h-full transition-transform duration-200 group-hover:scale-105',
           sizeConfig.image,
           layout === 'horizontal' ? 'aspect-square' : '',
           photoClassName
@@ -202,7 +202,8 @@ export function PhotoGallery({
           'w-full',
           layoutClass,
           layout === 'horizontal' && containerHeight ? containerHeight : '',
-          layout === 'horizontal' ? 'overflow-x-auto' : 'overflow-y-auto'
+          layout === 'horizontal' ? 'overflow-x-auto overflow-y-hidden' : 
+          layout === 'masonry' ? 'overflow-y-auto overflow-x-hidden' : 'overflow-y-auto overflow-x-hidden'
         )}
         style={{
           maxHeight: layout !== 'horizontal' && containerHeight ? containerHeight : undefined,
