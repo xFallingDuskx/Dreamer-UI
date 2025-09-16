@@ -157,8 +157,8 @@ const FormDemo = () => {
 			placeholder: 'Enter your first name',
 			required: true,
 			variant: 'outline',
-			isValid: (value: string) => {
-				if (value.length < 2) return { valid: false, message: 'First name must be at least 2 characters' };
+			isValid: (value: string | undefined) => {
+				if (!value || value.length < 2) return { valid: false, message: 'First name must be at least 2 characters' };
 				return { valid: true };
 			}
 		}),
@@ -176,7 +176,8 @@ const FormDemo = () => {
 			placeholder: 'Enter your email address',
 			required: true,
 			variant: 'outline',
-			isValid: (value: string) => {
+			isValid: (value: string | undefined) => {
+				if (!value) return { valid: false, message: 'Email is required' };
 				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 				if (!emailRegex.test(value)) return { valid: false, message: 'Please enter a valid email address' };
 				return { valid: true, message: 'Email format is valid' };
@@ -232,8 +233,8 @@ const FormDemo = () => {
 			label: 'Username',
 			placeholder: 'Enter username',
 			variant: 'underline',
-			isValid: (value: string) => {
-				if (value.length < 3) return { valid: false, message: 'Username must be at least 3 characters' };
+			isValid: (value: string | undefined) => {
+				if (!value || value.length < 3) return { valid: false, message: 'Username must be at least 3 characters' };
 				if (!/^[a-zA-Z0-9_]+$/.test(value)) return { valid: false, message: 'Username can only contain letters, numbers, and underscores' };
 				return { valid: true };
 			}
@@ -251,8 +252,8 @@ const FormDemo = () => {
 			type: 'password',
 			placeholder: 'Enter new password',
 			variant: 'underline',
-			isValid: (value: string) => {
-				if (value.length < 8) return { valid: false, message: 'Password must be at least 8 characters' };
+			isValid: (value: string | undefined) => {
+				if (!value || value.length < 8) return { valid: false, message: 'Password must be at least 8 characters' };
 				if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
 					return { valid: false, message: 'Password must contain at least one lowercase letter, one uppercase letter, and one number' };
 				}
@@ -341,7 +342,7 @@ const FormDemo = () => {
 									type: 'email',
 									placeholder: 'Must be valid email',
 									variant: 'outline',
-									isValid: (value: string) => {
+									isValid: (value: string | undefined) => {
 										if (!value) return { valid: true }; // Optional field
 										const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 										if (!emailRegex.test(value)) return { valid: false, message: 'Invalid email format' };
@@ -354,8 +355,8 @@ const FormDemo = () => {
 									type: 'number',
 									placeholder: 'Enter number between 1-100',
 									variant: 'outline',
-									maxWidth: 150, // Compact width for number input
-									isValid: (value: string) => {
+									maxWidth: { xs: 120, sm: 150, md: 180 }, // Responsive width for number input
+									isValid: (value: string | undefined) => {
 										if (!value) return { valid: true };
 										const num = parseInt(value);
 										if (num < 1 || num > 100) return { valid: false, message: 'Number must be between 1 and 100' };
@@ -409,7 +410,7 @@ const FormDemo = () => {
 									type: 'number',
 									placeholder: '25',
 									variant: 'outline',
-									maxWidth: 120 // Compact width for age input
+									maxWidth: { xs: 100, md: 120, lg: 140 } // Responsive width for age input
 								}),
 								input({
 									name: 'phone',

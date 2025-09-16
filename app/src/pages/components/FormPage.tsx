@@ -106,8 +106,8 @@ export function FormPage() {
       placeholder: 'At least 3 characters',
       required: true,
       variant: 'outline',
-      isValid: (value: string) => {
-        if (value.length < 3) return { valid: false, message: 'Username must be at least 3 characters' };
+      isValid: (value: string | undefined) => {
+        if (!value || value.length < 3) return { valid: false, message: 'Username must be at least 3 characters' };
         if (!/^[a-zA-Z0-9_]+$/.test(value)) return { valid: false, message: 'Username can only contain letters, numbers, and underscores' };
         return { valid: true };
       }
@@ -119,7 +119,8 @@ export function FormPage() {
       placeholder: 'Valid email format',
       required: true,
       variant: 'outline',
-      isValid: (value: string) => {
+      isValid: (value: string | undefined) => {
+        if (!value) return { valid: false, message: 'Email is required' };
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) return { valid: false, message: 'Please enter a valid email address' };
         return { valid: true };
@@ -131,7 +132,7 @@ export function FormPage() {
       type: 'number',
       placeholder: 'Between 13-120',
       variant: 'outline',
-      isValid: (value: string) => {
+      isValid: (value: string | undefined) => {
         if (!value) return { valid: true }; // Optional field
         const age = parseInt(value);
         if (age < 13 || age > 120) return { valid: false, message: 'Age must be between 13 and 120' };
@@ -218,7 +219,7 @@ export function FormPage() {
       type: 'number',
       placeholder: '1',
       variant: 'outline',
-      maxWidth: 100 // Small width for quantity
+      maxWidth: 80 // Simple pixel width for quantity
     }),
     input({
       name: 'price',
@@ -226,7 +227,7 @@ export function FormPage() {
       type: 'number',
       placeholder: '0.00',
       variant: 'outline',
-      maxWidth: 150 // Medium width for price
+      maxWidth: { xs: 120, md: 150, lg: 180 } // Responsive width for price
     }),
     input({
       name: 'productName',
@@ -396,7 +397,7 @@ input({
   placeholder: 'Enter username',
   required: true,
   variant: 'outline',
-  isValid: (value) => value.length >= 3 ? { valid: true } : { valid: false, message: 'Too short' }
+  isValid: (value: string | undefined) => value && value.length >= 3 ? { valid: true } : { valid: false, message: 'Too short' }
 })`}
               </pre>
             </div>

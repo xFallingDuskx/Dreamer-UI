@@ -12,5 +12,6 @@ export type {
   RadioField,
   BaseFormField,
   FieldType,
-  ValidationResult
+  ValidationResult,
+  ScreenSize
 } from './types';

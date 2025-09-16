@@ -2,6 +2,8 @@ import React from 'react';
 
 export type FieldType = 'input' | 'textarea' | 'select' | 'checkbox' | 'radio';
 
+export type ScreenSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+
 export interface ValidationResult {
 	valid: boolean;
 	message?: string;
@@ -14,11 +16,9 @@ export interface BaseFormField {
 	description?: string;
 	required?: boolean;
 	disabled?: boolean;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	isValid?: (value: any) => ValidationResult;
 	// Layout properties
 	colSpan?: 1 | 2 | 3 | 4 | 'full'; // Number of columns to span
-	maxWidth?: number; // Maximum width constraint in pixels
+	maxWidth?: number | Partial<Record<ScreenSize, number>>; // Maximum width constraint in pixels or responsive breakpoint object
 }
 
 export interface InputField extends BaseFormField {
@@ -27,6 +27,7 @@ export interface InputField extends BaseFormField {
 	placeholder?: string;
 	variant?: 'base' | 'default' | 'underline' | 'outline';
 	rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+	isValid?: (value: string | undefined) => ValidationResult;
 }
 
 export interface TextareaField extends BaseFormField {
@@ -37,6 +38,7 @@ export interface TextareaField extends BaseFormField {
 	rows?: number;
 	autoExpand?: boolean;
 	characterLimit?: number;
+	isValid?: (value: string | undefined) => ValidationResult;
 }
 
 export interface SelectField extends BaseFormField {
@@ -45,16 +47,19 @@ export interface SelectField extends BaseFormField {
 	placeholder?: string;
 	searchable?: boolean;
 	clearable?: boolean;
+	isValid?: (value: string | undefined) => ValidationResult;
 }
 
 export interface CheckboxField extends BaseFormField {
 	__type: 'checkbox';
 	text?: string;
+	isValid?: (value: boolean) => ValidationResult;
 }
 
 export interface RadioField extends BaseFormField {
 	__type: 'radio';
 	options: Array<{ value: string; label: string; disabled?: boolean }>;
+	isValid?: (value: string | undefined) => ValidationResult;
 }
 
 export type FormField = InputField | TextareaField | SelectField | CheckboxField | RadioField;
