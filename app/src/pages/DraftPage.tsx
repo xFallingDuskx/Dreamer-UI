@@ -1,4 +1,5 @@
 import {
+	Avatar,
 	Callout,
 	Card,
 	Code,
@@ -13,7 +14,6 @@ import {
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
-import { Avatar } from '../../avatar';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
