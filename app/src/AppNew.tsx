@@ -21,6 +21,7 @@ import { SkeletonPage } from './pages/components/SkeletonPage';
 import { CalloutPage } from './pages/components/CalloutPage';
 import { FormPage } from './pages/components/FormPage';
 import { CardPage } from './pages/components/CardPage';
+import { AvatarPage } from './pages/components/AvatarPage';
 
 // Hook Pages
 import { UseActionModalPage } from './pages/hooks/UseActionModalPage';
@@ -52,6 +53,7 @@ function App() {
               <Route path='components' element={<ComponentsPage />} />
 
               {/* Component Pages */}
+              <Route path='components/avatar' element={<AvatarPage />} />
               <Route path='components/button' element={<ButtonPage />} />
               <Route path='components/card' element={<CardPage />} />
               <Route path='components/disclosure' element={<DisclosurePage />} />
