@@ -22,6 +22,18 @@ const components = [
     category: 'Display',
   },
   {
+    name: 'Disclosure',
+    path: '/components/disclosure',
+    description: 'Collapsible content component with accessible expand/collapse functionality.',
+    category: 'Display',
+  },
+  {
+    name: 'ErrorBoundary',
+    path: '/components/error-boundary',
+    description: 'React error boundary component that catches JavaScript errors and displays fallback UI.',
+    category: 'Feedback',
+  },
+  {
     name: 'Input',
     path: '/components/input',
     description: 'Flexible input component with validation states and different types.',

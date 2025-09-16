@@ -668,7 +668,7 @@ export const DraftPage = () => {
 									<ErrorBoundary
 										variant='danger'
 										fallbackMessage='The BuggyComponent threw an error!'
-										onError={(error, errorInfo) => {
+										onError={(error) => {
 											console.log('Error caught by ErrorBoundary:', error);
 										}}
 									>

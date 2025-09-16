@@ -1,5 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { ExclamationTriangle, InfoCircled, X } from '@moondreamsdev/dreamer-ui/symbols';
+import { ExclamationTriangle, InfoCircled } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { ErrorBoundaryVariants } from './variants';
 
