@@ -671,6 +671,7 @@ export const DraftPage = () => {
 										onError={(error) => {
 											console.log('Error caught by ErrorBoundary:', error);
 										}}
+										inDevEnv={true}
 									>
 										<BuggyComponent />
 									</ErrorBoundary>

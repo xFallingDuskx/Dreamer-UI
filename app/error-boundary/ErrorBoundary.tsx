@@ -6,8 +6,6 @@ import { ErrorBoundaryVariants } from './variants';
 export interface ErrorBoundaryProps {
   /** The id of the ErrorBoundary. */
   id?: string;
-  /** The ref for the ErrorBoundary. */
-  ref?: React.Ref<HTMLDivElement>;
   /** The variant of the ErrorBoundary. */
   variant?: ErrorBoundaryVariants;
   /** Whether to show a retry button. */
@@ -24,6 +22,8 @@ export interface ErrorBoundaryProps {
   className?: string;
   /** The children to render inside the ErrorBoundary. */
   children: ReactNode;
+  /** Flag to indicate if the app is in development mode. For showing error details in development mode */
+  inDevEnv?: boolean;
 }
 
 interface ErrorBoundaryState {
@@ -40,7 +40,6 @@ const VariantIcons: Record<ErrorBoundaryVariants, React.ReactNode> = {
 
 export function ErrorBoundary({
   id,
-  ref,
   variant = 'danger',
   showRetry = true,
   fallbackMessage,
@@ -49,13 +48,13 @@ export function ErrorBoundary({
   onError,
   className,
   children,
+  inDevEnv = false,
 }: ErrorBoundaryProps) {
   // Since functional components can't have error boundaries,
   // we need to use a class component wrapper
   return (
     <ErrorBoundaryClass
       id={id}
-      ref={ref}
       variant={variant}
       showRetry={showRetry}
       fallbackMessage={fallbackMessage}
@@ -63,6 +62,7 @@ export function ErrorBoundary({
       onRetry={onRetry}
       onError={onError}
       className={className}
+      inDevEnv={inDevEnv}
     >
       {children}
     </ErrorBoundaryClass>
@@ -84,7 +84,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryProps, ErrorBoundaryStat
     this.props.onError?.(error, errorInfo);
     
     // Log error for development
-    if (process.env.NODE_ENV === 'development') {
+    if (this.props.inDevEnv) {
       console.error('ErrorBoundary caught an error:', error);
       console.error('Error info:', errorInfo);
     }
@@ -98,12 +98,12 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryProps, ErrorBoundaryStat
   render() {
     const {
       id,
-      ref,
       variant = 'danger',
       showRetry = true,
       fallbackMessage = 'Something went wrong',
       fallback,
       className,
+      inDevEnv,
     } = this.props;
 
     if (this.state.hasError) {
@@ -118,7 +118,6 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryProps, ErrorBoundaryStat
       return (
         <div
           id={id}
-          ref={ref}
           data-variant={variant}
           data-has-error={this.state.hasError}
           className={join(
@@ -141,7 +140,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryProps, ErrorBoundaryStat
             {fallbackMessage}
           </p>
 
-          {process.env.NODE_ENV === 'development' && this.state.error && (
+          {inDevEnv && this.state.error && (
             <details className="mt-4 text-left">
               <summary className="cursor-pointer text-sm font-medium mb-2">
                 Error Details (Development Only)
