@@ -181,8 +181,7 @@ export function Form<T extends FormData = FormData>({
 								data-field-type={field.__type}
 								size={checkboxSize}
 							/>
-							<div className='inline-block' style={{ maxWidth: `calc(100% - ${checkboxSize + 10}px)` }}>
-								{' '}
+							<div className='inline-block' style={{ maxWidth: `calc(100% - ${checkboxSize + 10}px)` }}> {/* 8px for spacing, 2px for buffer */}
 								{/* 8px for spacing, 2px for buffer */}
 								<Label htmlFor={fieldId} className='cursor-pointer'>
 									{checkboxField.text || field.label}
