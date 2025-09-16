@@ -13,6 +13,7 @@ import {
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
+import { Table, TableColumn } from '../../table';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -585,6 +586,190 @@ export const DraftPage = () => {
 										</div>
 									</Card>
 								</div>
+							</div>
+						</div>
+
+						{/* Table Component Testing */}
+						<div>
+							<h3 className='text-lg font-medium text-white mb-3'>Table Component Testing</h3>
+							<div className='space-y-6'>
+								{/* Sample data for testing */}
+								{(() => {
+									interface User {
+										id: number;
+										name: string;
+										email: string;
+										role: string;
+										status: 'active' | 'inactive';
+										lastLogin: Date;
+									}
+
+									const sampleData: User[] = [
+										{
+											id: 1,
+											name: 'Alice Johnson',
+											email: 'alice@example.com',
+											role: 'Admin',
+											status: 'active',
+											lastLogin: new Date('2024-01-15T10:30:00'),
+										},
+										{
+											id: 2,
+											name: 'Bob Smith',
+											email: 'bob@example.com',
+											role: 'User',
+											status: 'active',
+											lastLogin: new Date('2024-01-14T15:45:00'),
+										},
+										{
+											id: 3,
+											name: 'Carol Davis',
+											email: 'carol@example.com',
+											role: 'Editor',
+											status: 'inactive',
+											lastLogin: new Date('2024-01-10T09:20:00'),
+										},
+										{
+											id: 4,
+											name: 'David Wilson',
+											email: 'david@example.com',
+											role: 'User',
+											status: 'active',
+											lastLogin: new Date('2024-01-16T11:15:00'),
+										},
+										{
+											id: 5,
+											name: 'Eve Miller',
+											email: 'eve@example.com',
+											role: 'Admin',
+											status: 'active',
+											lastLogin: new Date('2024-01-16T08:00:00'),
+										},
+									];
+
+									const columns: TableColumn<User>[] = [
+										{
+											key: 'name',
+											header: 'Name',
+											accessor: 'name',
+											sortable: true,
+											align: 'left',
+										},
+										{
+											key: 'email',
+											header: 'Email',
+											accessor: 'email',
+											sortable: true,
+											align: 'left',
+										},
+										{
+											key: 'role',
+											header: 'Role',
+											accessor: 'role',
+											sortable: true,
+											align: 'center',
+											cell: (user) => (
+												<Badge variant={user.role === 'Admin' ? 'accent' : user.role === 'Editor' ? 'secondary' : 'muted'}>
+													{user.role}
+												</Badge>
+											),
+										},
+										{
+											key: 'status',
+											header: 'Status',
+											accessor: 'status',
+											sortable: true,
+											align: 'center',
+											cell: (user) => (
+												<Badge variant={user.status === 'active' ? 'success' : 'destructive'}>
+													{user.status}
+												</Badge>
+											),
+										},
+										{
+											key: 'lastLogin',
+											header: 'Last Login',
+											accessor: 'lastLogin',
+											sortable: true,
+											align: 'right',
+											cell: (user) => user.lastLogin.toLocaleDateString(),
+										},
+									];
+
+									return (
+										<div className='space-y-6'>
+											{/* Basic Table */}
+											<div>
+												<h4 className='text-md font-medium text-gray-300 mb-2'>Basic Table</h4>
+												<Table
+													data={sampleData}
+													columns={columns}
+													caption='User management table'
+												/>
+											</div>
+
+											{/* Small Table with Selection */}
+											<div>
+												<h4 className='text-md font-medium text-gray-300 mb-2'>Small Table with Selection</h4>
+												<Table
+													data={sampleData.slice(0, 3)}
+													columns={columns}
+													size='sm'
+													selectable={true}
+													getRowId={(user) => user.id}
+													onSelectionChange={(selectedIds) => console.log('Selected:', selectedIds)}
+													caption='Small user table with selection'
+												/>
+											</div>
+
+											{/* Large Striped Table */}
+											<div>
+												<h4 className='text-md font-medium text-gray-300 mb-2'>Large Striped Table</h4>
+												<Table
+													data={sampleData}
+													columns={columns}
+													size='lg'
+													striped={true}
+													hoverable={true}
+													caption='Large striped user table'
+												/>
+											</div>
+
+											{/* Empty State */}
+											<div>
+												<h4 className='text-md font-medium text-gray-300 mb-2'>Empty State</h4>
+												<Table
+													data={[]}
+													columns={columns}
+													emptyState={
+														<div className='text-center py-8'>
+															<p className='text-gray-500'>No users found</p>
+															<p className='text-sm text-gray-600'>Add some users to see them here</p>
+														</div>
+													}
+													caption='Empty user table'
+												/>
+											</div>
+
+											{/* Loading State */}
+											<div>
+												<h4 className='text-md font-medium text-gray-300 mb-2'>Loading State</h4>
+												<Table
+													data={sampleData}
+													columns={columns}
+													loading={true}
+													loadingContent={
+														<div className='flex items-center gap-2'>
+															<div className='w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin'></div>
+															Loading users...
+														</div>
+													}
+													caption='Loading user table'
+												/>
+											</div>
+										</div>
+									);
+								})()}
 							</div>
 						</div>
 					</div>
