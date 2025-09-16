@@ -70,6 +70,12 @@ const components = [
     description: 'Versatile component for displaying alerts, warnings, and informational messages.',
     category: 'Feedback',
   },
+  {
+    name: 'PhotoGallery',
+    path: '/components/photogallery',
+    description: 'Flexible photo gallery with infinite scrolling, multiple layouts, and responsive design.',
+    category: 'Display',
+  },
 ];
 
 const categories = Array.from(new Set(components.map((c) => c.category)));

@@ -29,6 +29,7 @@ const components = [
   { name: 'Tabs', path: '/components/tabs' },
   { name: 'Pagination', path: '/components/pagination' },
   { name: 'Carousel', path: '/components/carousel' },
+  { name: 'PhotoGallery', path: '/components/photogallery' },
   { name: 'Scroll Area', path: '/components/scroll-area' },
   { name: 'Clickable', path: '/components/clickable' },
   { name: 'Callout', path: '/components/callout' },
