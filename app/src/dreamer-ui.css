@@ -1,20 +1,23 @@
 /** Necessary theme styles for Dreamer UI library - Customize as desired! */
 
 @theme dreamer-ui {
-  --color-primary: var(--color-indigo-700); /* Deep space navy for primary */
-  --color-primary-foreground: var(--color-white);
-  --color-secondary: var(--color-indigo-100); /* Light indigo for secondary elements */
-  --color-secondary-foreground: var(--color-indigo-900); /* Dark indigo for contrast */
-  --color-destructive: var(--color-red-600); /* Slightly stronger red for better visibility */
-  --color-destructive-foreground: var(--color-white);
-  --color-muted: var(--color-slate-100); /* Softer neutral background */
-  --color-muted-foreground: var(--color-slate-500); /* Better contrast for readability */
+	--color-primary: var(--color-indigo-700); /* Deep space navy for primary */
+	--color-primary-foreground: var(--color-white);
+	--color-secondary: var(--color-indigo-100); /* Light indigo for secondary elements */
+	--color-secondary-foreground: var(--color-indigo-900); /* Dark indigo for contrast */
 
-  --color-accent: var(--color-teal-500); /* Cosmic teal accent for aurora/nebula feel */
-  --color-accent-foreground: var(--color-white);
+	--color-muted: var(--color-slate-100); /* Softer neutral background */
+	--color-muted-foreground: var(--color-slate-500); /* Better contrast for readability */
 
-  --color-success: var(--color-emerald-600); /* More vibrant green that complements indigo */
-  --color-border: var(--color-slate-300); /* Lighter border for modern look */
-  --color-popover: var(--color-white); /* Clean white popover background */
-  --color-popover-foreground: var(--color-slate-900); /* Dark text for readability */
+	--color-accent: var(--color-teal-500); /* Cosmic teal accent for aurora/nebula feel */
+	--color-accent-foreground: var(--color-white);
+
+	--color-success: var(--color-emerald-600); /* More vibrant green that complements indigo */
+	--color-success-foreground: var(--color-white);
+	--color-destructive: var(--color-red-600); /* Slightly stronger red for better visibility */
+	--color-destructive-foreground: var(--color-white);
+
+	--color-border: var(--color-slate-500); /* Neutral border for modern look */
+	--color-popover: var(--color-white); /* Clean white popover background */
+	--color-popover-foreground: var(--color-slate-900); /* Dark text for readability */
 }

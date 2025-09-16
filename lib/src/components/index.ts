@@ -3,6 +3,7 @@ export * from './actionmodal';
 export * from './badge';
 export * from './button';
 export * from './callout';
+export * from './card';
 export * from './carousel';
 export * from './checkbox';
 export * from './clickable';

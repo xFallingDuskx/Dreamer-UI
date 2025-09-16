@@ -20,6 +20,7 @@ import { ModalPage } from './pages/components/ModalPage';
 import { SkeletonPage } from './pages/components/SkeletonPage';
 import { CalloutPage } from './pages/components/CalloutPage';
 import { FormPage } from './pages/components/FormPage';
+import { CardPage } from './pages/components/CardPage';
 
 // Hook Pages
 import { UseActionModalPage } from './pages/hooks/UseActionModalPage';
@@ -52,6 +53,7 @@ function App() {
 
               {/* Component Pages */}
               <Route path='components/button' element={<ButtonPage />} />
+              <Route path='components/card' element={<CardPage />} />
               <Route path='components/disclosure' element={<DisclosurePage />} />
               <Route path='components/skeleton' element={<SkeletonPage />} />
               <Route path='components/input' element={<InputPage />} />
