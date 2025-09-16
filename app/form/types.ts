@@ -2,6 +2,11 @@ import React from 'react';
 
 export type FieldType = 'input' | 'textarea' | 'select' | 'checkbox' | 'radio';
 
+export interface ValidationResult {
+	valid: boolean;
+	message?: string;
+}
+
 export interface BaseFormField {
 	__type: FieldType;
 	name: string;
@@ -10,7 +15,7 @@ export interface BaseFormField {
 	required?: boolean;
 	disabled?: boolean;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	isValid?: (value: any) => boolean | string; // boolean for valid/invalid, string for error message
+	isValid?: (value: any) => ValidationResult;
 	// Layout properties
 	colSpan?: 1 | 2 | 3 | 4 | 'full'; // Number of columns to span
 	maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'none'; // Maximum width constraint
@@ -64,11 +69,12 @@ export interface FormErrors {
 	[key: string]: string;
 }
 
-export interface FormProps {
+export interface FormProps<T extends FormData = FormData> {
 	form: FormField[];
-	data?: FormData;
-	onDataChange?: (data: FormData) => void;
-	onSubmit?: (data: FormData) => void;
+	data?: T;
+	onDataChange?: (data: T) => void;
+	onSubmit?: (data: T) => void;
+	submitButton?: React.ReactNode;
 	className?: string;
 	id?: string;
 	ref?: React.Ref<HTMLFormElement>;

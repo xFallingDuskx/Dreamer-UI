@@ -107,9 +107,9 @@ export function FormPage() {
       required: true,
       variant: 'outline',
       isValid: (value: string) => {
-        if (value.length < 3) return 'Username must be at least 3 characters';
-        if (!/^[a-zA-Z0-9_]+$/.test(value)) return 'Username can only contain letters, numbers, and underscores';
-        return true;
+        if (value.length < 3) return { valid: false, message: 'Username must be at least 3 characters' };
+        if (!/^[a-zA-Z0-9_]+$/.test(value)) return { valid: false, message: 'Username can only contain letters, numbers, and underscores' };
+        return { valid: true };
       }
     }),
     input({
@@ -121,8 +121,8 @@ export function FormPage() {
       variant: 'outline',
       isValid: (value: string) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) return 'Please enter a valid email address';
-        return true;
+        if (!emailRegex.test(value)) return { valid: false, message: 'Please enter a valid email address' };
+        return { valid: true };
       }
     }),
     input({
@@ -132,10 +132,10 @@ export function FormPage() {
       placeholder: 'Between 13-120',
       variant: 'outline',
       isValid: (value: string) => {
-        if (!value) return true; // Optional field
+        if (!value) return { valid: true }; // Optional field
         const age = parseInt(value);
-        if (age < 13 || age > 120) return 'Age must be between 13 and 120';
-        return true;
+        if (age < 13 || age > 120) return { valid: false, message: 'Age must be between 13 and 120' };
+        return { valid: true };
       }
     })
   ];
@@ -396,7 +396,7 @@ input({
   placeholder: 'Enter username',
   required: true,
   variant: 'outline',
-  isValid: (value) => value.length >= 3 || 'Too short'
+  isValid: (value) => value.length >= 3 ? { valid: true } : { valid: false, message: 'Too short' }
 })`}
               </pre>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, cloneElement, isValidElement } from 'react';
 import { 
   Input,
   Textarea,
@@ -21,26 +21,27 @@ import {
 import { useFormValidation } from './hooks';
 import { formVariants, formDefaults, FormVariants } from './variants';
 
-export interface FormComponentProps extends FormProps, Partial<FormVariants> {}
+export interface FormComponentProps<T extends FormData = FormData> extends FormProps<T>, Partial<FormVariants> {}
 
-export function Form({
+export function Form<T extends FormData = FormData>({
   form,
-  data: initialData = {},
+  data: initialData = {} as T,
   onDataChange,
   onSubmit,
+  submitButton,
   columns = formDefaults.columns,
   responsive = formDefaults.responsive,
   spacing = formDefaults.spacing,
   className,
   id,
   ref,
-}: FormComponentProps) {
-  const [data, setData] = useState<FormData>(initialData);
-  const { errors, validateForm, validateSingleField } = useFormValidation(form, data);
+}: FormComponentProps<T>) {
+  const [data, setData] = useState<T>(initialData);
+  const { errors, validateForm, validateSingleField, isFormValid } = useFormValidation(form, data);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updateData = useCallback((fieldName: string, value: any) => {
-    const newData = { ...data, [fieldName]: value };
+    const newData = { ...data, [fieldName]: value } as T;
     setData(newData);
     onDataChange?.(newData);
     
@@ -264,6 +265,30 @@ export function Form({
     className
   );
 
+  // Render submit button if provided
+  const renderSubmitButton = () => {
+    if (!submitButton) return null;
+
+    if (isValidElement(submitButton)) {
+      // Clone the button and add disabled state based on form validity
+      const props = submitButton.props || {};
+      return cloneElement(submitButton, {
+        disabled: !isFormValid,
+        ...props,
+        className: join(
+          'col-span-full', // Span all columns
+          typeof props.className === 'string' ? props.className : ''
+        ),
+      } as any);
+    }
+
+    return (
+      <div className="col-span-full">
+        {submitButton}
+      </div>
+    );
+  };
+
   return (
     <form
       ref={ref}
@@ -273,8 +298,10 @@ export function Form({
       data-form-fields={form.length}
       data-form-columns={columns}
       data-form-responsive={responsive}
+      data-form-valid={isFormValid}
     >
       {form.map(renderField)}
+      {renderSubmitButton()}
     </form>
   );
 }

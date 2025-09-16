@@ -8,6 +8,7 @@ import {
 	DropdownMenuFactories,
 	DropdownMenu,
   Badge,
+  Button,
 } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
@@ -155,8 +156,8 @@ const FormDemo = () => {
 			required: true,
 			variant: 'outline',
 			isValid: (value: string) => {
-				if (value.length < 2) return 'First name must be at least 2 characters';
-				return true;
+				if (value.length < 2) return { valid: false, message: 'First name must be at least 2 characters' };
+				return { valid: true };
 			}
 		}),
 		input({
@@ -175,8 +176,8 @@ const FormDemo = () => {
 			variant: 'outline',
 			isValid: (value: string) => {
 				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-				if (!emailRegex.test(value)) return 'Please enter a valid email address';
-				return true;
+				if (!emailRegex.test(value)) return { valid: false, message: 'Please enter a valid email address' };
+				return { valid: true, message: 'Email format is valid' };
 			}
 		}),
 		select({
@@ -230,9 +231,9 @@ const FormDemo = () => {
 			placeholder: 'Enter username',
 			variant: 'underline',
 			isValid: (value: string) => {
-				if (value.length < 3) return 'Username must be at least 3 characters';
-				if (!/^[a-zA-Z0-9_]+$/.test(value)) return 'Username can only contain letters, numbers, and underscores';
-				return true;
+				if (value.length < 3) return { valid: false, message: 'Username must be at least 3 characters' };
+				if (!/^[a-zA-Z0-9_]+$/.test(value)) return { valid: false, message: 'Username can only contain letters, numbers, and underscores' };
+				return { valid: true };
 			}
 		}),
 		input({
@@ -249,11 +250,11 @@ const FormDemo = () => {
 			placeholder: 'Enter new password',
 			variant: 'underline',
 			isValid: (value: string) => {
-				if (value.length < 8) return 'Password must be at least 8 characters';
+				if (value.length < 8) return { valid: false, message: 'Password must be at least 8 characters' };
 				if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
-					return 'Password must contain at least one lowercase letter, one uppercase letter, and one number';
+					return { valid: false, message: 'Password must contain at least one lowercase letter, one uppercase letter, and one number' };
 				}
-				return true;
+				return { valid: true };
 			}
 		}),
 		select({
@@ -281,9 +282,9 @@ const FormDemo = () => {
 		<div>
 			<h3 className='text-lg font-medium text-white mb-3'>Form Component Testing</h3>
 			<div className='space-y-8'>
-				{/* Contact Form */}
+				{/* Contact Form with integrated submit button */}
 				<div>
-					<h4 className='text-md font-medium text-gray-300 mb-4'>Contact Form Example</h4>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Contact Form with Submit Button</h4>
 					<div className='bg-gray-800/50 p-6 rounded-lg'>
 						<Form
 							form={contactForm}
@@ -292,40 +293,36 @@ const FormDemo = () => {
 							onSubmit={(data) => handleSubmit(data, 'Contact Form')}
 							spacing='normal'
 							className='max-w-md'
+							submitButton={
+								<Button variant='primary' type='submit' className='mt-4'>
+									Submit Contact Form
+								</Button>
+							}
 						/>
-						<button
-							type='submit'
-							form='contact-form'
-							className='mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700'
-						>
-							Submit Contact Form
-						</button>
 					</div>
 				</div>
 
-				{/* Settings Form */}
+				{/* Settings Form with integrated submit button */}
 				<div>
-					<h4 className='text-md font-medium text-gray-300 mb-4'>Settings Form Example</h4>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Settings Form with Submit Button</h4>
 					<div className='bg-gray-800/50 p-6 rounded-lg'>
 						<Form
 							form={settingsForm}
 							onSubmit={(data) => handleSubmit(data, 'Settings Form')}
 							spacing='tight'
 							className='max-w-sm'
+							submitButton={
+								<Button variant='secondary' type='submit' className='mt-4'>
+									Save Settings
+								</Button>
+							}
 						/>
-						<button
-							type='submit'
-							form='settings-form'
-							className='mt-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700'
-						>
-							Save Settings
-						</button>
 					</div>
 				</div>
 
-				{/* Simple validation demo */}
+				{/* Simple validation demo with submit button */}
 				<div>
-					<h4 className='text-md font-medium text-gray-300 mb-4'>Validation Demo</h4>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Validation Demo with Auto-disabled Submit</h4>
 					<div className='bg-gray-800/50 p-6 rounded-lg'>
 						<Form
 							form={[
@@ -343,9 +340,10 @@ const FormDemo = () => {
 									placeholder: 'Must be valid email',
 									variant: 'outline',
 									isValid: (value: string) => {
-										if (!value) return true; // Optional field
+										if (!value) return { valid: true }; // Optional field
 										const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-										return emailRegex.test(value) || 'Invalid email format';
+										if (!emailRegex.test(value)) return { valid: false, message: 'Invalid email format' };
+										return { valid: true };
 									}
 								}),
 								input({
@@ -354,24 +352,24 @@ const FormDemo = () => {
 									type: 'number',
 									placeholder: 'Enter number between 1-100',
 									variant: 'outline',
+									maxWidth: 'xs',
 									isValid: (value: string) => {
-										if (!value) return true;
+										if (!value) return { valid: true };
 										const num = parseInt(value);
-										if (num < 1 || num > 100) return 'Number must be between 1 and 100';
-										return true;
+										if (num < 1 || num > 100) return { valid: false, message: 'Number must be between 1 and 100' };
+										return { valid: true, message: 'Valid number' };
 									}
 								})
 							]}
 							onSubmit={(data) => handleSubmit(data, 'Validation Demo')}
 							spacing='normal'
 							className='max-w-md'
+							submitButton={
+								<Button variant='secondary' type='submit' className='mt-4'>
+									Test Validation
+								</Button>
+							}
 						/>
-						<button
-							type='submit'
-							className='mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700'
-						>
-							Test Validation
-						</button>
 					</div>
 				</div>
 

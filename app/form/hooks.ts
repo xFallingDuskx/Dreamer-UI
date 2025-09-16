@@ -13,11 +13,8 @@ export function useFormValidation(fields: FormField[], data: FormData) {
     // Run custom validation if provided
     if (field.isValid && value) {
       const validation = field.isValid(value);
-      if (validation === false) {
-        return `${field.label} is invalid`;
-      }
-      if (typeof validation === 'string') {
-        return validation;
+      if (!validation.valid) {
+        return validation.message || `${field.label} is invalid`;
       }
     }
 
@@ -64,9 +61,30 @@ export function useFormValidation(fields: FormField[], data: FormData) {
     return Object.values(errors).some(error => error);
   }, [errors]);
 
+  const isFormValid = useMemo(() => {
+    // Check if all required fields have values and pass validation
+    return fields.every(field => {
+      const value = data[field.name];
+      
+      // Check required fields
+      if (field.required && (!value || (typeof value === 'string' && value.trim() === ''))) {
+        return false;
+      }
+      
+      // Check custom validation
+      if (field.isValid && value) {
+        const validation = field.isValid(value);
+        return validation.valid;
+      }
+      
+      return true;
+    }) && !hasErrors;
+  }, [fields, data, hasErrors]);
+
   return {
     errors,
     hasErrors,
+    isFormValid,
     validateForm,
     validateSingleField,
     clearErrors,

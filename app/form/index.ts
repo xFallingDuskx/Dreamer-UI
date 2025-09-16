@@ -11,5 +11,6 @@ export type {
   CheckboxField,
   RadioField,
   BaseFormField,
-  FieldType
+  FieldType,
+  ValidationResult
 } from './types';
