@@ -4,6 +4,7 @@ import { ExampleSection } from '../../components/ui/ExampleSection';
 const tableOfContents = [
   { id: 'installation', title: 'Installation', level: 1 },
   { id: 'basic-usage', title: 'Basic Usage', level: 1 },
+  { id: 'flush-method', title: 'Flush Method', level: 1 },
   { id: 'async-functions', title: 'Async Functions', level: 1 },
   { id: 'custom-delay', title: 'Custom Delay', level: 1 },
   { id: 'real-world-examples', title: 'Real-World Examples', level: 1 },
@@ -14,7 +15,7 @@ export function DebouncePage() {
   return (
     <ComponentPage
       title='debounce'
-      description='A utility function that delays invoking a function until after a specified delay has elapsed since the last time it was called. Perfect for search inputs, API calls, and other scenarios where you want to limit function execution frequency.'
+      description='A utility function that delays invoking a function until after a specified delay has elapsed since the last time it was called. Includes a flush method for immediate execution of pending calls. Perfect for search inputs, API calls, and other scenarios where you want to limit function execution frequency.'
       tableOfContents={tableOfContents}
     >
       <ExampleSection 
@@ -59,6 +60,36 @@ debouncedFunction(); // This one will execute after 300ms`}
 
 debouncedGreeting('Alice'); // Cancelled
 debouncedGreeting('Bob');   // This will execute with 'Bob'`}
+            </pre>
+          </div>
+        </div>
+      </ExampleSection>
+
+      <ExampleSection 
+        title='Flush Method'
+        description='Immediately execute any pending debounced function calls.'
+        id='flush-method'
+      >
+        <div className='space-y-4'>
+          <div className='bg-gray-700 p-4 rounded-lg'>
+            <h4 className='text-white font-semibold mb-2'>Using flush()</h4>
+            <pre className='text-sm text-gray-300 overflow-x-auto'>
+{`const debouncedSave = debounce(async (data) => {
+  await saveToServer(data);
+  console.log('Data saved');
+}, 1000);
+
+// Regular debounced calls
+debouncedSave(userData); // Will be cancelled
+debouncedSave(userData); // Pending for 1000ms
+
+// Force immediate execution of pending call
+debouncedSave.flush(); // Executes the pending call right now
+
+// Useful for cleanup or urgent execution
+window.addEventListener('beforeunload', () => {
+  debouncedSave.flush(); // Ensure final save before page unload
+});`}
             </pre>
           </div>
         </div>
@@ -233,17 +264,21 @@ function DocumentEditor({ document, onSave }) {
 {`function debounce<TArgs extends unknown[], TReturn>(
   fn: (...args: TArgs) => TReturn | Promise<TReturn>,
   delay?: number
-): (...args: TArgs) => Promise<TReturn>
+): ((...args: TArgs) => Promise<TReturn | undefined>) & { 
+  flush: () => Promise<TReturn | undefined> 
+}
 
 // Parameters:
 // - fn: The function to debounce (sync or async)
 // - delay: Delay in milliseconds (default: 300ms)
 //
 // Returns:
-// - A debounced version that returns a Promise
+// - A debounced function that returns a Promise
+// - Includes flush() method for immediate execution
 //
 // Behavior:
 // - Cancels previous executions when called again before delay
+// - flush() method executes pending call immediately
 // - Automatically handles both sync and async functions
 // - Returns a Promise for consistent async interface
 // - Preserves original function's parameters and return type`}

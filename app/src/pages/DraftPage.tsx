@@ -163,25 +163,38 @@ const DebounceDemo = () => {
 		debouncedSearch(value);
 	};
 
+	const handleFlush = () => {
+		debouncedSearch.flush();
+	};
+
 	return (
 		<div className='space-y-4'>
 			<div>
 				<label htmlFor='debounce-input' className='block text-sm font-medium text-gray-300 mb-2'>
 					Type something (500ms debounce):
 				</label>
-				<input
-					id='debounce-input'
-					type='text'
-					value={inputValue}
-					onChange={handleInputChange}
-					className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500'
-					placeholder='Start typing...'
-				/>
+				<div className='flex gap-2'>
+					<input
+						id='debounce-input'
+						type='text'
+						value={inputValue}
+						onChange={handleInputChange}
+						className='flex-1 px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500'
+						placeholder='Start typing...'
+					/>
+					<button
+						onClick={handleFlush}
+						className='px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors'
+					>
+						Flush
+					</button>
+				</div>
 			</div>
 			<div className='text-sm text-gray-400'>
 				<p>Current input: <span className='text-white'>{inputValue}</span></p>
 				<p>Debounced value: <span className='text-white'>{debouncedValue}</span></p>
 				<p>Search API calls made: <span className='text-white'>{searchCount}</span></p>
+				<p className='text-xs'>Note: Use "Flush" to immediately execute the pending debounced call.</p>
 			</div>
 		</div>
 	);
