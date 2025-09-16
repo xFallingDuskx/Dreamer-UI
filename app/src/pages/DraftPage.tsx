@@ -294,7 +294,7 @@ const FormDemo = () => {
 							spacing='normal'
 							className='max-w-md'
 							submitButton={
-								<Button variant='primary' type='submit' className='mt-4'>
+								<Button variant='primary' type='submit' className='mt-4 w-fit ml-auto'>
 									Submit Contact Form
 								</Button>
 							}
