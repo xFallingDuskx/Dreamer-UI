@@ -20,6 +20,7 @@ import { ModalPage } from './pages/components/ModalPage';
 import { SkeletonPage } from './pages/components/SkeletonPage';
 import { CalloutPage } from './pages/components/CalloutPage';
 import { CardPage } from './pages/components/CardPage';
+import { ErrorBoundaryPage } from './pages/components/ErrorBoundaryPage';
 
 // Hook Pages
 import { UseActionModalPage } from './pages/hooks/UseActionModalPage';
@@ -33,6 +34,7 @@ import { ThrottlePage } from './pages/utils/ThrottlePage';
 // Utils
 import { DisclosurePage } from './pages/components/DisclosurePage';
 import { isLocalhost } from './utils/isLocalhost';
+import { AvatarPage } from './pages/components/AvatarPage';
 
 function App() {
   const showDraftRoute = isLocalhost();
@@ -53,6 +55,7 @@ function App() {
               <Route path='components' element={<ComponentsPage />} />
 
               {/* Component Pages */}
+              <Route path='components/avatar' element={<AvatarPage />} />
               <Route path='components/button' element={<ButtonPage />} />
               <Route path='components/card' element={<CardPage />} />
               <Route path='components/disclosure' element={<DisclosurePage />} />
@@ -61,6 +64,7 @@ function App() {
               <Route path='components/modal' element={<ModalPage />} />
               <Route path='components/codeblock' element={<CodeBlockPage />} />
               <Route path='components/callout' element={<CalloutPage />} />
+              <Route path='components/error-boundary' element={<ErrorBoundaryPage />} />
 
               {/* Hook Pages */}
               <Route path='hooks' element={<HooksPage />} />

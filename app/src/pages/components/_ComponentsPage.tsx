@@ -4,6 +4,12 @@ import { ExampleSection } from '../../components/ui/ExampleSection';
 
 const components = [
   {
+    name: 'Avatar',
+    path: '/components/avatar',
+    description: 'Display user profile pictures with 12 pre-defined cartoon-like avatars inspired by Moon Dreams Dev.',
+    category: 'Display',
+  },
+  {
     name: 'Button',
     path: '/components/button',
     description: 'Versatile button component with multiple variants, sizes, and states.',
@@ -20,6 +26,18 @@ const components = [
     path: '/components/codeblock',
     description: 'Syntax-highlighted code display with TypeScript support, copy, and fullscreen.',
     category: 'Display',
+  },
+  {
+    name: 'Disclosure',
+    path: '/components/disclosure',
+    description: 'Collapsible content component with accessible expand/collapse functionality.',
+    category: 'Display',
+  },
+  {
+    name: 'ErrorBoundary',
+    path: '/components/error-boundary',
+    description: 'React error boundary component that catches JavaScript errors and displays fallback UI.',
+    category: 'Feedback',
   },
   {
     name: 'Input',
