@@ -13,6 +13,7 @@ import {
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
+import { Avatar } from '../../avatar';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -463,6 +464,62 @@ export const DraftPage = () => {
 
 						{/* Dropdown Menu Testing */}
 						<DropdownDemo />
+
+						{/* Avatar Component Testing */}
+						<div>
+							<h3 className='text-lg font-medium text-white mb-3'>Avatar Component Testing</h3>
+							<div className='space-y-6'>
+								{/* All presets */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-3'>All Preset Avatars</h4>
+									<div className='grid grid-cols-6 gap-4'>
+										<Avatar preset='astronaut' size='lg' alt='Astronaut avatar' />
+										<Avatar preset='moon' size='lg' alt='Moon avatar' />
+										<Avatar preset='star' size='lg' alt='Star avatar' />
+										<Avatar preset='galaxy' size='lg' alt='Galaxy avatar' />
+										<Avatar preset='nebula' size='lg' alt='Nebula avatar' />
+										<Avatar preset='planet' size='lg' alt='Planet avatar' />
+										<Avatar preset='cosmic-cat' size='lg' alt='Cosmic cat avatar' />
+										<Avatar preset='dream-cloud' size='lg' alt='Dream cloud avatar' />
+										<Avatar preset='rocket' size='lg' alt='Rocket avatar' />
+										<Avatar preset='constellation' size='lg' alt='Constellation avatar' />
+										<Avatar preset='comet' size='lg' alt='Comet avatar' />
+										<Avatar preset='twilight' size='lg' alt='Twilight avatar' />
+									</div>
+								</div>
+
+								{/* Different sizes */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-3'>Different Sizes</h4>
+									<div className='flex items-end gap-4'>
+										<Avatar preset='astronaut' size='xs' alt='Extra small avatar' />
+										<Avatar preset='moon' size='sm' alt='Small avatar' />
+										<Avatar preset='star' size='md' alt='Medium avatar' />
+										<Avatar preset='galaxy' size='lg' alt='Large avatar' />
+										<Avatar preset='nebula' size='xl' alt='Extra large avatar' />
+										<Avatar preset='planet' size='2xl' alt='2XL avatar' />
+									</div>
+								</div>
+
+								{/* Different shapes */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-3'>Different Shapes</h4>
+									<div className='flex gap-4'>
+										<Avatar preset='cosmic-cat' size='xl' shape='circle' alt='Circle avatar' />
+										<Avatar preset='rocket' size='xl' shape='square' alt='Square avatar' />
+									</div>
+								</div>
+
+								{/* Custom content */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-3'>Custom Content</h4>
+									<div className='flex gap-4'>
+										<Avatar initials='MD' size='lg' alt='Initials avatar' />
+										<Avatar size='lg' alt='Fallback avatar' />
+									</div>
+								</div>
+							</div>
+						</div>
 
 						{/* Badge Component Testing */}
 						<div>
