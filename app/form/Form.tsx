@@ -38,6 +38,7 @@ export function Form({
   const [data, setData] = useState<FormData>(initialData);
   const { errors, validateForm, validateSingleField } = useFormValidation(form, data);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updateData = useCallback((fieldName: string, value: any) => {
     const newData = { ...data, [fieldName]: value };
     setData(newData);
@@ -180,8 +181,9 @@ export function Form({
 
         case 'checkbox': {
           const checkboxField = field as CheckboxField;
+          const checkboxSize = 16
           return (
-            <div className="flex items-start space-x-3">
+            <div className="space-x-2">
               <Checkbox
                 id={fieldId}
                 checked={fieldValue || false}
@@ -189,8 +191,9 @@ export function Form({
                 disabled={field.disabled}
                 data-field-name={field.name}
                 data-field-type={field.__type}
+                size={checkboxSize}
               />
-              <div>
+              <div className='inline-block' style={{ maxWidth: `calc(100% - ${checkboxSize + 10}px)` }}> {/* 8px for spacing, 2px for buffer */}
                 <Label htmlFor={fieldId} className="cursor-pointer">
                   {checkboxField.text || field.label}
                 </Label>

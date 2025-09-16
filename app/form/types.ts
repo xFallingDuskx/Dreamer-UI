@@ -3,74 +3,76 @@ import React from 'react';
 export type FieldType = 'input' | 'textarea' | 'select' | 'checkbox' | 'radio';
 
 export interface BaseFormField {
-  __type: FieldType;
-  name: string;
-  label: string;
-  description?: string;
-  required?: boolean;
-  disabled?: boolean;
-  isValid?: (value: any) => boolean | string; // boolean for valid/invalid, string for error message
-  // Layout properties
-  colSpan?: 1 | 2 | 3 | 4 | 'full'; // Number of columns to span
-  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'none'; // Maximum width constraint
-  minWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'none'; // Minimum width constraint
+	__type: FieldType;
+	name: string;
+	label: string;
+	description?: string;
+	required?: boolean;
+	disabled?: boolean;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	isValid?: (value: any) => boolean | string; // boolean for valid/invalid, string for error message
+	// Layout properties
+	colSpan?: 1 | 2 | 3 | 4 | 'full'; // Number of columns to span
+	maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'none'; // Maximum width constraint
+	minWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'none'; // Minimum width constraint
 }
 
 export interface InputField extends BaseFormField {
-  __type: 'input';
-  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
-  placeholder?: string;
-  variant?: 'base' | 'default' | 'underline' | 'outline';
-  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+	__type: 'input';
+	type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
+	placeholder?: string;
+	variant?: 'base' | 'default' | 'underline' | 'outline';
+	rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
 }
 
 export interface TextareaField extends BaseFormField {
-  __type: 'textarea';
-  placeholder?: string;
-  variant?: 'base' | 'left-line' | 'outline';
-  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
-  rows?: number;
-  autoExpand?: boolean;
-  characterLimit?: number;
+	__type: 'textarea';
+	placeholder?: string;
+	variant?: 'base' | 'left-line' | 'outline';
+	rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+	rows?: number;
+	autoExpand?: boolean;
+	characterLimit?: number;
 }
 
 export interface SelectField extends BaseFormField {
-  __type: 'select';
-  options: Array<{ value: string; label: string; disabled?: boolean }>;
-  placeholder?: string;
-  searchable?: boolean;
-  clearable?: boolean;
+	__type: 'select';
+	options: Array<{ value: string; label: string; disabled?: boolean }>;
+	placeholder?: string;
+	searchable?: boolean;
+	clearable?: boolean;
 }
 
 export interface CheckboxField extends BaseFormField {
-  __type: 'checkbox';
-  text?: string;
+	__type: 'checkbox';
+	text?: string;
 }
 
 export interface RadioField extends BaseFormField {
-  __type: 'radio';
-  options: Array<{ value: string; label: string; disabled?: boolean }>;
+	__type: 'radio';
+	options: Array<{ value: string; label: string; disabled?: boolean }>;
 }
 
 export type FormField = InputField | TextareaField | SelectField | CheckboxField | RadioField;
 
 export interface FormData {
-  [key: string]: any;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	[key: string]: any;
 }
 
 export interface FormErrors {
-  [key: string]: string;
+	[key: string]: string;
 }
 
 export interface FormProps {
-  form: FormField[];
-  data?: FormData;
-  onDataChange?: (data: FormData) => void;
-  onSubmit?: (data: FormData) => void;
-  className?: string;
-  id?: string;
-  ref?: React.Ref<HTMLFormElement>;
-  // Layout configuration
-  columns?: 1 | 2 | 3 | 4; // Default number of columns in the grid
-  responsive?: boolean; // Whether to collapse to single column on mobile
+	form: FormField[];
+	data?: FormData;
+	onDataChange?: (data: FormData) => void;
+	onSubmit?: (data: FormData) => void;
+	className?: string;
+	id?: string;
+	ref?: React.Ref<HTMLFormElement>;
+	// Layout configuration
+	columns?: 1 | 2 | 3 | 4; // Default number of columns in the grid
+	responsive?: boolean; // Whether to collapse to single column on mobile
 }
