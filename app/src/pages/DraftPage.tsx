@@ -13,6 +13,7 @@ import {
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
+import { TextEditor } from '../../text-editor';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -584,6 +585,134 @@ export const DraftPage = () => {
 											</div>
 										</div>
 									</Card>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{/* TextEditor Component Testing */}
+					<div>
+						<h3 className='text-lg font-medium text-white mb-3'>Text Editor Component Testing</h3>
+						<div className='space-y-6'>
+							{/* Basic Editor */}
+							<div>
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Basic Text Editor</h4>
+								<TextEditor
+									placeholder="Start typing your content..."
+									initialContent="<p>Welcome to the <strong>text editor</strong>! Try typing <span style='color: #3b82f6'>@username</span> or <span style='color: #10b981'>#hashtag</span> to see special commands.</p>"
+									onContentChange={(content) => console.log('Content changed:', content)}
+								/>
+							</div>
+
+							{/* Different Variants */}
+							<div>
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Different Variants</h4>
+								<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+									<div>
+										<p className='text-sm text-gray-400 mb-2'>Default</p>
+										<TextEditor
+											variant="default"
+											size="sm"
+											placeholder="Default variant..."
+										/>
+									</div>
+									<div>
+										<p className='text-sm text-gray-400 mb-2'>Minimal</p>
+										<TextEditor
+											variant="minimal"
+											size="sm"
+											placeholder="Minimal variant..."
+										/>
+									</div>
+									<div>
+										<p className='text-sm text-gray-400 mb-2'>Filled</p>
+										<TextEditor
+											variant="filled"
+											size="sm"
+											placeholder="Filled variant..."
+										/>
+									</div>
+								</div>
+							</div>
+
+							{/* Different Sizes */}
+							<div>
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Different Sizes</h4>
+								<div className='space-y-4'>
+									<div>
+										<p className='text-sm text-gray-400 mb-2'>Small</p>
+										<TextEditor size="sm" placeholder="Small editor..." />
+									</div>
+									<div>
+										<p className='text-sm text-gray-400 mb-2'>Medium (Default)</p>
+										<TextEditor size="md" placeholder="Medium editor..." />
+									</div>
+									<div>
+										<p className='text-sm text-gray-400 mb-2'>Large</p>
+										<TextEditor size="lg" placeholder="Large editor..." />
+									</div>
+								</div>
+							</div>
+
+							{/* Custom Command Handlers */}
+							<div>
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Custom Command Handlers</h4>
+								<TextEditor
+									placeholder="Try typing @mention or #tag or /command..."
+									commandHandlers={[
+										{
+											trigger: '@',
+											color: 'text-blue-500',
+											onTrigger: (text, position) => {
+												alert(`Mention triggered with text: "${text}" at position: ${position}`);
+											},
+										},
+										{
+											trigger: '#',
+											color: 'text-green-500',
+											onTrigger: (text, position) => {
+												alert(`Hashtag triggered with text: "${text}" at position: ${position}`);
+											},
+										},
+										{
+											trigger: '/',
+											color: 'text-purple-500',
+											onTrigger: (text, position) => {
+												alert(`Slash command triggered with text: "${text}" at position: ${position}`);
+											},
+										},
+									]}
+								/>
+							</div>
+
+							{/* Without Toolbar */}
+							<div>
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Without Toolbar</h4>
+								<TextEditor
+									showToolbar={false}
+									placeholder="This editor has no toolbar. Use keyboard shortcuts: Ctrl+B (bold), Ctrl+I (italic), Ctrl+U (underline)"
+									initialContent="<p>Use <strong>Ctrl+B</strong> for bold, <em>Ctrl+I</em> for italic, and <u>Ctrl+U</u> for underline.</p>"
+								/>
+							</div>
+
+							{/* Disabled and Read-only States */}
+							<div>
+								<h4 className='text-md font-medium text-gray-300 mb-2'>States</h4>
+								<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+									<div>
+										<p className='text-sm text-gray-400 mb-2'>Disabled</p>
+										<TextEditor
+											disabled
+											initialContent="<p>This editor is disabled.</p>"
+										/>
+									</div>
+									<div>
+										<p className='text-sm text-gray-400 mb-2'>Read-only</p>
+										<TextEditor
+											readOnly
+											initialContent="<p>This editor is <strong>read-only</strong>. You can select text but cannot edit it.</p>"
+										/>
+									</div>
 								</div>
 							</div>
 						</div>

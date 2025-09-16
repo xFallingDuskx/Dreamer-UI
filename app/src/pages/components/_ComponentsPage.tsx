@@ -28,6 +28,12 @@ const components = [
     category: 'Form',
   },
   {
+    name: 'Text Editor',
+    path: '/components/text-editor',
+    description: 'Rich text editor with typography support, special commands, and customizable styling.',
+    category: 'Form',
+  },
+  {
     name: 'Modal',
     path: '/components/modal',
     description: 'Overlay component for forms, confirmations, and interactive content.',
