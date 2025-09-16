@@ -39,6 +39,12 @@ const components = [
     description: 'Loading placeholders that mimic the structure of your content.',
     category: 'Feedback',
   },
+  {
+    name: 'Table',
+    path: '/components/table',
+    description: 'Data table component with sorting, selection, custom cells, and responsive design.',
+    category: 'Display',
+  },
   // Placeholder for future components
   {
     name: 'Textarea',
