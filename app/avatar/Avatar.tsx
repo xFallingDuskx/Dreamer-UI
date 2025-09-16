@@ -46,7 +46,7 @@ export function Avatar({
       id={id}
       ref={ref}
       className={join(
-        'relative inline-flex items-center justify-center overflow-hidden bg-gray-100 border-2 border-gray-200',
+        'relative inline-flex items-center justify-center overflow-hidden bg-gray-100 border-2 border-border',
         sizeClasses.size,
         shapeClasses,
         className

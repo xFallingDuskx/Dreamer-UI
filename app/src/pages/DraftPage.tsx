@@ -515,7 +515,12 @@ export const DraftPage = () => {
 									<h4 className='text-md font-medium text-gray-300 mb-3'>Custom Content</h4>
 									<div className='flex gap-4'>
 										<Avatar initials='MD' size='lg' alt='Initials avatar' />
-										<Avatar size='lg' alt='Fallback avatar' />
+										<Avatar
+											size='lg'
+											alt='Fallback avatar'
+											src='https://media.easy-peasy.ai/27feb2bb-aeb4-4a83-9fb6-8f3f2a15885e/cd053ed5-47cb-438b-bf2f-a49c7dcbab29.png'
+											className='border-orange-900'
+										/>
 									</div>
 								</div>
 							</div>
@@ -590,7 +595,9 @@ export const DraftPage = () => {
 											>
 												Take a peaceful walk through the forest trails.
 											</Card>
-											<small className='text-xs text-gray-500 mt-1 text-center'>Image extends to card edges with max height set to "fit"</small>
+											<small className='text-xs text-gray-500 mt-1 text-center'>
+												Image extends to card edges with max height set to "fit"
+											</small>
 										</div>
 									</div>
 								</div>
