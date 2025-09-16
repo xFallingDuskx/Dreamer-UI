@@ -15,7 +15,7 @@ import {
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
-import { debounce, throttle } from '../utils/testUtils';
+import { debounce, throttle } from '@moondreamsdev/dreamer-ui/utils';
 
 // Component that can throw errors for testing
 const BuggyComponent = () => {

@@ -16,8 +16,6 @@ export function debounce<TArgs extends unknown[], TReturn>(
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
   let isAsync: boolean | undefined;
   let lastArgs: TArgs | undefined;
-  let lastResolve: ((value: TReturn | undefined) => void) | undefined;
-  let lastReject: ((reason: unknown) => void) | undefined;
 
   const execute = async (): Promise<TReturn | undefined> => {
     if (!lastArgs) return undefined;
@@ -25,30 +23,24 @@ export function debounce<TArgs extends unknown[], TReturn>(
     const args = lastArgs;
     lastArgs = undefined;
 
-    try {
-      const result = fn(...args);
-      
-      // Check if the function returns a promise on first call
-      if (isAsync === undefined) {
-        isAsync = result instanceof Promise;
-      }
-      
-      if (isAsync) {
-        const asyncResult = await result;
-        return asyncResult;
-      } else {
-        return result as TReturn;
-      }
-    } catch (error) {
-      throw error;
+    const result = fn(...args);
+    
+    // Check if the function returns a promise on first call
+    if (isAsync === undefined) {
+      isAsync = result instanceof Promise;
+    }
+    
+    if (isAsync) {
+      const asyncResult = await result;
+      return asyncResult;
+    } else {
+      return result as TReturn;
     }
   };
 
   const debounced = (...args: TArgs): Promise<TReturn | undefined> => {
     return new Promise((resolve, reject) => {
       lastArgs = args;
-      lastResolve = resolve;
-      lastReject = reject;
 
       if (timeoutId !== undefined) {
         clearTimeout(timeoutId);
@@ -66,18 +58,15 @@ export function debounce<TArgs extends unknown[], TReturn>(
   };
 
   debounced.flush = (): Promise<TReturn | undefined> => {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       if (timeoutId !== undefined) {
         clearTimeout(timeoutId);
         timeoutId = undefined;
       }
 
-      try {
-        const result = await execute();
-        resolve(result);
-      } catch (error) {
-        reject(error);
-      }
+      execute()
+        .then(result => resolve(result))
+        .catch(error => reject(error));
     });
   };
 
