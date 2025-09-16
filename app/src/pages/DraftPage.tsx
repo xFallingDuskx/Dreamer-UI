@@ -13,6 +13,7 @@ import {
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
+import { debounce, throttle } from '../utils/testUtils';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -137,6 +138,95 @@ const DropdownDemo = () => {
 					<strong>Selected:</strong> {selectedValue}
 				</p>
 			)}
+		</div>
+	);
+};
+
+// Debounce Demo Component
+const DebounceDemo = () => {
+	const [inputValue, setInputValue] = useState('');
+	const [debouncedValue, setDebouncedValue] = useState('');
+	const [searchCount, setSearchCount] = useState(0);
+
+	// Create debounced function that simulates async API call
+	const debouncedSearch = debounce(async (value: string) => {
+		// Simulate API call delay
+		await new Promise(resolve => setTimeout(resolve, 100));
+		setDebouncedValue(value);
+		setSearchCount(prev => prev + 1);
+		return value;
+	}, 500);
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+		setInputValue(value);
+		debouncedSearch(value);
+	};
+
+	return (
+		<div className='space-y-4'>
+			<div>
+				<label htmlFor='debounce-input' className='block text-sm font-medium text-gray-300 mb-2'>
+					Type something (500ms debounce):
+				</label>
+				<input
+					id='debounce-input'
+					type='text'
+					value={inputValue}
+					onChange={handleInputChange}
+					className='w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500'
+					placeholder='Start typing...'
+				/>
+			</div>
+			<div className='text-sm text-gray-400'>
+				<p>Current input: <span className='text-white'>{inputValue}</span></p>
+				<p>Debounced value: <span className='text-white'>{debouncedValue}</span></p>
+				<p>Search API calls made: <span className='text-white'>{searchCount}</span></p>
+			</div>
+		</div>
+	);
+};
+
+// Throttle Demo Component  
+const ThrottleDemo = () => {
+	const [clickCount, setClickCount] = useState(0);
+	const [throttledCount, setThrottledCount] = useState(0);
+
+	// Create throttled function
+	const throttledIncrement = throttle(() => {
+		setThrottledCount(prev => prev + 1);
+	}, 1000);
+
+	const handleClick = () => {
+		setClickCount(prev => prev + 1);
+		throttledIncrement();
+	};
+
+	const handleFlush = () => {
+		throttledIncrement.flush();
+	};
+
+	return (
+		<div className='space-y-4'>
+			<div className='flex gap-2'>
+				<button
+					onClick={handleClick}
+					className='px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors'
+				>
+					Click Me (1000ms throttle)
+				</button>
+				<button
+					onClick={handleFlush}
+					className='px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors'
+				>
+					Flush
+				</button>
+			</div>
+			<div className='text-sm text-gray-400'>
+				<p>Total clicks: <span className='text-white'>{clickCount}</span></p>
+				<p>Throttled executions: <span className='text-white'>{throttledCount}</span></p>
+				<p className='text-xs'>Note: Click rapidly to see throttling effect. Use "Flush" to immediately execute any pending calls.</p>
+			</div>
 		</div>
 	);
 };
@@ -586,6 +676,24 @@ export const DraftPage = () => {
 									</Card>
 								</div>
 							</div>
+						</div>
+					</div>
+				</div>
+
+				{/* Debounce and Throttle Utility Testing */}
+				<div>
+					<h2 className='text-xl font-bold text-white mb-4'>Debounce & Throttle Utility Testing</h2>
+					<div className='space-y-6'>
+						{/* Debounce Demo */}
+						<div>
+							<h3 className='text-lg font-medium text-white mb-3'>Debounce Example</h3>
+							<DebounceDemo />
+						</div>
+
+						{/* Throttle Demo */}
+						<div>
+							<h3 className='text-lg font-medium text-white mb-3'>Throttle Example</h3>
+							<ThrottleDemo />
 						</div>
 					</div>
 				</div>
