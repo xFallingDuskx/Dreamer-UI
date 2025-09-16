@@ -11,6 +11,7 @@ const components = [
   { name: 'CodeBlock', path: '/components/codeblock' },
   { name: 'Disclosure', path: '/components/disclosure' },
   { name: 'Input', path: '/components/input' },
+  { name: 'List', path: '/components/list' },
   { name: 'Textarea', path: '/components/textarea' },
   { name: 'Select', path: '/components/select' },
   { name: 'Checkbox', path: '/components/checkbox' },

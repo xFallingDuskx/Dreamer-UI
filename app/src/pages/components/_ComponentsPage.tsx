@@ -28,6 +28,12 @@ const components = [
     category: 'Form',
   },
   {
+    name: 'List',
+    path: '/components/list',
+    description: 'Interactive list component with add, delete, and reorder functionality via drag-and-drop or buttons.',
+    category: 'Display',
+  },
+  {
     name: 'Modal',
     path: '/components/modal',
     description: 'Overlay component for forms, confirmations, and interactive content.',
