@@ -18,8 +18,7 @@ export interface BaseFormField {
 	isValid?: (value: any) => ValidationResult;
 	// Layout properties
 	colSpan?: 1 | 2 | 3 | 4 | 'full'; // Number of columns to span
-	maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'none'; // Maximum width constraint
-	minWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'none'; // Minimum width constraint
+	maxWidth?: number; // Maximum width constraint in pixels
 }
 
 export interface InputField extends BaseFormField {

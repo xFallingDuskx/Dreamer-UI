@@ -55,30 +55,31 @@ export function Form<T extends FormData = FormData>({
 		[data, validateForm, onSubmit]
 	);
 
-	const getFieldClasses = (field: FormField) => {
+	const getFieldStylesAndClasses = (field: FormField) => {
 		const classes = [];
+		const styles: React.CSSProperties = {};
 
 		// Column span
 		if (field.colSpan && columns! > 1) {
 			classes.push(formVariants.colSpan[field.colSpan]);
 		}
 
-		// Width constraints
+		// Width constraints using pixel values
 		if (field.maxWidth) {
-			classes.push(formVariants.maxWidth[field.maxWidth]);
-		}
-		if (field.minWidth) {
-			classes.push(formVariants.minWidth[field.minWidth]);
+			styles.maxWidth = `${field.maxWidth}px`;
 		}
 
-		return classes.join(' ');
+		return {
+			className: classes.join(' '),
+			style: styles,
+		};
 	};
 
 	const renderField = (field: FormField) => {
 		const fieldValue = data[field.name];
 		const fieldError = errors[field.name];
 		const fieldId = id ? `${id}-${field.name}` : field.name;
-		const fieldClasses = getFieldClasses(field);
+		const { className: fieldClasses, style: fieldStyles } = getFieldStylesAndClasses(field);
 
 		const renderFieldContent = () => {
 			switch (field.__type) {
@@ -233,7 +234,7 @@ export function Form<T extends FormData = FormData>({
 		};
 
 		return (
-			<div key={field.name} className={fieldClasses}>
+			<div key={field.name} className={fieldClasses} style={fieldStyles}>
 				{renderFieldContent()}
 			</div>
 		);

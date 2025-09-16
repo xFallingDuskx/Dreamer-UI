@@ -199,7 +199,7 @@ export function FormPage() {
       type: 'number',
       placeholder: '25',
       variant: 'outline',
-      maxWidth: 'xs'
+      maxWidth: 120 // Compact width for age input
     }),
     textarea({
       name: 'comments',
@@ -218,7 +218,7 @@ export function FormPage() {
       type: 'number',
       placeholder: '1',
       variant: 'outline',
-      maxWidth: 'xs'
+      maxWidth: 100 // Small width for quantity
     }),
     input({
       name: 'price',
@@ -226,14 +226,14 @@ export function FormPage() {
       type: 'number',
       placeholder: '0.00',
       variant: 'outline',
-      maxWidth: 'sm'
+      maxWidth: 150 // Medium width for price
     }),
     input({
       name: 'productName',
       label: 'Product Name',
       placeholder: 'Enter product name',
-      variant: 'outline',
-      minWidth: 'md'
+      variant: 'outline'
+      // No width constraint for product name - let it use available space
     })
   ];
 

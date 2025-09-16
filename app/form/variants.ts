@@ -17,29 +17,11 @@ export const formVariants = {
     4: 'col-span-1 md:col-span-2 lg:col-span-4',
     full: 'col-span-full',
   },
-  maxWidth: {
-    xs: 'max-w-xs',
-    sm: 'max-w-sm', 
-    md: 'max-w-md',
-    lg: 'max-w-lg',
-    xl: 'max-w-xl',
-    none: '',
-  },
-  minWidth: {
-    xs: 'min-w-[16rem]',
-    sm: 'min-w-[20rem]',
-    md: 'min-w-[24rem]', 
-    lg: 'min-w-[28rem]',
-    xl: 'min-w-[32rem]',
-    none: '',
-  },
 } as const;
 
 export type FormSpacing = keyof typeof formVariants.spacing;
 export type FormColumns = keyof typeof formVariants.columns;
 export type FormColSpan = keyof typeof formVariants.colSpan;
-export type FormMaxWidth = keyof typeof formVariants.maxWidth;
-export type FormMinWidth = keyof typeof formVariants.minWidth;
 
 export interface FormVariants {
   spacing: FormSpacing;

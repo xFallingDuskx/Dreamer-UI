@@ -354,7 +354,7 @@ const FormDemo = () => {
 									type: 'number',
 									placeholder: 'Enter number between 1-100',
 									variant: 'outline',
-									maxWidth: 'xs',
+									maxWidth: 150, // Compact width for number input
 									isValid: (value: string) => {
 										if (!value) return { valid: true };
 										const num = parseInt(value);
@@ -409,7 +409,7 @@ const FormDemo = () => {
 									type: 'number',
 									placeholder: '25',
 									variant: 'outline',
-									maxWidth: 'xs'
+									maxWidth: 120 // Compact width for age input
 								}),
 								input({
 									name: 'phone',
