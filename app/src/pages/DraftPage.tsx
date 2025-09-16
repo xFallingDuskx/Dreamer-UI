@@ -10,9 +10,10 @@ import {
 	DropdownMenu,
 	Badge,
 } from '@moondreamsdev/dreamer-ui/components';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
+import { Graph, type DataPoint, type TimeWindow } from '../../graph';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -148,6 +149,34 @@ export const DraftPage = () => {
 		fullscreen: false,
 		nonDraggable: false,
 	});
+
+	// Generate sample data for Graph component
+	const generateSampleData = (count: number, label: string): DataPoint[] => {
+		const now = Date.now();
+		const dayInMs = 24 * 60 * 60 * 1000;
+		
+		return Array.from({ length: count }, (_, i) => ({
+			timestamp: now - (count - 1 - i) * dayInMs,
+			value: Math.floor(Math.random() * 100) + 20 + Math.sin(i * 0.5) * 20,
+			label: `${label} Day ${i + 1}`,
+			additionalContent: (
+				<div className='text-xs'>
+					<div>Day {i + 1} of {count}</div>
+					<div>Trend: {i > 0 && Math.random() > 0.5 ? '↗ Up' : '↘ Down'}</div>
+				</div>
+			),
+		}));
+	};
+
+	const sampleData1 = useMemo(() => generateSampleData(30, 'Revenue'), []);
+	const sampleData2 = useMemo(() => generateSampleData(15, 'Users'), []);
+	
+	// Time window for filtering (last 2 weeks)
+	const twoWeeksAgo = Date.now() - (14 * 24 * 60 * 60 * 1000);
+	const timeWindow: TimeWindow = {
+		start: twoWeeksAgo,
+		end: Date.now(),
+	};
 
 	return (
 		<ComponentPage
@@ -584,6 +613,68 @@ export const DraftPage = () => {
 											</div>
 										</div>
 									</Card>
+								</div>
+							</div>
+						</div>
+
+						{/* Graph Component Testing */}
+						<div>
+							<h3 className='text-lg font-medium text-white mb-3'>Graph Component Testing</h3>
+							<div className='space-y-6'>
+								{/* Default Graph */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Default Graph (Medium)</h4>
+									<Graph
+										data={sampleData1}
+										title='Revenue Over Time'
+										size='md'
+										theme='primary'
+									/>
+								</div>
+
+								{/* Small Graph */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Small Graph</h4>
+									<Graph
+										data={sampleData2}
+										title='User Growth'
+										size='sm'
+										theme='secondary'
+									/>
+								</div>
+
+								{/* Large Graph with Time Window */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Large Graph with Time Filter (Last 2 Weeks)</h4>
+									<Graph
+										data={sampleData1}
+										timeWindow={timeWindow}
+										title='Revenue (Filtered)'
+										size='lg'
+										theme='accent'
+									/>
+								</div>
+
+								{/* Custom Size Graph */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Custom Dimensions</h4>
+									<Graph
+										data={sampleData2}
+										title='Custom Size Chart'
+										width={500}
+										height={250}
+										theme='primary'
+									/>
+								</div>
+
+								{/* Empty Graph */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Empty Graph</h4>
+									<Graph
+										data={[]}
+										title='No Data Available'
+										size='md'
+									/>
 								</div>
 							</div>
 						</div>
