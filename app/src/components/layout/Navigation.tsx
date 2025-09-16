@@ -10,6 +10,7 @@ const components = [
   { name: 'Card', path: '/components/card' },
   { name: 'CodeBlock', path: '/components/codeblock' },
   { name: 'Disclosure', path: '/components/disclosure' },
+  { name: 'Graph', path: '/components/graph' },
   { name: 'Input', path: '/components/input' },
   { name: 'Textarea', path: '/components/textarea' },
   { name: 'Select', path: '/components/select' },
