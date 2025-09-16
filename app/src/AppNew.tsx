@@ -32,6 +32,7 @@ import { JoinPage } from './pages/utils/JoinPage';
 // Utils
 import { DisclosurePage } from './pages/components/DisclosurePage';
 import { isLocalhost } from './utils/isLocalhost';
+import { AvatarPage } from './pages/components/AvatarPage';
 
 function App() {
   const showDraftRoute = isLocalhost();
@@ -52,6 +53,7 @@ function App() {
               <Route path='components' element={<ComponentsPage />} />
 
               {/* Component Pages */}
+              <Route path='components/avatar' element={<AvatarPage />} />
               <Route path='components/button' element={<ButtonPage />} />
               <Route path='components/card' element={<CardPage />} />
               <Route path='components/disclosure' element={<DisclosurePage />} />
