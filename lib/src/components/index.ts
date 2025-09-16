@@ -13,6 +13,7 @@ export * from './code-block';
 export * from './disclosure';
 export * from './drawer';
 export * from './dropdown-menu';
+export * from './error-boundary';
 export * from './input';
 export * from './label';
 export * from './modal';
