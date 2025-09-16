@@ -34,6 +34,12 @@ const components = [
     category: 'Overlay',
   },
   {
+    name: 'Graph',
+    path: '/components/graph',
+    description: 'Interactive line graph component for visualizing time-series data with hover tooltips.',
+    category: 'Display',
+  },
+  {
     name: 'Skeleton',
     path: '/components/skeleton',
     description: 'Loading placeholders that mimic the structure of your content.',
