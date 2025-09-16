@@ -26,7 +26,9 @@ import { UseActionModalPage } from './pages/hooks/UseActionModalPage';
 import { UseToastPage } from './pages/hooks/UseToastPage';
 
 // Utils Pages
+import { DebouncePage } from './pages/utils/DebouncePage';
 import { JoinPage } from './pages/utils/JoinPage';
+import { ThrottlePage } from './pages/utils/ThrottlePage';
 
 // Utils
 import { DisclosurePage } from './pages/components/DisclosurePage';
@@ -67,7 +69,9 @@ function App() {
 
               {/* Utils Pages */}
               <Route path='utils' element={<UtilsPage />} />
+              <Route path='utils/debounce' element={<DebouncePage />} />
               <Route path='utils/join' element={<JoinPage />} />
+              <Route path='utils/throttle' element={<ThrottlePage />} />
 
               {/* Draft Page - Only available on localhost */}
               {showDraftRoute && <Route path='draft' element={<DraftPage />} />}

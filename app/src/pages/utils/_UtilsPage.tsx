@@ -4,9 +4,19 @@ import { ExampleSection } from '../../components/ui/ExampleSection';
 
 const utils = [
   {
+    name: 'debounce',
+    path: '/utils/debounce',
+    description: 'Delay function execution until after a specified delay has elapsed since the last call. Perfect for search inputs and API calls.',
+  },
+  {
     name: 'join',
     path: '/utils/join',
     description: 'Conditionally join CSS class names with proper handling of falsy values and arrays.',
+  },
+  {
+    name: 'throttle',
+    path: '/utils/throttle',
+    description: 'Limit function execution to at most once per specified delay period. Ideal for scroll handlers and rate-limiting.',
   },
 ];
 
