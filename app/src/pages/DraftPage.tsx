@@ -13,6 +13,7 @@ import {
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
+import { PhotoGallery } from '../../photo-gallery';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -584,6 +585,151 @@ export const DraftPage = () => {
 											</div>
 										</div>
 									</Card>
+								</div>
+							</div>
+						</div>
+
+						{/* PhotoGallery Component Testing */}
+						<div>
+							<h3 className='text-lg font-medium text-white mb-3'>PhotoGallery Component Testing</h3>
+							<div className='space-y-6'>
+								{/* Grid Layout */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Grid Layout - Sample Photos</h4>
+									<PhotoGallery
+										layout='grid'
+										size='md'
+										containerHeight='400px'
+										initialPhotos={[
+											{
+												id: 1,
+												src: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=300&h=200&fit=crop',
+												alt: 'Mountain landscape',
+												caption: 'Mountain Adventure',
+											},
+											{
+												id: 2,
+												src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=300&h=300&fit=crop',
+												alt: 'Forest path',
+												caption: 'Forest Walk',
+											},
+											{
+												id: 3,
+												src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=250&fit=crop',
+												alt: 'Ocean view',
+												caption: 'Ocean Serenity',
+											},
+											{
+												id: 4,
+												src: 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=300&h=200&fit=crop',
+												alt: 'Desert sunset',
+												caption: 'Desert Sunset',
+											},
+											{
+												id: 5,
+												src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=300&h=280&fit=crop',
+												alt: 'City skyline',
+												caption: 'Urban Lights',
+											},
+											{
+												id: 6,
+												src: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=300&h=220&fit=crop',
+												alt: 'Starry night',
+												caption: 'Starry Night',
+											},
+										]}
+										onPhotoClick={(photo, index) => console.log('Clicked photo:', photo, 'at index:', index)}
+									/>
+								</div>
+
+								{/* Horizontal Layout */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Horizontal Scrolling Layout</h4>
+									<PhotoGallery
+										layout='horizontal'
+										size='lg'
+										containerHeight='300px'
+										initialPhotos={[
+											{
+												id: 7,
+												src: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=300&h=300&fit=crop',
+												alt: 'Tropical beach',
+												caption: 'Tropical Paradise',
+											},
+											{
+												id: 8,
+												src: 'https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=300&h=300&fit=crop',
+												alt: 'Autumn forest',
+												caption: 'Autumn Colors',
+											},
+											{
+												id: 9,
+												src: 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=300&h=300&fit=crop',
+												alt: 'Misty lake',
+												caption: 'Misty Morning',
+											},
+											{
+												id: 10,
+												src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop',
+												alt: 'Snow peaks',
+												caption: 'Snow Peaks',
+											},
+											{
+												id: 11,
+												src: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=300&h=300&fit=crop',
+												alt: 'Flower field',
+												caption: 'Spring Blooms',
+											},
+										]}
+										onPhotoClick={(photo, index) => alert(`Clicked ${photo.caption} at position ${index + 1}`)}
+									/>
+								</div>
+
+								{/* Masonry Layout */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Masonry Layout</h4>
+									<PhotoGallery
+										layout='masonry'
+										size='sm'
+										containerHeight='500px'
+										initialPhotos={[
+											{
+												id: 12,
+												src: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=250&h=350&fit=crop',
+												alt: 'Tall mountain',
+												caption: 'Tall Mountain',
+											},
+											{
+												id: 13,
+												src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=250&h=200&fit=crop',
+												alt: 'Wide forest',
+												caption: 'Wide Forest',
+											},
+											{
+												id: 14,
+												src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=250&h=400&fit=crop',
+												alt: 'Vertical ocean',
+												caption: 'Ocean Depth',
+											},
+											{
+												id: 15,
+												src: 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=250&h=180&fit=crop',
+												alt: 'Short desert',
+												caption: 'Desert Vista',
+											},
+										]}
+									/>
+								</div>
+
+								{/* Empty State */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Empty State</h4>
+									<PhotoGallery
+										layout='grid'
+										size='md'
+										containerHeight='200px'
+										initialPhotos={[]}
+									/>
 								</div>
 							</div>
 						</div>
