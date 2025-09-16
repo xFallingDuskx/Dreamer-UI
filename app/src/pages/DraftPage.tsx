@@ -13,6 +13,29 @@ import {
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
+import { ErrorBoundary } from '../../error-boundary';
+
+// Component that can throw errors for testing
+const BuggyComponent = () => {
+	const [hasError, setHasError] = useState(false);
+
+	if (hasError) {
+		// This will trigger the ErrorBoundary
+		throw new Error('BuggyComponent intentionally threw an error!');
+	}
+
+	return (
+		<div className='p-4 bg-gray-800 rounded text-gray-300'>
+			<p>This component works normally.</p>
+			<button
+				className='mt-2 px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700'
+				onClick={() => setHasError(true)}
+			>
+				Click to Trigger Error
+			</button>
+		</div>
+	);
+};
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -584,6 +607,73 @@ export const DraftPage = () => {
 											</div>
 										</div>
 									</Card>
+								</div>
+							</div>
+						</div>
+
+						{/* ErrorBoundary Component Testing */}
+						<div>
+							<h3 className='text-lg font-medium text-white mb-3'>ErrorBoundary Component Testing</h3>
+							<div className='space-y-6'>
+								{/* Basic ErrorBoundary */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Basic ErrorBoundary (Danger Variant)</h4>
+									<ErrorBoundary variant='danger' fallbackMessage='This component encountered an error.'>
+										<div className='p-4 bg-gray-800 rounded text-gray-300'>
+											This content is working fine.
+										</div>
+									</ErrorBoundary>
+								</div>
+
+								{/* Warning Variant */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Warning Variant</h4>
+									<ErrorBoundary variant='warning' fallbackMessage='A warning-level error occurred.'>
+										<div className='p-4 bg-gray-800 rounded text-gray-300'>
+											This content is also working fine.
+										</div>
+									</ErrorBoundary>
+								</div>
+
+								{/* Info Variant */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Info Variant</h4>
+									<ErrorBoundary variant='info' fallbackMessage='An informational error occurred.' showRetry={false}>
+										<div className='p-4 bg-gray-800 rounded text-gray-300'>
+											This content has no retry button.
+										</div>
+									</ErrorBoundary>
+								</div>
+
+								{/* ErrorBoundary with Custom Fallback */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Custom Fallback</h4>
+									<ErrorBoundary
+										fallback={
+											<div className='p-6 bg-purple-900/20 border border-purple-600 rounded-lg text-center'>
+												<h3 className='text-purple-400 font-semibold mb-2'>Custom Error UI</h3>
+												<p className='text-purple-300'>This is a custom fallback interface.</p>
+											</div>
+										}
+									>
+										<div className='p-4 bg-gray-800 rounded text-gray-300'>
+											This content uses a custom fallback.
+										</div>
+									</ErrorBoundary>
+								</div>
+
+								{/* Error Simulation - Only enable for testing */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Error Simulation (Click to trigger)</h4>
+									<ErrorBoundary
+										variant='danger'
+										fallbackMessage='The BuggyComponent threw an error!'
+										onError={(error, errorInfo) => {
+											console.log('Error caught by ErrorBoundary:', error);
+										}}
+									>
+										<BuggyComponent />
+									</ErrorBoundary>
 								</div>
 							</div>
 						</div>
