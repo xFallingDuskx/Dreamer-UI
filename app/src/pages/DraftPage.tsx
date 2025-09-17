@@ -291,7 +291,7 @@ const FormDemo = () => {
 					<div className='bg-gray-800/50 p-6 rounded-lg'>
 						<Form
 							form={contactForm}
-							data={formData}
+							initialData={formData}
 							onDataChange={setFormData}
 							onSubmit={(data) => handleSubmit(data, 'Contact Form')}
 							spacing='normal'

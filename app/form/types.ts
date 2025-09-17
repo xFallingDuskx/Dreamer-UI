@@ -75,7 +75,7 @@ export interface FormErrors {
 
 export interface FormProps<T extends FormData = FormData> {
 	form: FormField[];
-	data?: T;
+	initialData?: T;
 	onDataChange?: (data: T) => void;
 	onSubmit?: (data: T) => void;
 	submitButton?: React.ReactNode;

@@ -20,7 +20,7 @@ export interface FormComponentProps<T extends FormData = FormData> extends FormP
 
 export function Form<T extends FormData = FormData>({
 	form,
-	data: initialData = {} as T,
+	initialData = {} as T,
 	onDataChange,
 	onSubmit,
 	submitButton,
