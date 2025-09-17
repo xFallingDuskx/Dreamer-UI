@@ -4,6 +4,8 @@ import { ExampleSection } from '../../components/ui/ExampleSection';
 
 const tableOfContents = [
   { id: 'basic-usage', title: 'Basic Usage', level: 1 },
+  { id: 'markers', title: 'Markers', level: 1 },
+  { id: 'custom-rendering', title: 'Custom Rendering', level: 1 },
   { id: 'variants', title: 'Variants', level: 1 },
   { id: 'interactive-features', title: 'Interactive Features', level: 1 },
   { id: 'accessibility', title: 'Accessibility', level: 1 },
@@ -29,6 +31,121 @@ export function DynamicListPage() {
               { id: '3', content: 'Finish project proposal' },
             ]}
             addPlaceholder="Add a new task..."
+          />
+        </div>
+      </ExampleSection>
+
+      <ExampleSection 
+        title='Markers'
+        description='Different marker types to visually organize list items.'
+        id='markers'
+      >
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+          <div>
+            <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Disc (Default)</h4>
+            <DynamicList
+              marker="disc"
+              items={[
+                { id: '1', content: 'First item' },
+                { id: '2', content: 'Second item' },
+                { id: '3', content: 'Third item' },
+              ]}
+              allowAdd={false}
+            />
+          </div>
+          <div>
+            <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Dash</h4>
+            <DynamicList
+              marker="dash"
+              items={[
+                { id: '1', content: 'First item' },
+                { id: '2', content: 'Second item' },
+                { id: '3', content: 'Third item' },
+              ]}
+              allowAdd={false}
+            />
+          </div>
+          <div>
+            <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Decimal</h4>
+            <DynamicList
+              marker="decimal"
+              items={[
+                { id: '1', content: 'First item' },
+                { id: '2', content: 'Second item' },
+                { id: '3', content: 'Third item' },
+              ]}
+              allowAdd={false}
+            />
+          </div>
+          <div>
+            <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Custom Icon</h4>
+            <DynamicList
+              marker={<span className="text-blue-500">★</span>}
+              items={[
+                { id: '1', content: 'Starred item' },
+                { id: '2', content: 'Important task' },
+                { id: '3', content: 'Priority item' },
+              ]}
+              allowAdd={false}
+            />
+          </div>
+        </div>
+      </ExampleSection>
+
+      <ExampleSection 
+        title='Custom Rendering'
+        description='Custom item rendering with additional data and rich content.'
+        id='custom-rendering'
+      >
+        <div className='max-w-2xl'>
+          <DynamicList
+            items={[
+              { 
+                id: '1', 
+                content: 'Design Landing Page', 
+                priority: 'high',
+                assignee: 'Sarah',
+                dueDate: '2024-01-15'
+              },
+              { 
+                id: '2', 
+                content: 'Code Review', 
+                priority: 'medium',
+                assignee: 'Mike',
+                dueDate: '2024-01-18'
+              },
+              { 
+                id: '3', 
+                content: 'Write Documentation', 
+                priority: 'low',
+                assignee: 'Alex',
+                dueDate: '2024-01-22'
+              },
+            ]}
+            itemRenderer={(item, index) => (
+              <div className="flex items-center justify-between w-full">
+                <div className="flex-1">
+                  <div className="font-medium text-slate-900 dark:text-slate-100">
+                    {item.content}
+                  </div>
+                  <div className="text-sm text-slate-500 dark:text-slate-400">
+                    Assigned to {item.assignee} • Due {item.dueDate}
+                  </div>
+                </div>
+                <div className="flex-shrink-0">
+                  <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                    item.priority === 'high' 
+                      ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' 
+                      : item.priority === 'medium'
+                      ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                      : 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
+                  }`}>
+                    {item.priority}
+                  </span>
+                </div>
+              </div>
+            )}
+            addPlaceholder="Add new task..."
           />
         </div>
       </ExampleSection>

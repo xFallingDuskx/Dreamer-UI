@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { listVariants } from './variants';
-import { ChevronUp, ChevronDown, GripVertical, Trash, Plus } from './icons';
+import { ChevronUp, ChevronDown, GripVertical, Trash, Plus, DiscMarker, DashMarker } from './icons';
 import { useDynamicList, type DynamicListItem } from './hooks';
+
+export type MarkerType = 'disc' | 'dash' | 'decimal' | React.ReactElement;
 
 export interface DynamicListProps {
   /** Items to display in the list */
@@ -27,6 +29,10 @@ export interface DynamicListProps {
   onItemsChange?: (items: DynamicListItem[]) => void;
   /** Custom render function for items */
   renderItem?: (item: DynamicListItem, index: number) => React.ReactNode;
+  /** Marker type for list items */
+  marker?: MarkerType;
+  /** Custom item renderer function (alternative name for renderItem) */
+  itemRenderer?: (item: DynamicListItem, index: number) => React.ReactNode;
 }
 
 export function DynamicList({
@@ -41,6 +47,8 @@ export function DynamicList({
   addPlaceholder = 'Add new item...',
   onItemsChange,
   renderItem,
+  marker = 'disc',
+  itemRenderer,
 }: DynamicListProps) {
   const [newItemText, setNewItemText] = useState('');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -48,16 +56,21 @@ export function DynamicList({
 
   const {
     items,
+    visualItems,
     addItem,
     deleteItem,
     moveItemUp,
     moveItemDown,
     draggedItem,
+    draggedOverIndex,
     handleDragStart,
     handleDragOver,
     handleDragEnd,
     handleDrop,
   } = useDynamicList(initialItems);
+
+  // Use itemRenderer if provided, otherwise use renderItem
+  const itemRenderFunction = itemRenderer || renderItem;
 
   // Call onChange callback when items change
   React.useEffect(() => {
@@ -99,6 +112,30 @@ export function DynamicList({
     }
   };
 
+  // Render marker based on type
+  const renderMarker = (index: number) => {
+    if (!marker) return null;
+
+    if (React.isValidElement(marker)) {
+      return marker;
+    }
+
+    switch (marker) {
+      case 'disc':
+        return <DiscMarker className="text-slate-400" />;
+      case 'dash':
+        return <DashMarker className="text-slate-400" />;
+      case 'decimal':
+        return (
+          <span className="text-sm font-medium text-slate-400 flex-shrink-0 min-w-6 text-right">
+            {index + 1}.
+          </span>
+        );
+      default:
+        return <DiscMarker className="text-slate-400" />;
+    }
+  };
+
   const sizeClasses = listVariants.size[size];
 
   return (
@@ -113,93 +150,111 @@ export function DynamicList({
       data-allow-add={allowAdd}
       data-allow-delete={allowDelete}
       data-allow-reorder={allowReorder}
+      data-marker={typeof marker === 'string' ? marker : 'custom'}
     >
       {/* List Items */}
       <ul className={join('divide-y divide-slate-200 dark:divide-slate-700', sizeClasses)} role="list">
-        {items.map((item, index) => (
-          <li
-            key={item.id}
-            className={join(
-              'flex items-center group relative',
-              draggedItem?.id === item.id ? 'opacity-50' : '',
-              hoveredIndex === index ? 'bg-slate-50 dark:bg-slate-700/50' : ''
-            )}
-            draggable={allowReorder}
-            onDragStart={(e) => {
-              e.dataTransfer.effectAllowed = 'move';
-              handleDragStart(item, index);
-            }}
-            onDragOver={(e) => handleDragOver(e, index)}
-            onDragEnd={handleDragEnd}
-            onDrop={handleDrop}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-            tabIndex={0}
-            role="listitem"
-            aria-label={`List item ${index + 1}: ${item.content}`}
-            onKeyDown={(e) => handleItemKeyDown(e, index)}
-          >
-            {/* Drag Handle */}
-            {allowReorder && (
-              <div className="flex-shrink-0 p-2 cursor-move opacity-0 group-hover:opacity-100 transition-opacity">
-                <GripVertical size={16} className="text-slate-400" />
-              </div>
-            )}
-
-            {/* Item Content */}
-            <div className="flex-1 min-w-0">
-              {renderItem ? (
-                renderItem(item, index)
-              ) : (
-                <span className="block text-slate-900 dark:text-slate-100 truncate">
-                  {item.content}
-                </span>
+        {visualItems.map((item, visualIndex) => {
+          // Find the original index of this item in the actual items array
+          const originalIndex = items.findIndex(originalItem => originalItem.id === item.id);
+          const isDraggedItem = draggedItem?.id === item.id;
+          const isHovered = hoveredIndex === originalIndex;
+          
+          return (
+            <li
+              key={item.id}
+              className={join(
+                'flex items-center group relative transition-all duration-150',
+                isDraggedItem ? 'opacity-50' : '',
+                isHovered ? 'bg-slate-50 dark:bg-slate-700/50' : '',
+                // Add drag feedback styling
+                draggedItem && draggedOverIndex === visualIndex && !isDraggedItem 
+                  ? 'border-t-2 border-primary' : ''
               )}
-            </div>
-
-            {/* Control Buttons */}
-            <div className={join(
-              'flex-shrink-0 flex items-center gap-1 opacity-0 transition-opacity',
-              hoveredIndex === index ? 'opacity-100' : ''
-            )}>
-              {/* Move Up/Down Buttons */}
+              draggable={allowReorder}
+              onDragStart={(e) => {
+                e.dataTransfer.effectAllowed = 'move';
+                handleDragStart(item, originalIndex);
+              }}
+              onDragOver={(e) => handleDragOver(e, visualIndex)}
+              onDragEnd={handleDragEnd}
+              onDrop={handleDrop}
+              onMouseEnter={() => setHoveredIndex(originalIndex)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              tabIndex={0}
+              role="listitem"
+              aria-label={`List item ${originalIndex + 1}: ${item.content}`}
+              onKeyDown={(e) => handleItemKeyDown(e, originalIndex)}
+            >
+              {/* Drag Handle */}
               {allowReorder && (
-                <>
-                  <button
-                    type="button"
-                    onClick={() => moveItemUp(index)}
-                    disabled={index === 0}
-                    className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors"
-                    aria-label={`Move item up`}
-                  >
-                    <ChevronUp size={14} />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => moveItemDown(index)}
-                    disabled={index === items.length - 1}
-                    className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors"
-                    aria-label={`Move item down`}
-                  >
-                    <ChevronDown size={14} />
-                  </button>
-                </>
+                <div className="flex-shrink-0 p-2 cursor-move opacity-0 group-hover:opacity-100 transition-opacity">
+                  <GripVertical size={16} className="text-slate-400" />
+                </div>
               )}
 
-              {/* Delete Button */}
-              {allowDelete && (
-                <button
-                  type="button"
-                  onClick={() => deleteItem(item.id)}
-                  className="p-1.5 text-red-400 hover:text-red-600 dark:hover:text-red-300 rounded transition-colors"
-                  aria-label={`Delete item`}
-                >
-                  <Trash size={14} />
-                </button>
+              {/* Marker */}
+              {marker && (
+                <div className="flex-shrink-0 px-3 flex items-center justify-center">
+                  {renderMarker(originalIndex)}
+                </div>
               )}
-            </div>
-          </li>
-        ))}
+
+              {/* Item Content */}
+              <div className="flex-1 min-w-0">
+                {itemRenderFunction ? (
+                  itemRenderFunction(item, originalIndex)
+                ) : (
+                  <span className="block text-slate-900 dark:text-slate-100 truncate">
+                    {item.content}
+                  </span>
+                )}
+              </div>
+
+              {/* Control Buttons */}
+              <div className={join(
+                'flex-shrink-0 flex items-center gap-1 opacity-0 transition-opacity',
+                isHovered ? 'opacity-100' : ''
+              )}>
+                {/* Move Up/Down Buttons */}
+                {allowReorder && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => moveItemUp(originalIndex)}
+                      disabled={originalIndex === 0}
+                      className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors"
+                      aria-label={`Move item up`}
+                    >
+                      <ChevronUp size={14} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => moveItemDown(originalIndex)}
+                      disabled={originalIndex === items.length - 1}
+                      className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors"
+                      aria-label={`Move item down`}
+                    >
+                      <ChevronDown size={14} />
+                    </button>
+                  </>
+                )}
+
+                {/* Delete Button */}
+                {allowDelete && (
+                  <button
+                    type="button"
+                    onClick={() => deleteItem(item.id)}
+                    className="p-1.5 text-red-400 hover:text-red-600 dark:hover:text-red-300 rounded transition-colors"
+                    aria-label={`Delete item`}
+                  >
+                    <Trash size={14} />
+                  </button>
+                )}
+              </div>
+            </li>
+          );
+        })}
 
         {/* Empty State */}
         {items.length === 0 && (

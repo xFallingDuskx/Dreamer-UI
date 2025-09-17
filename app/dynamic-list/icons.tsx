@@ -103,3 +103,32 @@ export function Plus({ size = 16, color = 'currentColor', className = '', ...pro
     </svg>
   );
 }
+
+// Marker icons
+export function DiscMarker({ size = 8, color = 'currentColor', className = '', ...props }: { size?: number; color?: string; className?: string; [key: string]: any }) {
+  return (
+    <div
+      {...props}
+      className={`rounded-full flex-shrink-0 ${className}`}
+      style={{
+        width: size,
+        height: size,
+        backgroundColor: color,
+      }}
+    />
+  );
+}
+
+export function DashMarker({ size = 12, color = 'currentColor', className = '', ...props }: { size?: number; color?: string; className?: string; [key: string]: any }) {
+  return (
+    <div
+      {...props}
+      className={`flex-shrink-0 ${className}`}
+      style={{
+        width: size,
+        height: 2,
+        backgroundColor: color,
+      }}
+    />
+  );
+}
