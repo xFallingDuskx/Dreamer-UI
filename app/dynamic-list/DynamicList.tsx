@@ -143,7 +143,7 @@ export function DynamicList({
 		<div
 			ref={ref}
 			id={id}
-			className={join('border border-slate-200 rounded-lg bg-white dark:bg-slate-800 dark:border-slate-700', className)}
+			className={className}
 			data-size={size}
 			data-allow-add={allowAdd}
 			data-allow-delete={allowDelete}
