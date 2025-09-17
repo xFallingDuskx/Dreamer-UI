@@ -1,6 +1,7 @@
 import {
 	Avatar,
 	Callout,
+	Button,
 	Card,
 	Code,
 	Disclosure,
@@ -9,13 +10,35 @@ import {
 	DropdownMenuItem,
 	DropdownMenuFactories,
 	DropdownMenu,
-  Badge,
-  Button,
+	Badge,
+	ErrorBoundary
 } from '@moondreamsdev/dreamer-ui/components';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { Form, FormFactories, FormData } from '../../form';
+
+// Component that can throw errors for testing
+const BuggyComponent = () => {
+	const [hasError, setHasError] = useState(false);
+
+	if (hasError) {
+		// This will trigger the ErrorBoundary
+		throw new Error('BuggyComponent intentionally threw an error!');
+	}
+
+	return (
+		<div className='p-4 bg-gray-800 rounded text-gray-300'>
+			<p>This component works normally.</p>
+			<button
+				className='mt-2 px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700'
+				onClick={() => setHasError(true)}
+			>
+				Click to Trigger Error
+			</button>
+		</div>
+	);
+};
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -950,6 +973,24 @@ export const DraftPage = () => {
 										</div>
 									</Card>
 								</div>
+							</div>
+						</div>
+
+						{/* ErrorBoundary Component Testing */}
+						<div>
+							<h3 className='text-lg font-medium text-white mb-3'>ErrorBoundary Component Testing</h3>
+							<div>
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Error Simulation (Click to trigger)</h4>
+								<ErrorBoundary
+									variant='danger'
+									fallbackMessage='The BuggyComponent threw an error!'
+									onError={(error: Error) => {
+										console.log('Error caught by ErrorBoundary:', error);
+									}}
+									inDevEnv={true}
+								>
+									<BuggyComponent />
+								</ErrorBoundary>
 							</div>
 						</div>
 					</div>

@@ -21,7 +21,7 @@ import { SkeletonPage } from './pages/components/SkeletonPage';
 import { CalloutPage } from './pages/components/CalloutPage';
 import { FormPage } from './pages/components/FormPage';
 import { CardPage } from './pages/components/CardPage';
-import { AvatarPage } from './pages/components/AvatarPage';
+import { ErrorBoundaryPage } from './pages/components/ErrorBoundaryPage';
 
 // Hook Pages
 import { UseActionModalPage } from './pages/hooks/UseActionModalPage';
@@ -33,6 +33,7 @@ import { JoinPage } from './pages/utils/JoinPage';
 // Utils
 import { DisclosurePage } from './pages/components/DisclosurePage';
 import { isLocalhost } from './utils/isLocalhost';
+import { AvatarPage } from './pages/components/AvatarPage';
 
 function App() {
   const showDraftRoute = isLocalhost();
@@ -62,6 +63,7 @@ function App() {
               <Route path='components/modal' element={<ModalPage />} />
               <Route path='components/codeblock' element={<CodeBlockPage />} />
               <Route path='components/callout' element={<CalloutPage />} />
+              <Route path='components/error-boundary' element={<ErrorBoundaryPage />} />
               <Route path='components/form' element={<FormPage />} />
 
               {/* Hook Pages */}

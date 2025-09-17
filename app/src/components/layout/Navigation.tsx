@@ -11,7 +11,7 @@ const components = [
   { name: 'Card', path: '/components/card' },
   { name: 'CodeBlock', path: '/components/codeblock' },
   { name: 'Disclosure', path: '/components/disclosure' },
-  { name: 'Form', path: '/components/form' },
+  { name: 'ErrorBoundary', path: '/components/error-boundary' },
   { name: 'Input', path: '/components/input' },
   { name: 'Textarea', path: '/components/textarea' },
   { name: 'Select', path: '/components/select' },
@@ -34,6 +34,7 @@ const components = [
   { name: 'Scroll Area', path: '/components/scroll-area' },
   { name: 'Clickable', path: '/components/clickable' },
   { name: 'Callout', path: '/components/callout' },
+  { name: 'Form', path: '/components/form' },
 ];
 
 const hooks = [
