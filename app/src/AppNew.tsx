@@ -21,7 +21,7 @@ import { SkeletonPage } from './pages/components/SkeletonPage';
 import { CalloutPage } from './pages/components/CalloutPage';
 import { FormPage } from './pages/components/FormPage';
 import { CardPage } from './pages/components/CardPage';
-import { ListPage } from './pages/components/ListPage';
+import { DynamicListPage } from './pages/components/DynamicListPage';
 import { ErrorBoundaryPage } from './pages/components/ErrorBoundaryPage';
 
 // Hook Pages
@@ -61,7 +61,7 @@ function App() {
               <Route path='components/disclosure' element={<DisclosurePage />} />
               <Route path='components/skeleton' element={<SkeletonPage />} />
               <Route path='components/input' element={<InputPage />} />
-              <Route path='components/list' element={<ListPage />} />
+              <Route path='components/dynamic-list' element={<DynamicListPage />} />
               <Route path='components/modal' element={<ModalPage />} />
               <Route path='components/codeblock' element={<CodeBlockPage />} />
               <Route path='components/callout' element={<CalloutPage />} />

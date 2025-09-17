@@ -2,11 +2,11 @@ import React, { useState, useRef } from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { listVariants } from './variants';
 import { ChevronUp, ChevronDown, GripVertical, Trash, Plus } from './icons';
-import { useList, type ListItem } from './hooks';
+import { useDynamicList, type DynamicListItem } from './hooks';
 
-export interface ListProps {
+export interface DynamicListProps {
   /** Items to display in the list */
-  items?: ListItem[];
+  items?: DynamicListItem[];
   /** Size variant */
   size?: keyof typeof listVariants.size;
   /** Optional ID for the component */
@@ -24,12 +24,12 @@ export interface ListProps {
   /** Placeholder text for new items */
   addPlaceholder?: string;
   /** Callback when items change */
-  onItemsChange?: (items: ListItem[]) => void;
+  onItemsChange?: (items: DynamicListItem[]) => void;
   /** Custom render function for items */
-  renderItem?: (item: ListItem, index: number) => React.ReactNode;
+  renderItem?: (item: DynamicListItem, index: number) => React.ReactNode;
 }
 
-export function List({
+export function DynamicList({
   items: initialItems = [],
   size = 'md',
   id,
@@ -41,7 +41,7 @@ export function List({
   addPlaceholder = 'Add new item...',
   onItemsChange,
   renderItem,
-}: ListProps) {
+}: DynamicListProps) {
   const [newItemText, setNewItemText] = useState('');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -57,7 +57,7 @@ export function List({
     handleDragOver,
     handleDragEnd,
     handleDrop,
-  } = useList(initialItems);
+  } = useDynamicList(initialItems);
 
   // Call onChange callback when items change
   React.useEffect(() => {

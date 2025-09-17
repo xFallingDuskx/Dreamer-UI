@@ -19,6 +19,7 @@ import {
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
+import { DynamicList } from '../../dynamic-list';
 
 // Component that can throw errors for testing
 const BuggyComponent = () => {
@@ -41,7 +42,6 @@ const BuggyComponent = () => {
 		</div>
 	);
 };
-import { List } from '../../list';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -989,7 +989,7 @@ export const DraftPage = () => {
 								<div>
 									<h4 className='text-md font-medium text-gray-300 mb-2'>Basic List</h4>
 									<div className='max-w-md'>
-										<List
+										<DynamicList
 											items={[
 												{ id: '1', content: 'First item' },
 												{ id: '2', content: 'Second item with longer content that may wrap' },
@@ -1005,7 +1005,7 @@ export const DraftPage = () => {
 									<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
 										<div>
 											<h5 className='text-sm text-gray-400 mb-2'>Small</h5>
-											<List
+											<DynamicList
 												size='sm'
 												items={[
 													{ id: '1', content: 'Small item 1' },
@@ -1015,7 +1015,7 @@ export const DraftPage = () => {
 										</div>
 										<div>
 											<h5 className='text-sm text-gray-400 mb-2'>Medium (default)</h5>
-											<List
+											<DynamicList
 												size='md'
 												items={[
 													{ id: '1', content: 'Medium item 1' },
@@ -1025,7 +1025,7 @@ export const DraftPage = () => {
 										</div>
 										<div>
 											<h5 className='text-sm text-gray-400 mb-2'>Large</h5>
-											<List
+											<DynamicList
 												size='lg'
 												items={[
 													{ id: '1', content: 'Large item 1' },
@@ -1042,7 +1042,7 @@ export const DraftPage = () => {
 									<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
 										<div>
 											<h5 className='text-sm text-gray-400 mb-2'>Read-only (no interactions)</h5>
-											<List
+											<DynamicList
 												allowAdd={false}
 												allowDelete={false}
 												allowReorder={false}
@@ -1055,7 +1055,7 @@ export const DraftPage = () => {
 										</div>
 										<div>
 											<h5 className='text-sm text-gray-400 mb-2'>Delete only</h5>
-											<List
+											<DynamicList
 												allowAdd={false}
 												allowReorder={false}
 												items={[
@@ -1072,7 +1072,7 @@ export const DraftPage = () => {
 								<div>
 									<h4 className='text-md font-medium text-gray-300 mb-2'>Empty State</h4>
 									<div className='max-w-md'>
-										<List items={[]} addPlaceholder="Start adding items..." />
+										<DynamicList items={[]} addPlaceholder="Start adding items..." />
 									</div>
 								</div>
 
@@ -1080,7 +1080,7 @@ export const DraftPage = () => {
 								<div>
 									<h4 className='text-md font-medium text-gray-300 mb-2'>Custom Placeholder</h4>
 									<div className='max-w-md'>
-										<List
+										<DynamicList
 											items={[{ id: '1', content: 'Shopping list item' }]}
 											addPlaceholder="Add grocery item..."
 										/>

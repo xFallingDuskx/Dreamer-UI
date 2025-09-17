@@ -1,18 +1,18 @@
 import { useState, useCallback, useRef } from 'react';
 
-export interface ListItem {
+export interface DynamicListItem {
   id: string;
   content: string;
 }
 
-export function useList(initialItems: ListItem[] = []) {
-  const [items, setItems] = useState<ListItem[]>(initialItems);
-  const [draggedItem, setDraggedItem] = useState<ListItem | null>(null);
+export function useDynamicList(initialItems: DynamicListItem[] = []) {
+  const [items, setItems] = useState<DynamicListItem[]>(initialItems);
+  const [draggedItem, setDraggedItem] = useState<DynamicListItem | null>(null);
   const draggedOverIndex = useRef<number | null>(null);
 
   const addItem = useCallback((content: string) => {
-    const newItem: ListItem = {
-      id: `item-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    const newItem: DynamicListItem = {
+      id: `item-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
       content,
     };
     setItems(prev => [...prev, newItem]);
@@ -47,7 +47,7 @@ export function useList(initialItems: ListItem[] = []) {
   }, [moveItem, items.length]);
 
   // Drag and drop handlers
-  const handleDragStart = useCallback((item: ListItem, index: number) => {
+  const handleDragStart = useCallback((item: DynamicListItem, index: number) => {
     setDraggedItem(item);
     draggedOverIndex.current = index;
   }, []);

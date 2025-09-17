@@ -1,4 +1,4 @@
-import { List } from '../../../list';
+import { DynamicList } from '../../../dynamic-list';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
 
@@ -9,10 +9,10 @@ const tableOfContents = [
   { id: 'accessibility', title: 'Accessibility', level: 1 },
 ];
 
-export function ListPage() {
+export function DynamicListPage() {
   return (
     <ComponentPage
-      title='List'
+      title='DynamicList'
       description='A dynamic list component that allows items to be added, deleted, and reordered through drag-and-drop or button controls. Perfect for managing collections of data.'
       tableOfContents={tableOfContents}
     >
@@ -22,7 +22,7 @@ export function ListPage() {
         id='basic-usage'
       >
         <div className='max-w-md'>
-          <List
+          <DynamicList
             items={[
               { id: '1', content: 'Buy groceries' },
               { id: '2', content: 'Walk the dog' },
@@ -41,7 +41,7 @@ export function ListPage() {
         <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
           <div>
             <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Small</h4>
-            <List
+            <DynamicList
               size='sm'
               items={[
                 { id: '1', content: 'Compact item' },
@@ -52,7 +52,7 @@ export function ListPage() {
           </div>
           <div>
             <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Medium (Default)</h4>
-            <List
+            <DynamicList
               items={[
                 { id: '1', content: 'Standard item' },
                 { id: '2', content: 'Regular spacing' },
@@ -62,7 +62,7 @@ export function ListPage() {
           </div>
           <div>
             <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Large</h4>
-            <List
+            <DynamicList
               size='lg'
               items={[
                 { id: '1', content: 'Spacious item' },
@@ -82,7 +82,7 @@ export function ListPage() {
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
           <div>
             <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Read-only</h4>
-            <List
+            <DynamicList
               allowAdd={false}
               allowDelete={false}
               allowReorder={false}
@@ -95,7 +95,7 @@ export function ListPage() {
           </div>
           <div>
             <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Delete only</h4>
-            <List
+            <DynamicList
               allowAdd={false}
               allowReorder={false}
               items={[
@@ -107,7 +107,7 @@ export function ListPage() {
           </div>
           <div>
             <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Reorder only</h4>
-            <List
+            <DynamicList
               allowAdd={false}
               allowDelete={false}
               items={[
@@ -119,7 +119,7 @@ export function ListPage() {
           </div>
           <div>
             <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Custom placeholder</h4>
-            <List
+            <DynamicList
               items={[
                 { id: '1', content: 'Shopping item' },
               ]}
@@ -146,7 +146,7 @@ export function ListPage() {
           </div>
           
           <div className='max-w-md'>
-            <List
+            <DynamicList
               items={[
                 { id: '1', content: 'Try keyboard navigation' },
                 { id: '2', content: 'Focus this item and use arrow keys' },
