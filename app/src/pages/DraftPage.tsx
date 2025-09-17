@@ -1,20 +1,24 @@
 import {
 	Avatar,
+	Badge,
+	Button,
 	Callout,
 	Card,
 	Code,
 	Disclosure,
 	Drawer,
-	Popover,
-	DropdownMenuItem,
-	DropdownMenuFactories,
 	DropdownMenu,
-	Badge,
-	ErrorBoundary
+	DropdownMenuFactories,
+	DropdownMenuItem,
+	ErrorBoundary,
+	Form,
+	FormData,
+	FormFactories,
+	Popover,
 } from '@moondreamsdev/dreamer-ui/components';
+import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
-import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 
 // Component that can throw errors for testing
 const BuggyComponent = () => {
@@ -161,6 +165,304 @@ const DropdownDemo = () => {
 					<strong>Selected:</strong> {selectedValue}
 				</p>
 			)}
+		</div>
+	);
+};
+
+const FormDemo = () => {
+	const [formData, setFormData] = useState<FormData>({});
+	const [submittedData, setSubmittedData] = useState<FormData | null>(null);
+	const { input, textarea, select, checkbox, radio } = FormFactories;
+
+	// Basic contact form
+	const contactForm = [
+		input({
+			name: 'firstName',
+			label: 'First Name',
+			placeholder: 'Enter your first name',
+			required: true,
+			variant: 'outline',
+			isValid: (value: string) => {
+				if (!value || value.length < 2) return { valid: false, message: 'First name must be at least 2 characters' };
+				return { valid: true };
+			},
+		}),
+		input({
+			name: 'lastName',
+			label: 'Last Name',
+			placeholder: 'Enter your last name',
+			required: true,
+			variant: 'outline',
+		}),
+		input({
+			name: 'email',
+			label: 'Email',
+			type: 'email',
+			placeholder: 'Enter your email address',
+			required: true,
+			variant: 'outline',
+			isValid: (value: string) => {
+				if (!value) return { valid: false, message: 'Email is required' };
+				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				if (!emailRegex.test(value)) return { valid: false, message: 'Please enter a valid email address' };
+				return { valid: true, message: 'Email format is valid' };
+			},
+		}),
+		select({
+			name: 'country',
+			label: 'Country',
+			placeholder: 'Select your country',
+			required: true,
+			options: [
+				{ value: 'us', label: 'United States' },
+				{ value: 'ca', label: 'Canada' },
+				{ value: 'uk', label: 'United Kingdom' },
+				{ value: 'de', label: 'Germany' },
+				{ value: 'fr', label: 'France' },
+				{ value: 'jp', label: 'Japan' },
+				{ value: 'au', label: 'Australia' },
+			],
+			searchable: true,
+			clearable: true,
+		}),
+		textarea({
+			name: 'message',
+			label: 'Message',
+			placeholder: 'Enter your message',
+			description: 'Tell us about your inquiry',
+			variant: 'outline',
+			rows: 4,
+			characterLimit: 500,
+		}),
+		checkbox({
+			name: 'subscribe',
+			label: 'Email Notifications',
+			text: 'I would like to receive email updates and newsletters',
+		}),
+		radio({
+			name: 'contactMethod',
+			label: 'Preferred Contact Method',
+			required: true,
+			options: [
+				{ value: 'email', label: 'Email' },
+				{ value: 'phone', label: 'Phone' },
+				{ value: 'mail', label: 'Postal Mail' },
+			],
+		}),
+	];
+
+	// Settings form with different variants
+	const settingsForm = [
+		input({
+			name: 'username',
+			label: 'Username',
+			placeholder: 'Enter username',
+			variant: 'underline',
+			isValid: (value: string) => {
+				if (!value || value.length < 3) return { valid: false, message: 'Username must be at least 3 characters' };
+				if (!/^[a-zA-Z0-9_]+$/.test(value))
+					return { valid: false, message: 'Username can only contain letters, numbers, and underscores' };
+				return { valid: true };
+			},
+		}),
+		input({
+			name: 'currentPassword',
+			label: 'Current Password',
+			type: 'password',
+			placeholder: 'Enter current password',
+			variant: 'underline',
+		}),
+		input({
+			name: 'newPassword',
+			label: 'New Password',
+			type: 'password',
+			placeholder: 'Enter new password',
+			variant: 'underline',
+			isValid: (value: string) => {
+				if (!value || value.length < 8) return { valid: false, message: 'Password must be at least 8 characters' };
+				if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+					return {
+						valid: false,
+						message: 'Password must contain at least one lowercase letter, one uppercase letter, and one number',
+					};
+				}
+				return { valid: true };
+			},
+		}),
+		select({
+			name: 'theme',
+			label: 'Theme',
+			options: [
+				{ value: 'light', label: 'Light' },
+				{ value: 'dark', label: 'Dark' },
+				{ value: 'system', label: 'System' },
+			],
+		}),
+		checkbox({
+			name: 'twoFactorAuth',
+			label: 'Two-Factor Authentication',
+			text: 'Enable two-factor authentication for enhanced security',
+		}),
+	];
+
+	const handleSubmit = (data: FormData, formType: string) => {
+		console.log(`${formType} submitted:`, data);
+		setSubmittedData({ ...data, _formType: formType });
+	};
+
+	return (
+		<div>
+			<h3 className='text-lg font-medium text-white mb-3'>Form Component Testing</h3>
+			<div className='space-y-8'>
+				{/* Contact Form with integrated submit button */}
+				<div>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Contact Form with Submit Button</h4>
+					<div className='bg-gray-800/50 p-6 rounded-lg'>
+						<Form
+							form={contactForm}
+							initialData={formData}
+							onDataChange={setFormData}
+							onSubmit={(data) => handleSubmit(data, 'Contact Form')}
+							spacing='normal'
+							className='max-w-md'
+							submitButton={
+								<Button variant='primary' type='submit' className='mt-4 w-fit ml-auto'>
+									Submit Contact Form
+								</Button>
+							}
+						/>
+					</div>
+				</div>
+
+				{/* Settings Form with integrated submit button */}
+				<div>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Settings Form with Submit Button</h4>
+					<div className='bg-gray-800/50 p-6 rounded-lg'>
+						<Form
+							form={settingsForm}
+							onSubmit={(data) => handleSubmit(data, 'Settings Form')}
+							spacing='tight'
+							className='max-w-sm'
+							submitButton={
+								<Button variant='secondary' type='submit' className='mt-4'>
+									Save Settings
+								</Button>
+							}
+						/>
+					</div>
+				</div>
+
+				{/* Simple validation demo with submit button */}
+				<div>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Validation Demo with Auto-disabled Submit</h4>
+					<div className='bg-gray-800/50 p-6 rounded-lg'>
+						<Form
+							form={[
+								input({
+									name: 'requiredField',
+									label: 'Required Field',
+									placeholder: 'This field is required',
+									required: true,
+									variant: 'outline',
+								}),
+								input({
+									name: 'emailField',
+									label: 'Email Validation',
+									type: 'email',
+									placeholder: 'Must be valid email',
+									variant: 'outline',
+									isValid: (value: string) => {
+										if (!value) return { valid: true }; // Optional field
+										const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+										if (!emailRegex.test(value)) return { valid: false, message: 'Invalid email format' };
+										return { valid: true };
+									},
+								}),
+								input({
+									name: 'numberField',
+									label: 'Number (1-100)',
+									type: 'number',
+									placeholder: 'Enter number between 1-100',
+									variant: 'outline',
+									isValid: (value: string) => {
+										if (!value) return { valid: true };
+										const num = parseInt(value);
+										if (num < 1 || num > 100) return { valid: false, message: 'Number must be between 1 and 100' };
+										return { valid: true, message: 'Valid number' };
+									},
+								}),
+							]}
+							onSubmit={(data) => handleSubmit(data, 'Validation Demo')}
+							spacing='normal'
+							className='max-w-md'
+							submitButton={
+								<Button variant='secondary' type='submit' className='mt-4'>
+									Test Validation
+								</Button>
+							}
+						/>
+					</div>
+				</div>
+
+				{/* Layout Examples */}
+				<div>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Multi-Column Layout</h4>
+					<div className='bg-gray-800/50 p-6 rounded-lg'>
+						<Form
+							form={[
+								input({
+									name: 'firstName',
+									label: 'First Name',
+									placeholder: 'John',
+									variant: 'outline',
+									required: true,
+								}),
+								input({
+									name: 'lastName',
+									label: 'Last Name',
+									placeholder: 'Doe',
+									variant: 'outline',
+									required: true,
+								}),
+								input({
+									name: 'email',
+									label: 'Email (Full Width)',
+									type: 'email',
+									placeholder: 'john.doe@example.com',
+									variant: 'outline',
+									colSpan: 'full',
+								}),
+								input({
+									name: 'age',
+									label: 'Age',
+									type: 'number',
+									placeholder: '25',
+									variant: 'outline',
+									className: 'max-w-[80px]',
+								}),
+								input({
+									name: 'phone',
+									label: 'Phone',
+									type: 'tel',
+									placeholder: '+1 (555) 123-4567',
+									variant: 'outline',
+								}),
+							]}
+							columns={2}
+							spacing='normal'
+							onSubmit={(data) => handleSubmit(data, 'Layout Demo')}
+						/>
+					</div>
+				</div>
+
+				{/* Display submitted data */}
+				{submittedData && (
+					<div className='bg-green-900/20 border border-green-800 p-4 rounded-lg'>
+						<h4 className='text-md font-medium text-green-300 mb-2'>Submitted Data:</h4>
+						<pre className='text-sm text-green-200 overflow-auto'>{JSON.stringify(submittedData, null, 2)}</pre>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 };
@@ -487,6 +789,9 @@ export const DraftPage = () => {
 
 						{/* Dropdown Menu Testing */}
 						<DropdownDemo />
+
+						{/* Form Component Testing */}
+						<FormDemo />
 
 						{/* Avatar Component Testing */}
 						<div>

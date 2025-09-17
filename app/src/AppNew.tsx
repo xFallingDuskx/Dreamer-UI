@@ -19,6 +19,7 @@ import { InputPage } from './pages/components/InputPage';
 import { ModalPage } from './pages/components/ModalPage';
 import { SkeletonPage } from './pages/components/SkeletonPage';
 import { CalloutPage } from './pages/components/CalloutPage';
+import { FormPage } from './pages/components/FormPage';
 import { CardPage } from './pages/components/CardPage';
 import { ErrorBoundaryPage } from './pages/components/ErrorBoundaryPage';
 
@@ -63,6 +64,7 @@ function App() {
               <Route path='components/codeblock' element={<CodeBlockPage />} />
               <Route path='components/callout' element={<CalloutPage />} />
               <Route path='components/error-boundary' element={<ErrorBoundaryPage />} />
+              <Route path='components/form' element={<FormPage />} />
 
               {/* Hook Pages */}
               <Route path='hooks' element={<HooksPage />} />

@@ -1,0 +1,98 @@
+import { useState, useCallback, useMemo } from 'react';
+import { FormField, FormData, FormErrors, IsValidFunc } from './types';
+
+export function useFormValidation(fields: FormField[], data: FormData) {
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const validateField = useCallback((field: FormField, value: any): string | null => {
+    // Check required fields
+    if (field.required && (!value || (typeof value === 'string' && value.trim() === ''))) {
+      return `${field.label} is required`;
+    }
+
+    // Run custom validation if provided
+    if (field.isValid && value) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const isValidFunc = field.isValid as IsValidFunc<any>;
+      const validation = isValidFunc(value);
+      if (!validation.valid) {
+        return validation.message || `${field.label} is invalid`;
+      }
+    }
+
+    return null;
+  }, []);
+
+  const validateForm = useCallback((currentData: FormData = data) => {
+    const newErrors: FormErrors = {};
+    
+    fields.forEach(field => {
+      const error = validateField(field, currentData[field.name]);
+      if (error) {
+        newErrors[field.name] = error;
+      }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }, [fields, data, validateField]);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const validateSingleField = useCallback((fieldName: string, value: any) => {
+    const field = fields.find(f => f.name === fieldName);
+    if (!field) return;
+
+    const error = validateField(field, value);
+    setErrors(prev => {
+      const newErrors = { ...prev };
+      if (error) {
+        newErrors[fieldName] = error;
+      } else {
+        delete newErrors[fieldName];
+      }
+      return newErrors;
+    });
+
+    return !error;
+  }, [fields, validateField]);
+
+  const clearErrors = useCallback(() => {
+    setErrors({});
+  }, []);
+
+  const hasErrors = useMemo(() => {
+    return Object.values(errors).some(error => error);
+  }, [errors]);
+
+  const isFormValid = useMemo(() => {
+    // Check if all required fields have values and pass validation
+    return fields.every(field => {
+      const value = data[field.name];
+      
+      // Check required fields
+      if (field.required && (!value || (typeof value === 'string' && value.trim() === ''))) {
+        return false;
+      }
+      
+      // Check custom validation
+      if (field.isValid && value) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const isValidFunc = field.isValid as IsValidFunc<any>;
+        const validation = isValidFunc(value);
+        return validation.valid;
+      }
+      
+      return true;
+    }) && !hasErrors;
+  }, [fields, data, hasErrors]);
+
+  return {
+    errors,
+    hasErrors,
+    isFormValid,
+    validateForm,
+    validateSingleField,
+    clearErrors,
+  };
+}

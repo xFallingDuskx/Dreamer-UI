@@ -34,6 +34,7 @@ const components = [
   { name: 'Scroll Area', path: '/components/scroll-area' },
   { name: 'Clickable', path: '/components/clickable' },
   { name: 'Callout', path: '/components/callout' },
+  { name: 'Form', path: '/components/form' },
 ];
 
 const hooks = [
