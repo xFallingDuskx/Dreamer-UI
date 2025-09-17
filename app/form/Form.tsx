@@ -1,20 +1,18 @@
-import React, { useState, useCallback, cloneElement, isValidElement } from 'react';
-import { Input, Textarea, Select, Label, Checkbox, RadioGroup } from '@moondreamsdev/dreamer-ui/components';
+import { Checkbox, Input, Label, RadioGroup, Select, Textarea } from '@moondreamsdev/dreamer-ui/components';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import {
-	FormProps,
-	FormField,
-	FormData,
-	InputField,
-	TextareaField,
-	SelectField,
-	CheckboxField,
-	RadioField,
-	ScreenSize,
-} from './types';
+import React, { cloneElement, isValidElement, useCallback, useState } from 'react';
 import { useFormValidation } from './hooks';
-import { formVariants, formDefaults, FormVariants } from './variants';
-import useScreenSize from './useScreenSize';
+import {
+	CheckboxField,
+	FormData,
+	FormField,
+	FormProps,
+	InputField,
+	RadioField,
+	SelectField,
+	TextareaField,
+} from './types';
+import { formDefaults, formVariants, FormVariants } from './variants';
 
 export interface FormComponentProps<T extends FormData = FormData> extends FormProps<T>, Partial<FormVariants> {}
 
@@ -33,7 +31,6 @@ export function Form<T extends FormData = FormData>({
 }: FormComponentProps<T>) {
 	const [data, setData] = useState<T>(initialData);
 	const { errors, validateForm, validateSingleField, isFormValid } = useFormValidation(form, data);
-	const { screenSize } = useScreenSize();
 
 	const updateData = useCallback(
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,45 +64,8 @@ export function Form<T extends FormData = FormData>({
 			classes.push(formVariants.colSpan[field.colSpan]);
 		}
 
-		// Width constraints using pixel values or responsive breakpoint object
-		if (field.maxWidth) {
-			if (typeof field.maxWidth === 'number') {
-				// Simple pixel value
-				styles.maxWidth = `${field.maxWidth}px`;
-			} else {
-				// Responsive breakpoint object - find the appropriate width for current screen size
-				const breakpointOrder: ScreenSize[] = ['2xl', 'xl', 'lg', 'md', 'sm', 'xs'];
-				const currentIndex = breakpointOrder.indexOf(screenSize);
-				
-				// Find the first available width starting from current screen size and going up
-				let effectiveWidth: number | undefined;
-				for (let i = currentIndex; i >= 0; i--) {
-					const breakpoint = breakpointOrder[i];
-					if (field.maxWidth[breakpoint] !== undefined) {
-						effectiveWidth = field.maxWidth[breakpoint];
-						break;
-					}
-				}
-				
-				// If no width found for current or larger screens, look for smaller screens
-				if (effectiveWidth === undefined) {
-					for (let i = currentIndex + 1; i < breakpointOrder.length; i++) {
-						const breakpoint = breakpointOrder[i];
-						if (field.maxWidth[breakpoint] !== undefined) {
-							effectiveWidth = field.maxWidth[breakpoint];
-							break;
-						}
-					}
-				}
-				
-				if (effectiveWidth !== undefined) {
-					styles.maxWidth = `${effectiveWidth}px`;
-				}
-			}
-		}
-
 		return {
-			className: classes.join(' '),
+			className: join(classes.join(' '), field.className),
 			style: styles,
 		};
 	};
@@ -217,7 +177,9 @@ export function Form<T extends FormData = FormData>({
 								data-field-type={field.__type}
 								size={checkboxSize}
 							/>
-							<div className='inline-block' style={{ maxWidth: `calc(100% - ${checkboxSize + 10}px)` }}> {/* 8px for spacing, 2px for buffer */}
+							<div className='inline-block' style={{ maxWidth: `calc(100% - ${checkboxSize + 10}px)` }}>
+								{' '}
+								{/* 8px for spacing, 2px for buffer */}
 								{/* 8px for spacing, 2px for buffer */}
 								<Label htmlFor={fieldId} className='cursor-pointer'>
 									{checkboxField.text || field.label}

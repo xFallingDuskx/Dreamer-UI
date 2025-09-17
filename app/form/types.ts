@@ -9,6 +9,8 @@ export interface ValidationResult {
 	message?: string;
 }
 
+export type IsValidFunc<T> = (value: T) => ValidationResult;
+
 export interface BaseFormField {
 	__type: FieldType;
 	name: string;
@@ -18,7 +20,7 @@ export interface BaseFormField {
 	disabled?: boolean;
 	// Layout properties
 	colSpan?: 1 | 2 | 3 | 4 | 'full'; // Number of columns to span
-	maxWidth?: number | Partial<Record<ScreenSize, number>>; // Maximum width constraint in pixels or responsive breakpoint object
+	className?: string;
 }
 
 export interface InputField extends BaseFormField {
@@ -27,7 +29,7 @@ export interface InputField extends BaseFormField {
 	placeholder?: string;
 	variant?: 'base' | 'default' | 'underline' | 'outline';
 	rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
-	isValid?: (value: string | undefined) => ValidationResult;
+	isValid?: IsValidFunc<string>;
 }
 
 export interface TextareaField extends BaseFormField {
@@ -38,7 +40,7 @@ export interface TextareaField extends BaseFormField {
 	rows?: number;
 	autoExpand?: boolean;
 	characterLimit?: number;
-	isValid?: (value: string | undefined) => ValidationResult;
+	isValid?: IsValidFunc<string>;
 }
 
 export interface SelectField extends BaseFormField {
@@ -47,19 +49,19 @@ export interface SelectField extends BaseFormField {
 	placeholder?: string;
 	searchable?: boolean;
 	clearable?: boolean;
-	isValid?: (value: string | undefined) => ValidationResult;
+	isValid?: IsValidFunc<string | undefined>;
 }
 
 export interface CheckboxField extends BaseFormField {
 	__type: 'checkbox';
 	text?: string;
-	isValid?: (value: boolean) => ValidationResult;
+	isValid?: IsValidFunc<boolean>;
 }
 
 export interface RadioField extends BaseFormField {
 	__type: 'radio';
 	options: Array<{ value: string; label: string; disabled?: boolean }>;
-	isValid?: (value: string | undefined) => ValidationResult;
+	isValid?: IsValidFunc<string>;
 }
 
 export type FormField = InputField | TextareaField | SelectField | CheckboxField | RadioField;

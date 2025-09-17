@@ -1,9 +1,10 @@
 import { useState, useCallback, useMemo } from 'react';
-import { FormField, FormData, FormErrors } from './types';
+import { FormField, FormData, FormErrors, IsValidFunc } from './types';
 
 export function useFormValidation(fields: FormField[], data: FormData) {
   const [errors, setErrors] = useState<FormErrors>({});
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const validateField = useCallback((field: FormField, value: any): string | null => {
     // Check required fields
     if (field.required && (!value || (typeof value === 'string' && value.trim() === ''))) {
@@ -12,7 +13,9 @@ export function useFormValidation(fields: FormField[], data: FormData) {
 
     // Run custom validation if provided
     if (field.isValid && value) {
-      const validation = field.isValid(value);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const isValidFunc = field.isValid as IsValidFunc<any>;
+      const validation = isValidFunc(value);
       if (!validation.valid) {
         return validation.message || `${field.label} is invalid`;
       }
@@ -35,6 +38,7 @@ export function useFormValidation(fields: FormField[], data: FormData) {
     return Object.keys(newErrors).length === 0;
   }, [fields, data, validateField]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const validateSingleField = useCallback((fieldName: string, value: any) => {
     const field = fields.find(f => f.name === fieldName);
     if (!field) return;
@@ -73,7 +77,9 @@ export function useFormValidation(fields: FormField[], data: FormData) {
       
       // Check custom validation
       if (field.isValid && value) {
-        const validation = field.isValid(value);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const isValidFunc = field.isValid as IsValidFunc<any>;
+        const validation = isValidFunc(value);
         return validation.valid;
       }
       
