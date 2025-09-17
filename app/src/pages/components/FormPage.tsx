@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
-import { Form, FormFactories, FormData } from '../../../form';
+import { Form, FormFactories, FormData } from '@moondreamsdev/dreamer-ui/components'
 
 const tableOfContents = [
   { id: 'form-types', title: 'Form Types', level: 1 },
@@ -200,7 +200,7 @@ export function FormPage() {
       type: 'number',
       placeholder: '25',
       variant: 'outline',
-      maxWidth: 120 // Compact width for age input
+      className: 'max-w-[80px]' // Limit width for age
     }),
     textarea({
       name: 'comments',
@@ -219,7 +219,7 @@ export function FormPage() {
       type: 'number',
       placeholder: '1',
       variant: 'outline',
-      maxWidth: 80 // Simple pixel width for quantity
+      className: 'md:max-w-[80px]' // Limit width for quantity
     }),
     input({
       name: 'price',
@@ -227,7 +227,7 @@ export function FormPage() {
       type: 'number',
       placeholder: '0.00',
       variant: 'outline',
-      maxWidth: { xs: 120, md: 150, lg: 180 } // Responsive width for price
+      className: 'md:max-w-[150px] lg:max-w-[180px]' // Tailwind width constraints
     }),
     input({
       name: 'productName',
@@ -255,7 +255,7 @@ export function FormPage() {
             <div className='bg-gray-900/50 p-6 rounded-lg'>
               <Form
                 form={basicForm}
-                data={basicFormData}
+                initialData={basicFormData}
                 onDataChange={setBasicFormData}
                 spacing='normal'
                 className='max-w-sm'
@@ -286,7 +286,7 @@ export function FormPage() {
             <div className='bg-gray-900/50 p-6 rounded-lg'>
               <Form
                 form={multiColumnForm}
-                data={layoutFormData}
+                initialData={layoutFormData}
                 onDataChange={setLayoutFormData}
                 columns={2}
                 spacing='normal'
@@ -351,7 +351,7 @@ export function FormPage() {
         <div className='bg-gray-900/50 p-6 rounded-lg'>
           <Form
             form={validationForm}
-            data={validationFormData}
+            initialData={validationFormData}
             onDataChange={setValidationFormData}
             onSubmit={(data) => {
               setSubmittedData(data);

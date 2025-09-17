@@ -1,10 +1,8 @@
 import React from 'react';
 
-export type FieldType = 'input' | 'textarea' | 'select' | 'checkbox' | 'radio';
+export type FormFieldType = 'input' | 'textarea' | 'select' | 'checkbox' | 'radio';
 
-export type ScreenSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
-
-export interface ValidationResult {
+interface ValidationResult {
 	valid: boolean;
 	message?: string;
 }
@@ -12,7 +10,7 @@ export interface ValidationResult {
 export type IsValidFunc<T> = (value: T) => ValidationResult;
 
 export interface BaseFormField {
-	__type: FieldType;
+	__type: FormFieldType;
 	name: string;
 	label: string;
 	description?: string;
@@ -23,7 +21,7 @@ export interface BaseFormField {
 	className?: string;
 }
 
-export interface InputField extends BaseFormField {
+export interface FormInputField extends BaseFormField {
 	__type: 'input';
 	type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
 	placeholder?: string;
@@ -32,7 +30,7 @@ export interface InputField extends BaseFormField {
 	isValid?: IsValidFunc<string>;
 }
 
-export interface TextareaField extends BaseFormField {
+export interface FormTextareaField extends BaseFormField {
 	__type: 'textarea';
 	placeholder?: string;
 	variant?: 'base' | 'left-line' | 'outline';
@@ -43,7 +41,7 @@ export interface TextareaField extends BaseFormField {
 	isValid?: IsValidFunc<string>;
 }
 
-export interface SelectField extends BaseFormField {
+export interface FormSelectField extends BaseFormField {
 	__type: 'select';
 	options: Array<{ value: string; label: string; disabled?: boolean }>;
 	placeholder?: string;
@@ -52,19 +50,19 @@ export interface SelectField extends BaseFormField {
 	isValid?: IsValidFunc<string | undefined>;
 }
 
-export interface CheckboxField extends BaseFormField {
+export interface FormCheckboxField extends BaseFormField {
 	__type: 'checkbox';
 	text?: string;
 	isValid?: IsValidFunc<boolean>;
 }
 
-export interface RadioField extends BaseFormField {
+export interface FormRadioField extends BaseFormField {
 	__type: 'radio';
 	options: Array<{ value: string; label: string; disabled?: boolean }>;
 	isValid?: IsValidFunc<string>;
 }
 
-export type FormField = InputField | TextareaField | SelectField | CheckboxField | RadioField;
+export type FormField = FormInputField | FormTextareaField | FormSelectField | FormCheckboxField | FormRadioField;
 
 export interface FormData {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

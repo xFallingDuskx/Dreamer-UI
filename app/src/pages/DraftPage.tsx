@@ -1,22 +1,24 @@
 import {
 	Avatar,
-	Callout,
+	Badge,
 	Button,
+	Callout,
 	Card,
 	Code,
 	Disclosure,
 	Drawer,
-	Popover,
-	DropdownMenuItem,
-	DropdownMenuFactories,
 	DropdownMenu,
-	Badge,
-	ErrorBoundary
+	DropdownMenuFactories,
+	DropdownMenuItem,
+	ErrorBoundary,
+	Form,
+	FormData,
+	FormFactories,
+	Popover,
 } from '@moondreamsdev/dreamer-ui/components';
+import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
-import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
-import { Form, FormFactories, FormData } from '../../form';
 
 // Component that can throw errors for testing
 const BuggyComponent = () => {
@@ -183,14 +185,14 @@ const FormDemo = () => {
 			isValid: (value: string) => {
 				if (!value || value.length < 2) return { valid: false, message: 'First name must be at least 2 characters' };
 				return { valid: true };
-			}
+			},
 		}),
 		input({
 			name: 'lastName',
 			label: 'Last Name',
 			placeholder: 'Enter your last name',
 			required: true,
-			variant: 'outline'
+			variant: 'outline',
 		}),
 		input({
 			name: 'email',
@@ -204,7 +206,7 @@ const FormDemo = () => {
 				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 				if (!emailRegex.test(value)) return { valid: false, message: 'Please enter a valid email address' };
 				return { valid: true, message: 'Email format is valid' };
-			}
+			},
 		}),
 		select({
 			name: 'country',
@@ -218,10 +220,10 @@ const FormDemo = () => {
 				{ value: 'de', label: 'Germany' },
 				{ value: 'fr', label: 'France' },
 				{ value: 'jp', label: 'Japan' },
-				{ value: 'au', label: 'Australia' }
+				{ value: 'au', label: 'Australia' },
 			],
 			searchable: true,
-			clearable: true
+			clearable: true,
 		}),
 		textarea({
 			name: 'message',
@@ -230,12 +232,12 @@ const FormDemo = () => {
 			description: 'Tell us about your inquiry',
 			variant: 'outline',
 			rows: 4,
-			characterLimit: 500
+			characterLimit: 500,
 		}),
 		checkbox({
 			name: 'subscribe',
 			label: 'Email Notifications',
-			text: 'I would like to receive email updates and newsletters'
+			text: 'I would like to receive email updates and newsletters',
 		}),
 		radio({
 			name: 'contactMethod',
@@ -244,9 +246,9 @@ const FormDemo = () => {
 			options: [
 				{ value: 'email', label: 'Email' },
 				{ value: 'phone', label: 'Phone' },
-				{ value: 'mail', label: 'Postal Mail' }
-			]
-		})
+				{ value: 'mail', label: 'Postal Mail' },
+			],
+		}),
 	];
 
 	// Settings form with different variants
@@ -258,16 +260,17 @@ const FormDemo = () => {
 			variant: 'underline',
 			isValid: (value: string) => {
 				if (!value || value.length < 3) return { valid: false, message: 'Username must be at least 3 characters' };
-				if (!/^[a-zA-Z0-9_]+$/.test(value)) return { valid: false, message: 'Username can only contain letters, numbers, and underscores' };
+				if (!/^[a-zA-Z0-9_]+$/.test(value))
+					return { valid: false, message: 'Username can only contain letters, numbers, and underscores' };
 				return { valid: true };
-			}
+			},
 		}),
 		input({
 			name: 'currentPassword',
 			label: 'Current Password',
 			type: 'password',
 			placeholder: 'Enter current password',
-			variant: 'underline'
+			variant: 'underline',
 		}),
 		input({
 			name: 'newPassword',
@@ -278,10 +281,13 @@ const FormDemo = () => {
 			isValid: (value: string) => {
 				if (!value || value.length < 8) return { valid: false, message: 'Password must be at least 8 characters' };
 				if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
-					return { valid: false, message: 'Password must contain at least one lowercase letter, one uppercase letter, and one number' };
+					return {
+						valid: false,
+						message: 'Password must contain at least one lowercase letter, one uppercase letter, and one number',
+					};
 				}
 				return { valid: true };
-			}
+			},
 		}),
 		select({
 			name: 'theme',
@@ -289,14 +295,14 @@ const FormDemo = () => {
 			options: [
 				{ value: 'light', label: 'Light' },
 				{ value: 'dark', label: 'Dark' },
-				{ value: 'system', label: 'System' }
-			]
+				{ value: 'system', label: 'System' },
+			],
 		}),
 		checkbox({
 			name: 'twoFactorAuth',
 			label: 'Two-Factor Authentication',
-			text: 'Enable two-factor authentication for enhanced security'
-		})
+			text: 'Enable two-factor authentication for enhanced security',
+		}),
 	];
 
 	const handleSubmit = (data: FormData, formType: string) => {
@@ -357,7 +363,7 @@ const FormDemo = () => {
 									label: 'Required Field',
 									placeholder: 'This field is required',
 									required: true,
-									variant: 'outline'
+									variant: 'outline',
 								}),
 								input({
 									name: 'emailField',
@@ -370,7 +376,7 @@ const FormDemo = () => {
 										const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 										if (!emailRegex.test(value)) return { valid: false, message: 'Invalid email format' };
 										return { valid: true };
-									}
+									},
 								}),
 								input({
 									name: 'numberField',
@@ -383,8 +389,8 @@ const FormDemo = () => {
 										const num = parseInt(value);
 										if (num < 1 || num > 100) return { valid: false, message: 'Number must be between 1 and 100' };
 										return { valid: true, message: 'Valid number' };
-									}
-								})
+									},
+								}),
 							]}
 							onSubmit={(data) => handleSubmit(data, 'Validation Demo')}
 							spacing='normal'
@@ -409,14 +415,14 @@ const FormDemo = () => {
 									label: 'First Name',
 									placeholder: 'John',
 									variant: 'outline',
-									required: true
+									required: true,
 								}),
 								input({
 									name: 'lastName',
-									label: 'Last Name', 
+									label: 'Last Name',
 									placeholder: 'Doe',
 									variant: 'outline',
-									required: true
+									required: true,
 								}),
 								input({
 									name: 'email',
@@ -424,7 +430,7 @@ const FormDemo = () => {
 									type: 'email',
 									placeholder: 'john.doe@example.com',
 									variant: 'outline',
-									colSpan: 'full'
+									colSpan: 'full',
 								}),
 								input({
 									name: 'age',
@@ -432,15 +438,15 @@ const FormDemo = () => {
 									type: 'number',
 									placeholder: '25',
 									variant: 'outline',
-									className: 'max-w-[80px]'
+									className: 'max-w-[80px]',
 								}),
 								input({
 									name: 'phone',
 									label: 'Phone',
 									type: 'tel',
 									placeholder: '+1 (555) 123-4567',
-									variant: 'outline'
-								})
+									variant: 'outline',
+								}),
 							]}
 							columns={2}
 							spacing='normal'
@@ -453,9 +459,7 @@ const FormDemo = () => {
 				{submittedData && (
 					<div className='bg-green-900/20 border border-green-800 p-4 rounded-lg'>
 						<h4 className='text-md font-medium text-green-300 mb-2'>Submitted Data:</h4>
-						<pre className='text-sm text-green-200 overflow-auto'>
-							{JSON.stringify(submittedData, null, 2)}
-						</pre>
+						<pre className='text-sm text-green-200 overflow-auto'>{JSON.stringify(submittedData, null, 2)}</pre>
 					</div>
 				)}
 			</div>

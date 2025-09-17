@@ -1,18 +1,23 @@
-import { Checkbox, Input, Label, RadioGroup, Select, Textarea } from '@moondreamsdev/dreamer-ui/components';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { cloneElement, isValidElement, useCallback, useState } from 'react';
 import { useFormValidation } from './hooks';
 import {
-	CheckboxField,
+	FormCheckboxField,
 	FormData,
 	FormField,
 	FormProps,
-	InputField,
-	RadioField,
-	SelectField,
-	TextareaField,
+	FormInputField,
+	FormRadioField,
+	FormSelectField,
+	FormTextareaField,
 } from './types';
 import { formDefaults, formVariants, FormVariants } from './variants';
+import { join } from '../../utils';
+import { Label } from '../label';
+import { Input } from '../input';
+import { Textarea } from '../textarea';
+import { Select } from '../select';
+import { Checkbox } from '../checkbox';
+import { RadioGroup } from '../radiogroup';
 
 export interface FormComponentProps<T extends FormData = FormData> extends FormProps<T>, Partial<FormVariants> {}
 
@@ -79,7 +84,7 @@ export function Form<T extends FormData = FormData>({
 		const renderFieldContent = () => {
 			switch (field.__type) {
 				case 'input': {
-					const inputField = field as InputField;
+					const inputField = field as FormInputField;
 					return (
 						<>
 							<Label htmlFor={fieldId} required={field.required} description={field.description}>
@@ -103,7 +108,7 @@ export function Form<T extends FormData = FormData>({
 				}
 
 				case 'textarea': {
-					const textareaField = field as TextareaField;
+					const textareaField = field as FormTextareaField;
 					return (
 						<>
 							<Label htmlFor={fieldId} required={field.required} description={field.description}>
@@ -129,7 +134,7 @@ export function Form<T extends FormData = FormData>({
 				}
 
 				case 'select': {
-					const selectField = field as SelectField;
+					const selectField = field as FormSelectField;
 					// Convert options to match Select component expected format
 					const selectOptions = selectField.options.map((opt) => ({
 						text: opt.label,
@@ -164,7 +169,7 @@ export function Form<T extends FormData = FormData>({
 				}
 
 				case 'checkbox': {
-					const checkboxField = field as CheckboxField;
+					const checkboxField = field as FormCheckboxField;
 					const checkboxSize = 16;
 					return (
 						<div className='space-x-2'>
@@ -196,7 +201,7 @@ export function Form<T extends FormData = FormData>({
 				}
 
 				case 'radio': {
-					const radioField = field as RadioField;
+					const radioField = field as FormRadioField;
 					// Convert options to match RadioGroup expected format
 					const radioOptions = radioField.options.map((opt) => ({
 						label: opt.label,
