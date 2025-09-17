@@ -25,6 +25,7 @@ export function DynamicListPage() {
       >
         <div className='max-w-md'>
           <DynamicList
+            title="Daily Tasks"
             items={[
               { id: '1', content: 'Buy groceries' },
               { id: '2', content: 'Walk the dog' },
@@ -44,6 +45,7 @@ export function DynamicListPage() {
           <div>
             <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Disc (Default)</h4>
             <DynamicList
+              title="Features"
               marker="disc"
               items={[
                 { id: '1', content: 'First item' },
@@ -56,6 +58,7 @@ export function DynamicListPage() {
           <div>
             <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Dash</h4>
             <DynamicList
+              title="Options"
               marker="dash"
               items={[
                 { id: '1', content: 'First item' },
@@ -68,6 +71,7 @@ export function DynamicListPage() {
           <div>
             <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Decimal</h4>
             <DynamicList
+              title="Steps"
               marker="decimal"
               items={[
                 { id: '1', content: 'First item' },
@@ -80,6 +84,7 @@ export function DynamicListPage() {
           <div>
             <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Custom Icon</h4>
             <DynamicList
+              title="Favorites"
               marker={<span className="text-blue-500">★</span>}
               items={[
                 { id: '1', content: 'Starred item' },
@@ -99,6 +104,7 @@ export function DynamicListPage() {
       >
         <div className='max-w-2xl'>
           <DynamicList
+            title="Project Tasks"
             items={[
               { 
                 id: '1', 

@@ -35,6 +35,8 @@ export interface DynamicListProps {
 	itemRenderer?: (item: DynamicListItem, index: number) => React.ReactNode;
 	/** Whether to show dividers between items */
 	showDividers?: boolean;
+	/** Optional title for the list */
+	title?: string;
 }
 
 export function DynamicList({
@@ -52,6 +54,7 @@ export function DynamicList({
 	marker,
 	itemRenderer,
 	showDividers = true,
+	title,
 }: DynamicListProps) {
 	const [newItemText, setNewItemText] = useState('');
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -125,15 +128,15 @@ export function DynamicList({
 
 		switch (marker) {
 			case 'disc':
-				return <DiscMarker className='text-slate-400' />;
+				return <DiscMarker className='text-muted-foreground' />;
 			case 'dash':
-				return <DashMarker className='text-slate-400' />;
+				return <DashMarker className='text-muted-foreground' />;
 			case 'decimal':
 				return (
-					<span className='text-sm font-medium text-slate-400 flex-shrink-0 min-w-6 text-right'>{index + 1}.</span>
+					<span className='text-sm font-medium text-muted-foreground flex-shrink-0 min-w-6 text-right'>{index + 1}.</span>
 				);
 			default:
-				return <DiscMarker className='text-slate-400' />;
+				return <DiscMarker className='text-muted-foreground' />;
 		}
 	};
 
@@ -143,15 +146,25 @@ export function DynamicList({
 		<div
 			ref={ref}
 			id={id}
-			className={className}
+			className={join(
+				'border border-border rounded-lg bg-popover',
+				className
+			)}
 			data-size={size}
 			data-allow-add={allowAdd}
 			data-allow-delete={allowDelete}
 			data-allow-reorder={allowReorder}
 			data-marker={typeof marker === 'string' ? marker : 'custom'}
 		>
+			{/* Title */}
+			{title && (
+				<div className={join('border-b border-border px-4 py-3')}>
+					<h3 className='text-base font-semibold text-popover-foreground'>{title}</h3>
+				</div>
+			)}
+
 			{/* List Items */}
-			<ul className={join(showDividers && 'divide-y divide-slate-200 dark:divide-slate-700', sizeClasses)} role='list'>
+			<ul className={join('', sizeClasses)} role='list'>
 				{visualItems.map((item, visualIndex) => {
 					// Find the original index of this item in the actual items array
 					const originalIndex = items.findIndex((originalItem) => originalItem.id === item.id);
@@ -163,8 +176,9 @@ export function DynamicList({
 							key={item.id}
 							className={join(
 								'flex items-center group relative transition-all duration-150',
-								isDraggedItem && 'opacity-0',
-								isHovered ? 'bg-slate-50 dark:bg-slate-700/50' : '',
+								showDividers && visualIndex !== visualItems.length - 1 ? 'border-b border-border' : '',
+								isDraggedItem && 'opacity-50',
+								isHovered ? 'bg-muted' : '',
 								// Add drag feedback styling
 								draggedItem && draggedOverIndex === visualIndex && !isDraggedItem ? 'border-t-2 border-primary' : ''
 							)}
@@ -185,29 +199,37 @@ export function DynamicList({
 						>
 							{/* Drag Handle */}
 							{allowReorder && (
-								<div className='flex-shrink-0 p-2 cursor-move opacity-0 group-hover:opacity-100 transition-opacity'>
-									<GripVertical size={16} className='text-slate-400' />
+								<div className='flex-shrink-0 pl-2 pr-1 py-2 cursor-move opacity-0 group-hover:opacity-100 transition-opacity'>
+									<GripVertical size={16} className='text-muted-foreground' />
 								</div>
 							)}
 
 							{/* Marker */}
 							{marker && (
-								<div className='flex-shrink-0 px-3 flex items-center justify-center'>{renderMarker(originalIndex)}</div>
+								<div className={join(
+									'flex-shrink-0 flex items-center justify-center py-2',
+									allowReorder ? 'px-1' : 'px-2'
+								)}>
+									{renderMarker(originalIndex)}
+								</div>
 							)}
 
 							{/* Item Content */}
-							<div className='flex-1 min-w-0'>
+							<div className={join(
+								'flex-1 min-w-0 py-2',
+								!allowReorder && !marker ? 'px-3' : 'pr-3'
+							)}>
 								{itemRenderFunction ? (
 									itemRenderFunction(item, originalIndex)
 								) : (
-									<span className='block text-slate-900 dark:text-slate-100 truncate'>{item.content}</span>
+									<span className='block text-popover-foreground truncate'>{item.content}</span>
 								)}
 							</div>
 
 							{/* Control Buttons */}
 							<div
 								className={join(
-									'flex-shrink-0 flex items-center gap-1 opacity-0 transition-opacity',
+									'flex-shrink-0 flex items-center gap-1 pr-2 opacity-0 transition-opacity',
 									isHovered ? 'opacity-100' : ''
 								)}
 							>
@@ -218,7 +240,7 @@ export function DynamicList({
 											type='button'
 											onClick={() => moveItemUp(originalIndex)}
 											disabled={originalIndex === 0}
-											className='p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
+											className='p-1.5 text-muted-foreground hover:text-popover-foreground disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
 											aria-label={`Move item up`}
 										>
 											<ChevronUp size={14} />
@@ -227,7 +249,7 @@ export function DynamicList({
 											type='button'
 											onClick={() => moveItemDown(originalIndex)}
 											disabled={originalIndex === items.length - 1}
-											className='p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
+											className='p-1.5 text-muted-foreground hover:text-popover-foreground disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
 											aria-label={`Move item down`}
 										>
 											<ChevronDown size={14} />
@@ -240,7 +262,7 @@ export function DynamicList({
 									<button
 										type='button'
 										onClick={() => deleteItem(item.id)}
-										className='p-1.5 text-red-400 hover:text-red-600 dark:hover:text-red-300 rounded transition-colors'
+										className='p-1.5 text-destructive hover:text-destructive/80 rounded transition-colors'
 										aria-label={`Delete item`}
 									>
 										<Trash size={14} />
@@ -253,7 +275,7 @@ export function DynamicList({
 
 				{/* Empty State */}
 				{items.length === 0 && (
-					<li className={join('text-center text-slate-500 dark:text-slate-400 py-8', sizeClasses)}>
+					<li className={join('text-center text-muted-foreground py-8', sizeClasses)}>
 						No items yet. {allowAdd && 'Add an item below to get started.'}
 					</li>
 				)}
@@ -261,7 +283,7 @@ export function DynamicList({
 
 			{/* Add New Item */}
 			{allowAdd && (
-				<div className={join('border-t border-slate-200 dark:border-slate-700 flex items-center gap-2', sizeClasses)}>
+				<div className={join('border-t border-border flex items-center gap-2', sizeClasses)}>
 					<input
 						ref={inputRef}
 						type='text'
@@ -269,14 +291,14 @@ export function DynamicList({
 						onChange={(e) => setNewItemText(e.target.value)}
 						onKeyPress={handleKeyPress}
 						placeholder={addPlaceholder}
-						className='flex-1 bg-transparent border-none outline-none text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400'
+						className='flex-1 bg-transparent border-none outline-none text-popover-foreground placeholder-muted-foreground'
 						aria-label='Add new list item'
 					/>
 					<button
 						type='button'
 						onClick={handleAddItem}
 						disabled={!newItemText.trim()}
-						className='flex-shrink-0 p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
+						className='flex-shrink-0 p-1.5 text-muted-foreground hover:text-popover-foreground disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
 						aria-label='Add item'
 					>
 						<Plus size={16} />
