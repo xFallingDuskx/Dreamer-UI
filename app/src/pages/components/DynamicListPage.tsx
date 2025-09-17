@@ -40,7 +40,7 @@ export function DynamicListPage() {
         description='Different marker types to visually organize list items.'
         id='markers'
       >
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
           <div>
             <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Disc (Default)</h4>
             <DynamicList
@@ -123,7 +123,7 @@ export function DynamicListPage() {
               },
             ]}
             itemRenderer={(item, index) => (
-              <div className="flex items-center justify-between w-full">
+              <div key={index} className="flex items-center justify-between w-full">
                 <div className="flex-1">
                   <div className="font-medium text-slate-900 dark:text-slate-100">
                     {item.content}

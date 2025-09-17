@@ -4,6 +4,7 @@ export interface DynamicListItem {
   id: string;
   content: string;
   // Allow any additional data to be stored with the item
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
