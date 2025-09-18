@@ -1,7 +1,13 @@
-export const listVariants = {
-  size: {
-    sm: 'text-sm gap-2 p-2',
-    md: 'text-base gap-3 p-3',
-    lg: 'text-lg gap-4 p-4',
-  },
+export type DynamicListSize = 'sm' | 'md' | 'lg';
+
+export const listVariants: Record<DynamicListSize, string> = {
+    sm: 'text-sm gap-2',
+    md: 'text-base gap-3',
+    lg: 'text-lg gap-4',
 } as const;
+
+export const iconSize: Record<DynamicListSize, number> = {
+    sm: 14,
+    md: 15,
+    lg: 16,
+};

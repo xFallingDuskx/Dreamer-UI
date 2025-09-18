@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import { listVariants } from './variants';
-import { ChevronUp, ChevronDown, GripVertical, Trash, Plus, DiscMarker, DashMarker } from './icons';
+import React, { useRef, useState } from 'react';
 import { useDynamicList, type DynamicListItem } from './hooks';
+import { ChevronDown, ChevronUp, DashMarker, DiscMarker, GripVertical, Plus, Trash } from './icons';
+import { DynamicListSize, iconSize, listVariants } from './variants';
 
 export type MarkerType = 'disc' | 'dash' | 'decimal' | React.ReactElement;
 
@@ -10,7 +10,7 @@ export interface DynamicListProps {
 	/** Items to display in the list */
 	items?: DynamicListItem[];
 	/** Size variant */
-	size?: keyof typeof listVariants.size;
+	size?: DynamicListSize;
 	/** Optional ID for the component */
 	id?: string;
 	/** Additional CSS classes */
@@ -133,23 +133,23 @@ export function DynamicList({
 				return <DashMarker className='text-muted-foreground' />;
 			case 'decimal':
 				return (
-					<span className='text-sm font-medium text-muted-foreground flex-shrink-0 min-w-6 text-right'>{index + 1}.</span>
+					<span className='text-sm font-medium text-muted-foreground flex-shrink-0 min-w-6 text-right'>
+						{index + 1}.
+					</span>
 				);
 			default:
 				return <DiscMarker className='text-muted-foreground' />;
 		}
 	};
 
-	const sizeClasses = listVariants.size[size];
+	const sizeClasses = listVariants[size];
+	const iconSizeValue = iconSize[size];
 
 	return (
 		<div
 			ref={ref}
 			id={id}
-			className={join(
-				'border border-border rounded-lg bg-popover',
-				className
-			)}
+			className={className}
 			data-size={size}
 			data-allow-add={allowAdd}
 			data-allow-delete={allowDelete}
@@ -159,12 +159,12 @@ export function DynamicList({
 			{/* Title */}
 			{title && (
 				<div className={join('border-b border-border px-4 py-3')}>
-					<h3 className='text-base font-semibold text-popover-foreground'>{title}</h3>
+					<h3 className='text-base font-semibold'>{title}</h3>
 				</div>
 			)}
 
 			{/* List Items */}
-			<ul className={join('', sizeClasses)} role='list'>
+			<ul className={sizeClasses} role='list'>
 				{visualItems.map((item, visualIndex) => {
 					// Find the original index of this item in the actual items array
 					const originalIndex = items.findIndex((originalItem) => originalItem.id === item.id);
@@ -175,10 +175,10 @@ export function DynamicList({
 						<li
 							key={item.id}
 							className={join(
-								'flex items-center group relative transition-all duration-150',
-								showDividers && visualIndex !== visualItems.length - 1 ? 'border-b border-border' : '',
-								isDraggedItem && 'opacity-50',
-								isHovered ? 'bg-muted' : '',
+								'flex items-center group relative transition-all duration-150 pl-2',
+								showDividers && visualIndex !== visualItems.length - 1 && 'border-b border-border',
+								isDraggedItem && 'opacity-30',
+								// isHovered ? 'bg-black/5 dark:bg-white/5' : '',
 								// Add drag feedback styling
 								draggedItem && draggedOverIndex === visualIndex && !isDraggedItem ? 'border-t-2 border-primary' : ''
 							)}
@@ -199,75 +199,76 @@ export function DynamicList({
 						>
 							{/* Drag Handle */}
 							{allowReorder && (
-								<div className='flex-shrink-0 pl-2 pr-1 py-2 cursor-move opacity-0 group-hover:opacity-100 transition-opacity'>
-									<GripVertical size={16} className='text-muted-foreground' />
+								<div className='absolute -translate-x-full flex-shrink-0 pl-2 pr-1 py-2 cursor-move opacity-0 group-hover:opacity-100 transition-opacity'>
+									<GripVertical size={iconSizeValue + 2} className='opacity-70' />
 								</div>
 							)}
 
 							{/* Marker */}
 							{marker && (
-								<div className={join(
-									'flex-shrink-0 flex items-center justify-center py-2',
-									allowReorder ? 'px-1' : 'px-2'
-								)}>
+								<div
+									className={join(
+										'flex-shrink-0 flex items-center justify-center py-2',
+										allowReorder ? 'px-1.5' : 'px-2'
+									)}
+								>
 									{renderMarker(originalIndex)}
 								</div>
 							)}
 
 							{/* Item Content */}
-							<div className={join(
-								'flex-1 min-w-0 py-2',
-								!allowReorder && !marker ? 'px-3' : 'pr-3'
-							)}>
-								{itemRenderFunction ? (
-									itemRenderFunction(item, originalIndex)
-								) : (
-									<span className='block text-popover-foreground truncate'>{item.content}</span>
-								)}
-							</div>
+							<div className={join('flex-1 flex min-w-0')}>
+								<div className={join('flex-1 min-w-0 py-2', !allowReorder && !marker ? 'px-3' : 'pr-3')}>
+									{itemRenderFunction ? (
+										itemRenderFunction(item, originalIndex)
+									) : (
+										<span className='block  truncate'>{item.content}</span>
+									)}
+								</div>
 
-							{/* Control Buttons */}
-							<div
-								className={join(
-									'flex-shrink-0 flex items-center gap-1 pr-2 opacity-0 transition-opacity',
-									isHovered ? 'opacity-100' : ''
-								)}
-							>
-								{/* Move Up/Down Buttons */}
-								{allowReorder && (
-									<>
+								{/* Control Buttons */}
+								<div
+									className={join(
+										'flex-shrink-0 flex gap-1 pr-2 opacity-0 transition-opacity',
+										isHovered && 'opacity-100'
+									)}
+								>
+									{/* Move Up/Down Buttons */}
+									{allowReorder && (
+										<>
+											<button
+												type='button'
+												onClick={() => moveItemUp(originalIndex)}
+												disabled={originalIndex === 0}
+												className='p-0.5 opacity-50 hover:opacity-80 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
+												aria-label={`Move item up`}
+											>
+												<ChevronUp size={iconSizeValue} />
+											</button>
+											<button
+												type='button'
+												onClick={() => moveItemDown(originalIndex)}
+												disabled={originalIndex === items.length - 1}
+												className='p-0.5 opacity-50 hover:opacity-80 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
+												aria-label={`Move item down`}
+											>
+												<ChevronDown size={iconSizeValue} />
+											</button>
+										</>
+									)}
+
+									{/* Delete Button */}
+									{allowDelete && (
 										<button
 											type='button'
-											onClick={() => moveItemUp(originalIndex)}
-											disabled={originalIndex === 0}
-											className='p-1.5 text-muted-foreground hover:text-popover-foreground disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
-											aria-label={`Move item up`}
+											onClick={() => deleteItem(item.id)}
+											className='p-0.5 text-destructive opacity-70 hover:opacity-90 rounded transition-colors'
+											aria-label={`Delete item`}
 										>
-											<ChevronUp size={14} />
+											<Trash size={iconSizeValue} />
 										</button>
-										<button
-											type='button'
-											onClick={() => moveItemDown(originalIndex)}
-											disabled={originalIndex === items.length - 1}
-											className='p-1.5 text-muted-foreground hover:text-popover-foreground disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
-											aria-label={`Move item down`}
-										>
-											<ChevronDown size={14} />
-										</button>
-									</>
-								)}
-
-								{/* Delete Button */}
-								{allowDelete && (
-									<button
-										type='button'
-										onClick={() => deleteItem(item.id)}
-										className='p-1.5 text-destructive hover:text-destructive/80 rounded transition-colors'
-										aria-label={`Delete item`}
-									>
-										<Trash size={14} />
-									</button>
-								)}
+									)}
+								</div>
 							</div>
 						</li>
 					);
@@ -289,16 +290,16 @@ export function DynamicList({
 						type='text'
 						value={newItemText}
 						onChange={(e) => setNewItemText(e.target.value)}
-						onKeyPress={handleKeyPress}
+						onKeyDown={handleKeyPress}
 						placeholder={addPlaceholder}
-						className='flex-1 bg-transparent border-none outline-none text-popover-foreground placeholder-muted-foreground'
+						className='flex-1 bg-transparent border-none outline-none  placeholder-muted-foreground'
 						aria-label='Add new list item'
 					/>
 					<button
 						type='button'
 						onClick={handleAddItem}
 						disabled={!newItemText.trim()}
-						className='flex-shrink-0 p-1.5 text-muted-foreground hover:text-popover-foreground disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
+						className='flex-shrink-0 p-1.5 text-muted-foreground hover: disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
 						aria-label='Add item'
 					>
 						<Plus size={16} />
