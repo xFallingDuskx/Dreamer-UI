@@ -163,8 +163,8 @@ export function DynamicListPage() {
       >
         <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
           <div>
-            <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Small</h4>
             <DynamicList
+              title='Small'
               size='sm'
               items={[
                 { id: '1', content: 'Compact item' },
@@ -174,8 +174,8 @@ export function DynamicListPage() {
             />
           </div>
           <div>
-            <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Medium (Default)</h4>
             <DynamicList
+              title='Medium (Default)'
               items={[
                 { id: '1', content: 'Standard item' },
                 { id: '2', content: 'Regular spacing' },
@@ -184,8 +184,8 @@ export function DynamicListPage() {
             />
           </div>
           <div>
-            <h4 className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-2'>Large</h4>
             <DynamicList
+              title='Large'
               size='lg'
               items={[
                 { id: '1', content: 'Spacious item' },
