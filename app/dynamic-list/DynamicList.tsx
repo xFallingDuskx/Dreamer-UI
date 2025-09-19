@@ -35,8 +35,8 @@ export interface DynamicListProps {
 	itemRenderer?: (item: DynamicListItem, index: number) => React.ReactNode;
 	/** Whether to show dividers between items */
 	showDividers?: boolean;
-  /** Whether to always show reorder buttons (if allowReorder is true) */
-  showReorderButtons?: boolean;
+	/** Whether to always show reorder buttons (if allowReorder is true) */
+	showReorderButtons?: boolean;
 	/** Optional title for the list */
 	title?: string | React.ReactElement;
 }
@@ -56,7 +56,7 @@ export function DynamicList({
 	marker,
 	itemRenderer,
 	showDividers = true,
-  showReorderButtons = true,
+	showReorderButtons = true,
 	title,
 }: DynamicListProps) {
 	const [newItemText, setNewItemText] = useState('');
@@ -89,6 +89,10 @@ export function DynamicList({
 		onItemsChange?.(items);
 	}, [items, onItemsChange]);
 
+	const getItemElementById = (itemId: string) =>
+    // must escape special characters in ID for querySelector
+		document.querySelector(`#${listId} #${CSS.escape(itemId)}`) as HTMLElement | null;
+
 	const handleAddItem = () => {
 		if (newItemText.trim()) {
 			addItem(newItemText.trim());
@@ -110,15 +114,39 @@ export function DynamicList({
 			case 'ArrowUp':
 				e.preventDefault();
 				moveItemUp(index);
+
+				if (index > 0) {
+					setHoveredIndex(index - 1);
+				}
 				break;
 			case 'ArrowDown':
 				e.preventDefault();
 				moveItemDown(index);
+
+				if (index < items.length - 1) {
+					setHoveredIndex(index + 1);
+				}
 				break;
+			case 'Backspace':
 			case 'Delete':
 				if (allowDelete) {
 					e.preventDefault();
+					const nextIndex = index < items.length - 1 ? index + 1 : index - 1;
+					const nextItem = items[nextIndex];
 					deleteItem(items[index].id);
+
+					// After deletion, set focus to the next item or previous if last was deleted
+					if (nextIndex >= 0 && nextItem) {
+						// Use a timeout to ensure the item is removed from the DOM before focusing
+						setTimeout(() => {
+							const nextElement = getItemElementById(nextItem.id);
+							nextElement?.focus();
+						}, 0);
+					} else {
+						// If no items left, focus the input for adding new items
+						inputRef.current?.focus();
+						setHoveredIndex(null);
+					}
 				}
 				break;
 		}
@@ -127,7 +155,7 @@ export function DynamicList({
 	const renderTitle = () => {
 		if (!title) return null;
 
-    const titleClasses = join('font-medium opacity-60', titleVariants[size]);
+		const titleClasses = join('font-medium opacity-60', titleVariants[size]);
 		if (typeof title === 'string') {
 			return (
 				<h4 id={titleId} className={titleClasses}>
@@ -136,8 +164,11 @@ export function DynamicList({
 			);
 		}
 
-    const prop = title.props as { className?: string };
-		return React.cloneElement(title, { id: titleId, className: join(titleClasses, prop.className) } as Record<string, unknown>);
+		const prop = title.props as { className?: string };
+		return React.cloneElement(title, { id: titleId, className: join(titleClasses, prop.className) } as Record<
+			string,
+			unknown
+		>);
 	};
 
 	// Render marker based on type
@@ -170,7 +201,7 @@ export function DynamicList({
 	return (
 		<div
 			ref={ref}
-			id={id}
+			id={listId}
 			className={className}
 			data-size={size}
 			data-allow-add={allowAdd}
@@ -187,13 +218,13 @@ export function DynamicList({
 					// Find the original index of this item in the actual items array
 					const originalIndex = items.findIndex((originalItem) => originalItem.id === item.id);
 					const isDraggedItem = draggedItem?.id === item.id;
-          const isNotDraggedItem = draggedItem && draggedItem.id !== item.id;
+					const isNotDraggedItem = draggedItem && draggedItem.id !== item.id;
 					const isHovered = hoveredIndex === originalIndex;
 
 					return (
-						<>
+						<div key={item.id}>
 							<li
-								key={item.id}
+								id={item.id}
 								className={join(
 									'flex items-center group relative transition-all duration-150',
 									isDraggedItem && 'opacity-30',
@@ -210,10 +241,19 @@ export function DynamicList({
 								onDrop={handleDrop}
 								onMouseEnter={() => setHoveredIndex(originalIndex)}
 								onMouseLeave={() => setHoveredIndex(null)}
+								onFocus={(e) => {
+									// Check if the focused element is the current list item
+									if (e.currentTarget === e.target) {
+										setHoveredIndex(originalIndex);
+									}
+								}}
 								tabIndex={0}
 								role='listitem'
 								aria-label={`List item ${originalIndex + 1}: ${item.content}`}
 								onKeyDown={(e) => handleItemKeyDown(e, originalIndex)}
+								aria-description={`${allowReorder ? 'Use up/down arrow keys to reorder. ' : ''}${
+									allowDelete ? 'Press Backspace/Delete to remove this item.' : ''
+								}`}
 							>
 								{/* Drag Handle */}
 								{allowReorder && (
@@ -243,7 +283,7 @@ export function DynamicList({
 									{!draggedItem && (
 										<div
 											className={join(
-												'flex-shrink-0 flex gap-1 pr-2 opacity-0 transition-opacity',
+												'flex-shrink-0 flex items-center gap-1 pr-2 opacity-0 transition-opacity',
 												isHovered && 'opacity-100'
 											)}
 										>
@@ -255,7 +295,9 @@ export function DynamicList({
 														onClick={() => moveItemUp(originalIndex)}
 														disabled={originalIndex === 0}
 														className='p-0.5 opacity-50 hover:opacity-80 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
-														aria-label={`Move item up`}
+														// Prevent from tabbing to this button since the behavior is not ideal
+														aria-hidden={true}
+														tabIndex={-1}
 													>
 														<ChevronUp size={iconSizeValue} />
 													</button>
@@ -264,7 +306,9 @@ export function DynamicList({
 														onClick={() => moveItemDown(originalIndex)}
 														disabled={originalIndex === items.length - 1}
 														className='p-0.5 opacity-50 hover:opacity-80 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
-														aria-label={`Move item down`}
+														// Prevent from tabbing to this button since the behavior is not ideal
+														aria-hidden={true}
+														tabIndex={-1}
 													>
 														<ChevronDown size={iconSizeValue} />
 													</button>
@@ -274,9 +318,10 @@ export function DynamicList({
 											{/* Delete Button */}
 											{allowDelete && (
 												<button
+													tabIndex={isHovered ? 0 : -1}
 													type='button'
 													onClick={() => deleteItem(item.id)}
-													className='p-0.5 text-destructive opacity-70 hover:opacity-90 rounded transition-colors'
+													className='p-0.5 text-destructive opacity-70 h-fit hover:opacity-90 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-destructive'
 													aria-label={`Delete item`}
 												>
 													<Trash size={iconSizeValue} />
@@ -287,7 +332,7 @@ export function DynamicList({
 								</div>
 							</li>
 							{showDividers && visualIndex < items.length - 1 && <hr className='border-border/50' />}
-						</>
+						</div>
 					);
 				})}
 
@@ -303,6 +348,7 @@ export function DynamicList({
 			{allowAdd && (
 				<div className={join('border-t border-border/50 flex items-center gap-2', sizeClasses)}>
 					<input
+						id={`${listId}-new-item-input`}
 						ref={inputRef}
 						type='text'
 						value={newItemText}
