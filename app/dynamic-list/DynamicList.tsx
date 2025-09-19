@@ -1,5 +1,5 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import React, { useId, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import { useDynamicList, type DynamicListItem } from './hooks';
 import { ChevronDown, ChevronUp, DashMarker, DiscMarker, GripVertical, Plus, Trash } from './icons';
 import { DynamicListSize, iconSize, listVariants, titleVariants } from './variants';
@@ -66,6 +66,8 @@ export function DynamicList<T extends object>({
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const generatedId = useId();
+  const hasMounted = useRef(false);
+  const lastOnChangeItems = useRef<DynamicListItem<T>[]>(initialItems);
 	const listId = id || `dynamic-list-${generatedId}`;
 	const titleId = `${listId}-title`;
 
@@ -88,8 +90,16 @@ export function DynamicList<T extends object>({
 	const itemRenderFunction = itemRenderer || renderItem;
 
 	// Call onChange callback when items change
-	React.useEffect(() => {
-		onItemsChange?.(items);
+  // Avoid calling onItemsChange on initial mount
+	useEffect(() => {
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      return;
+    }
+    if (lastOnChangeItems.current !== items) {
+      lastOnChangeItems.current = items;
+      onItemsChange?.(items);
+    }
 	}, [items, onItemsChange]);
 
 	const getItemElementById = (itemId: string) =>

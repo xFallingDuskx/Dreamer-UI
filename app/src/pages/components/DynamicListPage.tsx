@@ -128,6 +128,7 @@ export function DynamicListPage() {
                 dueDate: '2024-01-22'
               },
             ]}
+            onItemsChange={(items) => console.log('Updated items:', items)}
             itemRenderer={(item, index) => (
               <div key={index} className="flex items-center justify-between w-full">
                 <div className="flex-1">
