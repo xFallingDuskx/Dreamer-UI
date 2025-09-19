@@ -1,9 +1,9 @@
+import { ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { useDynamicList, type DynamicListItem } from './hooks';
 import { ChevronUp, DashMarker, DiscMarker, GripVertical, Plus, Trash } from './icons';
 import { DynamicListSize, iconSize, listVariants, titleVariants } from './variants';
-import { ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 
 export type MarkerType = 'disc' | 'dash' | 'decimal' | React.ReactElement;
 
@@ -40,8 +40,8 @@ export interface DynamicListProps<T extends object> {
 	showReorderButtons?: boolean;
 	/** Optional title for the list */
 	title?: string | React.ReactElement;
-  /** Whether to truncate long text in items (default: true) */
-  truncateText?: boolean;
+	/** Whether to truncate long text in items (default: true) */
+	truncateText?: boolean;
 }
 
 export function DynamicList<T extends object>({
@@ -61,14 +61,14 @@ export function DynamicList<T extends object>({
 	showDividers = true,
 	showReorderButtons = true,
 	title,
-  truncateText = false,
+	truncateText = false,
 }: DynamicListProps<T>) {
 	const [newItemText, setNewItemText] = useState('');
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const generatedId = useId();
-  const hasMounted = useRef(false);
-  const lastOnChangeItems = useRef<DynamicListItem<T>[]>(initialItems);
+	const hasMounted = useRef(false);
+	const lastOnChangeItems = useRef<DynamicListItem<T>[]>(initialItems);
 	const listId = id || `dynamic-list-${generatedId}`;
 	const titleId = `${listId}-title`;
 
@@ -91,20 +91,20 @@ export function DynamicList<T extends object>({
 	const itemRenderFunction = itemRenderer || renderItem;
 
 	// Call onChange callback when items change
-  // Avoid calling onItemsChange on initial mount
+	// Avoid calling onItemsChange on initial mount
 	useEffect(() => {
-    if (!hasMounted.current) {
-      hasMounted.current = true;
-      return;
-    }
-    if (lastOnChangeItems.current !== items) {
-      lastOnChangeItems.current = items;
-      onItemsChange?.(items);
-    }
+		if (!hasMounted.current) {
+			hasMounted.current = true;
+			return;
+		}
+		if (lastOnChangeItems.current !== items) {
+			lastOnChangeItems.current = items;
+			onItemsChange?.(items);
+		}
 	}, [items, onItemsChange]);
 
 	const getItemElementById = (itemId: string) =>
-    // must escape special characters in ID for querySelector
+		// must escape special characters in ID for querySelector
 		document.querySelector(`#${listId} #${CSS.escape(itemId)}`) as HTMLElement | null;
 
 	const handleAddItem = () => {
@@ -115,6 +115,30 @@ export function DynamicList<T extends object>({
 		}
 	};
 
+	const handleDeleteItem = (e: React.MouseEvent | React.KeyboardEvent, index: number) => {
+		if (!allowDelete) {
+			return;
+		}
+		e.preventDefault();
+		const nextIndex = index < items.length - 1 ? index + 1 : index - 1;
+		const nextItem = items[nextIndex];
+		deleteItem(items[index].id);
+		console.log('deleted item:', items[index].id); // REMOVE
+
+		// After deletion, set focus to the next item or previous if last was deleted
+		if (nextIndex >= 0 && nextItem) {
+			// Use a timeout to ensure the item is removed from the DOM before focusing
+			setTimeout(() => {
+				const nextElement = getItemElementById(nextItem.id);
+				nextElement?.focus();
+			}, 0);
+		} else {
+			// If no items left, focus the input for adding new items
+			inputRef.current?.focus();
+			setHoveredIndex(null);
+		}
+	};
+
 	const handleKeyPress = (e: React.KeyboardEvent) => {
 		if (e.key === 'Enter') {
 			handleAddItem();
@@ -122,10 +146,10 @@ export function DynamicList<T extends object>({
 	};
 
 	const handleItemKeyDown = (e: React.KeyboardEvent, index: number) => {
-		if (!allowReorder) return;
-
+		console.log('e.key', e.key); // REMOVE
 		switch (e.key) {
 			case 'ArrowUp':
+				if (!allowReorder) return;
 				e.preventDefault();
 				moveItemUp(index);
 
@@ -134,6 +158,7 @@ export function DynamicList<T extends object>({
 				}
 				break;
 			case 'ArrowDown':
+				if (!allowReorder) return;
 				e.preventDefault();
 				moveItemDown(index);
 
@@ -143,25 +168,9 @@ export function DynamicList<T extends object>({
 				break;
 			case 'Backspace':
 			case 'Delete':
-				if (allowDelete) {
-					e.preventDefault();
-					const nextIndex = index < items.length - 1 ? index + 1 : index - 1;
-					const nextItem = items[nextIndex];
-					deleteItem(items[index].id);
-
-					// After deletion, set focus to the next item or previous if last was deleted
-					if (nextIndex >= 0 && nextItem) {
-						// Use a timeout to ensure the item is removed from the DOM before focusing
-						setTimeout(() => {
-							const nextElement = getItemElementById(nextItem.id);
-							nextElement?.focus();
-						}, 0);
-					} else {
-						// If no items left, focus the input for adding new items
-						inputRef.current?.focus();
-						setHoveredIndex(null);
-					}
-				}
+				handleDeleteItem(e, index);
+				break;
+			default:
 				break;
 		}
 	};
@@ -239,7 +248,7 @@ export function DynamicList<T extends object>({
 						<div key={item.id}>
 							<li
 								id={item.id}
-                title={truncateText ? item.content : undefined}
+								title={truncateText ? item.content : undefined}
 								className={join(
 									'flex items-center group relative transition-all duration-150',
 									isDraggedItem && 'opacity-30',
@@ -335,7 +344,7 @@ export function DynamicList<T extends object>({
 												<button
 													tabIndex={isHovered ? 0 : -1}
 													type='button'
-													onClick={() => deleteItem(item.id)}
+													onClick={(e) => handleDeleteItem(e, originalIndex)}
 													className='p-0.5 text-destructive opacity-70 h-fit hover:opacity-90 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-destructive'
 													aria-label={`Delete item`}
 												>
