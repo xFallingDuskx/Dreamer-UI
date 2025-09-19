@@ -6,9 +6,9 @@ import { DynamicListSize, iconSize, listVariants, titleVariants } from './varian
 
 export type MarkerType = 'disc' | 'dash' | 'decimal' | React.ReactElement;
 
-export interface DynamicListProps {
+export interface DynamicListProps<T extends object> {
 	/** Items to display in the list */
-	items?: DynamicListItem[];
+	items?: DynamicListItem<T>[];
 	/** Size variant */
 	size?: DynamicListSize;
 	/** Optional ID for the component */
@@ -26,13 +26,13 @@ export interface DynamicListProps {
 	/** Placeholder text for new items */
 	addPlaceholder?: string;
 	/** Callback when items change */
-	onItemsChange?: (items: DynamicListItem[]) => void;
+	onItemsChange?: (items: DynamicListItem<T>[]) => void;
 	/** Custom render function for items */
-	renderItem?: (item: DynamicListItem, index: number) => React.ReactNode;
+	renderItem?: (item: DynamicListItem<T>, index: number) => React.ReactNode;
 	/** Marker type for list items */
 	marker?: MarkerType;
 	/** Custom item renderer function (alternative name for renderItem) */
-	itemRenderer?: (item: DynamicListItem, index: number) => React.ReactNode;
+	itemRenderer?: (item: DynamicListItem<T>, index: number) => React.ReactNode;
 	/** Whether to show dividers between items */
 	showDividers?: boolean;
 	/** Whether to always show reorder buttons (if allowReorder is true) */
@@ -43,7 +43,7 @@ export interface DynamicListProps {
   truncateText?: boolean;
 }
 
-export function DynamicList({
+export function DynamicList<T extends object>({
 	items: initialItems = [],
 	size = 'md',
 	id,
@@ -61,7 +61,7 @@ export function DynamicList({
 	showReorderButtons = true,
 	title,
   truncateText = false,
-}: DynamicListProps) {
+}: DynamicListProps<T>) {
 	const [newItemText, setNewItemText] = useState('');
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -82,7 +82,7 @@ export function DynamicList({
 		handleDragOver,
 		handleDragEnd,
 		handleDrop,
-	} = useDynamicList(initialItems);
+	} = useDynamicList<T>(initialItems);
 
 	// Use itemRenderer if provided, otherwise use renderItem
 	const itemRenderFunction = itemRenderer || renderItem;

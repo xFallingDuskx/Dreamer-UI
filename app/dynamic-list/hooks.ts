@@ -1,21 +1,19 @@
 import { useState, useCallback, useRef } from 'react';
 
-export interface DynamicListItem {
+export type DynamicListItem<T extends object> = T & {
   id: string;
   content: string;
-  // Allow any additional data to be stored with the item
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
 }
 
-export function useDynamicList(initialItems: DynamicListItem[] = []) {
-  const [items, setItems] = useState<DynamicListItem[]>(initialItems);
-  const [draggedItem, setDraggedItem] = useState<DynamicListItem | null>(null);
+export function useDynamicList<T extends object>(initialItems: DynamicListItem<T>[] = []) {
+  const [items, setItems] = useState<DynamicListItem<T>[]>(initialItems);
+  const [draggedItem, setDraggedItem] = useState<DynamicListItem<T> | null>(null);
   const [draggedOverIndex, setDraggedOverIndex] = useState<number | null>(null);
   const draggedFromIndex = useRef<number | null>(null);
 
-  const addItem = useCallback((content: string) => {
-    const newItem: DynamicListItem = {
+  const addItem = useCallback((content: string, extra?: Partial<T>) => {
+    const newItem: DynamicListItem<T> = {
+      ...(extra as T),
       id: `item-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
       content,
     };
@@ -51,7 +49,7 @@ export function useDynamicList(initialItems: DynamicListItem[] = []) {
   }, [moveItem, items.length]);
 
   // Drag and drop handlers
-  const handleDragStart = useCallback((item: DynamicListItem, index: number) => {
+  const handleDragStart = useCallback((item: DynamicListItem<T>, index: number) => {
     setDraggedItem(item);
     draggedFromIndex.current = index;
     setDraggedOverIndex(index);
