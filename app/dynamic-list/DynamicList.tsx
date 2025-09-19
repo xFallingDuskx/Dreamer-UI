@@ -1,8 +1,9 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { useDynamicList, type DynamicListItem } from './hooks';
-import { ChevronDown, ChevronUp, DashMarker, DiscMarker, GripVertical, Plus, Trash } from './icons';
+import { ChevronUp, DashMarker, DiscMarker, GripVertical, Plus, Trash } from './icons';
 import { DynamicListSize, iconSize, listVariants, titleVariants } from './variants';
+import { ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 
 export type MarkerType = 'disc' | 'dash' | 'decimal' | React.ReactElement;
 
@@ -308,7 +309,7 @@ export function DynamicList<T extends object>({
 														type='button'
 														onClick={() => moveItemUp(originalIndex)}
 														disabled={originalIndex === 0}
-														className='p-0.5 opacity-50 hover:opacity-80 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
+														className='p-0.5 opacity-50 leading-0 hover:opacity-80 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
 														// Prevent from tabbing to this button since the behavior is not ideal
 														aria-hidden={true}
 														tabIndex={-1}
@@ -319,7 +320,7 @@ export function DynamicList<T extends object>({
 														type='button'
 														onClick={() => moveItemDown(originalIndex)}
 														disabled={originalIndex === items.length - 1}
-														className='p-0.5 opacity-50 hover:opacity-80 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
+														className='p-0.5 opacity-50 leading-0 hover:opacity-80 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
 														// Prevent from tabbing to this button since the behavior is not ideal
 														aria-hidden={true}
 														tabIndex={-1}
