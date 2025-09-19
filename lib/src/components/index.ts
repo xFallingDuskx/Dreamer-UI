@@ -1,5 +1,6 @@
 export * from './accordion';
 export * from './actionmodal';
+export * from './avatar';
 export * from './badge';
 export * from './button';
 export * from './callout';
@@ -12,6 +13,9 @@ export * from './code-block';
 export * from './disclosure';
 export * from './drawer';
 export * from './dropdown-menu';
+export * from './dynamic-list';
+export * from './error-boundary';
+export * from './form';
 export * from './input';
 export * from './label';
 export * from './modal';
