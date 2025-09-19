@@ -383,7 +383,7 @@ export function DynamicList<T extends object>({
 						type='button'
 						onClick={handleAddItem}
 						disabled={!newItemText.trim()}
-						className='flex-shrink-0 p-1.5 text-muted-foreground hover: disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors'
+						className='flex-shrink-0 p-1.5 text-muted-foreground opacity-70 enabled:hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed rounded transition-opacity'
 						aria-label='Add item'
 					>
 						<Plus size={16} />

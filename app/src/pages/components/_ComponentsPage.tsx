@@ -47,7 +47,7 @@ const components = [
 	},
   {
     name: 'List',
-    path: '/components/list',
+    path: '/components/dynamic-list',
     description: 'Interactive list component with add, delete, and reorder functionality via drag-and-drop or buttons.',
     category: 'Display',
   },
