@@ -39,6 +39,8 @@ export interface DynamicListProps {
 	showReorderButtons?: boolean;
 	/** Optional title for the list */
 	title?: string | React.ReactElement;
+  /** Whether to truncate long text in items (default: true) */
+  truncateText?: boolean;
 }
 
 export function DynamicList({
@@ -58,6 +60,7 @@ export function DynamicList({
 	showDividers = true,
 	showReorderButtons = true,
 	title,
+  truncateText = false,
 }: DynamicListProps) {
 	const [newItemText, setNewItemText] = useState('');
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -225,6 +228,7 @@ export function DynamicList({
 						<div key={item.id}>
 							<li
 								id={item.id}
+                title={truncateText ? item.content : undefined}
 								className={join(
 									'flex items-center group relative transition-all duration-150',
 									isDraggedItem && 'opacity-30',
@@ -275,7 +279,7 @@ export function DynamicList({
 										{itemRenderFunction ? (
 											itemRenderFunction(item, originalIndex)
 										) : (
-											<span className='block  truncate'>{item.content}</span>
+											<span className={join('block', truncateText && 'truncate')}>{item.content}</span>
 										)}
 									</div>
 
