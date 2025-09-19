@@ -239,7 +239,6 @@ export function DynamicList<T extends object>({
 					// Find the original index of this item in the actual items array
 					const originalIndex = items.findIndex((originalItem) => originalItem.id === item.id);
 					const isDraggedItem = draggedItem?.id === item.id;
-					const isNotDraggedItem = draggedItem && draggedItem.id !== item.id;
 					const isHovered = hoveredIndex === originalIndex;
 
 					return (
@@ -279,8 +278,8 @@ export function DynamicList<T extends object>({
 							>
 								{/* Drag Handle */}
 								{allowReorder && (
-									<div className='absolute -translate-x-full flex-shrink-0 pl-2 pr-1 py-2 cursor-move opacity-0 group-hover:opacity-100 transition-opacity'>
-										<GripVertical size={iconSizeValue + 2} className={isNotDraggedItem ? 'opacity-0' : 'opacity-70'} />
+									<div className={join('absolute -translate-x-full flex-shrink-0 pl-2 pr-1 py-2 cursor-move transition-opacity opacity-0', (isDraggedItem || (isHovered && !draggedItem)) && 'opacity-100')}>
+										<GripVertical size={iconSizeValue + 2} />
 									</div>
 								)}
 
