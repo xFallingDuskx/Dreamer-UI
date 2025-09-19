@@ -286,7 +286,7 @@ export function DynamicList<T extends object>({
 
 								{/* Item Content */}
 								<div className={join('flex-1 flex min-w-0')}>
-									<div className={join('flex-1 min-w-0 py-2', !allowReorder && !marker ? 'px-3' : 'pr-3')}>
+									<div className={join('flex-1 min-w-0 py-2 pr-2')}>
 										{itemRenderFunction ? (
 											itemRenderFunction(item, originalIndex)
 										) : (
