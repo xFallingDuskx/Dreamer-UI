@@ -45,6 +45,12 @@ const components = [
 		description: 'Flexible input component with validation states and different types.',
 		category: 'Form',
 	},
+  {
+    name: 'List',
+    path: '/components/dynamic-list',
+    description: 'Interactive list component with add, delete, and reorder functionality via drag-and-drop or buttons.',
+    category: 'Display',
+  },
 	{
 		name: 'Modal',
 		path: '/components/modal',
