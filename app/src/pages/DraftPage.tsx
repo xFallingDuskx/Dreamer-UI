@@ -19,7 +19,6 @@ import {
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
-import { DynamicList } from '../../dynamic-list';
 
 // Component that can throw errors for testing
 const BuggyComponent = () => {
@@ -977,114 +976,6 @@ export const DraftPage = () => {
 											</div>
 										</div>
 									</Card>
-								</div>
-							</div>
-						</div>
-
-						{/* List Component Testing */}
-						<div>
-							<h3 className='text-lg font-medium text-white mb-3'>List Component Testing</h3>
-							<div className='space-y-6'>
-								{/* Basic List */}
-								<div>
-									<h4 className='text-md font-medium text-gray-300 mb-2'>Basic List</h4>
-									<div className='max-w-md'>
-										<DynamicList
-											items={[
-												{ id: '1', content: 'First item' },
-												{ id: '2', content: 'Second item with longer content that may wrap' },
-												{ id: '3', content: 'Third item' },
-											]}
-										/>
-									</div>
-								</div>
-
-								{/* Size Variants */}
-								<div>
-									<h4 className='text-md font-medium text-gray-300 mb-2'>Size Variants</h4>
-									<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-										<div>
-											<h5 className='text-sm text-gray-400 mb-2'>Small</h5>
-											<DynamicList
-												size='sm'
-												items={[
-													{ id: '1', content: 'Small item 1' },
-													{ id: '2', content: 'Small item 2' },
-												]}
-											/>
-										</div>
-										<div>
-											<h5 className='text-sm text-gray-400 mb-2'>Medium (default)</h5>
-											<DynamicList
-												size='md'
-												items={[
-													{ id: '1', content: 'Medium item 1' },
-													{ id: '2', content: 'Medium item 2' },
-												]}
-											/>
-										</div>
-										<div>
-											<h5 className='text-sm text-gray-400 mb-2'>Large</h5>
-											<DynamicList
-												size='lg'
-												items={[
-													{ id: '1', content: 'Large item 1' },
-													{ id: '2', content: 'Large item 2' },
-												]}
-											/>
-										</div>
-									</div>
-								</div>
-
-								{/* Interactive Features */}
-								<div>
-									<h4 className='text-md font-medium text-gray-300 mb-2'>Interactive Features</h4>
-									<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-										<div>
-											<h5 className='text-sm text-gray-400 mb-2'>Read-only (no interactions)</h5>
-											<DynamicList
-												allowAdd={false}
-												allowDelete={false}
-												allowReorder={false}
-												items={[
-													{ id: '1', content: 'Read-only item 1' },
-													{ id: '2', content: 'Read-only item 2' },
-													{ id: '3', content: 'Read-only item 3' },
-												]}
-											/>
-										</div>
-										<div>
-											<h5 className='text-sm text-gray-400 mb-2'>Delete only</h5>
-											<DynamicList
-												allowAdd={false}
-												allowReorder={false}
-												items={[
-													{ id: '1', content: 'Deletable item 1' },
-													{ id: '2', content: 'Deletable item 2' },
-													{ id: '3', content: 'Deletable item 3' },
-												]}
-											/>
-										</div>
-									</div>
-								</div>
-
-								{/* Empty State */}
-								<div>
-									<h4 className='text-md font-medium text-gray-300 mb-2'>Empty State</h4>
-									<div className='max-w-md'>
-										<DynamicList items={[]} addPlaceholder="Start adding items..." />
-									</div>
-								</div>
-
-								{/* Custom Placeholder */}
-								<div>
-									<h4 className='text-md font-medium text-gray-300 mb-2'>Custom Placeholder</h4>
-									<div className='max-w-md'>
-										<DynamicList
-											items={[{ id: '1', content: 'Shopping list item' }]}
-											addPlaceholder="Add grocery item..."
-										/>
-									</div>
 								</div>
 							</div>
 						</div>

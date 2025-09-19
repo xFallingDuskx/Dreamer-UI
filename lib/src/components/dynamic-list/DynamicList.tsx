@@ -1,11 +1,11 @@
-import { ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { useDynamicList, type DynamicListItem } from './hooks';
-import { ChevronUp, DashMarker, DiscMarker, GripVertical, Plus, Trash } from './icons';
 import { DynamicListSize, iconSize, listVariants, titleVariants } from './variants';
+import { join } from '../../utils';
+import { ChevronDown, ChevronUp, GripVertical, Plus, Trash } from '../../symbols';
+import { DashMarker, DiscMarker } from './markers';
 
-export type MarkerType = 'disc' | 'dash' | 'decimal' | React.ReactElement;
+export type DynamicListMarkerType = 'disc' | 'dash' | 'decimal' | React.ReactElement;
 
 export interface DynamicListProps<T extends object> {
 	/** Items to display in the list */
@@ -31,7 +31,7 @@ export interface DynamicListProps<T extends object> {
 	/** Custom render function for items */
 	renderItem?: (item: DynamicListItem<T>, index: number) => React.ReactNode;
 	/** Marker type for list items */
-	marker?: MarkerType;
+	marker?: DynamicListMarkerType;
 	/** Custom item renderer function (alternative name for renderItem) */
 	itemRenderer?: (item: DynamicListItem<T>, index: number) => React.ReactNode;
 	/** Whether to show dividers between items */

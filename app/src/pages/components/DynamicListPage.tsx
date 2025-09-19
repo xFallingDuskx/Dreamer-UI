@@ -1,6 +1,6 @@
-import { DynamicList } from '../../../dynamic-list';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
+import { DynamicList } from '@moondreamsdev/dreamer-ui/components';
 
 const tableOfContents = [
   { id: 'basic-usage', title: 'Basic Usage', level: 1 },
