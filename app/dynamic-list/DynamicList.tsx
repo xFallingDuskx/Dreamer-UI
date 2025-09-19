@@ -123,7 +123,6 @@ export function DynamicList<T extends object>({
 		const nextIndex = index < items.length - 1 ? index + 1 : index - 1;
 		const nextItem = items[nextIndex];
 		deleteItem(items[index].id);
-		console.log('deleted item:', items[index].id); // REMOVE
 
 		// After deletion, set focus to the next item or previous if last was deleted
 		if (nextIndex >= 0 && nextItem) {
@@ -146,7 +145,6 @@ export function DynamicList<T extends object>({
 	};
 
 	const handleItemKeyDown = (e: React.KeyboardEvent, index: number) => {
-		console.log('e.key', e.key); // REMOVE
 		switch (e.key) {
 			case 'ArrowUp':
 				if (!allowReorder) return;
