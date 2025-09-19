@@ -35,6 +35,8 @@ export interface DynamicListProps {
 	itemRenderer?: (item: DynamicListItem, index: number) => React.ReactNode;
 	/** Whether to show dividers between items */
 	showDividers?: boolean;
+  /** Whether to always show reorder buttons (if allowReorder is true) */
+  showReorderButtons?: boolean;
 	/** Optional title for the list */
 	title?: string | React.ReactElement;
 }
@@ -54,6 +56,7 @@ export function DynamicList({
 	marker,
 	itemRenderer,
 	showDividers = true,
+  showReorderButtons = true,
 	title,
 }: DynamicListProps) {
 	const [newItemText, setNewItemText] = useState('');
@@ -245,7 +248,7 @@ export function DynamicList({
 											)}
 										>
 											{/* Move Up/Down Buttons */}
-											{allowReorder && (
+											{allowReorder && showReorderButtons && (
 												<>
 													<button
 														type='button'
