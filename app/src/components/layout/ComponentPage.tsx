@@ -2,6 +2,7 @@ import { Button, Code, CodeBlock, Disclosure, Table } from '@moondreamsdev/dream
 import { Check, Copy } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { ExampleSection } from '../ui/ExampleSection';
 
 // SectionHeader component with hover link functionality
 interface SectionHeaderProps {
@@ -65,15 +66,24 @@ interface KeyboardShortcut {
 	description: string;
 }
 
+interface ComponentExample {
+	id: string;
+	title: string;
+	description: string;
+	code: string;
+	children: React.ReactNode;
+}
+
 interface ComponentPageProps {
 	title: string;
 	description: string;
-	children: React.ReactNode;
+	children?: React.ReactNode;
 	tableOfContents?: TableOfContentsItem[];
 	usageInstructions?: string;
 	importStatement?: string;
 	componentProps?: ComponentProp[];
 	keyboardShortcuts?: KeyboardShortcut[];
+	examples?: ComponentExample[];
 }
 
 export function ComponentPage({
@@ -85,6 +95,7 @@ export function ComponentPage({
 	importStatement,
 	componentProps,
 	keyboardShortcuts,
+	examples,
 }: ComponentPageProps) {
 	const [activeSection, setActiveSection] = useState<string>('');
 	const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
@@ -273,6 +284,28 @@ export function ComponentPage({
 							allowDownload={false}
 							className='bg-gray-900/50!'
 						/>
+					</div>
+				)}
+
+				{/* Examples Section */}
+				{examples && examples.length > 0 && (
+					<div className={join('mb-8', tableOfContents?.length ? 'lg:mr-48 2xl:mr-24' : '')} id='examples'>
+						<SectionHeader id='examples' level={1}>
+							Examples
+						</SectionHeader>
+						<div className='space-y-12'>
+							{examples.map((example) => (
+								<ExampleSection
+									key={example.id}
+									title={example.title}
+									description={example.description}
+									id={example.id}
+									code={example.code}
+								>
+									{example.children}
+								</ExampleSection>
+							))}
+						</div>
 					</div>
 				)}
 
