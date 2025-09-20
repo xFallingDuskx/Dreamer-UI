@@ -27,6 +27,7 @@ const components = [
   { name: 'Modal', path: '/components/modal' },
   { name: 'Action Modal', path: '/components/actionmodal' },
   { name: 'Panel', path: '/components/panel' },
+  { name: 'Time', path: '/components/time' },
   { name: 'Toast', path: '/components/toast' },
   { name: 'Tooltip', path: '/components/tooltip' },
   { name: 'Tabs', path: '/components/tabs' },

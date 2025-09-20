@@ -35,6 +35,7 @@ import { JoinPage } from './pages/utils/JoinPage';
 import { DisclosurePage } from './pages/components/DisclosurePage';
 import { isLocalhost } from './utils/isLocalhost';
 import { AvatarPage } from './pages/components/AvatarPage';
+import { TimePage } from './pages/components/TimePage';
 
 function App() {
   const showDraftRoute = isLocalhost();
@@ -67,6 +68,7 @@ function App() {
               <Route path='components/callout' element={<CalloutPage />} />
               <Route path='components/error-boundary' element={<ErrorBoundaryPage />} />
               <Route path='components/form' element={<FormPage />} />
+              <Route path='components/time' element={<TimePage />} />
 
               {/* Hook Pages */}
               <Route path='hooks' element={<HooksPage />} />
