@@ -173,10 +173,10 @@ export function Table<T extends object>({
 			<div
 				id={id}
 				ref={ref}
-				className={join('flex items-center justify-center p-8 text-muted-foreground', sizeVariant.container, className)}
+				className={join('flex items-center justify-center p-8', sizeVariant.container, className)}
 				{...props}
 			>
-				{emptyState || <div>No data available</div>}
+				{emptyState || <div className='text-muted-foreground'>No data available</div>}
 			</div>
 		);
 	}
