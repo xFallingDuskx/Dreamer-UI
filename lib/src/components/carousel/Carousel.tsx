@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import { join } from '../../utils';
 import { useCarousel } from './hooks';
-import useScreenSize, { ScreenSize } from './useScreenSize';
 import {
   ButtonPosition,
   buttonPositionVariants,
@@ -11,6 +10,7 @@ import {
   buttonStyleVariants,
 } from './variants';
 import { ChevronLeft, ChevronRight } from '../../symbols';
+import { ScreenSize, useScreenSize } from '../../hooks';
 
 interface ButtonElementProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
