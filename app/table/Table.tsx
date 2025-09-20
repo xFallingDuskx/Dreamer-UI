@@ -260,12 +260,14 @@ export function Table<T extends object>({
 					{sortedData.map((item, index) => {
 						const rowId = getRowId(item, index);
 						const isSelected = isRowSelected(rowId);
+						const isFinalItem = index === sortedData.length - 1;
 
 						return (
 							<tr
 								key={rowId}
 								className={join(
-									'border-b border-border transition-colors',
+									'transition-all',
+									!isFinalItem && 'border-b border-border',
 									hoverable && 'hover:bg-accent/15',
 									striped && index % 2 === 1 && 'bg-accent/25',
 									isSelected && sizeVariant.selectedRow
