@@ -245,7 +245,7 @@ export function Table<T extends object>({
 												{column.header}
 												<div className='flex flex-col items-center -space-y-1'>
 													<ChevronUp
-														size={sizeVariant.checkboxSize - 4 - 2}
+														size={sizeVariant.checkboxSize - 4}
 														className={sortDirection === 'asc' ? 'text-accent' : 'opacity-40'}
 													/>
 													<ChevronDown
