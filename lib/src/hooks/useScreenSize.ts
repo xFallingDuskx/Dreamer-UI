@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-// Define Tailwind CSS breakpoints
-const breakpoints = {
+/** Based on Tailwind CSS breakpoints */
+export const ScreenSizeBreakpoints = {
   xs: 0, // Smaller than `sm`
   sm: 640, // Tailwind's `sm` breakpoint: `@media (min-width: 640px)`
   md: 768, // Tailwind's `md` breakpoint: `@media (min-width: 768px)`
@@ -10,21 +10,21 @@ const breakpoints = {
   '2xl': 1536, // Tailwind's `2xl` breakpoint: `@media (min-width: 1536px)`
 };
 
-export type ScreenSize = keyof typeof breakpoints;
+export type ScreenSize = keyof typeof ScreenSizeBreakpoints;
 
-export default function useScreenSize() {
+export function useScreenSize() {
   const [screenSize, setScreenSize] = useState<ScreenSize>();
   const [screenWidth, setScreenWidth] = useState<number>(0);
 
-  const getBreakpoint = (size: ScreenSize) => breakpoints[size];
+  const getBreakpoint = (size: ScreenSize) => ScreenSizeBreakpoints[size];
 
   useEffect(() => {
     const getScreenSize = (width: number): ScreenSize => {
-      if (width >= breakpoints['2xl']) return '2xl';
-      if (width >= breakpoints['xl']) return 'xl';
-      if (width >= breakpoints['lg']) return 'lg';
-      if (width >= breakpoints['md']) return 'md';
-      if (width >= breakpoints['sm']) return 'sm';
+      if (width >= ScreenSizeBreakpoints['2xl']) return '2xl';
+      if (width >= ScreenSizeBreakpoints['xl']) return 'xl';
+      if (width >= ScreenSizeBreakpoints['lg']) return 'lg';
+      if (width >= ScreenSizeBreakpoints['md']) return 'md';
+      if (width >= ScreenSizeBreakpoints['sm']) return 'sm';
       return 'xs';
     };
 
