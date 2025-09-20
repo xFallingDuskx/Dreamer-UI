@@ -154,7 +154,7 @@ export function ComponentPage({
 			if (isScrollingRef.current) return;
 			isScrollingRef.current = true;
 			el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-			setTimeout(() => (isScrollingRef.current = false), 1000); // Prevent multiple scrolls within 1 second
+			setTimeout(() => (isScrollingRef.current = false), 500); // Prevent multiple scrolls within 0.5 second
 		},
 		[]
 	);
