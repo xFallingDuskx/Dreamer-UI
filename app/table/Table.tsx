@@ -263,9 +263,9 @@ export function Table<T extends object>({
 							<tr
 								key={rowId}
 								className={join(
-									sizeVariant.row,
-									hoverable && 'hover:bg-muted/50',
-									striped && index % 2 === 1 && 'bg-muted/25',
+									'border-b border-border transition-colors',
+									hoverable && 'hover:bg-accent/15',
+									striped && index % 2 === 1 && 'bg-accent/25',
 									isSelected && sizeVariant.selectedRow
 								)}
 								role='row'
