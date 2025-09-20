@@ -19,6 +19,7 @@ import {
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
+import { Time } from '../../time';
 
 // Component that can throw errors for testing
 const BuggyComponent = () => {
@@ -976,6 +977,54 @@ export const DraftPage = () => {
 											</div>
 										</div>
 									</Card>
+								</div>
+							</div>
+						</div>
+
+						{/* Time Component Testing */}
+						<div>
+							<h3 className='text-lg font-medium text-white mb-3'>Time Component</h3>
+							<div className='space-y-4'>
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Basic Time Picker (Default 15min increment)</h4>
+								<div className='max-w-xs'>
+									<Time placeholder="Select time" />
+								</div>
+								
+								<h4 className='text-md font-medium text-gray-300 mb-2'>24-Hour Format with 30min increment</h4>
+								<div className='max-w-xs'>
+									<Time 
+										use24HourFormat={true} 
+										increment={30}
+										placeholder="Select time"
+									/>
+								</div>
+
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Time Range (9 AM to 5 PM)</h4>
+								<div className='max-w-xs'>
+									<Time 
+										minValue="9:00 AM"
+										maxValue="5:00 PM"
+										increment={60}
+										placeholder="Work hours only"
+									/>
+								</div>
+
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Outline Variant</h4>
+								<div className='max-w-xs'>
+									<Time 
+										variant="outline"
+										rounded="md"
+										placeholder="Outline style"
+									/>
+								</div>
+
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Controlled Time</h4>
+								<div className='max-w-xs'>
+									<Time 
+										value="2:30 PM"
+										onChange={(time) => console.log('Time changed:', time)}
+										placeholder="Controlled time"
+									/>
 								</div>
 							</div>
 						</div>
