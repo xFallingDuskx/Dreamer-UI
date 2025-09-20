@@ -36,7 +36,7 @@ function SectionHeader({ id, children, level, className }: SectionHeaderProps) {
       <button
         onClick={handleCopyLink}
         className={join(
-          'absolute -left-8 w-6 h-6 flex items-center justify-center rounded text-accent transition-opacity',
+          'absolute -left-7 w-6 h-6 flex items-center justify-center rounded text-accent transition-opacity',
           isHovered ? 'opacity-100' : 'opacity-0'
         )}
         title={`Copy link to ${children}`}
