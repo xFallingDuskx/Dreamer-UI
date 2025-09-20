@@ -1,12 +1,16 @@
+import { useState } from 'react';
+import { Tabs, TabsList, TabsTrigger, TabsContent, CodeBlock } from '@moondreamsdev/dreamer-ui/components';
+
 interface ExampleSectionProps {
   title: string;
   description?: string;
   children: React.ReactNode;
   className?: string;
   id?: string;
+  code?: string;
 }
 
-export function ExampleSection({ title, description, children, className = '', id }: ExampleSectionProps) {
+export function ExampleSection({ title, description, children, className = '', id, code }: ExampleSectionProps) {
   const sectionId = id || title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 
   return (
@@ -18,7 +22,29 @@ export function ExampleSection({ title, description, children, className = '', i
         )}
       </div>
       <div className='bg-gray-800/50 border border-gray-600 rounded-xl p-6'>
-        {children}
+        {code ? (
+          <Tabs defaultValue="preview" className="w-full">
+            <TabsList className="mb-4">
+              <TabsTrigger value="preview">Preview</TabsTrigger>
+              <TabsTrigger value="code">Code</TabsTrigger>
+            </TabsList>
+            <TabsContent value="preview">
+              {children}
+            </TabsContent>
+            <TabsContent value="code">
+              <CodeBlock
+                code={code}
+                language="tsx"
+                hideHeader={true}
+                allowCopy={true}
+                allowFullscreen={false}
+                allowDownload={false}
+              />
+            </TabsContent>
+          </Tabs>
+        ) : (
+          children
+        )}
       </div>
     </section>
   );

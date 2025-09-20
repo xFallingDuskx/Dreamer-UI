@@ -108,6 +108,15 @@ export function ButtonPage() {
         title='Variants'
         description='Different button styles to fit your design needs.'
         id='variants'
+        code={`<div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
+  <Button>Primary</Button>
+  <Button variant='secondary'>Secondary</Button>
+  <Button variant='tertiary'>Tertiary</Button>
+  <Button variant='destructive'>Destructive</Button>
+  <Button variant='outline'>Outline</Button>
+  <Button variant='link' size='md'>Link</Button>
+  <Button variant='base'>Base</Button>
+</div>`}
       >
         <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
           <Button>Primary</Button>
@@ -124,6 +133,11 @@ export function ButtonPage() {
         title='States'
         description='Loading and disabled states for different user interactions.'
         id='states'
+        code={`<div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
+  <Button loading={true}>Loading</Button>
+  <Button disabled={true}>Disabled</Button>
+  <Button variant='base' size='fitted'>Fitted Size</Button>
+</div>`}
       >
         <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
           <Button loading={true}>Loading</Button>
@@ -136,6 +150,14 @@ export function ButtonPage() {
         title='Links'
         description='Buttons that function as links to external or internal destinations.'
         id='links'
+        code={`<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+  <Button href='https://google.com' target='_blank' rel='noopener noreferrer'>
+    External Link
+  </Button>
+  <Button href='https://google.com' disabled={true}>
+    Disabled Link
+  </Button>
+</div>`}
       >
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           <Button href='https://google.com' target='_blank' rel='noopener noreferrer'>
@@ -151,6 +173,21 @@ export function ButtonPage() {
         title='Usage Examples'
         description='Common button usage patterns in real applications.'
         id='usage-examples'
+        code={`<div className='space-y-4'>
+  <div className='flex gap-2'>
+    <Button>Save Changes</Button>
+    <Button variant='outline'>Cancel</Button>
+  </div>
+  <div className='flex gap-2'>
+    <Button variant='destructive'>Delete</Button>
+    <Button variant='secondary'>Archive</Button>
+  </div>
+  <div className='text-center'>
+    <Button size='fitted' variant='link'>
+      Learn More →
+    </Button>
+  </div>
+</div>`}
       >
         <div className='space-y-4'>
           <div className='flex gap-2'>
