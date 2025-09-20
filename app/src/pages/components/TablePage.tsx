@@ -1,7 +1,6 @@
-import { Badge } from '@moondreamsdev/dreamer-ui/components';
+import { Badge, Table, TableColumn } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
-import { Table, TableColumn } from '../../../table';
 
 const tableOfContents = [
 	{ id: 'basic-table', title: 'Basic Usage', level: 1 },

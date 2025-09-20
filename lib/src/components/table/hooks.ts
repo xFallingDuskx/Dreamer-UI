@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
 
-export type SortDirection = 'asc' | 'desc' | null;
+export type TableSortDirection = 'asc' | 'desc' | null;
 
 export interface SortConfig<T> {
 	key: keyof T | null;
-	direction: SortDirection;
+	direction: TableSortDirection;
 }
 
 export interface UseTableSortOptions<T> {

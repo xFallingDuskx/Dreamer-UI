@@ -1,9 +1,9 @@
-import { Checkbox } from '@moondreamsdev/dreamer-ui/components';
-import { ChevronDown, ChevronUp } from '@moondreamsdev/dreamer-ui/symbols';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React from 'react';
 import { useTableSelection, useTableSort } from './hooks';
 import { TableSize, TableSizes } from './variants';
+import { join } from '../../utils';
+import { Checkbox } from '../checkbox';
+import { ChevronDown, ChevronUp } from '../../symbols';
 
 export interface TableColumn<T extends object, U = unknown> {
 	/** Unique key for the column. Used for cell value if no `accessor` is provided. */
