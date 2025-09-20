@@ -98,7 +98,7 @@ const sortableColumns: TableColumn<User>[] = [
     header: 'Score',
     accessor: 'score',
     sortable: true,
-    align: 'right',
+    align: 'center',
   },
   {
     key: 'lastLogin',

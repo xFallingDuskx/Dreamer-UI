@@ -1,9 +1,8 @@
 import React from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import { ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
+import { ChevronDown, ChevronUp } from '@moondreamsdev/dreamer-ui/symbols';
 import { TableSize, TableSizes } from './variants';
 import { useTableSort, useTableSelection, SortDirection } from './hooks';
-import { ChevronUp, SortIcon } from './icons';
 import { Checkbox } from '@moondreamsdev/dreamer-ui/components';
 
 export interface TableColumn<T extends object, U = unknown> {
@@ -67,12 +66,13 @@ export interface TableProps<T extends object> {
 }
 
 function getSortIcon(sortDirection: SortDirection, size: number = 12) {
-	if (sortDirection === 'asc') {
-		return <ChevronUp size={size} />;
-	} else if (sortDirection === 'desc') {
-		return <ChevronDown size={size} />;
-	}
-	return <SortIcon size={size} className='opacity-60' />;
+
+  return (
+    <div className='flex flex-col items-center -space-y-1'>
+      <ChevronUp size={size - 2} className={sortDirection === 'asc' ? 'text-accent' : 'opacity-40'} />
+      <ChevronDown size={size} className={sortDirection === 'desc' ? 'text-accent' : 'opacity-40'} />
+    </div>
+  )
 }
 
 export function Table<T extends object>({
