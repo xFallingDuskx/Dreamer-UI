@@ -21,6 +21,7 @@ import { SkeletonPage } from './pages/components/SkeletonPage';
 import { CalloutPage } from './pages/components/CalloutPage';
 import { FormPage } from './pages/components/FormPage';
 import { CardPage } from './pages/components/CardPage';
+import { TablePage } from './pages/components/TablePage';
 import { DynamicListPage } from './pages/components/DynamicListPage';
 import { ErrorBoundaryPage } from './pages/components/ErrorBoundaryPage';
 
@@ -65,6 +66,7 @@ function App() {
               <Route path='components/modal' element={<ModalPage />} />
               <Route path='components/codeblock' element={<CodeBlockPage />} />
               <Route path='components/callout' element={<CalloutPage />} />
+              <Route path='components/table' element={<TablePage />} />
               <Route path='components/error-boundary' element={<ErrorBoundaryPage />} />
               <Route path='components/form' element={<FormPage />} />
 

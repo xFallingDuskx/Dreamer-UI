@@ -51,6 +51,61 @@ const components = [
     description: 'Interactive list component with add, delete, and reorder functionality via drag-and-drop or buttons.',
     category: 'Display',
   },
+  {
+    name: 'Input',
+    path: '/components/input',
+    description: 'Flexible input component with validation states and different types.',
+    category: 'Form',
+  },
+  {
+    name: 'Modal',
+    path: '/components/modal',
+    description: 'Overlay component for forms, confirmations, and interactive content.',
+    category: 'Overlay',
+  },
+  {
+    name: 'Skeleton',
+    path: '/components/skeleton',
+    description: 'Loading placeholders that mimic the structure of your content.',
+    category: 'Feedback',
+  },
+  {
+    name: 'Table',
+    path: '/components/table',
+    description: 'Data table component with sorting, selection, custom cells, and responsive design.',
+    category: 'Display',
+  },
+  // Placeholder for future components
+  {
+    name: 'Textarea',
+    path: '/components/textarea',
+    description: 'Multi-line text input with auto-expand and character limit features.',
+    category: 'Form',
+  },
+  {
+    name: 'Select',
+    path: '/components/select',
+    description: 'Dropdown selection component with search and keyboard navigation.',
+    category: 'Form',
+  },
+  {
+    name: 'Checkbox',
+    path: '/components/checkbox',
+    description: 'Customizable checkbox with different sizes and colors.',
+    category: 'Form',
+  },
+  {
+    name: 'Toast',
+    path: '/components/toast',
+    description: 'Notification component for displaying temporary messages.',
+    category: 'Feedback',
+  },
+  {
+    name: 'Callout',
+    path: '/components/callout',
+    description: 'Versatile component for displaying alerts, warnings, and informational messages.',
+    category: 'Feedback',
+  },
 	{
 		name: 'Modal',
 		path: '/components/modal',
@@ -87,19 +142,7 @@ const components = [
 		path: '/components/form',
 		description: 'Flexible form component using factory pattern with built-in validation and state management.',
 		category: 'Form',
-	},
-	{
-		name: 'Toast',
-		path: '/components/toast',
-		description: 'Notification component for displaying temporary messages.',
-		category: 'Feedback',
-	},
-	{
-		name: 'Callout',
-		path: '/components/callout',
-		description: 'Versatile component for displaying alerts, warnings, and informational messages.',
-		category: 'Feedback',
-	},
+	}
 ];
 
 const categories = Array.from(new Set(components.map((c) => c.category)));
