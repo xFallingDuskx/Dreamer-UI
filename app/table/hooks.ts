@@ -1,28 +1,29 @@
-import React, { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 export type SortDirection = 'asc' | 'desc' | null;
 
-export interface SortConfig {
-  key: string;
+export interface SortConfig<T> {
+  key: keyof T | null;
   direction: SortDirection;
 }
 
 export interface UseTableSortOptions<T> {
   data: T[];
-  initialSort?: SortConfig;
+  initialSort?: SortConfig<T>;
 }
 
 export interface UseTableSortResult<T> {
   sortedData: T[];
-  sortConfig: SortConfig;
-  handleSort: (key: string, customSorter?: (a: T, b: T) => number) => void;
+  sortConfig: SortConfig<T>;
+  handleSort: (key: keyof T, customSorter?: (a: T, b: T) => number) => void;
 }
 
 export function useTableSort<T>({
   data,
-  initialSort = { key: '', direction: null },
+  initialSort = { key: null, direction: null },
 }: UseTableSortOptions<T>): UseTableSortResult<T> {
-  const [sortConfig, setSortConfig] = useState<SortConfig>(initialSort);
+  const [sortConfig, setSortConfig] = useState<SortConfig<T>>(initialSort);
+  const [sortFn, setSortFn] = useState<((a: T, b: T) => number)>();
 
   const sortedData = useMemo(() => {
     if (!sortConfig.key || !sortConfig.direction) {
@@ -30,8 +31,14 @@ export function useTableSort<T>({
     }
 
     return [...data].sort((a, b) => {
-      const aValue = (a as any)[sortConfig.key];
-      const bValue = (b as any)[sortConfig.key];
+      if (sortFn) {
+        console.log('Custom sort function applied'); // REMOVE
+        const result = sortFn(a, b);
+        return sortConfig.direction === 'desc' ? -result : result;
+      }
+
+      const aValue = a[sortConfig.key!];
+      const bValue = b[sortConfig.key!];
 
       if (aValue === bValue) return 0;
 
@@ -51,14 +58,15 @@ export function useTableSort<T>({
 
       return sortConfig.direction === 'desc' ? -result : result;
     });
-  }, [data, sortConfig]);
+  }, [data, sortConfig, sortFn]);
 
-  const handleSort = (key: string, customSorter?: (a: T, b: T) => number) => {
+  const handleSort = (key: keyof T, customSorter?: (a: T, b: T) => number) => {
+    setSortFn(() => customSorter);
     setSortConfig((prevConfig) => {
       if (prevConfig.key === key) {
         // Cycle through: asc -> desc -> null
         const direction = prevConfig.direction === 'asc' ? 'desc' : prevConfig.direction === 'desc' ? null : 'asc';
-        return { key: direction ? key : '', direction };
+        return { key: direction ? key : null, direction };
       } else {
         return { key, direction: 'asc' };
       }
@@ -69,7 +77,7 @@ export function useTableSort<T>({
 }
 
 export interface UseTableSelectionOptions {
-  initialSelected?: string[] | number[];
+  initialSelected?: (string | number)[];
 }
 
 export interface UseTableSelectionResult {

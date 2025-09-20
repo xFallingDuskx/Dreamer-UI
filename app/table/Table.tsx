@@ -5,18 +5,18 @@ import { TableSize, TableSizes } from './variants';
 import { useTableSort, useTableSelection, SortDirection } from './hooks';
 import { ChevronUp, SortIcon } from './icons';
 
-export interface TableColumn<T = any> {
+export interface TableColumn<T extends object, U = unknown> {
   /** Unique key for the column */
-  key: string;
+  key: Extract<keyof T, string>;
   /** Column header label */
   header: string;
   /** Accessor function or property name to get cell value */
-  accessor?: keyof T | ((item: T) => any);
+  accessor?: keyof T | ((item: T) => U);
   /** Custom cell renderer */
-  cell?: (item: T, value: any) => React.ReactNode;
+  cell?: (item: T, value: U) => React.ReactNode;
   /** Whether the column is sortable */
   sortable?: boolean;
-  /** Custom sort function */
+  /** Custom sort function. Negative result indicates descending order. */
   sortFunction?: (a: T, b: T) => number;
   /** Column width */
   width?: string;
@@ -28,7 +28,7 @@ export interface TableColumn<T = any> {
   cellClassName?: string;
 }
 
-export interface TableProps<T = any> {
+export interface TableProps<T extends object> {
   /** Unique identifier for the table */
   id?: string;
   /** Custom CSS classes */
@@ -74,7 +74,7 @@ function getSortIcon(sortDirection: SortDirection, size: number = 12) {
   return <SortIcon size={size} className="opacity-60" />;
 }
 
-export function Table<T = any>({
+export function Table<T extends object>({
   id,
   className,
   ref,
@@ -98,7 +98,7 @@ export function Table<T = any>({
   
   const { sortedData, sortConfig, handleSort } = useTableSort({ 
     data,
-    initialSort: { key: '', direction: null }
+    initialSort: { key: null, direction: null }
   });
 
   const {
@@ -137,7 +137,7 @@ export function Table<T = any>({
         return item[column.accessor];
       }
     }
-    return (item as any)[column.key];
+    return (item)[column.key];
   };
 
   const renderCell = (item: T, column: TableColumn<T>) => {
@@ -147,7 +147,7 @@ export function Table<T = any>({
       return column.cell(item, value);
     }
     
-    return value;
+    return <>{value}</>;
   };
 
   const getAlignmentClass = (align?: 'left' | 'center' | 'right') => {

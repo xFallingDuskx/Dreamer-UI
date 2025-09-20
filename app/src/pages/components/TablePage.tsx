@@ -131,6 +131,8 @@ const customCellColumns: TableColumn<User>[] = [
         {user.role}
       </Badge>
     ),
+    sortable: true,
+    sortFunction: (a, b) => b.role.length - a.role.length, // Example custom sort by role name length
   },
   {
     key: 'status',
