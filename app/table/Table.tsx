@@ -19,13 +19,15 @@ export interface TableColumn<T extends object, U = unknown> {
 	/** Custom sort function. Negative result indicates descending order. */
 	sortFunction?: (a: T, b: T) => number;
 	/** Column width */
-	width?: string;
+	width?: string | number;
 	/** Column alignment */
 	align?: 'left' | 'center' | 'right';
 	/** Additional header class names */
 	headerClassName?: string;
 	/** Additional cell class names */
 	cellClassName?: string;
+  /** Additional column class names */
+  columnClassName?: string;
 }
 
 export interface TableProps<T extends object> {
@@ -192,6 +194,13 @@ export function Table<T extends object>({
 			<table className={sizeVariant.table} role='table'>
 				{caption && <caption className='sr-only'>{caption}</caption>}
 
+        <colgroup>
+          {selectable && <col style={{ width: '1%' }} />}
+          {columns.map((column) => (
+            <col key={column.key} style={column.width ? { width: column.width } : {}} className={column.columnClassName} />
+          ))}
+        </colgroup>
+
 				{showHeader && (
 					<thead className={sizeVariant.header} role='rowgroup'>
 						<tr role='row'>
@@ -214,7 +223,6 @@ export function Table<T extends object>({
 									<th
 										key={column.key}
 										className={join(sizeVariant.headerCell, getAlignmentClass(column.align), column.headerClassName)}
-										style={column.width ? { width: column.width } : undefined}
 										role='columnheader'
 										aria-sort={
 											sortConfig.key === column.key
