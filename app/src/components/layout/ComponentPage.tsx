@@ -149,15 +149,12 @@ export function ComponentPage({
 		}
 	};
 
-	const handleScrollIntoView = useCallback(
-		(el: HTMLElement) => {
-			if (isScrollingRef.current) return;
-			isScrollingRef.current = true;
-			el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-			setTimeout(() => (isScrollingRef.current = false), 500); // Prevent multiple scrolls within 0.5 second
-		},
-		[]
-	);
+	const handleScrollIntoView = useCallback((el: HTMLElement) => {
+		if (isScrollingRef.current) return;
+		isScrollingRef.current = true;
+		el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		setTimeout(() => (isScrollingRef.current = false), 500); // Prevent multiple scrolls within 0.5 second
+	}, []);
 
 	useLayoutEffect(() => {
 		if (usageInstructionsRef.current) {
@@ -186,7 +183,7 @@ export function ComponentPage({
 			if (element) {
 				// Small delay to ensure the page has rendered
 				setTimeout(() => {
-          handleScrollIntoView(element);
+					handleScrollIntoView(element);
 					setActiveSection(hash);
 				}, 100);
 			}
@@ -287,28 +284,6 @@ export function ComponentPage({
 					</div>
 				)}
 
-				{/* Examples Section */}
-				{examples && examples.length > 0 && (
-					<div className={join('mb-8', tableOfContents?.length ? 'lg:mr-48 2xl:mr-24' : '')} id='examples'>
-						<SectionHeader id='examples' level={1}>
-							Examples
-						</SectionHeader>
-						<div className='space-y-12'>
-							{examples.map((example) => (
-								<ExampleSection
-									key={example.id}
-									title={example.title}
-									description={example.description}
-									id={example.id}
-									code={example.code}
-								>
-									{example.children}
-								</ExampleSection>
-							))}
-						</div>
-					</div>
-				)}
-
 				{/* Mobile TOC Toggle using Disclosure */}
 				{tableOfContents?.length && (
 					<div className='lg:hidden mb-6'>
@@ -334,9 +309,32 @@ export function ComponentPage({
 
 				{/* Main Content */}
 				<div ref={mainContentRef} className={join(tableOfContents?.length ? 'lg:mr-48 2xl:mr-24' : '')}>
-					<div className='bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6 lg:p-8'>
-						{children}
-					</div>
+					{examples && examples.length > 0 && (
+						<div className='mb-8' id='examples'>
+							<SectionHeader id='examples' level={1}>
+								Examples
+							</SectionHeader>
+							<div className='space-y-12'>
+								{examples.map((example) => (
+									<ExampleSection
+										key={example.id}
+										title={example.title}
+										description={example.description}
+										id={example.id}
+										code={example.code}
+									>
+										{example.children}
+									</ExampleSection>
+								))}
+							</div>
+						</div>
+					)}
+
+					{children && (
+						<div className='bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6 lg:p-8'>
+							{children}
+						</div>
+					)}
 
 					{/* Component Props */}
 					{componentProps && componentProps.length > 0 && (
@@ -344,51 +342,50 @@ export function ComponentPage({
 							<SectionHeader id='props' level={1}>
 								Props
 							</SectionHeader>
-							<div className='bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6 lg:p-8'>
-								<Table
-									data={componentProps}
-									columns={[
-										{
-											key: 'name',
-											header: 'Name',
-											cell: (prop) => <Code content={prop.name} variant='accent' />,
-										},
-										{
-											key: 'type',
-											header: 'Type',
-											cell: (prop) => <Code content={prop.type} variant='modest' />,
-										},
-										{
-											key: 'default',
-											header: 'Default',
-											cell: (prop) =>
-												prop.default ? (
-													<Code content={prop.default} variant='modest' />
-												) : (
-													<span className='text-gray-500'>-</span>
-												),
-										},
-										{
-											key: 'required',
-											header: 'Required',
-											align: 'center',
-											cell: (prop) =>
-												prop.required ? (
-													<span className='text-red-400 font-bold'>Yes</span>
-												) : (
-													<span className='text-gray-500 font-medium'>No</span>
-												),
-										},
-										{
-											key: 'description',
-											header: 'Description',
-											cell: (prop) => <span className='text-gray-300'>{prop.description}</span>,
-										},
-									]}
-									size='sm'
-									hoverable={true}
-								/>
-							</div>
+							<Table
+								data={componentProps}
+								columns={[
+									{
+										key: 'name',
+										header: 'Name',
+										cell: (prop) => <Code content={prop.name} variant='accent' />,
+									},
+									{
+										key: 'type',
+										header: 'Type',
+										cell: (prop) => <Code content={prop.type} variant='modest' />,
+									},
+									{
+										key: 'default',
+										header: 'Default',
+										cell: (prop) =>
+											prop.default ? (
+												<Code content={prop.default} variant='modest' />
+											) : (
+												<span className='text-gray-500'>-</span>
+											),
+									},
+									{
+										key: 'required',
+										header: 'Required',
+										align: 'center',
+										cell: (prop) =>
+											prop.required ? (
+												<span className='text-red-400 font-bold'>Yes</span>
+											) : (
+												<span className='text-gray-500 font-medium'>No</span>
+											),
+									},
+									{
+										key: 'description',
+										header: 'Description',
+										cell: (prop) => <span className='text-gray-300'>{prop.description}</span>,
+									},
+								]}
+								size='sm'
+								hoverable={true}
+								className='bg-gray-900/50'
+							/>
 						</div>
 					)}
 
@@ -398,26 +395,25 @@ export function ComponentPage({
 							<SectionHeader id='keyboard-shortcuts' level={1}>
 								Keyboard Shortcuts
 							</SectionHeader>
-							<div className='bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6 lg:p-8'>
-								<Table
-									data={keyboardShortcuts}
-									columns={[
-										{
-											key: 'keys',
-											header: 'Keys',
-											cell: (shortcut) => <Code content={shortcut.keys} variant='accent' />,
-											cellClassName: 'py-4',
-										},
-										{
-											key: 'description',
-											header: 'Description',
-											cell: (shortcut) => <span className='text-gray-300'>{shortcut.description}</span>,
-										},
-									]}
-									size='sm'
-									hoverable={true}
-								/>
-							</div>
+							<Table
+								data={keyboardShortcuts}
+								columns={[
+									{
+										key: 'keys',
+										header: 'Keys',
+										cell: (shortcut) => <Code content={shortcut.keys} variant='accent' />,
+										cellClassName: 'py-4',
+									},
+									{
+										key: 'description',
+										header: 'Description',
+										cell: (shortcut) => <span className='text-gray-300'>{shortcut.description}</span>,
+									},
+								]}
+								size='sm'
+								hoverable={true}
+								className='bg-gray-900/50'
+							/>
 						</div>
 					)}
 				</div>
