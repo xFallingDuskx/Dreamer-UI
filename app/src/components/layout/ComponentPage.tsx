@@ -1,53 +1,49 @@
 import { Button, Code, CodeBlock, Disclosure, Table } from '@moondreamsdev/dreamer-ui/components';
 import { Check, Copy } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 // SectionHeader component with hover link functionality
 interface SectionHeaderProps {
-  id: string;
-  children: React.ReactNode;
-  level: 1 | 2;
-  className?: string;
+	id: string;
+	children: React.ReactNode;
+	level: 1 | 2;
+	className?: string;
 }
 
 function SectionHeader({ id, children, level, className }: SectionHeaderProps) {
-  const [isHovered, setIsHovered] = useState(false);
-  
-  const handleCopyLink = () => {
-    const url = new URL(window.location.href);
-    url.hash = id;
-    navigator.clipboard.writeText(url.toString());
-  };
+	const [isHovered, setIsHovered] = useState(false);
 
-  const Tag = level === 1 ? 'h1' : 'h2';
-  const textSize = level === 1 ? 'text-2xl' : 'text-lg';
+	const handleCopyLink = () => {
+		const url = new URL(window.location.href);
+		url.hash = id;
+		navigator.clipboard.writeText(url.toString());
+	};
 
-  return (
-    <Tag
-      className={join(
-        'group relative flex items-center font-semibold text-white mb-4',
-        textSize,
-        className
-      )}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <button
-        onClick={handleCopyLink}
-        className={join(
-          'absolute -left-7 w-6 h-6 flex items-center justify-center rounded text-accent transition-opacity',
-          isHovered ? 'opacity-100' : 'opacity-0'
-        )}
-        title={`Copy link to ${children}`}
-      >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/>
-        </svg>
-      </button>
-      {children}
-    </Tag>
-  );
+	const Tag = level === 1 ? 'h1' : 'h2';
+	const textSize = level === 1 ? 'text-2xl' : 'text-lg';
+
+	return (
+		<Tag
+			className={join('group relative flex items-center font-semibold text-white mb-4', textSize, className)}
+			onMouseEnter={() => setIsHovered(true)}
+			onMouseLeave={() => setIsHovered(false)}
+		>
+			<button
+				onClick={handleCopyLink}
+				className={join(
+					'absolute -left-7 w-6 h-6 flex items-center justify-center rounded text-accent transition-opacity',
+					isHovered ? 'opacity-100' : 'opacity-0'
+				)}
+				title={`Copy link to ${children}`}
+			>
+				<svg width='16' height='16' viewBox='0 0 16 16' fill='currentColor'>
+					<path d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z' />
+				</svg>
+			</button>
+			{children}
+		</Tag>
+	);
 }
 
 interface TableOfContentsItem {
@@ -94,6 +90,7 @@ export function ComponentPage({
 	const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
 	const [mainContentTop, setMainContentTop] = useState<number | undefined>(); // Default to 3rem (48px)
 	const [copied, setCopied] = useState<boolean>(false);
+	const isScrollingRef = useRef(false);
 	const usageInstructionsRef = useRef<HTMLDivElement | null>(null);
 	const importStatementRef = useRef<HTMLDivElement | null>(null);
 	const mainContentRef = useRef<HTMLDivElement | null>(null);
@@ -141,6 +138,16 @@ export function ComponentPage({
 		}
 	};
 
+	const handleScrollIntoView = useCallback(
+		(el: HTMLElement) => {
+			if (isScrollingRef.current) return;
+			isScrollingRef.current = true;
+			el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			setTimeout(() => (isScrollingRef.current = false), 1000); // Prevent multiple scrolls within 1 second
+		},
+		[]
+	);
+
 	useLayoutEffect(() => {
 		if (usageInstructionsRef.current) {
 			const rect = usageInstructionsRef.current.getBoundingClientRect();
@@ -168,7 +175,7 @@ export function ComponentPage({
 			if (element) {
 				// Small delay to ensure the page has rendered
 				setTimeout(() => {
-					element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          handleScrollIntoView(element);
 					setActiveSection(hash);
 				}, 100);
 			}
@@ -177,7 +184,7 @@ export function ComponentPage({
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
+					if (entry.isIntersecting && !isScrollingRef.current) {
 						const newActiveSection = entry.target.id;
 						setActiveSection(newActiveSection);
 					}
@@ -194,12 +201,12 @@ export function ComponentPage({
 		});
 
 		return () => observer.disconnect();
-	}, [tableOfContents]);
+	}, [tableOfContents, handleScrollIntoView]);
 
 	const scrollToSection = (id: string) => {
 		const element = document.getElementById(id);
 		if (element) {
-			element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			handleScrollIntoView(element);
 			setIsTocOpen(false); // Close mobile TOC after clicking
 
 			// Update URL hash
@@ -252,8 +259,10 @@ export function ComponentPage({
 
 				{/* Import Statement */}
 				{importStatement && (
-					<div className={join('mb-8', tableOfContents?.length ? 'lg:mr-48 2xl:mr-24' : '')} id="import">
-						<SectionHeader id="import" level={1}>Import</SectionHeader>
+					<div className={join('mb-8', tableOfContents?.length ? 'lg:mr-48 2xl:mr-24' : '')} id='import'>
+						<SectionHeader id='import' level={1}>
+							Import
+						</SectionHeader>
 						<CodeBlock
 							code={importStatement}
 							language='typescript'
@@ -298,8 +307,10 @@ export function ComponentPage({
 
 					{/* Component Props */}
 					{componentProps && componentProps.length > 0 && (
-						<div className='mt-8' id="props">
-							<SectionHeader id="props" level={1}>Props</SectionHeader>
+						<div className='mt-8' id='props'>
+							<SectionHeader id='props' level={1}>
+								Props
+							</SectionHeader>
 							<div className='bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6 lg:p-8'>
 								<Table
 									data={componentProps}
@@ -350,8 +361,10 @@ export function ComponentPage({
 
 					{/* Keyboard Shortcuts */}
 					{keyboardShortcuts && keyboardShortcuts.length > 0 && (
-						<div className='mt-8' id="keyboard-shortcuts">
-							<SectionHeader id="keyboard-shortcuts" level={1}>Keyboard Shortcuts</SectionHeader>
+						<div className='mt-8' id='keyboard-shortcuts'>
+							<SectionHeader id='keyboard-shortcuts' level={1}>
+								Keyboard Shortcuts
+							</SectionHeader>
 							<div className='bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6 lg:p-8'>
 								<Table
 									data={keyboardShortcuts}
