@@ -21,21 +21,22 @@ export function ExampleSection({ title, description, children, className = '', i
           <p className='text-gray-400'>{description}</p>
         )}
       </div>
-      <div className='bg-gray-800/50 border border-gray-600 rounded-xl p-6'>
+      <div className='bg-gray-800/50 rounded-xl p-6'>
         {code ? (
           <Tabs defaultValue="preview" className="w-full">
             <TabsList className="mb-4">
               <TabsTrigger value="preview">Preview</TabsTrigger>
               <TabsTrigger value="code">Code</TabsTrigger>
             </TabsList>
-            <TabsContent value="preview">
+            <TabsContent value="preview" className="border-0">
               {children}
             </TabsContent>
-            <TabsContent value="code">
+            <TabsContent value="code" className="border-0">
               <CodeBlock
                 code={code}
                 language="tsx"
                 hideHeader={true}
+                hideFiletype={true}
                 allowCopy={true}
                 allowFullscreen={false}
                 allowDownload={false}

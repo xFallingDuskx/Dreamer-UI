@@ -1,4 +1,4 @@
-import { Button, CodeBlock, Table } from '@moondreamsdev/dreamer-ui/components';
+import { Button, CodeBlock, Table, Code } from '@moondreamsdev/dreamer-ui/components';
 import { Copy } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { Disclosure } from '@moondreamsdev/dreamer-ui/components';
@@ -164,29 +164,25 @@ export function ComponentPage({
       <div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
         {/* Header */}
         <div className='text-center mb-12'>
-          <div className='flex justify-between items-start mb-4'>
-            <div className='flex-1'>
-              <h1 className='text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4'>
-                {title}
-              </h1>
-            </div>
-            <Button
-              variant='outline'
-              size='fitted'
+          <div className='flex justify-center items-center mb-4 relative'>
+            <h1 className='text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent'>
+              {title}
+            </h1>
+            <button
               onClick={handleCopyMarkdown}
-              className='ml-4 mt-2'
               disabled={copied}
+              className='absolute right-0 top-1/2 -translate-y-1/2 inline-flex items-center gap-2 px-3 py-1.5 text-sm text-gray-400 hover:text-white bg-gray-800/50 hover:bg-gray-700/50 border border-gray-600 hover:border-gray-500 rounded-lg transition-all duration-200'
             >
-              <Copy size={14} className='mr-2' />
-              {copied ? 'Copied!' : 'Copy as Markdown'}
-            </Button>
+              <Copy size={14} />
+              <span>{copied ? 'Copied!' : 'Copy Page'}</span>
+            </button>
           </div>
           <p className='text-xl text-gray-300 max-w-2xl mx-auto'>{description}</p>
         </div>
 
         {/* Usage Instructions */}
         {usageInstructions && (
-          <div className='mb-8'>
+          <div className={join('mb-8', tableOfContents?.length ? 'lg:mr-48 2xl:mr-24' : '')}>
             <div className='bg-blue-500/10 border border-blue-500/50 rounded-xl p-6'>
               <h2 className='text-lg font-semibold text-white mb-3'>Usage Instructions</h2>
               <p className='text-gray-300'>{usageInstructions}</p>
@@ -196,12 +192,13 @@ export function ComponentPage({
 
         {/* Import Statement */}
         {importStatement && (
-          <div className='mb-8'>
+          <div className={join('mb-8', tableOfContents?.length ? 'lg:mr-48 2xl:mr-24' : '')}>
             <h2 className='text-lg font-semibold text-white mb-3'>Import</h2>
             <CodeBlock
               code={importStatement}
               language='typescript'
               hideHeader={true}
+              hideFiletype={true}
               allowCopy={true}
               allowFullscreen={false}
               allowDownload={false}
@@ -249,17 +246,17 @@ export function ComponentPage({
                     { 
                       key: 'name', 
                       header: 'Name', 
-                      cell: (prop) => <code className='text-primary text-sm px-2 py-1 bg-gray-800 rounded'>{prop.name}</code>
+                      cell: (prop) => <Code content={prop.name} variant='accent' />
                     },
                     { 
                       key: 'type', 
                       header: 'Type', 
-                      cell: (prop) => <code className='text-gray-300 text-sm'>{prop.type}</code>
+                      cell: (prop) => <Code content={prop.type} variant='modest' />
                     },
                     { 
                       key: 'default', 
                       header: 'Default',
-                      cell: (prop) => prop.default ? <code className='text-gray-400 text-sm'>{prop.default}</code> : <span className='text-gray-500'>-</span>
+                      cell: (prop) => prop.default ? <Code content={prop.default} variant='modest' /> : <span className='text-gray-500'>-</span>
                     },
                     { 
                       key: 'required', 
@@ -294,7 +291,7 @@ export function ComponentPage({
                     { 
                       key: 'keys', 
                       header: 'Keys', 
-                      cell: (shortcut) => <code className='text-primary text-sm px-2 py-1 bg-gray-800 rounded'>{shortcut.keys}</code>
+                      cell: (shortcut) => <Code content={shortcut.keys} variant='accent' />
                     },
                     { 
                       key: 'description', 
