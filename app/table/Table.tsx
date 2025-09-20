@@ -6,7 +6,7 @@ import { useTableSelection, useTableSort } from './hooks';
 import { TableSize, TableSizes } from './variants';
 
 export interface TableColumn<T extends object, U = unknown> {
-	/** Unique key for the column */
+	/** Unique key for the column. Used for cell value if no `accessor` is provided. */
 	key: Extract<keyof T, string>;
 	/** Column header label */
 	header: string;
