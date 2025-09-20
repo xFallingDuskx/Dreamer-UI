@@ -1,9 +1,9 @@
-import React from 'react';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
-import { ChevronDown, ChevronUp } from '@moondreamsdev/dreamer-ui/symbols';
-import { TableSize, TableSizes } from './variants';
-import { useTableSort, useTableSelection, SortDirection } from './hooks';
 import { Checkbox } from '@moondreamsdev/dreamer-ui/components';
+import { ChevronDown, ChevronUp } from '@moondreamsdev/dreamer-ui/symbols';
+import { join } from '@moondreamsdev/dreamer-ui/utils';
+import React from 'react';
+import { useTableSelection, useTableSort } from './hooks';
+import { TableSize, TableSizes } from './variants';
 
 export interface TableColumn<T extends object, U = unknown> {
 	/** Unique key for the column */
@@ -63,16 +63,6 @@ export interface TableProps<T extends object> {
 	loadingContent?: React.ReactNode;
 	/** Table caption for accessibility */
 	caption?: string;
-}
-
-function getSortIcon(sortDirection: SortDirection, size: number = 12) {
-
-  return (
-    <div className='flex flex-col items-center -space-y-1'>
-      <ChevronUp size={size - 2} className={sortDirection === 'asc' ? 'text-accent' : 'opacity-40'} />
-      <ChevronDown size={size} className={sortDirection === 'desc' ? 'text-accent' : 'opacity-40'} />
-    </div>
-  )
 }
 
 export function Table<T extends object>({
@@ -213,43 +203,55 @@ export function Table<T extends object>({
 										indeterminate={isPartiallySelected(allRowIds)}
 										onCheckedChange={handleSelectAll}
 										aria-label='Select all rows'
-                    className='align-middle'
+										className='align-middle'
 									/>
 								</th>
 							)}
 
-							{columns.map((column) => (
-								<th
-									key={column.key}
-									className={join(sizeVariant.headerCell, getAlignmentClass(column.align), column.headerClassName)}
-									style={column.width ? { width: column.width } : undefined}
-									role='columnheader'
-									aria-sort={
-										sortConfig.key === column.key
-											? sortConfig.direction === 'asc'
-												? 'ascending'
-												: sortConfig.direction === 'desc'
-												? 'descending'
-												: 'none'
-											: column.sortable
-											? 'none'
-											: undefined
-									}
-								>
-									{column.sortable ? (
-										<button
-											className={sizeVariant.sortButton}
-											onClick={() => handleSort(column.key, column.sortFunction)}
-											aria-label={`Sort by ${column.header}`}
-										>
-											{column.header}
-											{getSortIcon(sortConfig.key === column.key ? sortConfig.direction : null)}
-										</button>
-									) : (
-										column.header
-									)}
-								</th>
-							))}
+							{columns.map((column) => {
+								const sortDirection = sortConfig.key === column.key ? sortConfig.direction : null;
+								return (
+									<th
+										key={column.key}
+										className={join(sizeVariant.headerCell, getAlignmentClass(column.align), column.headerClassName)}
+										style={column.width ? { width: column.width } : undefined}
+										role='columnheader'
+										aria-sort={
+											sortConfig.key === column.key
+												? sortConfig.direction === 'asc'
+													? 'ascending'
+													: sortConfig.direction === 'desc'
+													? 'descending'
+													: 'none'
+												: column.sortable
+												? 'none'
+												: undefined
+										}
+									>
+										{column.sortable ? (
+											<button
+												className={sizeVariant.sortButton}
+												onClick={() => handleSort(column.key, column.sortFunction)}
+												aria-label={`Sort by ${column.header}`}
+											>
+												{column.header}
+												<div className='flex flex-col items-center -space-y-1'>
+													<ChevronUp
+														size={sizeVariant.checkboxSize - 4 - 2}
+														className={sortDirection === 'asc' ? 'text-accent' : 'opacity-40'}
+													/>
+													<ChevronDown
+														size={sizeVariant.checkboxSize - 4}
+														className={sortDirection === 'desc' ? 'text-accent' : 'opacity-40'}
+													/>
+												</div>
+											</button>
+										) : (
+											column.header
+										)}
+									</th>
+								);
+							})}
 						</tr>
 					</thead>
 				)}
