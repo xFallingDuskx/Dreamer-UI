@@ -45,6 +45,12 @@ const components = [
 		description: 'Flexible input component with validation states and different types.',
 		category: 'Form',
 	},
+	{
+		name: 'Time',
+		path: '/components/time',
+		description: 'Responsive time picker with device-adaptive interface - dropdown on desktop, clock modal on mobile.',
+		category: 'Form',
+	},
   {
     name: 'List',
     path: '/components/dynamic-list',
