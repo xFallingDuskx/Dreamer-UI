@@ -11,7 +11,7 @@ export interface CalloutProps {
   /**The variant of the Callout. */
   variant?: CalloutVariants;
   /** The icon to display in the top-left corner of the Callout.*/
-  icon?: 'default' | React.ReactElement;
+  icon?: 'default' | string | React.ReactElement;
   /** The title of the Callout. */
   title?: React.ReactNode;
   /** The description of the Callout. */
