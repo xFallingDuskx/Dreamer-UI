@@ -82,7 +82,7 @@ export function ExampleSection({ title, description, children, className = '', i
 						<TabsContent value='preview' className='border-0 py-2'>
 							{children}
 						</TabsContent>
-						<TabsContent value='code' className='border-0'>
+						<TabsContent value='code' className='border-0 pt-1 pb-2'>
 							<CodeBlock
 								code={code}
 								language='tsx'
