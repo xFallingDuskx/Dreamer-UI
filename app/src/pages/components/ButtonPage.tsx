@@ -3,10 +3,14 @@ import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
 
 const tableOfContents = [
-  { id: 'variants', title: 'Variants', level: 1 },
-  { id: 'states', title: 'States', level: 1 },
-  { id: 'links', title: 'Links', level: 1 },
-  { id: 'usage-examples', title: 'Usage Examples', level: 1 },
+  { id: 'import', title: 'Import', level: 1 },
+  { id: 'examples', title: 'Examples', level: 1 },
+  { id: 'variants', title: 'Variants', level: 2 },
+  { id: 'states', title: 'States', level: 2 },
+  { id: 'links', title: 'Links', level: 2 },
+  { id: 'usage-examples', title: 'Usage Examples', level: 2 },
+  { id: 'props', title: 'Props', level: 1 },
+  { id: 'keyboard-shortcuts', title: 'Keyboard Shortcuts', level: 1 },
 ];
 
 const buttonProps = [
@@ -104,10 +108,28 @@ export function ButtonPage() {
       componentProps={buttonProps}
       keyboardShortcuts={keyboardShortcuts}
     >
-      <ExampleSection 
-        title='Variants'
-        description='Different button styles to fit your design needs.'
-        id='variants'
+      <section id="examples">
+        <div className='group relative flex items-center font-semibold text-white mb-6 text-2xl'>
+          <button
+            onClick={() => {
+              const url = new URL(window.location.href);
+              url.hash = 'examples';
+              navigator.clipboard.writeText(url.toString());
+            }}
+            className='absolute -left-8 w-6 h-6 flex items-center justify-center rounded text-accent transition-opacity group-hover:opacity-100 opacity-0'
+            title='Copy link to Examples'
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/>
+            </svg>
+          </button>
+          Examples
+        </div>
+        
+        <ExampleSection 
+          title='Variants'
+          description='Different button styles to fit your design needs.'
+          id='variants'
         code={`<div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
   <Button>Primary</Button>
   <Button variant='secondary'>Secondary</Button>
@@ -205,6 +227,7 @@ export function ButtonPage() {
           </div>
         </div>
       </ExampleSection>
+      </section>
     </ComponentPage>
   );
 }
