@@ -1,5 +1,5 @@
 // Button.tsx
-import { ButtonHTMLAttributes, Ref } from 'react';
+import React, { ButtonHTMLAttributes, Ref } from 'react';
 import { join } from '../../utils';
 import { LoadingDots } from './LoadingDots';
 import { ButtonSize, ButtonVariants, buttonDefaults, buttonVariants, roundedVariants, sizeVariants } from './variants';
@@ -65,6 +65,32 @@ export function Button({
 	}
 
 	const buttonRest = rest as ButtonButtonProps; // necessary to cast to avoid TS complaining
+	const getButtonChildren = () => {
+		if (!buttonRest.children) {
+			return null;
+		}
+
+		if (
+			typeof buttonRest.children === 'string' ||
+			typeof buttonRest.children === 'number' ||
+			typeof buttonRest.children === 'boolean'
+		) {
+			return <span className={join(loading && 'invisible')}>{buttonRest.children}</span>;
+		}
+
+		const clonedChildren = React.Children.map(buttonRest.children, (child, index) => {
+			if (React.isValidElement(child)) {
+				const childrenProps = child.props as { className?: string };
+				return React.cloneElement(child, {
+					key: index,
+					className: join(loading && 'invisible', childrenProps.className),
+				} as Record<string, unknown>);
+			}
+			return child;
+		});
+		return clonedChildren;
+	};
+
 	return (
 		<button
 			{...buttonRest}
@@ -76,7 +102,7 @@ export function Button({
 			className={buttonClasses}
 		>
 			{loading && <LoadingDots />}
-			<span className={join(loading && 'invisible')}>{buttonRest.children}</span>
+			{getButtonChildren()}
 		</button>
 	);
 }
