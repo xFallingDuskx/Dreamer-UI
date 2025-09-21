@@ -1,411 +1,386 @@
-import { CodeBlock, type CodeBlockTokenClasses } from '@moondreamsdev/dreamer-ui/components';
+import { CodeBlock } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
-import { ExampleSection } from '../../components/ui/ExampleSection';
 
-const tableOfContents = [
-  { id: 'basic-usage', title: 'Basic Usage', level: 1 },
-  { id: 'line-numbers', title: 'Line Numbers', level: 1 },
-  { id: 'interactive-features', title: 'Interactive Features', level: 1 },
-  { id: 'styling-options', title: 'Styling Options', level: 1 },
-  { id: 'advanced-examples', title: 'Advanced Examples', level: 1 },
-  { id: 'accessibility-usage', title: 'Accessibility & Usage', level: 1 },
+const componentProps = [
+  {
+    name: 'code',
+    type: 'string',
+    required: true,
+    description: 'The code content to display',
+  },
+  {
+    name: 'language',
+    type: '"typescript" | "ts" | "tsx" | "json" | "bash" | "sh" | "css"',
+    required: true,
+    description: 'Programming language for syntax highlighting',
+  },
+  {
+    name: 'filename',
+    type: 'string',
+    required: false,
+    description: 'Optional filename to display in the header',
+  },
+  {
+    name: 'showLineNumbers',
+    type: 'boolean',
+    required: false,
+    description: 'Whether to show line numbers on the left side',
+    defaultValue: 'false',
+  },
+  {
+    name: 'allowCopy',
+    type: 'boolean',
+    required: false,
+    description: 'Enable copy to clipboard functionality',
+    defaultValue: 'false',
+  },
+  {
+    name: 'allowDownload',
+    type: 'boolean',
+    required: false,
+    description: 'Enable download as file functionality',
+    defaultValue: 'false',
+  },
+  {
+    name: 'allowFullscreen',
+    type: 'boolean',
+    required: false,
+    description: 'Enable fullscreen viewing mode',
+    defaultValue: 'false',
+  },
+  {
+    name: 'showTrafficLights',
+    type: 'boolean',
+    required: false,
+    description: 'Show macOS-style traffic light buttons in header',
+    defaultValue: 'false',
+  },
+  {
+    name: 'hideHeader',
+    type: 'boolean',
+    required: false,
+    description: 'Hide the header completely for a minimal appearance',
+    defaultValue: 'false',
+  },
+  {
+    name: 'maxHeight',
+    type: 'number',
+    required: false,
+    description: 'Maximum height in pixels before showing scroll',
+  },
+];
+
+const codeBlockExamples = [
+  {
+    id: 'basic-usage',
+    title: 'Basic Usage',
+    description: 'Simple code block with syntax highlighting',
+    code: `<CodeBlock
+  code="function greet(name: string) {
+  return \`Hello, \${name}!\`;
+}"
+  language="typescript"
+/>`,
+    children: (
+      <CodeBlock
+        code={`function greet(name: string) {
+  return \`Hello, \${name}!\`;
+}`}
+        language="typescript"
+      />
+    ),
+  },
+  {
+    id: 'with-filename',
+    title: 'With Filename',
+    description: 'Code block displaying a filename in the header',
+    code: `<CodeBlock
+  code="export function Button({ children, onClick }) {
+  return (
+    <button onClick={onClick}>
+      {children}
+    </button>
+  );
+}"
+  language="tsx"
+  filename="Button.tsx"
+/>`,
+    children: (
+      <CodeBlock
+        code={`export function Button({ children, onClick }) {
+  return (
+    <button onClick={onClick}>
+      {children}
+    </button>
+  );
+}`}
+        language="tsx"
+        filename="Button.tsx"
+      />
+    ),
+  },
+  {
+    id: 'interactive-features',
+    title: 'Interactive Features',
+    description: 'Code block with copy, download, and fullscreen capabilities',
+    code: `<CodeBlock
+  code='{
+  "name": "my-app",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite"
+  }
+}'
+  language="json"
+  filename="package.json"
+  allowCopy={true}
+  allowDownload={true}
+  allowFullscreen={true}
+  showTrafficLights={true}
+  maxHeight={300}
+/>`,
+    children: (
+      <CodeBlock
+        code={`{
+  "name": "my-app",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite"
+  }
+}`}
+        language="json"
+        filename="package.json"
+        allowCopy={true}
+        allowDownload={true}
+        allowFullscreen={true}
+        showTrafficLights={true}
+        maxHeight={300}
+      />
+    ),
+  },
+  {
+    id: 'with-line-numbers',
+    title: 'With Line Numbers',
+    description: 'Code block displaying line numbers for easy reference',
+    code: `<CodeBlock
+  code="#!/bin/bash
+
+echo 'Setting up environment...'
+npm install
+echo 'Setup complete!'"
+  language="bash"
+  filename="setup.sh"
+  showLineNumbers={true}
+  allowCopy={true}
+/>`,
+    children: (
+      <CodeBlock
+        code={`#!/bin/bash
+
+echo 'Setting up environment...'
+npm install
+echo 'Setup complete!'`}
+        language="bash"
+        filename="setup.sh"
+        showLineNumbers={true}
+        allowCopy={true}
+      />
+    ),
+  },
+  {
+    id: 'language-examples',
+    title: 'Supported Languages',
+    description: 'Examples of syntax highlighting for different programming languages',
+    code: `// CSS Example
+<CodeBlock
+  code={\`.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card {
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: white;
+}\`}
+  language="css"
+  filename="styles.css"
+  allowCopy
+/>
+
+// JSON Example  
+<CodeBlock
+  code={\`{
+  "name": "my-awesome-app",
+  "version": "2.1.0",
+  "description": "A modern web application",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc && vite build",
+    "test": "vitest",
+    "dev": "vite dev --host"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "typescript": "^5.0.0"
+  }
+}\`}
+  language="json"
+  filename="package.json"
+  allowCopy
+  maxHeight={250}
+/>
+
+// Shell Script Example
+<CodeBlock
+  code={\`#!/bin/bash
+
+# Build and deployment script
+echo "🚀 Starting deployment..."
+
+# Install dependencies
+echo "📦 Installing dependencies..."
+npm ci
+
+# Run tests  
+echo "🧪 Running tests..."
+npm run test
+
+# Build application
+echo "🔨 Building application..."
+npm run build
+
+# Deploy to production
+echo "🌐 Deploying to production..."
+rsync -avz dist/ user@server:/var/www/app/
+
+echo "✅ Deployment completed successfully!"\`}
+  language="bash"
+  filename="deploy.sh"
+  allowCopy
+  showLineNumbers
+  maxHeight={300}
+/>`,
+    children: (
+      <div className="space-y-6">
+        <div>
+          <h4 className="text-sm font-medium mb-2">CSS</h4>
+          <CodeBlock
+            code={`.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card {
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: white;
+}`}
+            language="css"
+            filename="styles.css"
+            allowCopy
+          />
+        </div>
+        <div>
+          <h4 className="text-sm font-medium mb-2">JSON Configuration</h4>
+          <CodeBlock
+            code={`{
+  "name": "my-awesome-app",
+  "version": "2.1.0",
+  "description": "A modern web application",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc && vite build",
+    "test": "vitest",
+    "dev": "vite dev --host"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "typescript": "^5.0.0"
+  }
+}`}
+            language="json"
+            filename="package.json"
+            allowCopy
+            maxHeight={250}
+          />
+        </div>
+        <div>
+          <h4 className="text-sm font-medium mb-2">Shell Script</h4>
+          <CodeBlock
+            code={`#!/bin/bash
+
+# Build and deployment script
+echo "🚀 Starting deployment..."
+
+# Install dependencies
+echo "📦 Installing dependencies..."
+npm ci
+
+# Run tests  
+echo "🧪 Running tests..."
+npm run test
+
+# Build application
+echo "🔨 Building application..."
+npm run build
+
+# Deploy to production
+echo "🌐 Deploying to production..."
+rsync -avz dist/ user@server:/var/www/app/
+
+echo "✅ Deployment completed successfully!"`}
+            language="bash"
+            filename="deploy.sh"
+            allowCopy
+            showLineNumbers
+            maxHeight={300}
+          />
+        </div>
+      </div>
+    ),
+  },
+];
+
+const keyboardShortcuts = [
+  {
+    keys: 'Cmd/Ctrl + C',
+    description: 'Copy code to clipboard when copy button is focused',
+  },
+  {
+    keys: 'Cmd/Ctrl + S',
+    description: 'Download code as file when download button is focused',
+  },
+  {
+    keys: 'Escape',
+    description: 'Exit fullscreen mode',
+  },
+  {
+    keys: 'Tab',
+    description: 'Navigate between interactive elements',
+  },
 ];
 
 export function CodeBlockPage() {
-  // Example code snippets
-  const basicTypeScript = `interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
-function createUser(userData: Omit<User, 'id'>): User {
-  return {
-    id: Math.floor(Math.random() * 1000),
-    ...userData
-  };
-}`;
-
-  const reactExample = `import { useState, useCallback } from 'react';
-
-interface CounterProps {
-  initialCount?: number;
-  onCountChange?: (count: number) => void;
-}
-
-export default function Counter({ 
-  initialCount = 0, 
-  onCountChange
-}: CounterProps) {
-  const [count, setCount] = useState<number>(initialCount);
-
-  const increment = useCallback(() => {
-    const newCount = count + 1;
-    setCount(newCount);
-    onCountChange?.(newCount);
-  }, [count, onCountChange]);
-
-  return (
-    <div className="counter">
-      <span>Count: {count}</span>
-      <button onClick={increment}>+</button>
-    </div>
-  );
-}`;
-
-  const complexExample = `class UserService {
-  private readonly apiUrl = 'https://api.example.com/users';
-  private cache = new Map<string, User[]>();
-
-  async fetchUsers(filter?: UserFilter): Promise<User[]> {
-    try {
-      const cacheKey = this.generateCacheKey(filter);
-      
-      if (this.cache.has(cacheKey)) {
-        return this.cache.get(cacheKey)!;
-      }
-
-      const response = await fetch(\`\${this.apiUrl}?\${this.buildQuery(filter)}\`);
-      
-      if (!response.ok) {
-        throw new Error(\`HTTP \${response.status}: \${response.statusText}\`);
-      }
-
-      const users = await response.json();
-      this.cache.set(cacheKey, users);
-      
-      return users;
-    } catch (error) {
-      console.error('Failed to fetch users:', error);
-      throw new Error('Unable to load users. Please try again later.');
-    }
-  }
-
-  private generateCacheKey(filter?: UserFilter): string {
-    return JSON.stringify(filter || {});
-  }
-
-  private buildQuery(filter?: UserFilter): string {
-    if (!filter) return '';
-    
-    return Object.entries(filter)
-      .filter(([_, value]) => value !== undefined)
-      .map(([key, value]) => \`\${key}=\${encodeURIComponent(String(value))}\`)
-      .join('&');
-  }
-}`;
-
-  const basicJson = `{
-  "id": 123,
-  "name": "Dreamer UI",
-  "active": true,
-  "tags": ["react", "ui", "json"],
-  "meta": {
-    "created": "2025-09-02T12:00:00Z",
-    "contributors": ["Alice", "Bob"]
-  }
-}`;
-
-  const bashExample = `#!/bin/bash
-# This is a sample Bash script
-
-# Define variables
-NAME="Stephon"
-COUNT=3
-
-# Print a greeting
-echo "Hello, $NAME!"
-
-# Loop example
-for i in $(seq 1 $COUNT); do
-  echo "Iteration $i"
-done
-
-# Conditional example
-if [ $COUNT -gt 2 ]; then
-  echo "Count is greater than 2"
-else
-  echo "Count is 2 or less"
-fi
-
-# Using options with a command
-ls -lh --color=auto
-
-# Redirect output to a file
-echo "This will be saved to output.txt" > output.txt
-
-# Append to the same file
-echo "Appending another line" >> output.txt
-
-# End of script`;
-
-const cssExample = `@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-/*
-This is a multiline comment in CSS.
-You can write multiple lines of text here
-to explain your code or temporarily disable a block of styles.
-*/
-
-
-body {
-  font-family: 'Roboto', Arial, sans-serif; /* Apply the Roboto font */
-  background-color: #f0f0f0;
-}
-
-h1 {
-  color: #333;
-}
-
-p {
-  line-height: 1.5;
-}
-`;
-
-  const customTokenClasses: CodeBlockTokenClasses = {
-    keyword: 'text-purple-400 font-bold',
-    function: 'text-blue-400 font-semibold',
-    string: 'text-green-400',
-    type: 'text-yellow-400 font-medium',
-    comment: 'text-gray-500 italic',
-  };
-
   return (
     <ComponentPage
-      title='Code Block'
-      description='A syntax-highlighted code block component with copy, download, and interactive features.'
-      tableOfContents={tableOfContents}
-    >
-      <ExampleSection
-        title='Basic Usage'
-        description='Simple code blocks with different configurations.'
-        id='basic-usage'
-      >
-        <div className='space-y-6'>
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>Basic TypeScript Code</h4>
-            <CodeBlock code={basicTypeScript} language='typescript' />
-          </div>
-
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>With Filename</h4>
-            <CodeBlock code={basicTypeScript} language='ts' filename='user.ts' />
-          </div>
-
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>React TSX Component</h4>
-            <CodeBlock code={reactExample} language='tsx' filename='Counter.tsx' />
-          </div>
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>Basic JSON Example</h4>
-            <CodeBlock code={basicJson} language='json' filename='data.json' showLineNumbers={true} />
-          </div>
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>Bash Example</h4>
-            <CodeBlock code={bashExample} language='bash' filename='script.sh' showLineNumbers={true} />
-          </div>
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>Basic CSS Example</h4>
-            <CodeBlock code={cssExample} language='css' filename='styles.css' showLineNumbers={true} />
-          </div>
-        </div>
-      </ExampleSection>
-
-      <ExampleSection
-        title='Line Numbers'
-        description='Display line numbers for easier code reference.'
-        id='line-numbers'
-      >
-        <div className='space-y-6'>
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>With Line Numbers</h4>
-            <CodeBlock code={reactExample} language='tsx' filename='Counter.tsx' showLineNumbers={true} />
-          </div>
-        </div>
-      </ExampleSection>
-
-      <ExampleSection
-        title='Interactive Features'
-        description='Copy, download, and fullscreen functionality.'
-        id='interactive-features'
-      >
-        <div className='space-y-6'>
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>With Download & Fullscreen</h4>
-            <CodeBlock
-              code={complexExample}
-              language='typescript'
-              filename='UserService.ts'
-              allowDownload={true}
-              allowFullscreen={true}
-              showLineNumbers={true}
-            />
-          </div>
-
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>Copy Only</h4>
-            <CodeBlock code={`const message = "Hello, World!";\nconsole.log(message);`} language='ts' />
-          </div>
-        </div>
-      </ExampleSection>
-
-      <ExampleSection
-        title='Styling Options'
-        description='Different visual configurations and customizations.'
-        id='styling-options'
-      >
-        <div className='space-y-6'>
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>No Traffic Lights</h4>
-            <CodeBlock
-              code={`interface Config {\n  theme: 'light' | 'dark';\n  debug: boolean;\n}`}
-              language='ts'
-              filename='config.ts'
-              showTrafficLights={false}
-            />
-          </div>
-
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>Hidden Header (Floating Buttons)</h4>
-            <CodeBlock
-              code={`// Clean minimal appearance\nconst greeting = "Hello from floating buttons!";\nconsole.log(greeting);`}
-              language='ts'
-              hideHeader={true}
-              allowFullscreen={true}
-            />
-          </div>
-
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>Custom Token Colors</h4>
-            <CodeBlock
-              code={`// Custom syntax highlighting\nfunction greet(name: string): string {\n  return \`Hello, \${name}!\`;\n}\n\nconst result = greet('Developer');\nconsole.log(result);`}
-              language='ts'
-              filename='custom-colors.ts'
-              tokenClasses={customTokenClasses}
-              showLineNumbers={true}
-            />
-          </div>
-
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>With Max Height (Scrollable)</h4>
-            <CodeBlock
-              code={complexExample}
-              language='typescript'
-              filename='UserService.ts'
-              maxHeight={200}
-              showLineNumbers={true}
-            />
-          </div>
-        </div>
-      </ExampleSection>
-
-      <ExampleSection
-        title='Advanced Examples'
-        description='Real-world usage patterns and complex configurations.'
-        id='advanced-examples'
-      >
-        <div className='space-y-6'>
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>Full-Featured Code Block</h4>
-            <CodeBlock
-              code={complexExample}
-              language='typescript'
-              filename='UserService.ts'
-              showLineNumbers={true}
-              allowDownload={true}
-              allowFullscreen={true}
-              maxHeight={300}
-            />
-          </div>
-
-          <div>
-            <h4 className='text-md font-medium text-gray-300 mb-3'>API Response Example</h4>
-            <CodeBlock
-              code={`// API Response Handler
-interface ApiResponse<T> {
-  data: T;
-  status: 'success' | 'error';
-  message?: string;
-}
-
-async function handleApiCall<T>(
-  url: string,
-  options?: RequestInit
-): Promise<ApiResponse<T>> {
-  try {
-    const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-      },
-      ...options
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      return {
-        data: data,
-        status: 'error',
-        message: data.message || 'An error occurred'
-      };
-    }
-
-    return {
-      data,
-      status: 'success'
-    };
-  } catch (error) {
-    return {
-      data: {} as T,
-      status: 'error',
-      message: error instanceof Error ? error.message : 'Unknown error'
-    };
-  }
-}`}
-              language='typescript'
-              filename='api-handler.ts'
-              showLineNumbers={true}
-              allowDownload={true}
-              allowFullscreen={true}
-            />
-          </div>
-        </div>
-      </ExampleSection>
-
-      <ExampleSection
-        title='Accessibility & Usage'
-        description='Keyboard shortcuts and accessibility features.'
-        id='accessibility-usage'
-      >
-        <div className='space-y-4'>
-          <div className='bg-slate-700 p-4 rounded-lg'>
-            <h5 className='font-medium mb-2'>Keyboard Shortcuts</h5>
-            <ul className='space-y-1 text-sm text-gray-300'>
-              <li>
-                <kbd className='bg-slate-600 px-2 py-0.5 rounded text-xs'>Cmd/Ctrl + C</kbd> - Copy code to clipboard
-              </li>
-              <li>
-                <kbd className='bg-slate-600 px-2 py-0.5 rounded text-xs'>F</kbd> - Toggle fullscreen mode (when
-                enabled)
-              </li>
-              <li>
-                <kbd className='bg-slate-600 px-2 py-0.5 rounded text-xs'>Escape</kbd> - Exit fullscreen mode
-              </li>
-            </ul>
-          </div>
-          <div className='bg-slate-700 p-4 rounded-lg'>
-            <h5 className='font-medium mb-2'>Accessibility Features</h5>
-            <ul className='space-y-1 text-sm text-gray-300'>
-              <li>• Screen reader compatible with proper ARIA labels</li>
-              <li>• Keyboard navigation support</li>
-              <li>• Live announcements for copy actions</li>
-              <li>• Semantic HTML structure</li>
-              <li>• Focus management in fullscreen mode</li>
-            </ul>
-          </div>
-        </div>
-      </ExampleSection>
-    </ComponentPage>
+      title="Code Block"
+      description="Display syntax-highlighted code with copy, download, and fullscreen functionality."
+      usageInstructions="Use CodeBlock to display formatted code snippets with optional interactive features like copying, downloading, and fullscreen viewing."
+      importStatement="import { CodeBlock } from '@moondreamsdev/dreamer-ui';"
+      componentProps={componentProps}
+      examples={codeBlockExamples}
+      keyboardShortcuts={keyboardShortcuts}
+    />
   );
 }

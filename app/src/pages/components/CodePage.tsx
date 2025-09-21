@@ -16,17 +16,19 @@ const codeExamples = [
     description: 'Different code styles for various contexts.',
     code: `<div className='space-y-4'>
   <div>
-    <p className='mb-2'>Default: <Code>const value = 42;</Code></p>
-    <p className='mb-2'>Accent: <Code variant='accent'>useState()</Code></p>
-    <p className='mb-2'>Modest: <Code variant='modest'>string | number</Code></p>
+    <p className='mb-2'>Base: <Code variant='base' content='const value = 42;' /></p>
+    <p className='mb-2'>Accent: <Code variant='accent' content='useState()' /></p>
+    <p className='mb-2'>Modest: <Code variant='modest' content='string | number' /></p>
+    <p className='mb-2'>Current: <Code variant='current' content='className' /></p>
   </div>
 </div>`,
     children: (
       <div className='space-y-4'>
         <div>
-          <p className='mb-2'>Default: <Code>const value = 42;</Code></p>
-          <p className='mb-2'>Accent: <Code variant='accent'>useState()</Code></p>
-          <p className='mb-2'>Modest: <Code variant='modest'>string | number</Code></p>
+          <p className='mb-2'>Base: <Code variant='base' content='const value = 42;' /></p>
+          <p className='mb-2'>Accent: <Code variant='accent' content='useState()' /></p>
+          <p className='mb-2'>Modest: <Code variant='modest' content='string | number' /></p>
+          <p className='mb-2'>Current: <Code variant='current' content='className' /></p>
         </div>
       </div>
     ),
@@ -36,17 +38,17 @@ const codeExamples = [
     title: 'Usage Examples',
     description: 'Common use cases for inline code snippets.',
     code: `<div className='space-y-4'>
-  <p>Install the package with <Code>npm install package-name</Code></p>
-  <p>The <Code variant='accent'>className</Code> prop accepts any CSS classes.</p>
-  <p>Return type: <Code variant='modest'>Promise&lt;string&gt;</Code></p>
-  <p>Press <Code>Ctrl + C</Code> to copy the selection.</p>
+  <p>Install the package with <Code content='npm install package-name' /></p>
+  <p>The <Code variant='accent' content='className' /> prop accepts any CSS classes.</p>
+  <p>Return type: <Code variant='modest' content='Promise<string>' /></p>
+  <p>Press <Code content='Ctrl + C' /> to copy the selection.</p>
 </div>`,
     children: (
       <div className='space-y-4'>
-        <p>Install the package with <Code>npm install package-name</Code></p>
-        <p>The <Code variant='accent'>className</Code> prop accepts any CSS classes.</p>
-        <p>Return type: <Code variant='modest'>Promise&lt;string&gt;</Code></p>
-        <p>Press <Code>Ctrl + C</Code> to copy the selection.</p>
+        <p>Install the package with <Code content='npm install package-name' /></p>
+        <p>The <Code variant='accent' content='className' /> prop accepts any CSS classes.</p>
+        <p>Return type: <Code variant='modest' content='Promise<string>' /></p>
+        <p>Press <Code content='Ctrl + C' /> to copy the selection.</p>
       </div>
     ),
   },
@@ -54,10 +56,21 @@ const codeExamples = [
 
 const codeProps = [
   {
+    name: 'content',
+    type: 'string',
+    required: true,
+    description: 'The code content to display.',
+  },
+  {
     name: 'variant',
-    type: '"default" | "accent" | "modest"',
-    default: '"default"',
+    type: '"base" | "modest" | "accent" | "current"',
+    default: '"accent"',
     description: 'The visual style variant of the code.',
+  },
+  {
+    name: 'id',
+    type: 'string',
+    description: 'Unique identifier for the code element.',
   },
   {
     name: 'className',
@@ -65,10 +78,9 @@ const codeProps = [
     description: 'Additional CSS classes to apply to the code element.',
   },
   {
-    name: 'children',
-    type: 'React.ReactNode',
-    description: 'The code content to display.',
-    required: true,
+    name: 'style',
+    type: 'React.CSSProperties',
+    description: 'Inline styles to apply to the code element.',
   },
 ];
 
