@@ -209,12 +209,7 @@ const toggleProps = [
   {
     name: 'checked',
     type: 'boolean',
-    description: 'Whether the toggle is checked (controlled).',
-  },
-  {
-    name: 'defaultChecked',
-    type: 'boolean',
-    description: 'Whether the toggle is initially checked (uncontrolled).',
+    description: 'Whether the toggle is checked. If not provided, the toggle will be uncontrolled.',
   },
   {
     name: 'disabled',

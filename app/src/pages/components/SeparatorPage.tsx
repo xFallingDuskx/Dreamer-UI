@@ -5,6 +5,7 @@ const tableOfContents = [
   { id: 'import', title: 'Import', level: 1 },
   { id: 'examples', title: 'Examples', level: 1 },
   { id: 'orientations', title: 'Orientations', level: 2 },
+  { id: 'thickness', title: 'Thickness Variants', level: 2 },
   { id: 'in-layouts', title: 'In Layouts', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
 ];
@@ -37,6 +38,57 @@ const separatorExamples = [
           <p>Left content</p>
           <Separator orientation='vertical' />
           <p>Right content</p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'thickness',
+    title: 'Thickness Variants',
+    description: 'Different thickness options for separators.',
+    code: `<div className='space-y-6'>
+  <div>
+    <p className='mb-2 text-sm'>Thin (default)</p>
+    <Separator thickness='thin' />
+    <p className='mt-2 text-sm'>Content below</p>
+  </div>
+  <div>
+    <p className='mb-2 text-sm'>Medium</p>
+    <Separator thickness='medium' />
+    <p className='mt-2 text-sm'>Content below</p>
+  </div>
+  <div>
+    <p className='mb-2 text-sm'>Thick</p>
+    <Separator thickness='thick' />
+    <p className='mt-2 text-sm'>Content below</p>
+  </div>
+  <div>
+    <p className='mb-2 text-sm'>Extra Thick</p>
+    <Separator thickness='extra-thick' />
+    <p className='mt-2 text-sm'>Content below</p>
+  </div>
+</div>`,
+    children: (
+      <div className='space-y-6'>
+        <div>
+          <p className='mb-2 text-sm'>Thin (default)</p>
+          <Separator thickness='thin' />
+          <p className='mt-2 text-sm'>Content below</p>
+        </div>
+        <div>
+          <p className='mb-2 text-sm'>Medium</p>
+          <Separator thickness='medium' />
+          <p className='mt-2 text-sm'>Content below</p>
+        </div>
+        <div>
+          <p className='mb-2 text-sm'>Thick</p>
+          <Separator thickness='thick' />
+          <p className='mt-2 text-sm'>Content below</p>
+        </div>
+        <div>
+          <p className='mb-2 text-sm'>Extra Thick</p>
+          <Separator thickness='extra-thick' />
+          <p className='mt-2 text-sm'>Content below</p>
         </div>
       </div>
     ),
@@ -92,6 +144,18 @@ const separatorProps = [
     type: '"horizontal" | "vertical"',
     default: '"horizontal"',
     description: 'The orientation of the separator.',
+  },
+  {
+    name: 'thickness',
+    type: '"thin" | "medium" | "thick" | "extra-thick"',
+    default: '"thin"',
+    description: 'The thickness variant of the separator.',
+  },
+  {
+    name: 'decorative',
+    type: 'boolean',
+    default: 'false',
+    description: 'Whether the separator is decorative only. When true, it\'s hidden from screen readers.',
   },
   {
     name: 'className',

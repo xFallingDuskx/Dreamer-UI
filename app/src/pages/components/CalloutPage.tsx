@@ -31,6 +31,51 @@ const calloutExamples = [
 		),
 	},
 	{
+		id: 'with-icons',
+		title: 'With Icons',
+		description: 'Callouts with custom icons or without icons entirely.',
+		code: `<div className='space-y-4'>
+  <Callout 
+    variant='info' 
+    title='Default Icon' 
+    description='This callout uses the default icon for the info variant.'
+  />
+  <Callout 
+    variant='warning' 
+    title='Custom Icon' 
+    description='This callout has a custom icon instead of the default.'
+    icon='⚡'
+  />
+  <Callout 
+    variant='success' 
+    title='No Icon' 
+    description='This callout has no icon at all.'
+    icon={null}
+  />
+</div>`,
+		children: (
+			<div className='space-y-4'>
+				<Callout 
+					variant='info' 
+					title='Default Icon' 
+					description='This callout uses the default icon for the info variant.'
+				/>
+				<Callout 
+					variant='warning' 
+					title='Custom Icon' 
+					description='This callout has a custom icon instead of the default.'
+					icon='⚡'
+				/>
+				<Callout 
+					variant='success' 
+					title='No Icon' 
+					description='This callout has no icon at all.'
+					icon={null}
+				/>
+			</div>
+		),
+	},
+	{
 		id: 'dismissible',
 		title: 'Dismissible',
 		description: 'Callouts that can be dismissed by users.',

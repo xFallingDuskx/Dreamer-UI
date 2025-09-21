@@ -1,120 +1,395 @@
-import { Textarea } from '@moondreamsdev/dreamer-ui/components';
+import { useState } from 'react';
+import { Textarea, Label } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 
 const tableOfContents = [
   { id: 'import', title: 'Import', level: 1 },
   { id: 'examples', title: 'Examples', level: 1 },
   { id: 'basic-usage', title: 'Basic Usage', level: 2 },
-  { id: 'with-placeholder', title: 'With Placeholder', level: 2 },
-  { id: 'auto-resize', title: 'Auto Resize', level: 2 },
+  { id: 'variants', title: 'Variants', level: 2 },
+  { id: 'auto-expand', title: 'Auto Expand', level: 2 },
   { id: 'character-limit', title: 'Character Limit', level: 2 },
+  { id: 'validation-states', title: 'Validation States', level: 2 },
+  { id: 'display-mode', title: 'Display Only Mode', level: 2 },
+  { id: 'controlled-textarea', title: 'Controlled Textarea', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
 ];
+
+// Example components
+function BasicTextarea() {
+  return (
+    <div className='space-y-4 max-w-md'>
+      <div>
+        <Label htmlFor='basic'>Basic Textarea</Label>
+        <Textarea 
+          id='basic'
+          placeholder='Enter your message here...' 
+          rows={4}
+        />
+      </div>
+    </div>
+  );
+}
+
+function VariantTextareas() {
+  return (
+    <div className='space-y-6 max-w-md'>
+      <div>
+        <Label htmlFor='outline'>Outline (default)</Label>
+        <Textarea 
+          id='outline'
+          variant='outline' 
+          placeholder='Outline variant...' 
+          rows={3}
+        />
+      </div>
+      <div>
+        <Label htmlFor='leftline'>Left Line</Label>
+        <Textarea 
+          id='leftline'
+          variant='left-line' 
+          placeholder='Left line variant...' 
+          rows={3}
+        />
+      </div>
+      <div>
+        <Label htmlFor='base'>Base</Label>
+        <Textarea 
+          id='base'
+          variant='base' 
+          placeholder='Base variant (no border)...' 
+          rows={3}
+        />
+      </div>
+    </div>
+  );
+}
+
+function AutoExpandTextarea() {
+  return (
+    <div className='space-y-4 max-w-md'>
+      <div>
+        <Label htmlFor='autoexpand'>Auto Expand Textarea</Label>
+        <Textarea 
+          id='autoexpand'
+          autoExpand 
+          placeholder='This textarea will automatically grow as you type more content. Try typing multiple lines to see the expansion in action.' 
+          rows={2}
+        />
+        <p className='text-sm text-muted-foreground mt-1'>
+          The textarea will expand automatically based on content
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function CharacterLimitTextarea() {
+  return (
+    <div className='space-y-4 max-w-md'>
+      <div>
+        <Label htmlFor='charlimit'>Character Limit (150 chars)</Label>
+        <Textarea 
+          id='charlimit'
+          placeholder='Type your message...' 
+          characterLimit={150}
+          rows={4}
+        />
+      </div>
+    </div>
+  );
+}
+
+function ValidationStatesTextarea() {
+  return (
+    <div className='space-y-6 max-w-md'>
+      <div>
+        <Label htmlFor='error'>Error State</Label>
+        <Textarea 
+          id='error'
+          placeholder='Enter your message...' 
+          errorMessage='This field is required'
+          rows={3}
+        />
+      </div>
+      <div>
+        <Label htmlFor='success'>Success State</Label>
+        <Textarea 
+          id='success'
+          placeholder='Enter your message...' 
+          successMessage='Looks good!'
+          defaultValue='This is a valid message'
+          rows={3}
+        />
+      </div>
+      <div>
+        <Label htmlFor='disabled'>Disabled State</Label>
+        <Textarea 
+          id='disabled'
+          placeholder='Cannot enter text...' 
+          disabled
+          rows={3}
+        />
+      </div>
+    </div>
+  );
+}
+
+function DisplayModeTextarea() {
+  return (
+    <div className='space-y-4 max-w-md'>
+      <div>
+        <Label htmlFor='display'>Display Only Mode</Label>
+        <Textarea 
+          id='display'
+          displayOnlyMode 
+          defaultValue='This is read-only text that cannot be edited. It automatically expands to fit the content and removes interaction styling.'
+          rows={4}
+        />
+        <p className='text-sm text-muted-foreground mt-1'>
+          Perfect for displaying formatted text content
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function ControlledTextarea() {
+  const [value, setValue] = useState('This is controlled text content.');
+  
+  return (
+    <div className='space-y-4 max-w-md'>
+      <div>
+        <Label htmlFor='controlled'>Controlled Textarea</Label>
+        <Textarea 
+          id='controlled'
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder='Type your message...'
+          rows={4}
+        />
+      </div>
+      <div className='flex gap-2'>
+        <button
+          onClick={() => setValue('Sample text content')}
+          className='px-3 py-1 text-sm bg-primary text-primary-foreground rounded hover:bg-primary/90'
+        >
+          Set Sample Text
+        </button>
+        <button
+          onClick={() => setValue('')}
+          className='px-3 py-1 text-sm bg-secondary text-secondary-foreground rounded hover:bg-secondary/80'
+        >
+          Clear
+        </button>
+      </div>
+      <div className='text-sm text-muted-foreground'>
+        Characters: {value.length}
+      </div>
+    </div>
+  );
+}
 
 const textareaExamples = [
   {
     id: 'basic-usage',
     title: 'Basic Usage',
-    description: 'Simple textarea with default styling.',
-    code: `<div className='max-w-md'>
-  <Textarea defaultValue='This is a basic textarea with some initial content.' />
-</div>`,
-    children: (
-      <div className='max-w-md'>
-        <Textarea defaultValue='This is a basic textarea with some initial content.' />
-      </div>
-    ),
-  },
-  {
-    id: 'with-placeholder',
-    title: 'With Placeholder',
-    description: 'Textarea with placeholder text.',
-    code: `<div className='max-w-md'>
-  <Textarea placeholder='Enter your message here...' />
-</div>`,
-    children: (
-      <div className='max-w-md'>
-        <Textarea placeholder='Enter your message here...' />
-      </div>
-    ),
-  },
-  {
-    id: 'auto-resize',
-    title: 'Auto Resize',
-    description: 'Textarea that automatically expands with content.',
-    code: `<div className='max-w-md'>
+    description: 'Simple textarea with default styling and placeholder text.',
+    code: `<div>
+  <Label htmlFor='basic'>Basic Textarea</Label>
   <Textarea 
-    autoResize 
-    placeholder='This textarea will grow as you type...' 
-    minRows={3}
+    id='basic'
+    placeholder='Enter your message here...' 
+    rows={4}
   />
 </div>`,
     children: (
-      <div className='max-w-md'>
-        <Textarea 
-          autoResize 
-          placeholder='This textarea will grow as you type...' 
-          minRows={3}
-        />
-      </div>
+      <BasicTextarea />
+    ),
+  },
+  {
+    id: 'variants',
+    title: 'Variants',
+    description: 'Different visual styles: outline (default), left-line, and base.',
+    code: `// Outline variant (default)
+<Textarea 
+  variant='outline' 
+  placeholder='Outline variant...' 
+  rows={3}
+/>
+
+// Left line variant
+<Textarea 
+  variant='left-line' 
+  placeholder='Left line variant...' 
+  rows={3}
+/>
+
+// Base variant (no border)
+<Textarea 
+  variant='base' 
+  placeholder='Base variant...' 
+  rows={3}
+/>`,
+    children: (
+      <VariantTextareas />
+    ),
+  },
+  {
+    id: 'auto-expand',
+    title: 'Auto Expand',
+    description: 'Textarea that automatically grows with content.',
+    code: `<Textarea 
+  autoExpand 
+  placeholder='This textarea will automatically grow as you type...' 
+  rows={2}
+/>`,
+    children: (
+      <AutoExpandTextarea />
     ),
   },
   {
     id: 'character-limit',
     title: 'Character Limit',
-    description: 'Textarea with character count and limit.',
-    code: `<div className='max-w-md'>
-  <Textarea 
-    placeholder='Max 150 characters...'
-    maxLength={150}
-    showCount
-  />
-</div>`,
+    description: 'Textarea with character counting and limit validation.',
+    code: `<Textarea 
+  placeholder='Type your message...' 
+  characterLimit={150}
+  rows={4}
+/>`,
     children: (
-      <div className='max-w-md'>
-        <Textarea 
-          placeholder='Max 150 characters...'
-          maxLength={150}
-          showCount
-        />
+      <CharacterLimitTextarea />
+    ),
+  },
+  {
+    id: 'validation-states',
+    title: 'Validation States',
+    description: 'Error, success, and disabled states with appropriate messages.',
+    code: `// Error state
+<Textarea 
+  placeholder='Enter your message...' 
+  errorMessage='This field is required'
+  rows={3}
+/>
+
+// Success state
+<Textarea 
+  placeholder='Enter your message...' 
+  successMessage='Looks good!'
+  defaultValue='This is a valid message'
+  rows={3}
+/>
+
+// Disabled state
+<Textarea 
+  placeholder='Cannot enter text...' 
+  disabled
+  rows={3}
+/>`,
+    children: (
+      <ValidationStatesTextarea />
+    ),
+  },
+  {
+    id: 'display-mode',
+    title: 'Display Only Mode',
+    description: 'Read-only mode for displaying formatted text content.',
+    code: `<Textarea 
+  displayOnlyMode 
+  defaultValue='This is read-only text that cannot be edited. It automatically expands to fit the content.'
+  rows={4}
+/>`,
+    children: (
+      <DisplayModeTextarea />
+    ),
+  },
+  {
+    id: 'controlled-textarea',
+    title: 'Controlled Textarea',
+    description: 'Controlled textarea with external state management.',
+    code: `function ControlledTextarea() {
+  const [value, setValue] = useState('This is controlled text content.');
+  
+  return (
+    <div className='space-y-4'>
+      <Textarea 
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder='Type your message...'
+        rows={4}
+      />
+      <div className='flex gap-2'>
+        <button onClick={() => setValue('Sample text')}>
+          Set Sample Text
+        </button>
+        <button onClick={() => setValue('')}>
+          Clear
+        </button>
       </div>
+    </div>
+  );
+}`,
+    children: (
+      <ControlledTextarea />
     ),
   },
 ];
 
 const textareaProps = [
   {
+    name: 'variant',
+    type: '"base" | "left-line" | "outline"',
+    default: '"outline"',
+    description: 'Visual style variant of the textarea.',
+  },
+  {
+    name: 'rounded',
+    type: '"none" | "sm" | "md" | "lg" | "full"',
+    description: 'Border radius of the textarea. Defaults to "md" for outline variant.',
+  },
+  {
+    name: 'displayOnlyMode',
+    type: 'boolean',
+    default: 'false',
+    description: 'Read-only mode for displaying text content without interaction styling.',
+  },
+  {
+    name: 'errorMessage',
+    type: 'string',
+    description: 'Error message to display below the textarea.',
+  },
+  {
+    name: 'successMessage',
+    type: 'string',
+    description: 'Success message to display below the textarea.',
+  },
+  {
+    name: 'hideResizeHandle',
+    type: 'boolean',
+    default: 'false',
+    description: 'Whether to hide the resize handle (Webkit browsers only).',
+  },
+  {
+    name: 'autoExpand',
+    type: 'boolean',
+    default: 'false',
+    description: 'Whether the textarea should automatically expand based on content.',
+  },
+  {
+    name: 'characterLimit',
+    type: 'number',
+    default: '0',
+    description: 'Maximum number of characters allowed. Shows character count when > 0.',
+  },
+  {
     name: 'placeholder',
     type: 'string',
-    description: 'Placeholder text to display when the textarea is empty.',
+    description: 'Placeholder text to display when empty.',
   },
   {
-    name: 'autoResize',
-    type: 'boolean',
-    default: 'false',
-    description: 'Whether the textarea should automatically resize based on content.',
-  },
-  {
-    name: 'minRows',
+    name: 'rows',
     type: 'number',
-    default: '2',
-    description: 'Minimum number of rows (when autoResize is true).',
-  },
-  {
-    name: 'maxRows',
-    type: 'number',
-    description: 'Maximum number of rows (when autoResize is true).',
-  },
-  {
-    name: 'maxLength',
-    type: 'number',
-    description: 'Maximum number of characters allowed.',
-  },
-  {
-    name: 'showCount',
-    type: 'boolean',
-    default: 'false',
-    description: 'Whether to show character count.',
+    description: 'Initial number of rows for the textarea.',
   },
   {
     name: 'disabled',
@@ -134,7 +409,7 @@ const textareaProps = [
   },
   {
     name: 'onChange',
-    type: '(value: string) => void',
+    type: '(event: React.ChangeEvent<HTMLTextAreaElement>) => void',
     description: 'Callback fired when the textarea value changes.',
   },
   {
@@ -148,9 +423,9 @@ export function TextareaPage() {
   return (
     <ComponentPage
       title='Textarea'
-      description='Multi-line text input with auto-expand and character limit features.'
+      description='Multi-line text input component with auto-expand, character limits, and validation states.'
       tableOfContents={tableOfContents}
-      usageInstructions='The Textarea component is perfect for collecting longer text input from users. It supports auto-resize functionality, character limits with counters, and all standard textarea features. Use it for comments, descriptions, messages, and other multi-line text input.'
+      usageInstructions='The Textarea component is perfect for collecting longer text input from users. It supports multiple variants, auto-expand functionality, character limits with counters, validation states, and display-only mode. Use it for comments, descriptions, messages, feedback forms, and other multi-line text input scenarios.'
       importStatement="import { Textarea } from '@moondreamsdev/dreamer-ui/components';"
       componentProps={textareaProps}
       examples={textareaExamples}

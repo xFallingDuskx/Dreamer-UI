@@ -84,6 +84,69 @@ const cardExamples = [
       </div>
     ),
   },
+  {
+    id: 'with-images',
+    title: 'With Images',
+    description: 'Cards featuring images in headers or content areas for visual appeal.',
+    code: `<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+  <Card 
+    header={
+      <div>
+        <img 
+          src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=200&fit=crop" 
+          alt="Card header image"
+          className="w-full h-32 object-cover rounded-t-lg -m-4 mb-2"
+        />
+        <h3 className="font-semibold">Product Showcase</h3>
+      </div>
+    }
+    footer="Learn more →"
+  >
+    This card features an image in the header section, perfect for product showcases or blog previews.
+  </Card>
+  
+  <Card header="Content with Image">
+    <div className="space-y-4">
+      <img 
+        src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&h=200&fit=crop" 
+        alt="Content image"
+        className="w-full h-40 object-cover rounded-lg"
+      />
+      <p>Images can also be embedded within the card content for flexible layouts and visual storytelling.</p>
+    </div>
+  </Card>
+</div>`,
+    children: (
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+        <Card 
+          header={
+            <div>
+              <img 
+                src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=200&fit=crop" 
+                alt="Card header image"
+                className="w-full h-32 object-cover rounded-t-lg -m-4 mb-2"
+              />
+              <h3 className="font-semibold">Product Showcase</h3>
+            </div>
+          }
+          footer="Learn more →"
+        >
+          This card features an image in the header section, perfect for product showcases or blog previews.
+        </Card>
+        
+        <Card header="Content with Image">
+          <div className="space-y-4">
+            <img 
+              src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&h=200&fit=crop" 
+              alt="Content image"
+              className="w-full h-40 object-cover rounded-lg"
+            />
+            <p>Images can also be embedded within the card content for flexible layouts and visual storytelling.</p>
+          </div>
+        </Card>
+      </div>
+    ),
+  },
 ];
 
 const cardProps = [

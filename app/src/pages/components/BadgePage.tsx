@@ -38,7 +38,7 @@ const badgeExamples = [
   {/* Status indicators */}
   <div className='flex items-center gap-2'>
     <span>Server Status:</span>
-    <Badge variant='default'>Online</Badge>
+    <Badge variant='accent'>Online</Badge>
   </div>
   
   {/* Category tags */}
@@ -65,7 +65,7 @@ const badgeExamples = [
   <div className='space-y-2'>
     <div className='flex items-center gap-2'>
       <span>Dark Mode</span>
-      <Badge variant='outline' size='sm'>Beta</Badge>
+      <Badge outline={true} size='sm'>Beta</Badge>
     </div>
     <div className='flex items-center gap-2'>
       <span>New Dashboard</span>

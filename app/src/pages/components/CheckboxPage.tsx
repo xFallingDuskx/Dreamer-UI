@@ -6,6 +6,8 @@ const tableOfContents = [
   { id: 'examples', title: 'Examples', level: 1 },
   { id: 'sizes', title: 'Sizes', level: 2 },
   { id: 'states', title: 'States', level: 2 },
+  { id: 'colors', title: 'Colors', level: 2 },
+  { id: 'usage-examples', title: 'Usage Examples', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
   { id: 'keyboard-shortcuts', title: 'Keyboard Shortcuts', level: 1 },
 ];
@@ -101,6 +103,188 @@ const checkboxExamples = [
         <div className='flex items-center gap-2'>
           <Checkbox id='filled' checked filled />
           <label htmlFor='filled'>Filled Style</label>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'colors',
+    title: 'Colors',
+    description: 'Custom colors for different branding or categorization.',
+    code: `<div className='space-y-4'>
+  <div className='flex items-center gap-2'>
+    <Checkbox id='default' checked />
+    <label htmlFor='default'>Default</label>
+  </div>
+  <div className='flex items-center gap-2'>
+    <Checkbox id='red' checked color='red-500' />
+    <label htmlFor='red'>Red</label>
+  </div>
+  <div className='flex items-center gap-2'>
+    <Checkbox id='green' checked color='green-500' />
+    <label htmlFor='green'>Green</label>
+  </div>
+  <div className='flex items-center gap-2'>
+    <Checkbox id='blue' checked color='blue-500' />
+    <label htmlFor='blue'>Blue</label>
+  </div>
+  <div className='flex items-center gap-2'>
+    <Checkbox id='purple' checked color='purple-500' />
+    <label htmlFor='purple'>Purple</label>
+  </div>
+</div>`,
+    children: (
+      <div className='space-y-4'>
+        <div className='flex items-center gap-2'>
+          <Checkbox id='default' checked />
+          <label htmlFor='default'>Default</label>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Checkbox id='red' checked color='red-500' />
+          <label htmlFor='red'>Red</label>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Checkbox id='green' checked color='green-500' />
+          <label htmlFor='green'>Green</label>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Checkbox id='blue' checked color='blue-500' />
+          <label htmlFor='blue'>Blue</label>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Checkbox id='purple' checked color='purple-500' />
+          <label htmlFor='purple'>Purple</label>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'usage-examples',
+    title: 'Usage Examples',
+    description: 'Common checkbox usage patterns in real applications.',
+    code: `<div className='space-y-8'>
+  {/* Settings Panel */}
+  <div className='p-4 bg-gray-50 dark:bg-gray-800 rounded-lg'>
+    <h4 className='font-semibold mb-3'>Notification Settings</h4>
+    <div className='space-y-3'>
+      <div className='flex items-center gap-2'>
+        <Checkbox id='email-notifications' checked />
+        <label htmlFor='email-notifications'>Email notifications</label>
+      </div>
+      <div className='flex items-center gap-2'>
+        <Checkbox id='push-notifications' />
+        <label htmlFor='push-notifications'>Push notifications</label>
+      </div>
+      <div className='flex items-center gap-2'>
+        <Checkbox id='sms-notifications' disabled />
+        <label htmlFor='sms-notifications' className='text-gray-500'>SMS notifications (Pro only)</label>
+      </div>
+    </div>
+  </div>
+
+  {/* Todo List */}
+  <div className='p-4 bg-gray-50 dark:bg-gray-800 rounded-lg'>
+    <h4 className='font-semibold mb-3'>Task List</h4>
+    <div className='space-y-2'>
+      <div className='flex items-center gap-2'>
+        <Checkbox id='task1' checked size={18} />
+        <label htmlFor='task1' className='line-through opacity-75'>Complete project documentation</label>
+      </div>
+      <div className='flex items-center gap-2'>
+        <Checkbox id='task2' size={18} />
+        <label htmlFor='task2'>Review pull requests</label>
+      </div>
+      <div className='flex items-center gap-2'>
+        <Checkbox id='task3' size={18} />
+        <label htmlFor='task3'>Update dependencies</label>
+      </div>
+    </div>
+  </div>
+
+  {/* Filter Options */}
+  <div className='p-4 bg-gray-50 dark:bg-gray-800 rounded-lg'>
+    <h4 className='font-semibold mb-3'>Filter Products</h4>
+    <div className='grid grid-cols-2 gap-3'>
+      <div className='flex items-center gap-2'>
+        <Checkbox id='in-stock' checked color='green-500' />
+        <label htmlFor='in-stock'>In Stock</label>
+      </div>
+      <div className='flex items-center gap-2'>
+        <Checkbox id='on-sale' color='red-500' />
+        <label htmlFor='on-sale'>On Sale</label>
+      </div>
+      <div className='flex items-center gap-2'>
+        <Checkbox id='free-shipping' color='blue-500' />
+        <label htmlFor='free-shipping'>Free Shipping</label>
+      </div>
+      <div className='flex items-center gap-2'>
+        <Checkbox id='eco-friendly' color='green-600' />
+        <label htmlFor='eco-friendly'>Eco Friendly</label>
+      </div>
+    </div>
+  </div>
+</div>`,
+    children: (
+      <div className='space-y-8'>
+        {/* Settings Panel */}
+        <div className='p-4 bg-gray-50 dark:bg-gray-800 rounded-lg'>
+          <h4 className='font-semibold mb-3'>Notification Settings</h4>
+          <div className='space-y-3'>
+            <div className='flex items-center gap-2'>
+              <Checkbox id='email-notifications' checked />
+              <label htmlFor='email-notifications'>Email notifications</label>
+            </div>
+            <div className='flex items-center gap-2'>
+              <Checkbox id='push-notifications' />
+              <label htmlFor='push-notifications'>Push notifications</label>
+            </div>
+            <div className='flex items-center gap-2'>
+              <Checkbox id='sms-notifications' disabled />
+              <label htmlFor='sms-notifications' className='text-gray-500'>SMS notifications (Pro only)</label>
+            </div>
+          </div>
+        </div>
+
+        {/* Todo List */}
+        <div className='p-4 bg-gray-50 dark:bg-gray-800 rounded-lg'>
+          <h4 className='font-semibold mb-3'>Task List</h4>
+          <div className='space-y-2'>
+            <div className='flex items-center gap-2'>
+              <Checkbox id='task1' checked size={18} />
+              <label htmlFor='task1' className='line-through opacity-75'>Complete project documentation</label>
+            </div>
+            <div className='flex items-center gap-2'>
+              <Checkbox id='task2' size={18} />
+              <label htmlFor='task2'>Review pull requests</label>
+            </div>
+            <div className='flex items-center gap-2'>
+              <Checkbox id='task3' size={18} />
+              <label htmlFor='task3'>Update dependencies</label>
+            </div>
+          </div>
+        </div>
+
+        {/* Filter Options */}
+        <div className='p-4 bg-gray-50 dark:bg-gray-800 rounded-lg'>
+          <h4 className='font-semibold mb-3'>Filter Products</h4>
+          <div className='grid grid-cols-2 gap-3'>
+            <div className='flex items-center gap-2'>
+              <Checkbox id='in-stock' checked color='green-500' />
+              <label htmlFor='in-stock'>In Stock</label>
+            </div>
+            <div className='flex items-center gap-2'>
+              <Checkbox id='on-sale' color='red-500' />
+              <label htmlFor='on-sale'>On Sale</label>
+            </div>
+            <div className='flex items-center gap-2'>
+              <Checkbox id='free-shipping' color='blue-500' />
+              <label htmlFor='free-shipping'>Free Shipping</label>
+            </div>
+            <div className='flex items-center gap-2'>
+              <Checkbox id='eco-friendly' color='green-600' />
+              <label htmlFor='eco-friendly'>Eco Friendly</label>
+            </div>
+          </div>
         </div>
       </div>
     ),

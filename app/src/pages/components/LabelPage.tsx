@@ -1,4 +1,4 @@
-import { Label } from '@moondreamsdev/dreamer-ui/components';
+import { Label, Input, Textarea, Select, Checkbox } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 
 const tableOfContents = [
@@ -14,7 +14,7 @@ const labelExamples = [
   {
     id: 'basic-usage',
     title: 'Basic Usage',
-    description: 'Simple labels for form elements.',
+    description: 'Simple labels for form elements using native HTML inputs.',
     code: `<div className='space-y-4'>
   <div>
     <Label htmlFor='name'>Full Name</Label>
@@ -39,28 +39,95 @@ const labelExamples = [
     ),
   },
   {
-    id: 'required-labels',
-    title: 'Required Labels',
-    description: 'Labels with required indicators.',
-    code: `<div className='space-y-4'>
+    id: 'with-form-controls',
+    title: 'With Form Controls',
+    description: 'Labels used with Dreamer-UI form components for consistent styling.',
+    code: `<div className='space-y-4 max-w-md'>
   <div>
-    <Label htmlFor='required-name' required>Full Name</Label>
-    <input id='required-name' type='text' className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md' />
+    <Label htmlFor='input-1'>Input Field</Label>
+    <Input id='input-1' placeholder='Enter text here' variant='outline' />
   </div>
   <div>
-    <Label htmlFor='optional-phone'>Phone Number</Label>
-    <input id='optional-phone' type='tel' className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md' />
+    <Label htmlFor='textarea-1'>Message</Label>
+    <Textarea id='textarea-1' placeholder='Enter your message' variant='outline' rows={3} />
+  </div>
+  <div>
+    <Label htmlFor='select-1'>Choose Option</Label>
+    <Select 
+      id='select-1'
+      placeholder="Select an option"
+      options={[
+        { text: 'Option 1', value: 'option1' },
+        { text: 'Option 2', value: 'option2' },
+        { text: 'Option 3', value: 'option3' }
+      ]}
+    />
+  </div>
+  <div className='flex items-center gap-2'>
+    <Checkbox id='checkbox-1' />
+    <Label htmlFor='checkbox-1'>I agree to the terms</Label>
   </div>
 </div>`,
     children: (
-      <div className='space-y-4'>
+      <div className='space-y-4 max-w-md'>
         <div>
-          <Label htmlFor='required-name' required>Full Name</Label>
-          <input id='required-name' type='text' className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md' />
+          <Label htmlFor='input-1'>Input Field</Label>
+          <Input id='input-1' placeholder='Enter text here' variant='outline' />
         </div>
         <div>
-          <Label htmlFor='optional-phone'>Phone Number</Label>
-          <input id='optional-phone' type='tel' className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md' />
+          <Label htmlFor='textarea-1'>Message</Label>
+          <Textarea id='textarea-1' placeholder='Enter your message' variant='outline' rows={3} />
+        </div>
+        <div>
+          <Label htmlFor='select-1'>Choose Option</Label>
+          <Select 
+            id='select-1'
+            placeholder="Select an option"
+            options={[
+              { text: 'Option 1', value: 'option1' },
+              { text: 'Option 2', value: 'option2' },
+              { text: 'Option 3', value: 'option3' }
+            ]}
+          />
+        </div>
+        <div className='flex items-center gap-2'>
+          <Checkbox id='checkbox-1' />
+          <Label htmlFor='checkbox-1'>I agree to the terms</Label>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'required-labels',
+    title: 'Required Labels',
+    description: 'Labels with required indicators for mandatory form fields.',
+    code: `<div className='space-y-4 max-w-md'>
+  <div>
+    <Label htmlFor='required-name' required>Full Name</Label>
+    <Input id='required-name' placeholder='Enter your full name' variant='outline' required />
+  </div>
+  <div>
+    <Label htmlFor='required-email' required>Email Address</Label>
+    <Input id='required-email' type='email' placeholder='Enter your email' variant='outline' required />
+  </div>
+  <div>
+    <Label htmlFor='optional-phone'>Phone Number (Optional)</Label>
+    <Input id='optional-phone' type='tel' placeholder='Enter your phone number' variant='outline' />
+  </div>
+</div>`,
+    children: (
+      <div className='space-y-4 max-w-md'>
+        <div>
+          <Label htmlFor='required-name' required>Full Name</Label>
+          <Input id='required-name' placeholder='Enter your full name' variant='outline' required />
+        </div>
+        <div>
+          <Label htmlFor='required-email' required>Email Address</Label>
+          <Input id='required-email' type='email' placeholder='Enter your email' variant='outline' required />
+        </div>
+        <div>
+          <Label htmlFor='optional-phone'>Phone Number (Optional)</Label>
+          <Input id='optional-phone' type='tel' placeholder='Enter your phone number' variant='outline' />
         </div>
       </div>
     ),
