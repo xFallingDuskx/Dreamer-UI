@@ -9,6 +9,7 @@ const tableOfContents = [
   { id: 'direct-components', title: 'Direct Components', level: 2 },
   { id: 'custom-styling', title: 'Custom Styling', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
+  { id: 'keyboard-shortcuts', title: 'Keyboard Shortcuts', level: 1 },
 ];
 
 const accordionExamples = [
@@ -174,6 +175,41 @@ const accordionProps = [
   },
 ];
 
+const keyboardShortcuts = [
+  {
+    keys: 'Space',
+    description: 'Expand/collapse the focused accordion item'
+  },
+  {
+    keys: 'Enter',
+    description: 'Expand/collapse the focused accordion item'
+  },
+  {
+    keys: 'Tab',
+    description: 'Move focus to the next accordion trigger'
+  },
+  {
+    keys: 'Shift + Tab',
+    description: 'Move focus to the previous accordion trigger'
+  },
+  {
+    keys: 'Arrow Down',
+    description: 'Move focus to the next accordion trigger'
+  },
+  {
+    keys: 'Arrow Up',
+    description: 'Move focus to the previous accordion trigger'
+  },
+  {
+    keys: 'Home',
+    description: 'Move focus to the first accordion trigger'
+  },
+  {
+    keys: 'End',
+    description: 'Move focus to the last accordion trigger'
+  }
+];
+
 export function AccordionPage() {
   return (
     <ComponentPage
@@ -183,6 +219,7 @@ export function AccordionPage() {
       usageInstructions='The Accordion component allows you to create collapsible content sections. Use it to organize information hierarchically, for FAQs, or to save space in your interface. It supports both single and multiple expansion modes with full keyboard accessibility.'
       importStatement="import { Accordion } from '@moondreamsdev/dreamer-ui/components';"
       componentProps={accordionProps}
+      keyboardShortcuts={keyboardShortcuts}
       examples={accordionExamples}
     />
   );

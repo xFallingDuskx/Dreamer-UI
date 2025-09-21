@@ -6,8 +6,8 @@ const tableOfContents = [
   { id: 'examples', title: 'Examples', level: 1 },
   { id: 'sizes', title: 'Sizes', level: 2 },
   { id: 'states', title: 'States', level: 2 },
-  { id: 'with-labels', title: 'With Labels', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
+  { id: 'keyboard-shortcuts', title: 'Keyboard Shortcuts', level: 1 },
 ];
 
 const checkboxExamples = [
@@ -17,30 +17,30 @@ const checkboxExamples = [
     description: 'Different checkbox sizes for various contexts.',
     code: `<div className='flex items-center gap-6'>
   <div className='flex items-center gap-2'>
-    <Checkbox id='small' size='sm' />
+    <Checkbox id='small' size={16} />
     <label htmlFor='small'>Small</label>
   </div>
   <div className='flex items-center gap-2'>
-    <Checkbox id='medium' size='md' />
+    <Checkbox id='medium' size={20} />
     <label htmlFor='medium'>Medium</label>
   </div>
   <div className='flex items-center gap-2'>
-    <Checkbox id='large' size='lg' />
+    <Checkbox id='large' size={24} />
     <label htmlFor='large'>Large</label>
   </div>
 </div>`,
     children: (
       <div className='flex items-center gap-6'>
         <div className='flex items-center gap-2'>
-          <Checkbox id='small' size='sm' />
+          <Checkbox id='small' size={16} />
           <label htmlFor='small'>Small</label>
         </div>
         <div className='flex items-center gap-2'>
-          <Checkbox id='medium' size='md' />
+          <Checkbox id='medium' size={20} />
           <label htmlFor='medium'>Medium</label>
         </div>
         <div className='flex items-center gap-2'>
-          <Checkbox id='large' size='lg' />
+          <Checkbox id='large' size={24} />
           <label htmlFor='large'>Large</label>
         </div>
       </div>
@@ -56,16 +56,24 @@ const checkboxExamples = [
     <label htmlFor='unchecked'>Unchecked</label>
   </div>
   <div className='flex items-center gap-2'>
-    <Checkbox id='checked' defaultChecked />
+    <Checkbox id='checked' checked />
     <label htmlFor='checked'>Checked</label>
+  </div>
+  <div className='flex items-center gap-2'>
+    <Checkbox id='indeterminate' indeterminate />
+    <label htmlFor='indeterminate'>Indeterminate</label>
   </div>
   <div className='flex items-center gap-2'>
     <Checkbox id='disabled' disabled />
     <label htmlFor='disabled' className='text-gray-500'>Disabled</label>
   </div>
   <div className='flex items-center gap-2'>
-    <Checkbox id='disabled-checked' disabled defaultChecked />
+    <Checkbox id='disabled-checked' disabled checked />
     <label htmlFor='disabled-checked' className='text-gray-500'>Disabled Checked</label>
+  </div>
+  <div className='flex items-center gap-2'>
+    <Checkbox id='filled' checked filled />
+    <label htmlFor='filled'>Filled Style</label>
   </div>
 </div>`,
     children: (
@@ -75,16 +83,24 @@ const checkboxExamples = [
           <label htmlFor='unchecked'>Unchecked</label>
         </div>
         <div className='flex items-center gap-2'>
-          <Checkbox id='checked' defaultChecked />
+          <Checkbox id='checked' checked />
           <label htmlFor='checked'>Checked</label>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Checkbox id='indeterminate' indeterminate />
+          <label htmlFor='indeterminate'>Indeterminate</label>
         </div>
         <div className='flex items-center gap-2'>
           <Checkbox id='disabled' disabled />
           <label htmlFor='disabled' className='text-gray-500'>Disabled</label>
         </div>
         <div className='flex items-center gap-2'>
-          <Checkbox id='disabled-checked' disabled defaultChecked />
+          <Checkbox id='disabled-checked' disabled checked />
           <label htmlFor='disabled-checked' className='text-gray-500'>Disabled Checked</label>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Checkbox id='filled' checked filled />
+          <label htmlFor='filled'>Filled Style</label>
         </div>
       </div>
     ),
@@ -94,9 +110,38 @@ const checkboxExamples = [
 const checkboxProps = [
   {
     name: 'size',
-    type: '"sm" | "md" | "lg"',
-    default: '"md"',
-    description: 'The size of the checkbox.',
+    type: 'number',
+    default: '20',
+    description: 'The size of the checkbox in pixels.',
+  },
+  {
+    name: 'color',
+    type: 'string',
+    description: 'CSS color value or Tailwind class for the checkbox color.',
+  },
+  {
+    name: 'filled',
+    type: 'boolean',
+    default: 'false',
+    description: 'Whether to fill the checkbox background when checked.',
+  },
+  {
+    name: 'rounded',
+    type: 'boolean',
+    default: 'true',
+    description: 'Whether the checkbox should have rounded corners.',
+  },
+  {
+    name: 'checked',
+    type: 'boolean',
+    default: 'false',
+    description: 'Whether the checkbox is checked (controlled).',
+  },
+  {
+    name: 'indeterminate',
+    type: 'boolean',
+    default: 'false',
+    description: 'Whether the checkbox is in an indeterminate state.',
   },
   {
     name: 'disabled',
@@ -105,25 +150,41 @@ const checkboxProps = [
     description: 'Whether the checkbox is disabled.',
   },
   {
-    name: 'checked',
-    type: 'boolean',
-    description: 'Whether the checkbox is checked (controlled).',
+    name: 'display',
+    type: '"inline" | "block"',
+    default: '"inline"',
+    description: 'The display style of the checkbox.',
   },
   {
-    name: 'defaultChecked',
-    type: 'boolean',
-    description: 'Whether the checkbox is initially checked (uncontrolled).',
-  },
-  {
-    name: 'onChange',
+    name: 'onCheckedChange',
     type: '(checked: boolean) => void',
     description: 'Callback fired when the checkbox state changes.',
+  },
+  {
+    name: 'id',
+    type: 'string',
+    description: 'The HTML id attribute for the checkbox.',
   },
   {
     name: 'className',
     type: 'string',
     description: 'Additional CSS classes to apply to the checkbox.',
   },
+];
+
+const keyboardShortcuts = [
+  {
+    keys: 'Space',
+    description: 'Toggle the checkbox state'
+  },
+  {
+    keys: 'Tab',
+    description: 'Move focus to the next focusable element'
+  },
+  {
+    keys: 'Shift + Tab',
+    description: 'Move focus to the previous focusable element'
+  }
 ];
 
 export function CheckboxPage() {
@@ -135,6 +196,7 @@ export function CheckboxPage() {
       usageInstructions='The Checkbox component allows users to select one or more options from a set. Use it for binary choices, multiple selections, or toggle functionality. Always provide proper labels for accessibility.'
       importStatement="import { Checkbox } from '@moondreamsdev/dreamer-ui/components';"
       componentProps={checkboxProps}
+      keyboardShortcuts={keyboardShortcuts}
       examples={checkboxExamples}
     />
   );

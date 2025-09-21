@@ -16,33 +16,17 @@ const calloutExamples = [
 		title: 'Variants',
 		description: 'Different callout styles for various message types.',
 		code: `<div className='space-y-4'>
-  <Callout variant='info' title='Information'>
-    This is an informational message to keep users informed.
-  </Callout>
-  <Callout variant='warning' title='Warning'>
-    Please review this important warning message.
-  </Callout>
-  <Callout variant='error' title='Error'>
-    An error occurred that requires attention.
-  </Callout>
-  <Callout variant='success' title='Success'>
-    The action was completed successfully.
-  </Callout>
+  <Callout variant='info' title='Information' description='This is an informational message to keep users informed.' />
+  <Callout variant='warning' title='Warning' description='Please review this important warning message.' />
+  <Callout variant='destructive' title='Error' description='An error occurred that requires attention.' />
+  <Callout variant='success' title='Success' description='The action was completed successfully.' />
 </div>`,
 		children: (
 			<div className='space-y-4'>
-				<Callout variant='info' title='Information'>
-					This is an informational message to keep users informed.
-				</Callout>
-				<Callout variant='warning' title='Warning'>
-					Please review this important warning message.
-				</Callout>
-				<Callout variant='error' title='Error'>
-					An error occurred that requires attention.
-				</Callout>
-				<Callout variant='success' title='Success'>
-					The action was completed successfully.
-				</Callout>
+				<Callout variant='info' title='Information' description='This is an informational message to keep users informed.' />
+				<Callout variant='warning' title='Warning' description='Please review this important warning message.' />
+				<Callout variant='destructive' title='Error' description='An error occurred that requires attention.' />
+				<Callout variant='success' title='Success' description='The action was completed successfully.' />
 			</div>
 		),
 	},
@@ -53,18 +37,18 @@ const calloutExamples = [
 		code: `<Callout 
   variant='info' 
   title='Dismissible Callout' 
+  description='This callout can be dismissed by clicking the X button.'
+  dismissible
   onDismiss={() => console.log('Dismissed')}
->
-  This callout can be dismissed by clicking the X button.
-</Callout>`,
+/>`,
 		children: (
 			<Callout 
 				variant='info' 
 				title='Dismissible Callout' 
+				description='This callout can be dismissed by clicking the X button.'
+				dismissible
 				onDismiss={() => console.log('Dismissed')}
-			>
-				This callout can be dismissed by clicking the X button.
-			</Callout>
+			/>
 		),
 	},
 ];
@@ -72,19 +56,30 @@ const calloutExamples = [
 const calloutProps = [
 	{
 		name: 'variant',
-		type: '"info" | "warning" | "error" | "success"',
-		default: '"info"',
+		type: '"base" | "info" | "warning" | "destructive" | "success"',
+		default: '"base"',
 		description: 'The visual style variant of the callout.',
 	},
 	{
 		name: 'title',
-		type: 'string',
+		type: 'React.ReactNode',
 		description: 'Optional title for the callout.',
 	},
 	{
+		name: 'description',
+		type: 'React.ReactNode',
+		description: 'The main content to display inside the callout.',
+	},
+	{
 		name: 'icon',
-		type: 'React.ReactNode | false',
-		description: 'Custom icon to display. Set to false to hide the icon.',
+		type: 'string | React.ReactElement | null',
+		description: 'Custom icon to display. Will use default icon if not provided. Pass null to hide the icon.',
+	},
+	{
+		name: 'dismissible',
+		type: 'boolean',
+		default: 'false',
+		description: 'Whether the callout can be dismissed.',
 	},
 	{
 		name: 'onDismiss',
@@ -97,10 +92,14 @@ const calloutProps = [
 		description: 'Additional CSS classes to apply to the callout.',
 	},
 	{
-		name: 'children',
-		type: 'React.ReactNode',
-		description: 'The content to display inside the callout.',
-		required: true,
+		name: 'id',
+		type: 'string',
+		description: 'The id of the callout element.',
+	},
+	{
+		name: 'ref',
+		type: 'React.Ref<HTMLDivElement>',
+		description: 'Reference to the callout element.',
 	},
 ];
 
