@@ -1,91 +1,135 @@
-import { Accordion } from '@moondreamsdev/dreamer-ui/components';
+import { Accordion, AccordionItem } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 
 const tableOfContents = [
   { id: 'import', title: 'Import', level: 1 },
   { id: 'examples', title: 'Examples', level: 1 },
-  { id: 'single-item', title: 'Single Item', level: 2 },
-  { id: 'multiple-items', title: 'Multiple Items', level: 2 },
-  { id: 'collapsible', title: 'Collapsible', level: 2 },
+  { id: 'with-default-open', title: 'With Default Open Items', level: 2 },
+  { id: 'single-mode', title: 'Single Mode', level: 2 },
+  { id: 'direct-components', title: 'Direct Components', level: 2 },
+  { id: 'custom-styling', title: 'Custom Styling', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
 ];
 
 const accordionExamples = [
   {
-    id: 'single-item',
-    title: 'Single Item',
-    description: 'Basic accordion with a single expandable section.',
-    code: `<Accordion type='single' collapsible className='max-w-md'>
-  <AccordionItem value='item-1'>
-    <AccordionTrigger>What is Dreamer UI?</AccordionTrigger>
-    <AccordionContent>
-      Dreamer UI is a modern React component library built with Tailwind CSS, 
-      providing accessible and customizable components for building beautiful applications.
-    </AccordionContent>
-  </AccordionItem>
+    id: 'with-default-open',
+    title: 'With Default Open Items & Multiple Mode',
+    description: 'Accordion with default open items and ability to have multiple items open simultaneously.',
+    code: `<Accordion
+  items={[
+    {
+      id: 'item-1',
+      title: 'A super long title that should wrap to the next line if it is too long. It still should be readable.',
+      content: 'Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.',
+    },
+    { id: 'item-2', title: 'Item 2', content: 'Content for Item 2' },
+    { id: 'item-3', title: 'Item 3', content: 'Content for Item 3' },
+  ]}
+  allowMultiple={true}
+  defaultOpenItems={['item-2']}
+/>`,
+    children: (
+      <Accordion
+        items={[
+          {
+            id: 'item-1',
+            title: 'A super long title that should wrap to the next line if it is too long. It still should be readable.',
+            content: 'Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.Vel sunt laborum et quia assumenda hic dicta vero ab facere repellat sed odio placeat aut quia nobis.',
+          },
+          { id: 'item-2', title: 'Item 2', content: 'Content for Item 2' },
+          { id: 'item-3', title: 'Item 3', content: 'Content for Item 3' },
+        ]}
+        allowMultiple={true}
+        defaultOpenItems={['item-2']}
+      />
+    ),
+  },
+  {
+    id: 'single-mode',
+    title: 'Single Mode',
+    description: 'Accordion where only one item can be open at a time.',
+    code: `<Accordion
+  items={[
+    {
+      title: 'Item 1',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    },
+    { title: 'Item 2', content: 'Content for Item 2', disabled: true },
+    { title: 'Item 3', content: 'Content for Item 3' },
+  ]}
+  allowMultiple={false}
+/>`,
+    children: (
+      <Accordion
+        items={[
+          {
+            title: 'Item 1',
+            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+          },
+          { title: 'Item 2', content: 'Content for Item 2', disabled: true },
+          { title: 'Item 3', content: 'Content for Item 3' },
+        ]}
+        allowMultiple={false}
+      />
+    ),
+  },
+  {
+    id: 'direct-components',
+    title: 'Using AccordionItem Components',
+    description: 'Using AccordionItem components directly for more control.',
+    code: `<Accordion>
+  <AccordionItem
+    title='Item 1'
+    content='Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet.'
+  />
+  <AccordionItem title='Item 2' content='Content for Item 2' disabled={true} />
+  <AccordionItem title='Item 3' content='Content for Item 3' />
 </Accordion>`,
     children: (
-      <Accordion type='single' collapsible className='max-w-md'>
-        <Accordion.Item value='item-1'>
-          <Accordion.Trigger>What is Dreamer UI?</Accordion.Trigger>
-          <Accordion.Content>
-            Dreamer UI is a modern React component library built with Tailwind CSS, 
-            providing accessible and customizable components for building beautiful applications.
-          </Accordion.Content>
-        </Accordion.Item>
+      <Accordion>
+        <AccordionItem
+          title='Item 1'
+          content='Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius.'
+        />
+        <AccordionItem title='Item 2' content='Content for Item 2' disabled={true} />
+        <AccordionItem title='Item 3' content='Content for Item 3' />
       </Accordion>
     ),
   },
   {
-    id: 'multiple-items',
-    title: 'Multiple Items',
-    description: 'Accordion with multiple expandable sections.',
-    code: `<Accordion type='single' collapsible className='max-w-md'>
-  <AccordionItem value='item-1'>
-    <AccordionTrigger>Getting Started</AccordionTrigger>
-    <AccordionContent>
-      Install Dreamer UI in your project and start building amazing interfaces 
-      with our pre-built components and utilities.
-    </AccordionContent>
-  </AccordionItem>
-  <AccordionItem value='item-2'>
-    <AccordionTrigger>Components</AccordionTrigger>
-    <AccordionContent>
-      Explore our extensive library of accessible components including buttons, 
-      forms, navigation, overlays, and more.
-    </AccordionContent>
-  </AccordionItem>
-  <AccordionItem value='item-3'>
-    <AccordionTrigger>Customization</AccordionTrigger>
-    <AccordionContent>
-      Customize components using Tailwind CSS classes, CSS custom properties, 
-      or by extending our component variants.
-    </AccordionContent>
-  </AccordionItem>
+    id: 'custom-styling',
+    title: 'Custom Styling',
+    description: 'Accordion with custom trigger and body class names.',
+    code: `<Accordion 
+  triggersClassName='underline' 
+  bodiesClassName='bg-gray-50/5'
+>
+  <AccordionItem
+    title='Item 1'
+    content='Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore.'
+  />
+  <AccordionItem
+    title='Item 2'
+    content='Content for Item 2'
+    triggerClassName='text-red-300 hover:!bg-red-900/50'
+    bodyClassName='bg-red-500/10'
+  />
+  <AccordionItem title='Item 3' content='Content for Item 3' />
 </Accordion>`,
     children: (
-      <Accordion type='single' collapsible className='max-w-md'>
-        <Accordion.Item value='item-1'>
-          <Accordion.Trigger>Getting Started</Accordion.Trigger>
-          <Accordion.Content>
-            Install Dreamer UI in your project and start building amazing interfaces 
-            with our pre-built components and utilities.
-          </Accordion.Content>
-        </Accordion.Item>
-        <Accordion.Item value='item-2'>
-          <Accordion.Trigger>Components</Accordion.Trigger>
-          <Accordion.Content>
-            Explore our extensive library of accessible components including buttons, 
-            forms, navigation, overlays, and more.
-          </Accordion.Content>
-        </Accordion.Item>
-        <Accordion.Item value='item-3'>
-          <Accordion.Trigger>Customization</Accordion.Trigger>
-          <Accordion.Content>
-            Customize components using Tailwind CSS classes, CSS custom properties, 
-            or by extending our component variants.
-          </Accordion.Content>
-        </Accordion.Item>
+      <Accordion triggersClassName='underline' bodiesClassName='bg-gray-50/5'>
+        <AccordionItem
+          title='Item 1'
+          content='Lorem ipsum dolor sit amet. Sed laborum quis 33 quia libero id corporis labore sed dolores eveniet et impedit dolores eum consequatur eius. Est assumenda exercitationem qui pariatur odit et obcaecati sequi.'
+        />
+        <AccordionItem
+          title='Item 2'
+          content='Content for Item 2'
+          triggerClassName='text-red-300 hover:!bg-red-900/50'
+          bodyClassName='bg-red-500/10'
+        />
+        <AccordionItem title='Item 3' content='Content for Item 3' />
       </Accordion>
     ),
   },
@@ -93,42 +137,40 @@ const accordionExamples = [
 
 const accordionProps = [
   {
-    name: 'type',
-    type: '"single" | "multiple"',
-    default: '"single"',
-    description: 'Whether only one item can be expanded at a time or multiple items.',
+    name: 'items',
+    type: 'AccordionItemData[]',
+    description: 'Array of accordion items with id, title, content, and optional disabled state.',
   },
   {
-    name: 'collapsible',
+    name: 'allowMultiple',
     type: 'boolean',
-    default: 'false',
-    description: 'Whether the accordion items can be collapsed after expanding.',
+    default: 'true',
+    description: 'Whether multiple items can be open simultaneously.',
   },
   {
-    name: 'defaultValue',
-    type: 'string | string[]',
-    description: 'The default expanded item(s).',
+    name: 'defaultOpenItems',
+    type: 'string[]',
+    description: 'Array of item IDs that should be open by default.',
   },
   {
-    name: 'value',
-    type: 'string | string[]',
-    description: 'The controlled expanded item(s).',
+    name: 'triggersClassName',
+    type: 'string',
+    description: 'Additional CSS classes to apply to all trigger buttons.',
   },
   {
-    name: 'onValueChange',
-    type: '(value: string | string[]) => void',
-    description: 'Callback fired when the expanded state changes.',
+    name: 'bodiesClassName',
+    type: 'string',
+    description: 'Additional CSS classes to apply to all content bodies.',
   },
   {
     name: 'className',
     type: 'string',
-    description: 'Additional CSS classes to apply to the accordion.',
+    description: 'Additional CSS classes to apply to the accordion container.',
   },
   {
     name: 'children',
     type: 'React.ReactNode',
-    description: 'Accordion items to display.',
-    required: true,
+    description: 'AccordionItem components when using the component approach.',
   },
 ];
 

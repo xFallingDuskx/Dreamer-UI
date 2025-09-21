@@ -1,107 +1,197 @@
+import { useState } from 'react';
 import { Toggle } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 
 const tableOfContents = [
   { id: 'import', title: 'Import', level: 1 },
   { id: 'examples', title: 'Examples', level: 1 },
-  { id: 'basic-usage', title: 'Basic Usage', level: 2 },
   { id: 'sizes', title: 'Sizes', level: 2 },
-  { id: 'with-text', title: 'With Text', level: 2 },
-  { id: 'disabled', title: 'Disabled State', level: 2 },
+  { id: 'variants', title: 'Variants', level: 2 },
+  { id: 'states', title: 'States', level: 2 },
+  { id: 'interactive', title: 'Interactive Example', level: 2 },
+  { id: 'custom-colors', title: 'Custom Colors', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
 ];
 
 const toggleExamples = [
   {
-    id: 'basic-usage',
-    title: 'Basic Usage',
-    description: 'Simple toggle switches for boolean states.',
-    code: `<div className='space-y-4'>
-  <div className='flex items-center space-x-2'>
-    <Toggle id='notifications' />
-    <label htmlFor='notifications'>Enable notifications</label>
-  </div>
-  <div className='flex items-center space-x-2'>
-    <Toggle id='dark-mode' defaultChecked />
-    <label htmlFor='dark-mode'>Dark mode</label>
-  </div>
-</div>`,
-    children: (
-      <div className='space-y-4'>
-        <div className='flex items-center space-x-2'>
-          <Toggle id='notifications' />
-          <label htmlFor='notifications'>Enable notifications</label>
-        </div>
-        <div className='flex items-center space-x-2'>
-          <Toggle id='dark-mode' defaultChecked />
-          <label htmlFor='dark-mode'>Dark mode</label>
-        </div>
-      </div>
-    ),
-  },
-  {
     id: 'sizes',
     title: 'Sizes',
     description: 'Different toggle sizes for various contexts.',
-    code: `<div className='flex items-center space-x-6'>
-  <div className='flex items-center space-x-2'>
-    <Toggle id='small' size='sm' />
-    <label htmlFor='small'>Small</label>
+    code: `import { Toggle } from '@moondreamsdev/dreamer-ui/components';
+
+<div className='flex items-center gap-6'>
+  <div className='flex items-center gap-2'>
+    <Toggle size='sm' />
+    <span>Small</span>
   </div>
-  <div className='flex items-center space-x-2'>
-    <Toggle id='medium' size='md' />
-    <label htmlFor='medium'>Medium</label>
+  <div className='flex items-center gap-2'>
+    <Toggle size='md' />
+    <span>Medium (default)</span>
   </div>
-  <div className='flex items-center space-x-2'>
-    <Toggle id='large' size='lg' />
-    <label htmlFor='large'>Large</label>
+  <div className='flex items-center gap-2'>
+    <Toggle size='lg' />
+    <span>Large</span>
   </div>
 </div>`,
     children: (
-      <div className='flex items-center space-x-6'>
-        <div className='flex items-center space-x-2'>
-          <Toggle id='small' size='sm' />
-          <label htmlFor='small'>Small</label>
+      <div className='flex items-center gap-6'>
+        <div className='flex items-center gap-2'>
+          <Toggle size='sm' />
+          <span>Small</span>
         </div>
-        <div className='flex items-center space-x-2'>
-          <Toggle id='medium' size='md' />
-          <label htmlFor='medium'>Medium</label>
+        <div className='flex items-center gap-2'>
+          <Toggle size='md' />
+          <span>Medium (default)</span>
         </div>
-        <div className='flex items-center space-x-2'>
-          <Toggle id='large' size='lg' />
-          <label htmlFor='large'>Large</label>
+        <div className='flex items-center gap-2'>
+          <Toggle size='lg' />
+          <span>Large</span>
         </div>
       </div>
     ),
   },
   {
-    id: 'disabled',
-    title: 'Disabled State',
-    description: 'Disabled toggle switches.',
-    code: `<div className='space-y-4'>
-  <div className='flex items-center space-x-2'>
-    <Toggle id='disabled-off' disabled />
-    <label htmlFor='disabled-off' className='text-gray-500'>Disabled (off)</label>
+    id: 'variants',
+    title: 'Variants',
+    description: 'Different color variants for various use cases.',
+    code: `<div className='flex items-center gap-6'>
+  <div className='flex items-center gap-2'>
+    <Toggle variant='default' checked />
+    <span>Default</span>
   </div>
-  <div className='flex items-center space-x-2'>
-    <Toggle id='disabled-on' disabled defaultChecked />
-    <label htmlFor='disabled-on' className='text-gray-500'>Disabled (on)</label>
+  <div className='flex items-center gap-2'>
+    <Toggle variant='success' checked />
+    <span>Success</span>
+  </div>
+  <div className='flex items-center gap-2'>
+    <Toggle variant='destructive' checked />
+    <span>Destructive</span>
   </div>
 </div>`,
     children: (
-      <div className='space-y-4'>
-        <div className='flex items-center space-x-2'>
-          <Toggle id='disabled-off' disabled />
-          <label htmlFor='disabled-off' className='text-gray-500'>Disabled (off)</label>
+      <div className='flex items-center gap-6'>
+        <div className='flex items-center gap-2'>
+          <Toggle variant='default' checked />
+          <span>Default</span>
         </div>
-        <div className='flex items-center space-x-2'>
-          <Toggle id='disabled-on' disabled defaultChecked />
-          <label htmlFor='disabled-on' className='text-gray-500'>Disabled (on)</label>
+        <div className='flex items-center gap-2'>
+          <Toggle variant='success' checked />
+          <span>Success</span>
         </div>
+        <div className='flex items-center gap-2'>
+          <Toggle variant='destructive' checked />
+          <span>Destructive</span>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'states',
+    title: 'States',
+    description: 'Different toggle states including disabled options.',
+    code: `<div className='flex items-center gap-6'>
+  <div className='flex items-center gap-2'>
+    <Toggle checked={false} />
+    <span>Unchecked</span>
+  </div>
+  <div className='flex items-center gap-2'>
+    <Toggle checked />
+    <span>Checked</span>
+  </div>
+  <div className='flex items-center gap-2'>
+    <Toggle disabled />
+    <span>Disabled Unchecked</span>
+  </div>
+  <div className='flex items-center gap-2'>
+    <Toggle disabled checked />
+    <span>Disabled Checked</span>
+  </div>
+</div>`,
+    children: (
+      <div className='flex items-center gap-6'>
+        <div className='flex items-center gap-2'>
+          <Toggle checked={false} />
+          <span>Unchecked</span>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Toggle checked />
+          <span>Checked</span>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Toggle disabled />
+          <span>Disabled Unchecked</span>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Toggle disabled checked />
+          <span>Disabled Checked</span>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'interactive',
+    title: 'Interactive Example',
+    description: 'Interactive toggle with state management and event handling.',
+    code: `function InteractiveToggle() {
+  const [isEnabled, setIsEnabled] = useState(false);
+  
+  return (
+    <div className='flex items-center gap-2'>
+      <Toggle 
+        checked={isEnabled}
+        onCheckedChange={setIsEnabled}
+      />
+      <span>
+        Notifications are {isEnabled ? 'enabled' : 'disabled'}
+      </span>
+    </div>
+  );
+}`,
+    children: <InteractiveToggleExample />,
+  },
+  {
+    id: 'custom-colors',
+    title: 'Custom Colors',
+    description: 'Customizing toggle colors with CSS classes.',
+    code: `<div className='flex items-center gap-2'>
+  <Toggle
+    thumbClassName='!bg-red-500'
+    backgroundClassNames={{ 
+      checked: 'bg-red-200 focus:!ring-red-500' 
+    }}
+  />
+  <span>Custom red toggle</span>
+</div>`,
+    children: (
+      <div className='flex items-center gap-2'>
+        <Toggle
+          thumbClassName='!bg-red-500'
+          backgroundClassNames={{ 
+            checked: 'bg-red-200 focus:!ring-red-500' 
+          }}
+        />
+        <span>Custom red toggle</span>
       </div>
     ),
   },
 ];
+
+function InteractiveToggleExample() {
+  const [isEnabled, setIsEnabled] = useState(false);
+  
+  return (
+    <div className='flex items-center gap-2'>
+      <Toggle 
+        checked={isEnabled}
+        onCheckedChange={setIsEnabled}
+      />
+      <span>
+        Notifications are {isEnabled ? 'enabled' : 'disabled'}
+      </span>
+    </div>
+  );
+}
 
 const toggleProps = [
   {
@@ -109,6 +199,12 @@ const toggleProps = [
     type: '"sm" | "md" | "lg"',
     default: '"md"',
     description: 'The size of the toggle switch.',
+  },
+  {
+    name: 'variant',
+    type: '"default" | "success" | "destructive"',
+    default: '"default"',
+    description: 'The color variant of the toggle switch.',
   },
   {
     name: 'checked',
@@ -130,6 +226,16 @@ const toggleProps = [
     name: 'onCheckedChange',
     type: '(checked: boolean) => void',
     description: 'Callback fired when the toggle state changes.',
+  },
+  {
+    name: 'thumbClassName',
+    type: 'string',
+    description: 'Additional CSS classes to apply to the toggle thumb.',
+  },
+  {
+    name: 'backgroundClassNames',
+    type: '{ checked?: string; unchecked?: string; }',
+    description: 'CSS classes for background in different states.',
   },
   {
     name: 'className',
