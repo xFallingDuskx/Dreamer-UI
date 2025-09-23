@@ -11,7 +11,7 @@ export type ButtonVariant = keyof typeof buttonVariants;
 
 export const sizeVariants = {
   stripped: '',
-  fitted: 'size-fit',
+  fitted: 'size-fit leading-0',
   sm: 'px-2 py-1 text-sm',
   md: 'px-4 py-2 text-base',
   lg: 'px-6 py-3 text-lg',
