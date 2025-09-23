@@ -9,7 +9,6 @@ import { DraftPage } from './pages/DraftPage';
 import { GettingStartedPage } from './pages/GettingStartedPage';
 import { LandingPage } from './pages/LandingPage';
 import { ComponentsPage } from './pages/components/_ComponentsPage';
-import { HooksPage } from './pages/hooks/_HooksPage';
 import { UtilsPage } from './pages/utils/_UtilsPage';
 
 // Component Pages
@@ -49,10 +48,6 @@ import { TextareaPage } from './pages/components/TextareaPage';
 import { ToastPage } from './pages/components/ToastPage';
 import { TogglePage } from './pages/components/TogglePage';
 import { TooltipPage } from './pages/components/TooltipPage';
-
-// Hook Pages
-import { UseActionModalPage } from './pages/hooks/UseActionModalPage';
-import { UseToastPage } from './pages/hooks/UseToastPage';
 
 // Utils Pages
 import { JoinPage } from './pages/utils/JoinPage';
@@ -115,11 +110,6 @@ function App() {
 							<Route path='components/toast' element={<ToastPage />} />
 							<Route path='components/toggle' element={<TogglePage />} />
 							<Route path='components/tooltip' element={<TooltipPage />} />
-
-							{/* Hook Pages */}
-							<Route path='hooks' element={<HooksPage />} />
-							<Route path='hooks/useactionmodal' element={<UseActionModalPage />} />
-							<Route path='hooks/usetoast' element={<UseToastPage />} />
 
 							{/* Utils Pages */}
 							<Route path='utils' element={<UtilsPage />} />

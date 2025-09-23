@@ -44,11 +44,6 @@ const components = [
 	{ name: 'Tooltip', path: '/components/tooltip' },
 ];
 
-const hooks = [
-	{ name: 'useActionModal', path: '/hooks/useactionmodal' },
-	{ name: 'useToast', path: '/hooks/usetoast' },
-];
-
 const utils = [{ name: 'join', path: '/utils/join' }];
 
 export const Navigation = ({ className = '' }: NavigationProps) => {
@@ -123,40 +118,6 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 												}`}
 											>
 												{component.name}
-											</Link>
-										))}
-									</div>
-								</div>
-							</div>
-
-							{/* Hooks Dropdown */}
-							<div className='relative group'>
-								<button className='px-3 py-2 text-sm font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-800 transition-colors'>
-									Hooks
-								</button>
-								<div className='absolute left-0 mt-2 w-56 bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50'>
-									<div className='p-2'>
-										<Link
-											to='/hooks'
-											className={`block px-3 py-2 text-sm rounded-md transition-colors ${
-												location.pathname === '/hooks'
-													? 'text-primary bg-primary/20'
-													: 'text-gray-300 hover:text-white hover:bg-gray-800'
-											}`}
-										>
-											All Hooks
-										</Link>
-										{hooks.map((hook) => (
-											<Link
-												key={hook.path}
-												to={hook.path}
-												className={`block px-3 py-2 text-sm rounded-md transition-colors ${
-													location.pathname === hook.path
-														? 'text-primary bg-primary/20'
-														: 'text-gray-300 hover:text-white hover:bg-gray-800'
-												}`}
-											>
-												{hook.name}
 											</Link>
 										))}
 									</div>
