@@ -1,6 +1,18 @@
 import { useState } from 'react';
 import { ActionModal, Button } from '@moondreamsdev/dreamer-ui/components';
+import { useActionModal } from '@moondreamsdev/dreamer-ui/hooks';
 import { ComponentPage } from '../../components/layout/ComponentPage';
+
+const tableOfContents = [
+  { id: 'import', title: 'Import', level: 1 },
+  { id: 'examples', title: 'Examples', level: 1 },
+  { id: 'hook-usage', title: 'useActionModal Hook', level: 2 },
+  { id: 'component-usage', title: 'Direct Component Usage', level: 2 },
+  { id: 'destructive-actions', title: 'Destructive Actions', level: 2 },
+  { id: 'custom-content', title: 'Custom Content', level: 2 },
+  { id: 'props', title: 'Props', level: 1 },
+  { id: 'keyboard-shortcuts', title: 'Keyboard Shortcuts', level: 1 },
+];
 
 const componentProps = [
   {
@@ -70,9 +82,63 @@ const componentProps = [
 
 const actionModalExamples = [
   {
+    id: 'hook-usage',
+    title: 'useActionModal Hook',
+    description: 'The recommended way to use action modals with the useActionModal hook for simplified API.',
+    code: `import { useActionModal } from '@moondreamsdev/dreamer-ui/hooks';
+
+function HookExample() {
+  const { alert, confirm } = useActionModal();
+
+  const handleAlert = async () => {
+    await alert({
+      title: 'Success!',
+      message: 'This is an example alert modal triggered by the useActionModal hook.',
+    });
+  };
+
+  const handleConfirm = async () => {
+    const result = await confirm({
+      title: 'Confirm Action',
+      message: 'Do you want to proceed with this action?',
+    });
+    if (result) {
+      await alert({ message: 'You confirmed the action!' });
+    }
+  };
+
+  const handleDestructiveConfirm = async () => {
+    const result = await confirm({
+      title: 'Delete Item',
+      message: 'This will permanently delete the item. This action cannot be undone.',
+      destructive: true,
+      confirmText: 'Delete',
+      cancelText: 'Keep',
+    });
+    if (result) {
+      await alert({
+        message: 'Item deleted successfully!',
+        destructive: true,
+      });
+    }
+  };
+
+  return (
+    <div className="flex gap-4">
+      <Button onClick={handleAlert}>Show Alert</Button>
+      <Button onClick={handleConfirm}>Show Confirm</Button>
+      <Button onClick={handleDestructiveConfirm} variant="destructive">
+        Delete Item
+      </Button>
+    </div>
+  );
+}`,
+    children: <HookUsageExample />,
+  },
+  {
     id: 'alert-basic',
     title: 'Basic Alert',
-    description: 'Simple alert modal with just an OK button',
+    description: 'Simple alert modal with just an OK button using direct component usage.',
     code: `const [isOpen, setIsOpen] = useState(false);
 
 return (
@@ -92,7 +158,7 @@ return (
   {
     id: 'confirm-basic',
     title: 'Basic Confirmation',
-    description: 'Confirmation modal with OK and Cancel buttons',
+    description: 'Confirmation modal with OK and Cancel buttons.',
     code: `const [isOpen, setIsOpen] = useState(false);
 
 return (
@@ -115,7 +181,7 @@ return (
   {
     id: 'with-title',
     title: 'With Title',
-    description: 'Action modal with a custom title',
+    description: 'Action modal with a custom title.',
     code: `<ActionModal
   type="confirm"
   isOpen={isOpen}
@@ -134,7 +200,7 @@ return (
   {
     id: 'destructive-action',
     title: 'Destructive Action',
-    description: 'Confirmation modal for destructive actions with warning styling',
+    description: 'Confirmation modal for destructive actions with warning styling.',
     code: `<ActionModal
   type="confirm"
   isOpen={isOpen}
@@ -154,7 +220,7 @@ return (
   {
     id: 'custom-content',
     title: 'Custom Content',
-    description: 'Action modal with rich content using React components',
+    description: 'Action modal with rich content using React components.',
     code: `<ActionModal
   type="confirm"
   isOpen={isOpen}
@@ -180,6 +246,54 @@ return (
     children: <CustomContentExample />,
   },
 ];
+
+// Hook usage example component
+function HookUsageExample() {
+  const { alert, confirm } = useActionModal();
+
+  const handleAlert = async () => {
+    await alert({
+      title: 'Success!',
+      message: 'This is an example alert modal triggered by the useActionModal hook.',
+    });
+  };
+
+  const handleConfirm = async () => {
+    const result = await confirm({
+      title: 'Confirm Action',
+      message: 'Do you want to proceed with this action? This demonstrates the confirm functionality.',
+    });
+    if (result) {
+      await alert({ message: 'You confirmed the action!' });
+    }
+  };
+
+  const handleDestructiveConfirm = async () => {
+    const result = await confirm({
+      title: 'Delete Item',
+      message: 'This will permanently delete the item. This action cannot be undone.',
+      destructive: true,
+      confirmText: 'Delete',
+      cancelText: 'Keep',
+    });
+    if (result) {
+      await alert({
+        message: 'Item deleted successfully!',
+        destructive: true,
+      });
+    }
+  };
+
+  return (
+    <div className="flex gap-4">
+      <Button onClick={handleAlert}>Show Alert</Button>
+      <Button onClick={handleConfirm}>Show Confirm</Button>
+      <Button onClick={handleDestructiveConfirm} variant="destructive">
+        Delete Item
+      </Button>
+    </div>
+  );
+}
 
 function BasicAlertExample() {
   const [isOpen, setIsOpen] = useState(false);
@@ -318,9 +432,10 @@ export function ActionModalPage() {
   return (
     <ComponentPage
       title="Action Modal"
-      description="Pre-configured modal component with action buttons for alerts, confirmations, and simple user interactions."
-      usageInstructions="Use ActionModal for simple user interactions that require confirmation or acknowledgment. It comes in two types: 'alert' for notifications with a single OK button, and 'confirm' for yes/no decisions with OK and Cancel buttons. Perfect for delete confirmations, form submissions, and user alerts."
-      importStatement="import { ActionModal } from '@moondreamsdev/dreamer-ui';"
+      description="Pre-configured modal component with action buttons for alerts, confirmations, and simple user interactions. Can be used directly or with the useActionModal hook."
+      tableOfContents={tableOfContents}
+      usageInstructions="Use ActionModal for simple user interactions that require confirmation or acknowledgment. It comes in two types: 'alert' for notifications with a single OK button, and 'confirm' for yes/no decisions with OK and Cancel buttons. The useActionModal hook provides a simplified API for common use cases."
+      importStatement="import { ActionModal, useActionModal } from '@moondreamsdev/dreamer-ui';"
       componentProps={componentProps}
       examples={actionModalExamples}
       keyboardShortcuts={keyboardShortcuts}

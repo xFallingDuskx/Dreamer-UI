@@ -1,10 +1,12 @@
-import { Toast } from '@moondreamsdev/dreamer-ui/components';
+import { Toast, Button } from '@moondreamsdev/dreamer-ui/components';
+import { useToast } from '@moondreamsdev/dreamer-ui/hooks';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 
 const tableOfContents = [
   { id: 'import', title: 'Import', level: 1 },
   { id: 'examples', title: 'Examples', level: 1 },
-  { id: 'types', title: 'Toast Types', level: 2 },
+  { id: 'hook-usage', title: 'useToast Hook', level: 2 },
+  { id: 'component-usage', title: 'Direct Component Usage', level: 2 },
   { id: 'with-descriptions', title: 'With Descriptions', level: 2 },
   { id: 'with-actions', title: 'With Actions', level: 2 },
   { id: 'custom-types', title: 'Custom Types', level: 2 },
@@ -12,6 +14,72 @@ const tableOfContents = [
 ];
 
 const toastExamples = [
+  {
+    id: 'hook-usage',
+    title: 'useToast Hook',
+    description: 'The recommended way to show toast notifications using the useToast hook for simplified API.',
+    code: `import { useToast } from '@moondreamsdev/dreamer-ui/hooks';
+
+function HookExample() {
+  const { addToast } = useToast();
+
+  const showInfoToast = () => {
+    addToast({
+      title: 'Information',
+      description: 'This is an informational toast message.',
+      type: 'info',
+    });
+  };
+
+  const showSuccessToast = () => {
+    addToast({
+      title: 'Success',
+      description: 'Your changes have been saved successfully!',
+      type: 'info',
+    });
+  };
+
+  const showWarningToast = () => {
+    addToast({
+      title: 'Warning',
+      description: 'Please review your input before proceeding.',
+      type: 'warning',
+    });
+  };
+
+  const showErrorToast = () => {
+    addToast({
+      title: 'Error',
+      description: 'Something went wrong. Please try again.',
+      type: 'error',
+    });
+  };
+
+  const showToastWithAction = () => {
+    addToast({
+      title: 'Update available',
+      description: 'A new version of the app is available.',
+      type: 'info',
+      action: {
+        label: 'Update',
+        onClick: () => console.log('Update clicked')
+      },
+      duration: 10000,
+    });
+  };
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Button onClick={showInfoToast}>Info Toast</Button>
+      <Button onClick={showSuccessToast}>Success Toast</Button>
+      <Button onClick={showWarningToast}>Warning Toast</Button>
+      <Button onClick={showErrorToast}>Error Toast</Button>
+      <Button onClick={showToastWithAction}>Toast with Action</Button>
+    </div>
+  );
+}`,
+    children: <HookUsageExample />,
+  },
   {
     id: 'types',
     title: 'Toast Types',
@@ -208,6 +276,66 @@ const toastExamples = [
   },
 ];
 
+// Hook usage example component
+function HookUsageExample() {
+  const { addToast } = useToast();
+
+  const showInfoToast = () => {
+    addToast({
+      title: 'Information',
+      description: 'This is an informational toast message.',
+      type: 'info',
+    });
+  };
+
+  const showSuccessToast = () => {
+    addToast({
+      title: 'Success',
+      description: 'Your changes have been saved successfully!',
+      type: 'info',
+    });
+  };
+
+  const showWarningToast = () => {
+    addToast({
+      title: 'Warning',
+      description: 'Please review your input before proceeding.',
+      type: 'warning',
+    });
+  };
+
+  const showErrorToast = () => {
+    addToast({
+      title: 'Error',
+      description: 'Something went wrong. Please try again.',
+      type: 'error',
+    });
+  };
+
+  const showToastWithAction = () => {
+    addToast({
+      title: 'Update available',
+      description: 'A new version of the app is available.',
+      type: 'info',
+      action: {
+        label: 'Update',
+        onClick: () => console.log('Update clicked')
+      },
+      duration: 10000,
+    });
+  };
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Button onClick={showInfoToast}>Info Toast</Button>
+      <Button onClick={showSuccessToast}>Success Toast</Button>
+      <Button onClick={showWarningToast}>Warning Toast</Button>
+      <Button onClick={showErrorToast}>Error Toast</Button>
+      <Button onClick={showToastWithAction}>Toast with Action</Button>
+    </div>
+  );
+}
+
 const toastProps = [
   {
     name: 'id',
@@ -264,10 +392,10 @@ export function ToastPage() {
   return (
     <ComponentPage
       title='Toast'
-      description='Notification component for displaying temporary messages to users.'
+      description='Notification component for displaying temporary messages to users. Can be used directly or with the useToast hook.'
       tableOfContents={tableOfContents}
-      usageInstructions='The Toast component provides feedback to users about the result of actions or system events. Use different variants to indicate the type of message: success for confirmations, error for failures, warning for cautions, and info for general notifications. Toasts automatically dismiss after a duration or can be manually closed.'
-      importStatement="import { Toast } from '@moondreamsdev/dreamer-ui/components';"
+      usageInstructions='The Toast component provides feedback to users about the result of actions or system events. Use different variants to indicate the type of message: success for confirmations, error for failures, warning for cautions, and info for general notifications. The useToast hook provides a simplified API for showing toast notifications programmatically.'
+      importStatement="import { Toast, useToast } from '@moondreamsdev/dreamer-ui';"
       componentProps={toastProps}
       examples={toastExamples}
     />

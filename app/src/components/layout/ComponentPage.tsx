@@ -2,6 +2,7 @@ import { Button, Code, CodeBlock, Disclosure, Table } from '@moondreamsdev/dream
 import { Check, Copy } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ExampleSection } from '../ui/ExampleSection';
 
 // SectionHeader component with hover link functionality
@@ -44,6 +45,64 @@ function SectionHeader({ id, children, level, className }: SectionHeaderProps) {
 			</button>
 			{children}
 		</Tag>
+	);
+}
+
+// Component navigation data
+const COMPONENTS_ORDER = [
+	{ name: 'Accordion', path: '/components/accordion' },
+	{ name: 'Action Modal', path: '/components/actionmodal' },
+	{ name: 'Avatar', path: '/components/avatar' },
+	{ name: 'Badge', path: '/components/badge' },
+	{ name: 'Button', path: '/components/button' },
+	{ name: 'Callout', path: '/components/callout' },
+	{ name: 'Card', path: '/components/card' },
+	{ name: 'Carousel', path: '/components/carousel' },
+	{ name: 'Checkbox', path: '/components/checkbox' },
+	{ name: 'Clickable', path: '/components/clickable' },
+	{ name: 'Code', path: '/components/code' },
+	{ name: 'Code Block', path: '/components/codeblock' },
+	{ name: 'Disclosure', path: '/components/disclosure' },
+	{ name: 'Drawer', path: '/components/drawer' },
+	{ name: 'Dropdown Menu', path: '/components/dropdown-menu' },
+	{ name: 'Dynamic List', path: '/components/dynamic-list' },
+	{ name: 'Error Boundary', path: '/components/error-boundary' },
+	{ name: 'Form', path: '/components/form' },
+	{ name: 'Input', path: '/components/input' },
+	{ name: 'Label', path: '/components/label' },
+	{ name: 'Modal', path: '/components/modal' },
+	{ name: 'Pagination', path: '/components/pagination' },
+	{ name: 'Panel', path: '/components/panel' },
+	{ name: 'Popover', path: '/components/popover' },
+	{ name: 'Radio Group', path: '/components/radiogroup' },
+	{ name: 'Scroll Area', path: '/components/scroll-area' },
+	{ name: 'Select', path: '/components/select' },
+	{ name: 'Separator', path: '/components/separator' },
+	{ name: 'Skeleton', path: '/components/skeleton' },
+	{ name: 'Slider', path: '/components/slider' },
+	{ name: 'Slot', path: '/components/slot' },
+	{ name: 'Table', path: '/components/table' },
+	{ name: 'Tabs', path: '/components/tabs' },
+	{ name: 'Textarea', path: '/components/textarea' },
+	{ name: 'Toast', path: '/components/toast' },
+	{ name: 'Toggle', path: '/components/toggle' },
+	{ name: 'Tooltip', path: '/components/tooltip' },
+];
+
+// Navigation arrows components
+function ChevronLeftIcon({ size = 16 }: { size?: number }) {
+	return (
+		<svg width={size} height={size} viewBox="0 0 16 16" fill="currentColor">
+			<path d="M10.6 4.6a.5.5 0 0 0-.7-.7L6 7.8 9.9 11.7a.5.5 0 0 0 .7-.7L7.4 7.8 10.6 4.6z"/>
+		</svg>
+	);
+}
+
+function ChevronRightIcon({ size = 16 }: { size?: number }) {
+	return (
+		<svg width={size} height={size} viewBox="0 0 16 16" fill="currentColor">
+			<path d="M5.4 4.6a.5.5 0 0 1 .7-.7L10 7.8 6.1 11.7a.5.5 0 0 1-.7-.7L8.6 7.8 5.4 4.6z"/>
+		</svg>
 	);
 }
 
@@ -105,6 +164,13 @@ export function ComponentPage({
 	const usageInstructionsRef = useRef<HTMLDivElement | null>(null);
 	const importStatementRef = useRef<HTMLDivElement | null>(null);
 	const mainContentRef = useRef<HTMLDivElement | null>(null);
+	const navigate = useNavigate();
+
+	// Find current component index and navigation info
+	const currentPath = window.location.pathname;
+	const currentIndex = COMPONENTS_ORDER.findIndex(comp => comp.path === currentPath);
+	const previousComponent = currentIndex > 0 ? COMPONENTS_ORDER[currentIndex - 1] : null;
+	const nextComponent = currentIndex < COMPONENTS_ORDER.length - 1 ? COMPONENTS_ORDER[currentIndex + 1] : null;
 
 	const handleCopyMarkdown = async () => {
 		// Generate markdown content
@@ -243,14 +309,43 @@ export function ComponentPage({
 						<h1 className='text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent'>
 							{title}
 						</h1>
-						<Button
-							size='sm'
-							onClick={handleCopyMarkdown}
-							className='absolute right-0 top-1/2 -translate-y-1/2 inline-flex items-center gap-2 p-2'
-						>
-							{copied ? <Check size={14} /> : <Copy size={14} />}
-							<span>{copied ? 'Copied!' : 'Copy Page'}</span>
-						</Button>
+						<div className='absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2'>
+							{/* Previous Component Button */}
+							{previousComponent && (
+								<Button
+									size='sm'
+									variant='outline'
+									onClick={() => navigate(previousComponent.path)}
+									className='p-2'
+									title={`Previous: ${previousComponent.name}`}
+								>
+									<ChevronLeftIcon size={14} />
+								</Button>
+							)}
+							
+							{/* Next Component Button */}
+							{nextComponent && (
+								<Button
+									size='sm'
+									variant='outline'
+									onClick={() => navigate(nextComponent.path)}
+									className='p-2'
+									title={`Next: ${nextComponent.name}`}
+								>
+									<ChevronRightIcon size={14} />
+								</Button>
+							)}
+							
+							{/* Copy Page Button */}
+							<Button
+								size='sm'
+								onClick={handleCopyMarkdown}
+								className='inline-flex items-center gap-2 p-2'
+							>
+								{copied ? <Check size={14} /> : <Copy size={14} />}
+								<span>{copied ? 'Copied!' : 'Copy Page'}</span>
+							</Button>
+						</div>
 					</div>
 					<p className='text-xl text-gray-300 max-w-2xl mx-auto'>{description}</p>
 				</div>
