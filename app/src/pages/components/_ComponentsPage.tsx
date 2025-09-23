@@ -4,9 +4,27 @@ import { ExampleSection } from '../../components/ui/ExampleSection';
 
 const components = [
 	{
+		name: 'Accordion',
+		path: '/components/accordion',
+		description: 'Collapsible content sections with expand/collapse functionality.',
+		category: 'Display',
+	},
+	{
+		name: 'Action Modal',
+		path: '/components/actionmodal',
+		description: 'Modal component with built-in action buttons for confirmations and forms.',
+		category: 'Overlay',
+	},
+	{
 		name: 'Avatar',
 		path: '/components/avatar',
 		description: 'Display user profile pictures with 12 pre-defined cartoon-like avatars inspired by Moon Dreams Dev.',
+		category: 'Display',
+	},
+	{
+		name: 'Badge',
+		path: '/components/badge',
+		description: 'Small status indicators and labels for highlighting information.',
 		category: 'Display',
 	},
 	{
@@ -16,13 +34,43 @@ const components = [
 		category: 'Form',
 	},
 	{
+		name: 'Callout',
+		path: '/components/callout',
+		description: 'Versatile component for displaying alerts, warnings, and informational messages.',
+		category: 'Feedback',
+	},
+	{
 		name: 'Card',
 		path: '/components/card',
 		description: 'Flexible container component that supports images, different screen sizes, and customizable padding.',
 		category: 'Layout',
 	},
 	{
-		name: 'CodeBlock',
+		name: 'Carousel',
+		path: '/components/carousel',
+		description: 'Interactive slideshow component for displaying multiple items.',
+		category: 'Display',
+	},
+	{
+		name: 'Checkbox',
+		path: '/components/checkbox',
+		description: 'Customizable checkbox with different sizes and colors.',
+		category: 'Form',
+	},
+	{
+		name: 'Clickable',
+		path: '/components/clickable',
+		description: 'Generic clickable wrapper component with hover and focus states.',
+		category: 'Form',
+	},
+	{
+		name: 'Code',
+		path: '/components/code',
+		description: 'Inline code snippets with syntax highlighting.',
+		category: 'Display',
+	},
+	{
+		name: 'Code Block',
 		path: '/components/codeblock',
 		description: 'Syntax-highlighted code display with TypeScript support, copy, and fullscreen.',
 		category: 'Display',
@@ -34,10 +82,34 @@ const components = [
 		category: 'Display',
 	},
 	{
-		name: 'ErrorBoundary',
+		name: 'Drawer',
+		path: '/components/drawer',
+		description: 'Sliding panel component that appears from the side of the screen.',
+		category: 'Overlay',
+	},
+	{
+		name: 'Dropdown Menu',
+		path: '/components/dropdown-menu',
+		description: 'Contextual menu component with keyboard navigation and accessibility.',
+		category: 'Navigation',
+	},
+	{
+		name: 'Dynamic List',
+		path: '/components/dynamic-list',
+		description: 'Interactive list component with add, delete, and reorder functionality via drag-and-drop or buttons.',
+		category: 'Display',
+	},
+	{
+		name: 'Error Boundary',
 		path: '/components/error-boundary',
 		description: 'React error boundary component that catches JavaScript errors and displays fallback UI.',
 		category: 'Feedback',
+	},
+	{
+		name: 'Form',
+		path: '/components/form',
+		description: 'Flexible form component using factory pattern with built-in validation and state management.',
+		category: 'Form',
 	},
 	{
 		name: 'Input',
@@ -45,67 +117,12 @@ const components = [
 		description: 'Flexible input component with validation states and different types.',
 		category: 'Form',
 	},
-  {
-    name: 'List',
-    path: '/components/dynamic-list',
-    description: 'Interactive list component with add, delete, and reorder functionality via drag-and-drop or buttons.',
-    category: 'Display',
-  },
-  {
-    name: 'Input',
-    path: '/components/input',
-    description: 'Flexible input component with validation states and different types.',
-    category: 'Form',
-  },
-  {
-    name: 'Modal',
-    path: '/components/modal',
-    description: 'Overlay component for forms, confirmations, and interactive content.',
-    category: 'Overlay',
-  },
-  {
-    name: 'Skeleton',
-    path: '/components/skeleton',
-    description: 'Loading placeholders that mimic the structure of your content.',
-    category: 'Feedback',
-  },
-  {
-    name: 'Table',
-    path: '/components/table',
-    description: 'Data table component with sorting, selection, custom cells, and responsive design.',
-    category: 'Display',
-  },
-  // Placeholder for future components
-  {
-    name: 'Textarea',
-    path: '/components/textarea',
-    description: 'Multi-line text input with auto-expand and character limit features.',
-    category: 'Form',
-  },
-  {
-    name: 'Select',
-    path: '/components/select',
-    description: 'Dropdown selection component with search and keyboard navigation.',
-    category: 'Form',
-  },
-  {
-    name: 'Checkbox',
-    path: '/components/checkbox',
-    description: 'Customizable checkbox with different sizes and colors.',
-    category: 'Form',
-  },
-  {
-    name: 'Toast',
-    path: '/components/toast',
-    description: 'Notification component for displaying temporary messages.',
-    category: 'Feedback',
-  },
-  {
-    name: 'Callout',
-    path: '/components/callout',
-    description: 'Versatile component for displaying alerts, warnings, and informational messages.',
-    category: 'Feedback',
-  },
+	{
+		name: 'Label',
+		path: '/components/label',
+		description: 'Form label component with proper accessibility attributes.',
+		category: 'Form',
+	},
 	{
 		name: 'Modal',
 		path: '/components/modal',
@@ -113,17 +130,34 @@ const components = [
 		category: 'Overlay',
 	},
 	{
-		name: 'Skeleton',
-		path: '/components/skeleton',
-		description: 'Loading placeholders that mimic the structure of your content.',
-		category: 'Feedback',
+		name: 'Pagination',
+		path: '/components/pagination',
+		description: 'Navigation component for dividing content across multiple pages.',
+		category: 'Navigation',
 	},
-	// Placeholder for future components
 	{
-		name: 'Textarea',
-		path: '/components/textarea',
-		description: 'Multi-line text input with auto-expand and character limit features.',
+		name: 'Panel',
+		path: '/components/panel',
+		description: 'Flexible container component for grouping related content.',
+		category: 'Layout',
+	},
+	{
+		name: 'Popover',
+		path: '/components/popover',
+		description: 'Floating content container that appears relative to a trigger element.',
+		category: 'Overlay',
+	},
+	{
+		name: 'Radio Group',
+		path: '/components/radiogroup',
+		description: 'Group of radio buttons for single selection from multiple options.',
 		category: 'Form',
+	},
+	{
+		name: 'Scroll Area',
+		path: '/components/scroll-area',
+		description: 'Custom scrollable area with styled scrollbars.',
+		category: 'Layout',
 	},
 	{
 		name: 'Select',
@@ -132,17 +166,59 @@ const components = [
 		category: 'Form',
 	},
 	{
-		name: 'Checkbox',
-		path: '/components/checkbox',
-		description: 'Customizable checkbox with different sizes and colors.',
+		name: 'Separator',
+		path: '/components/separator',
+		description: 'Visual divider component for separating content sections.',
+		category: 'Layout',
+	},
+	{
+		name: 'Skeleton',
+		path: '/components/skeleton',
+		description: 'Loading placeholders that mimic the structure of your content.',
+		category: 'Feedback',
+	},
+	{
+		name: 'Slider',
+		path: '/components/slider',
+		description: 'Range input component for selecting numeric values.',
 		category: 'Form',
 	},
 	{
-		name: 'Form',
-		path: '/components/form',
-		description: 'Flexible form component using factory pattern with built-in validation and state management.',
+		name: 'Table',
+		path: '/components/table',
+		description: 'Data table component with sorting, selection, custom cells, and responsive design.',
+		category: 'Display',
+	},
+	{
+		name: 'Tabs',
+		path: '/components/tabs',
+		description: 'Tabbed interface component for organizing content into sections.',
+		category: 'Navigation',
+	},
+	{
+		name: 'Textarea',
+		path: '/components/textarea',
+		description: 'Multi-line text input with auto-expand and character limit features.',
 		category: 'Form',
-	}
+	},
+	{
+		name: 'Toast',
+		path: '/components/toast',
+		description: 'Notification component for displaying temporary messages.',
+		category: 'Feedback',
+	},
+	{
+		name: 'Toggle',
+		path: '/components/toggle',
+		description: 'Switch component for boolean states and settings.',
+		category: 'Form',
+	},
+	{
+		name: 'Tooltip',
+		path: '/components/tooltip',
+		description: 'Contextual information component that appears on hover or focus.',
+		category: 'Feedback',
+	},
 ];
 
 const categories = Array.from(new Set(components.map((c) => c.category)));

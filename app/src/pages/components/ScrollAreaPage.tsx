@@ -1,0 +1,209 @@
+import { ScrollArea } from '@moondreamsdev/dreamer-ui/components';
+import { ComponentPage } from '../../components/layout/ComponentPage';
+
+const tableOfContents = [
+  { id: 'import', title: 'Import', level: 1 },
+  { id: 'examples', title: 'Examples', level: 1 },
+  { id: 'basic-usage', title: 'Basic Usage', level: 2 },
+  { id: 'horizontal-scroll', title: 'Horizontal Scroll', level: 2 },
+  { id: 'custom-styling', title: 'Custom Styling', level: 2 },
+  { id: 'props', title: 'Props', level: 1 },
+];
+
+const scrollAreaExamples = [
+  {
+    id: 'basic-usage',
+    title: 'Basic Usage',
+    description: 'Simple scroll area with vertical scrolling.',
+    code: `<ScrollArea className='h-48 w-full border border-gray-200 rounded'>
+  <div className='p-4'>
+    <h4 className='font-semibold mb-2'>Long Content</h4>
+    <p className='mb-4'>
+      This is a scroll area with a fixed height. When the content exceeds this height, 
+      a vertical scrollbar will appear.
+    </p>
+    <p className='mb-4'>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+      incididunt ut labore et dolore magna aliqua.
+    </p>
+    <p className='mb-4'>
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
+      aliquip ex ea commodo consequat.
+    </p>
+    <p className='mb-4'>
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
+      eu fugiat nulla pariatur.
+    </p>
+    <p>
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+      deserunt mollit anim id est laborum.
+    </p>
+  </div>
+</ScrollArea>`,
+    children: (
+      <ScrollArea className='h-48 w-full border border-gray-200 rounded'>
+        <div className='p-4'>
+          <h4 className='font-semibold mb-2'>Long Content</h4>
+          <p className='mb-4'>
+            This is a scroll area with a fixed height. When the content exceeds this height, 
+            a vertical scrollbar will appear.
+          </p>
+          <p className='mb-4'>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+            incididunt ut labore et dolore magna aliqua.
+          </p>
+          <p className='mb-4'>
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
+            aliquip ex ea commodo consequat.
+          </p>
+          <p className='mb-4'>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
+            eu fugiat nulla pariatur.
+          </p>
+          <p>
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+            deserunt mollit anim id est laborum.
+          </p>
+        </div>
+      </ScrollArea>
+    ),
+  },
+  {
+    id: 'horizontal-scroll',
+    title: 'Horizontal Scroll',
+    description: 'Scroll area with horizontal scrolling for wide content.',
+    code: `<ScrollArea className='h-24 w-full border border-gray-200 rounded'>
+  <div className='p-4 w-[800px]'>
+    <h4 className='font-semibold mb-2'>Wide Content</h4>
+    <p>
+      This content is intentionally wider than the container (800px) to demonstrate 
+      horizontal scrolling. You can scroll horizontally to see more content. This is 
+      useful for tables, code blocks, or any wide content that doesn't fit in the 
+      available space.
+    </p>
+  </div>
+</ScrollArea>`,
+    children: (
+      <ScrollArea className='h-24 w-full border border-gray-200 rounded'>
+        <div className='p-4 w-[800px]'>
+          <h4 className='font-semibold mb-2'>Wide Content</h4>
+          <p>
+            This content is intentionally wider than the container (800px) to demonstrate 
+            horizontal scrolling. You can scroll horizontally to see more content. This is 
+            useful for tables, code blocks, or any wide content that doesn't fit in the 
+            available space.
+          </p>
+        </div>
+      </ScrollArea>
+    ),
+  },
+  {
+    id: 'custom-styling',
+    title: 'Custom Styling',
+    description: 'Scroll area with custom scrollbar styling.',
+    code: `<ScrollArea 
+  className='h-32 w-full border border-gray-200 rounded'
+  thumbClassName='!bg-blue-500 hover:!bg-blue-400'
+>
+  <div className='p-4'>
+    <h4 className='font-semibold mb-2'>Custom Blue Scrollbar</h4>
+    <p className='mb-4'>
+      This scroll area uses a custom blue thumb via the thumbClassName prop. 
+      The thumb changes color on hover.
+    </p>
+    <p className='mb-4'>
+      You can customize the scrollbar appearance to match your design system 
+      or brand colors.
+    </p>
+    <p className='mb-4'>
+      The scrollbar automatically appears when content overflows and disappears 
+      when it doesn't.
+    </p>
+    <p>
+      Try scrolling to see the blue thumb in action. The smooth transitions 
+      make the interaction feel polished.
+    </p>
+  </div>
+</ScrollArea>`,
+    children: (
+      <ScrollArea 
+        className='h-32 w-full border border-gray-200 rounded'
+        thumbClassName='!bg-blue-500 hover:!bg-blue-400'
+      >
+        <div className='p-4'>
+          <h4 className='font-semibold mb-2'>Custom Blue Scrollbar</h4>
+          <p className='mb-4'>
+            This scroll area uses a custom blue thumb via the thumbClassName prop. 
+            The thumb changes color on hover.
+          </p>
+          <p className='mb-4'>
+            You can customize the scrollbar appearance to match your design system 
+            or brand colors.
+          </p>
+          <p className='mb-4'>
+            The scrollbar automatically appears when content overflows and disappears 
+            when it doesn't.
+          </p>
+          <p>
+            Try scrolling to see the blue thumb in action. The smooth transitions 
+            make the interaction feel polished.
+          </p>
+        </div>
+      </ScrollArea>
+    ),
+  },
+];
+
+const scrollAreaProps = [
+  {
+    name: 'className',
+    type: 'string',
+    description: 'Additional CSS classes to apply to the scroll area root container.',
+  },
+  {
+    name: 'thumbClassName',
+    type: 'string',
+    description: 'Custom CSS classes for the scroll thumb (the draggable part of the scrollbar).',
+  },
+  {
+    name: 'viewportClassName',
+    type: 'string',
+    description: 'Custom CSS classes for the viewport (scrollable content area).',
+  },
+  {
+    name: 'scrollbarClassName',
+    type: 'string',
+    description: 'Custom CSS classes for the scrollbar track.',
+  },
+  {
+    name: 'scrollbarThickness',
+    type: 'number',
+    default: '10',
+    description: 'Scrollbar thickness in pixels.',
+  },
+  {
+    name: 'children',
+    type: 'React.ReactNode',
+    description: 'The content to make scrollable.',
+    required: true,
+  },
+  {
+    name: 'id',
+    type: 'string',
+    description: 'HTML id attribute for the scroll area.',
+  },
+];
+
+export function ScrollAreaPage() {
+  return (
+    <ComponentPage
+      title='Scroll Area'
+      description='Custom scrollable area with styled scrollbars and smooth scrolling behavior.'
+      tableOfContents={tableOfContents}
+      usageInstructions='The ScrollArea component provides a custom scrollable container with styled scrollbars. Use it to create scrollable regions that match your design system while maintaining smooth scrolling performance. Set a fixed height or width on the container to enable scrolling.'
+      importStatement="import { ScrollArea } from '@moondreamsdev/dreamer-ui/components';"
+      componentProps={scrollAreaProps}
+      examples={scrollAreaExamples}
+    />
+  );
+}

@@ -1,7 +1,8 @@
 import { Button, Code, CodeBlock, Disclosure, Table } from '@moondreamsdev/dreamer-ui/components';
-import { Check, Copy } from '@moondreamsdev/dreamer-ui/symbols';
+import { Check, ChevronLeft, ChevronRight, Copy } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ExampleSection } from '../ui/ExampleSection';
 
 // SectionHeader component with hover link functionality
@@ -46,6 +47,46 @@ function SectionHeader({ id, children, level, className }: SectionHeaderProps) {
 		</Tag>
 	);
 }
+
+// Component navigation data
+const COMPONENTS_ORDER = [
+	{ name: 'Accordion', path: '/components/accordion' },
+	{ name: 'Action Modal', path: '/components/actionmodal' },
+	{ name: 'Avatar', path: '/components/avatar' },
+	{ name: 'Badge', path: '/components/badge' },
+	{ name: 'Button', path: '/components/button' },
+	{ name: 'Callout', path: '/components/callout' },
+	{ name: 'Card', path: '/components/card' },
+	{ name: 'Carousel', path: '/components/carousel' },
+	{ name: 'Checkbox', path: '/components/checkbox' },
+	{ name: 'Clickable', path: '/components/clickable' },
+	{ name: 'Code', path: '/components/code' },
+	{ name: 'Code Block', path: '/components/codeblock' },
+	{ name: 'Disclosure', path: '/components/disclosure' },
+	{ name: 'Drawer', path: '/components/drawer' },
+	{ name: 'Dropdown Menu', path: '/components/dropdown-menu' },
+	{ name: 'Dynamic List', path: '/components/dynamic-list' },
+	{ name: 'Error Boundary', path: '/components/error-boundary' },
+	{ name: 'Form', path: '/components/form' },
+	{ name: 'Input', path: '/components/input' },
+	{ name: 'Label', path: '/components/label' },
+	{ name: 'Modal', path: '/components/modal' },
+	{ name: 'Pagination', path: '/components/pagination' },
+	{ name: 'Panel', path: '/components/panel' },
+	{ name: 'Popover', path: '/components/popover' },
+	{ name: 'Radio Group', path: '/components/radiogroup' },
+	{ name: 'Scroll Area', path: '/components/scroll-area' },
+	{ name: 'Select', path: '/components/select' },
+	{ name: 'Separator', path: '/components/separator' },
+	{ name: 'Skeleton', path: '/components/skeleton' },
+	{ name: 'Slider', path: '/components/slider' },
+	{ name: 'Table', path: '/components/table' },
+	{ name: 'Tabs', path: '/components/tabs' },
+	{ name: 'Textarea', path: '/components/textarea' },
+	{ name: 'Toast', path: '/components/toast' },
+	{ name: 'Toggle', path: '/components/toggle' },
+	{ name: 'Tooltip', path: '/components/tooltip' },
+];
 
 interface TableOfContentsItem {
 	id: string;
@@ -105,6 +146,19 @@ export function ComponentPage({
 	const usageInstructionsRef = useRef<HTMLDivElement | null>(null);
 	const importStatementRef = useRef<HTMLDivElement | null>(null);
 	const mainContentRef = useRef<HTMLDivElement | null>(null);
+	const navigate = useNavigate();
+
+	// Find current component index and navigation info
+	const currentPath = window.location.pathname;
+	const currentComponentIndex = COMPONENTS_ORDER.findIndex((comp) => comp.path === currentPath);
+	const previousComponent =
+		currentComponentIndex === 0
+			? COMPONENTS_ORDER[COMPONENTS_ORDER.length - 1]
+			: COMPONENTS_ORDER[currentComponentIndex - 1];
+	const nextComponent =
+		currentComponentIndex === COMPONENTS_ORDER.length - 1
+			? COMPONENTS_ORDER[0]
+			: COMPONENTS_ORDER[currentComponentIndex + 1];
 
 	const handleCopyMarkdown = async () => {
 		// Generate markdown content
@@ -239,18 +293,49 @@ export function ComponentPage({
 			<div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
 				{/* Header */}
 				<div className='text-center mb-12'>
-					<div className='flex justify-center items-center mb-4 relative'>
-						<h1 className='text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent'>
+					<div className='flex justify-center items-center mb-3 relative'>
+						<h1 className='text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent pb-1'>
 							{title}
 						</h1>
-						<Button
-							size='sm'
-							onClick={handleCopyMarkdown}
-							className='absolute right-0 top-1/2 -translate-y-1/2 inline-flex items-center gap-2 p-2'
-						>
-							{copied ? <Check size={14} /> : <Copy size={14} />}
-							<span>{copied ? 'Copied!' : 'Copy Page'}</span>
-						</Button>
+						{/* Component action buttons */}
+						{currentComponentIndex !== -1 && (
+							<div className='absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2'>
+								{/* Copy Page Button */}
+								<Button size='sm' onClick={handleCopyMarkdown} className='inline-flex items-center gap-2 px-2.5'>
+									{copied ? <Check size={14} /> : <Copy size={14} />}
+									<span>{copied ? 'Copied!' : 'Copy page'}</span>
+								</Button>
+
+								{/* Previous Component Button */}
+								<Button
+									size='fitted'
+									disabled={!previousComponent}
+									onClick={() => {
+										if (previousComponent) {
+											navigate(previousComponent.path);
+										}
+									}}
+									className='p-1.5'
+									title={previousComponent ? `Previous: ${previousComponent.name}` : undefined}
+								>
+									<ChevronLeft size={16} />
+								</Button>
+
+								{/* Next Component Button */}
+								<Button
+									size='fitted'
+									onClick={() => {
+										if (nextComponent) {
+											navigate(nextComponent.path);
+										}
+									}}
+									className='p-1.5'
+									title={nextComponent ? `Next: ${nextComponent.name}` : undefined}
+								>
+									<ChevronRight size={16} />
+								</Button>
+							</div>
+						)}
 					</div>
 					<p className='text-xl text-gray-300 max-w-2xl mx-auto'>{description}</p>
 				</div>
@@ -330,11 +415,7 @@ export function ComponentPage({
 						</div>
 					)}
 
-					{children && (
-						<div className='bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6 lg:p-8'>
-							{children}
-						</div>
-					)}
+					{children && <div className='backdrop-blur-sm p-2 sm:p-4 lg:p-6'>{children}</div>}
 
 					{/* Component Props */}
 					{componentProps && componentProps.length > 0 && (

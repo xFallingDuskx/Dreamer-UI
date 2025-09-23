@@ -1,14 +1,17 @@
 import { Badge, Table, TableColumn } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
-import { ExampleSection } from '../../components/ui/ExampleSection';
 
 const tableOfContents = [
-	{ id: 'basic-table', title: 'Basic Usage', level: 1 },
-	{ id: 'sorting', title: 'Sorting', level: 1 },
-	{ id: 'custom-cells', title: 'Custom Cells', level: 1 },
-	{ id: 'selection', title: 'Row Selection', level: 1 },
-	{ id: 'variants', title: 'Size Variants', level: 1 },
-	{ id: 'states', title: 'States', level: 1 },
+	{ id: 'import', title: 'Import', level: 1 },
+	{ id: 'examples', title: 'Examples', level: 1 },
+	{ id: 'basic-table', title: 'Basic Usage', level: 2 },
+	{ id: 'sorting', title: 'Sorting', level: 2 },
+	{ id: 'custom-cells', title: 'Custom Cells', level: 2 },
+	{ id: 'selection', title: 'Row Selection', level: 2 },
+	{ id: 'variants', title: 'Size Variants', level: 2 },
+	{ id: 'states', title: 'States', level: 2 },
+	{ id: 'props', title: 'Props', level: 1 },
+	{ id: 'keyboard-shortcuts', title: 'Keyboard Shortcuts', level: 1 },
 ];
 
 // Sample data for examples
@@ -79,84 +82,251 @@ const basicColumns: TableColumn<User>[] = [
 	},
 ];
 
-const sortableColumns: TableColumn<User>[] = [
+const tableExamples = [
 	{
-		key: 'name',
-		header: 'Name',
-		accessor: 'name',
-		sortable: true,
+		id: 'basic-table',
+		title: 'Basic Usage',
+		description: 'Simple tables display data in rows and columns with proper HTML semantics and accessibility.',
+		code: `const columns = [
+  { key: 'name', header: 'Name', accessor: 'name' },
+  { key: 'email', header: 'Email', accessor: 'email' },
+  { key: 'role', header: 'Role', accessor: 'role' },
+];
+
+<Table data={sampleUsers} columns={columns} caption='Basic user data table' />`,
+		children: (
+			<Table data={sampleUsers} columns={basicColumns} caption='Basic user data table' />
+		),
 	},
 	{
-		key: 'email',
-		header: 'Email',
-		accessor: 'email',
-		sortable: true,
+		id: 'sorting',
+		title: 'Sorting',
+		description: 'Tables can be sorted by clicking column headers. Add sortable: true to enable sorting.',
+		code: `const sortableColumns = [
+  { key: 'name', header: 'Name', accessor: 'name', sortable: true },
+  { key: 'email', header: 'Email', accessor: 'email', sortable: true },
+  { key: 'role', header: 'Role', accessor: 'role', sortable: true },
+  { key: 'score', header: 'Score', accessor: 'score', sortable: true },
+];
+
+<Table data={sampleUsers} columns={sortableColumns} />`,
+		children: (
+			<Table
+				data={sampleUsers}
+				columns={[
+					{ key: 'name', header: 'Name', accessor: 'name', sortable: true },
+					{ key: 'email', header: 'Email', accessor: 'email', sortable: true },
+					{ key: 'role', header: 'Role', accessor: 'role', sortable: true },
+					{ key: 'score', header: 'Score', accessor: 'score', sortable: true },
+				]}
+				caption='Sortable user data table'
+			/>
+		),
 	},
 	{
-		key: 'score',
-		header: 'Score',
-		accessor: 'score',
-		sortable: true,
-		align: 'center',
+		id: 'custom-cells',
+		title: 'Custom Cells',
+		description: 'Customize cell rendering with cell functions for complex data presentation.',
+		code: `const customColumns = [
+  { key: 'name', header: 'Name', accessor: 'name' },
+  { 
+    key: 'status', 
+    header: 'Status', 
+    accessor: 'status',
+    cell: (_, value) => (
+      <Badge variant={value === 'active' ? 'success' : 'secondary'}>
+        {value}
+      </Badge>
+    )
+  },
+  {
+    key: 'lastLogin',
+    header: 'Last Login',
+    accessor: 'lastLogin',
+    cell: (_, value) => new Date(value).toLocaleDateString(),
+  },
+];
+
+<Table data={sampleUsers} columns={customColumns} />`,
+		children: (
+			<Table
+				data={sampleUsers}
+				columns={[
+					{ key: 'name', header: 'Name', accessor: 'name' },
+					{
+						key: 'status',
+						header: 'Status',
+						accessor: 'status',
+						cell: (_, value) => (
+							<Badge variant={value === 'active' ? 'success' : 'secondary'}>
+								{value as string}
+							</Badge>
+						),
+					},
+					{
+						key: 'lastLogin',
+						header: 'Last Login',
+						accessor: 'lastLogin',
+						cell: (_, value) => (value as Date).toLocaleDateString(),
+					},
+				]}
+				caption='Table with custom cell rendering'
+			/>
+		),
 	},
 	{
-		key: 'lastLogin',
-		header: 'Last Login',
-		accessor: 'lastLogin',
-		sortable: true,
-		cell: (user) => user.lastLogin.toLocaleDateString(),
+		id: 'selection',
+		title: 'Row Selection',
+		description: 'Enable row selection with checkboxes for bulk operations and data management.',
+		code: `<Table
+  data={sampleUsers}
+  columns={basicColumns}
+  selectable
+  onSelectionChange={(selectedRows) => {
+    console.log('Selected rows:', selectedRows);
+  }}
+/>`,
+		children: (
+			<Table
+				data={sampleUsers}
+				columns={basicColumns}
+				selectable
+				onSelectionChange={(selectedRows) => {
+					console.log('Selected rows:', selectedRows);
+				}}
+				caption='Table with row selection'
+			/>
+		),
+	},
+	{
+		id: 'variants',
+		title: 'Size Variants',
+		description: 'Different size variants for various design contexts and space constraints.',
+		code: `// Small variant
+<Table data={sampleUsers} columns={basicColumns} size="sm" />
+
+// Medium variant (default)
+<Table data={sampleUsers} columns={basicColumns} size="md" />
+
+// Large variant
+<Table data={sampleUsers} columns={basicColumns} size="lg" />`,
+		children: (
+			<div className="space-y-6">
+				<div>
+					<h4 className="text-sm font-medium mb-2">Small</h4>
+					<Table data={sampleUsers.slice(0, 2)} columns={basicColumns} size="sm" />
+				</div>
+				<div>
+					<h4 className="text-sm font-medium mb-2">Medium (default)</h4>
+					<Table data={sampleUsers.slice(0, 2)} columns={basicColumns} size="md" />
+				</div>
+				<div>
+					<h4 className="text-sm font-medium mb-2">Large</h4>
+					<Table data={sampleUsers.slice(0, 2)} columns={basicColumns} size="lg" />
+				</div>
+			</div>
+		),
+	},
+	{
+		id: 'states',
+		title: 'States',
+		description: 'Handle loading and empty states with built-in UI feedback.',
+		code: `// Loading state
+<Table data={[]} columns={basicColumns} loading />
+
+// Empty state with custom message
+<Table 
+  data={[]} 
+  columns={basicColumns} 
+  emptyState={<div className="text-center py-4">No users found</div>}
+/>`,
+		children: (
+			<div className="space-y-6">
+				<div>
+					<h4 className="text-sm font-medium mb-2">Loading State</h4>
+					<Table data={[]} columns={basicColumns} loading />
+				</div>
+				<div>
+					<h4 className="text-sm font-medium mb-2">Empty State</h4>
+					<Table 
+						data={[]} 
+						columns={basicColumns} 
+						emptyState={<div className="text-center py-4">No users found</div>}
+					/>
+				</div>
+			</div>
+		),
 	},
 ];
 
-const customCellColumns: TableColumn<User>[] = [
+const tableProps = [
 	{
-		key: 'name',
-		header: 'User',
-		accessor: 'name',
-		cell: (user) => (
-			<div className='flex flex-col'>
-				<span className='font-medium'>{user.name}</span>
-				<span className='text-sm text-muted-foreground'>{user.email}</span>
-			</div>
-		),
+		name: 'data',
+		type: 'T[]',
+		required: true,
+		description: 'Array of data objects to display in the table.',
 	},
 	{
-		key: 'role',
-		header: 'Role',
-		accessor: 'role',
-		align: 'center',
-		cell: (user) => (
-			<Badge variant={user.role === 'Admin' ? 'accent' : user.role === 'Editor' ? 'secondary' : 'muted'}>
-				{user.role}
-			</Badge>
-		),
-		sortable: true,
-		sortFunction: (a, b) => b.role.length - a.role.length, // Example custom sort by role name length
+		name: 'columns',
+		type: 'TableColumn<T>[]',
+		required: true,
+		description: 'Column definitions specifying headers, accessors, and rendering options.',
 	},
 	{
-		key: 'status',
-		header: 'Status',
-		accessor: 'status',
-		align: 'center',
-		cell: (user) => <Badge variant={user.status === 'active' ? 'success' : 'destructive'}>{user.status}</Badge>,
+		name: 'size',
+		type: '"sm" | "md" | "lg"',
+		default: '"md"',
+		description: 'Size variant affecting padding and font sizes.',
 	},
 	{
-		key: 'score',
-		header: 'Score',
-		accessor: 'score',
-		align: 'center',
-		cell: (user) => (
-			<div className='flex items-center justify-center gap-2'>
-				<div
-					className={`w-2 h-2 rounded-full ${
-						user.score >= 80 ? 'bg-green-500' : user.score >= 60 ? 'bg-yellow-500' : 'bg-red-500'
-					}`}
-				/>
-				{user.score}%
-			</div>
-		),
-		width: 100,
-		columnClassName: 'bg-gray-500/20',
+		name: 'selectable',
+		type: 'boolean',
+		default: 'false',
+		description: 'Whether to show row selection checkboxes.',
+	},
+	{
+		name: 'onSelectionChange',
+		type: '(selectedIds: (string | number)[]) => void',
+		description: 'Callback fired when row selection changes.',
+	},
+	{
+		name: 'loading',
+		type: 'boolean',
+		default: 'false',
+		description: 'Whether to show loading state.',
+	},
+	{
+		name: 'emptyState',
+		type: 'React.ReactNode',
+		description: 'Custom content to show when data is empty.',
+	},
+	{
+		name: 'striped',
+		type: 'boolean',
+		default: 'false',
+		description: 'Whether to add striped row styling.',
+	},
+	{
+		name: 'hoverable',
+		type: 'boolean',
+		default: 'true',
+		description: 'Whether to add hover effects on rows.',
+	},
+	{
+		name: 'caption',
+		type: 'string',
+		description: 'Table caption for accessibility.',
+	},
+];
+
+const keyboardShortcuts = [
+	{
+		keys: 'Space, Enter',
+		description: 'Select/deselect row when focused on checkbox',
+	},
+	{
+		keys: 'Tab',
+		description: 'Navigate through interactive elements',
 	},
 ];
 
@@ -164,116 +334,13 @@ export function TablePage() {
 	return (
 		<ComponentPage
 			title='Table'
-			description='A powerful data table component with sorting, selection, custom cell rendering, and responsive design. Perfect for displaying structured data with interactive features.'
+			description='A powerful data table component with sorting, selection, custom cell rendering, and responsive design.'
 			tableOfContents={tableOfContents}
-		>
-			<ExampleSection
-				title='Basic Usage'
-				description='Simple tables display data in rows and columns with proper HTML semantics and accessibility.'
-				id='basic-table'
-			>
-				<Table data={sampleUsers} columns={basicColumns} caption='Basic user data table' />
-			</ExampleSection>
-
-			<ExampleSection
-				title='Sorting'
-				description='Columns can be made sortable to allow users to organize data by different criteria.'
-				id='sorting'
-			>
-				<Table data={sampleUsers} columns={sortableColumns} caption='Sortable user data table' />
-			</ExampleSection>
-
-			<ExampleSection
-				title='Custom Cells'
-				description='Cell content can be customized with React components for rich data presentation.'
-				id='custom-cells'
-			>
-				<Table data={sampleUsers} columns={customCellColumns} caption='Table with custom cell rendering' />
-			</ExampleSection>
-
-			<ExampleSection
-				title='Row Selection'
-				description='Tables support single and multi-row selection with checkboxes and callback functions.'
-				id='selection'
-			>
-				<Table
-					data={sampleUsers}
-					columns={basicColumns}
-					selectable={true}
-					getRowId={(user) => user.id}
-					onSelectionChange={(selectedIds) => console.log('Selected users:', selectedIds)}
-					caption='Selectable user data table'
-				/>
-			</ExampleSection>
-
-			<ExampleSection
-				title='Size Variants'
-				description='Tables are available in different sizes to match your design requirements.'
-				id='variants'
-			>
-				<div className='space-y-6'>
-					<div>
-						<h4 className='text-sm font-medium mb-2'>Small</h4>
-						<Table data={sampleUsers.slice(0, 2)} columns={basicColumns} size='sm' caption='Small sized table' />
-					</div>
-					<div>
-						<h4 className='text-sm font-medium mb-2'>Medium (Default)</h4>
-						<Table data={sampleUsers.slice(0, 2)} columns={basicColumns} size='md' caption='Medium sized table' />
-					</div>
-					<div>
-						<h4 className='text-sm font-medium mb-2'>Large</h4>
-						<Table data={sampleUsers.slice(0, 2)} columns={basicColumns} size='lg' caption='Large sized table' />
-					</div>
-				</div>
-			</ExampleSection>
-
-			<ExampleSection
-				title='States'
-				description='Tables can display loading states, empty states, and visual enhancements like stripes and hover effects.'
-				id='states'
-			>
-				<div className='space-y-6'>
-					<div>
-						<h4 className='text-sm font-medium mb-2'>Striped with Hover</h4>
-						<Table
-							data={sampleUsers}
-							columns={basicColumns}
-							striped={true}
-							hoverable={true}
-							caption='Striped table with hover effects'
-						/>
-					</div>
-					<div>
-						<h4 className='text-sm font-medium mb-2'>Loading State</h4>
-						<Table
-							data={sampleUsers}
-							columns={basicColumns}
-							loading={true}
-							loadingContent={
-								<div className='flex items-center gap-2'>
-									<div className='w-4 h-4 border-2 border-accent border-t-transparent rounded-full animate-spin'></div>
-									Loading data...
-								</div>
-							}
-							caption='Loading state table'
-						/>
-					</div>
-					<div>
-						<h4 className='text-sm font-medium mb-2'>Empty State</h4>
-						<Table
-							data={[]}
-							columns={basicColumns}
-							emptyState={
-								<div className='text-center py-8'>
-									<p className='text-muted-foreground'>No data available</p>
-									<p className='text-sm text-muted-foreground mt-1'>Add some records to see them here</p>
-								</div>
-							}
-							caption='Empty state table'
-						/>
-					</div>
-				</div>
-			</ExampleSection>
-		</ComponentPage>
+			usageInstructions='The Table component displays tabular data with rich features like sorting, selection, and custom cell rendering. Use it for data grids, user lists, dashboards, or any structured information.'
+			importStatement="import { Table, TableColumn } from '@moondreamsdev/dreamer-ui/components';"
+			componentProps={tableProps}
+			keyboardShortcuts={keyboardShortcuts}
+			examples={tableExamples}
+		/>
 	);
 }

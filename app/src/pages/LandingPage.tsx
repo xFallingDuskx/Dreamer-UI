@@ -63,11 +63,7 @@ export const LandingPage = () => {
           <div className='text-sm'>Components</div>
         </div>
         <div className='text-gray-400'>
-          <div className='text-2xl font-bold text-accent'>3+</div>
-          <div className='text-sm'>Hooks</div>
-        </div>
-        <div className='text-gray-400'>
-          <div className='text-2xl font-bold text-secondary'>100%</div>
+          <div className='text-2xl font-bold text-accent'>100%</div>
           <div className='text-sm'>TypeScript</div>
         </div>
         <div className='text-gray-400'>
