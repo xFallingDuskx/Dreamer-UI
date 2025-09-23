@@ -184,12 +184,6 @@ const components = [
 		category: 'Form',
 	},
 	{
-		name: 'Slot',
-		path: '/components/slot',
-		description: 'Utility component for creating flexible component compositions.',
-		category: 'Utility',
-	},
-	{
 		name: 'Table',
 		path: '/components/table',
 		description: 'Data table component with sorting, selection, custom cells, and responsive design.',
