@@ -7,6 +7,7 @@ const tableOfContents = [
   { id: 'examples', title: 'Examples', level: 1 },
   { id: 'basic-usage', title: 'Basic Usage', level: 2 },
   { id: 'controlled-popover', title: 'Controlled Popover', level: 2 },
+  { id: 'hover-behavior', title: 'Hover Behavior', level: 2 },
   { id: 'placement-alignment', title: 'Placement & Alignment', level: 2 },
   { id: 'rich-content', title: 'Rich Content', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
@@ -95,6 +96,52 @@ const popoverExamples = [
 }`,
     children: (
       <ControlledPopoverExample />
+    ),
+  },
+  {
+    id: 'hover-behavior',
+    title: 'Hover Behavior',
+    description: 'Popovers that show on hover and hide after a delay.',
+    code: `function HoverBehaviorExample() {
+  return (
+    <div className='flex gap-4'>
+      <Popover
+        trigger={<Button variant="outline">Hover me</Button>}
+        hoverable={true}
+        className='p-4 max-w-sm'
+      >
+        <div>
+          <h4 className='font-medium mb-2'>Hover Popover</h4>
+          <p className='text-sm text-gray-400'>
+            This popover appears on hover and disappears 200ms after the mouse leaves.
+          </p>
+        </div>
+      </Popover>
+
+      <Popover
+        trigger={<Button variant="outline">Navigation Menu</Button>}
+        hoverable={true}
+        placement="bottom"
+        alignment="start"
+        className='p-2'
+      >
+        <div className='space-y-1 min-w-[150px]'>
+          <div className='px-3 py-2 text-sm hover:bg-gray-700 rounded cursor-pointer'>
+            Dashboard
+          </div>
+          <div className='px-3 py-2 text-sm hover:bg-gray-700 rounded cursor-pointer'>
+            Settings
+          </div>
+          <div className='px-3 py-2 text-sm hover:bg-gray-700 rounded cursor-pointer'>
+            Profile
+          </div>
+        </div>
+      </Popover>
+    </div>
+  );
+}`,
+    children: (
+      <HoverBehaviorExample />
     ),
   },
   {
@@ -333,6 +380,45 @@ function ControlledPopoverExample() {
   );
 }
 
+function HoverBehaviorExample() {
+  return (
+    <div className='flex gap-4'>
+      <Popover
+        trigger={<Button variant="outline">Hover me</Button>}
+        hoverable={true}
+        className='p-4 max-w-sm'
+      >
+        <div>
+          <h4 className='font-medium mb-2'>Hover Popover</h4>
+          <p className='text-sm text-gray-400'>
+            This popover appears on hover and disappears 200ms after the mouse leaves.
+          </p>
+        </div>
+      </Popover>
+
+      <Popover
+        trigger={<Button variant="outline">Navigation Menu</Button>}
+        hoverable={true}
+        placement="bottom"
+        alignment="start"
+        className='p-2'
+      >
+        <div className='space-y-1 min-w-[150px]'>
+          <div className='px-3 py-2 text-sm hover:bg-gray-700 rounded cursor-pointer'>
+            Dashboard
+          </div>
+          <div className='px-3 py-2 text-sm hover:bg-gray-700 rounded cursor-pointer'>
+            Settings
+          </div>
+          <div className='px-3 py-2 text-sm hover:bg-gray-700 rounded cursor-pointer'>
+            Profile
+          </div>
+        </div>
+      </Popover>
+    </div>
+  );
+}
+
 function PlacementAlignmentExample() {
   return (
     <div className='grid grid-cols-2 gap-8'>
@@ -551,6 +637,12 @@ const popoverProps = [
     type: 'boolean',
     default: 'true',
     description: 'Automatically switch placement to opposite side if there is not enough space.',
+  },
+  {
+    name: 'hoverable',
+    type: 'boolean',
+    default: 'false',
+    description: 'Enable hover behavior - shows on hover, hides 200ms after mouse leaves.',
   },
 ];
 

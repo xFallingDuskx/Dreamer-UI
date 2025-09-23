@@ -1,5 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Popover } from '@moondreamsdev/dreamer-ui/components';
+import { ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { isLocalhost } from '../../utils/isLocalhost';
+import { join } from '@moondreamsdev/dreamer-ui/utils';
 
 interface NavigationProps {
 	className?: string;
@@ -44,10 +47,11 @@ const components = [
 	{ name: 'Tooltip', path: '/components/tooltip' },
 ];
 
-const utils = [{ name: 'join', path: '/utils/join' }];
+const componentPathToId = (path: string) => `nav-item-${path.replace('/components/', '')}`;
 
 export const Navigation = ({ className = '' }: NavigationProps) => {
 	const location = useLocation();
+	const navigate = useNavigate();
 	const showDraft = isLocalhost();
 
 	return (
@@ -66,13 +70,11 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 
 					{/* Main Navigation */}
 					<div className='hidden md:block'>
-						<div className='flex items-baseline space-x-8'>
+						<div className='flex items-baseline space-x-6'>
 							<Link
 								to='/'
 								className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-									location.pathname === '/'
-										? 'text-primary bg-primary/20'
-										: 'text-gray-300 hover:text-white hover:bg-gray-800'
+									location.pathname === '/' ? 'bg-accent/50' : 'text-gray-300 hover:text-white hover:bg-gray-800'
 								}`}
 							>
 								Home
@@ -82,81 +84,49 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 								to='/getting-started'
 								className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
 									location.pathname === '/getting-started'
-										? 'text-primary bg-primary/20'
+										? 'bg-accent/50'
 										: 'text-gray-300 hover:text-white hover:bg-gray-800'
 								}`}
 							>
 								Getting Started
 							</Link>
 
-							{/* Components Dropdown */}
-							<div className='relative group'>
-								<button className='px-3 py-2 text-sm font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-800 transition-colors'>
-									Components
-								</button>
-								<div className='absolute left-0 mt-2 w-64 bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50'>
-									<div className='p-2 max-h-96 overflow-y-auto'>
+							{/* Components Popover */}
+							<Popover
+								id='nav-popover'
+								trigger={
+									<button className='px-3 py-2 text-sm font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-800 transition-colors flex items-center gap-1'>
+										Components
+										<ChevronDown className='w-4 h-4' />
+									</button>
+								}
+								placement='bottom'
+								alignment='start'
+								className='w-64 max-h-96 overflow-y-auto bg-gray-900! border border-gray-700 focus:outline-none'
+								hoverable={true}
+							>
+								<div className='space-y-1'>
+									{components.map((component) => (
 										<Link
-											to='/components'
-											className={`block px-3 py-2 text-sm rounded-md transition-colors mb-1 ${
-												location.pathname === '/components'
-													? 'text-primary bg-primary/20'
+											id={componentPathToId(component.path)}
+											key={component.path}
+											to={component.path}
+											className={join(
+												'block px-3 py-2 text-sm transition-colors',
+												location.pathname === component.path
+													? 'bg-accent/50 text-white'
 													: 'text-gray-300 hover:text-white hover:bg-gray-800'
-											}`}
+											)}
+											onClick={() => {
+												// Close popover by navigating (optional, depends on desired UX)
+												navigate(component.path);
+											}}
 										>
-											All Components
+											{component.name}
 										</Link>
-										<div className='border-t border-gray-600 my-1'></div>
-										{components.map((component) => (
-											<Link
-												key={component.path}
-												to={component.path}
-												className={`block px-3 py-2 text-sm rounded-md transition-colors ${
-													location.pathname === component.path
-														? 'text-primary bg-primary/20'
-														: 'text-gray-300 hover:text-white hover:bg-gray-800'
-												}`}
-											>
-												{component.name}
-											</Link>
-										))}
-									</div>
+									))}
 								</div>
-							</div>
-
-							{/* Utils Dropdown */}
-							<div className='relative group'>
-								<button className='px-3 py-2 text-sm font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-800 transition-colors'>
-									Utils
-								</button>
-								<div className='absolute left-0 mt-2 w-48 bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50'>
-									<div className='p-2'>
-										<Link
-											to='/utils'
-											className={`block px-3 py-2 text-sm rounded-md transition-colors ${
-												location.pathname === '/utils'
-													? 'text-primary bg-primary/20'
-													: 'text-gray-300 hover:text-white hover:bg-gray-800'
-											}`}
-										>
-											All Utils
-										</Link>
-										{utils.map((util) => (
-											<Link
-												key={util.path}
-												to={util.path}
-												className={`block px-3 py-2 text-sm rounded-md transition-colors ${
-													location.pathname === util.path
-														? 'text-primary bg-primary/20'
-														: 'text-gray-300 hover:text-white hover:bg-gray-800'
-												}`}
-											>
-												{util.name}
-											</Link>
-										))}
-									</div>
-								</div>
-							</div>
+							</Popover>
 
 							{/* Draft Link - Only visible on localhost */}
 							{showDraft && (

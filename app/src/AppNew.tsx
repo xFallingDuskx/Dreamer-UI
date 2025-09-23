@@ -9,7 +9,6 @@ import { DraftPage } from './pages/DraftPage';
 import { GettingStartedPage } from './pages/GettingStartedPage';
 import { LandingPage } from './pages/LandingPage';
 import { ComponentsPage } from './pages/components/_ComponentsPage';
-import { UtilsPage } from './pages/utils/_UtilsPage';
 
 // Component Pages
 import { AccordionPage } from './pages/components/AccordionPage';
@@ -49,10 +48,6 @@ import { ToastPage } from './pages/components/ToastPage';
 import { TogglePage } from './pages/components/TogglePage';
 import { TooltipPage } from './pages/components/TooltipPage';
 
-// Utils Pages
-import { JoinPage } from './pages/utils/JoinPage';
-
-// Utils
 import { isLocalhost } from './utils/isLocalhost';
 
 function App() {
@@ -110,10 +105,6 @@ function App() {
 							<Route path='components/toast' element={<ToastPage />} />
 							<Route path='components/toggle' element={<TogglePage />} />
 							<Route path='components/tooltip' element={<TooltipPage />} />
-
-							{/* Utils Pages */}
-							<Route path='utils' element={<UtilsPage />} />
-							<Route path='utils/join' element={<JoinPage />} />
 
 							{/* Draft Page - Only available on localhost */}
 							{showDraftRoute && <Route path='draft' element={<DraftPage />} />}
