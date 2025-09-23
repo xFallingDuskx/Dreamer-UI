@@ -293,9 +293,9 @@ export function ComponentPage({
 						</h1>
 						<div className='absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2'>
 							{/* Copy Page Button */}
-							<Button size='sm' onClick={handleCopyMarkdown} className='inline-flex items-center gap-2 p-2'>
+							<Button size='sm' onClick={handleCopyMarkdown} className='inline-flex items-center gap-2 px-2.5'>
 								{copied ? <Check size={14} /> : <Copy size={14} />}
-								<span>{copied ? 'Copied!' : 'Copy Page'}</span>
+								<span>{copied ? 'Copied!' : 'Copy page'}</span>
 							</Button>
 
 							{/* Previous Component Button */}
