@@ -6,6 +6,7 @@ const tableOfContents = [
   { id: 'examples', title: 'Examples', level: 1 },
   { id: 'basic-usage', title: 'Basic Usage', level: 2 },
   { id: 'horizontal-scroll', title: 'Horizontal Scroll', level: 2 },
+  { id: 'max-height', title: 'Max Height', level: 2 },
   { id: 'custom-styling', title: 'Custom Styling', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
 ];
@@ -98,6 +99,67 @@ const scrollAreaExamples = [
     ),
   },
   {
+    id: 'max-height',
+    title: 'Max Height',
+    description: 'Scroll area with maximum height constraint.',
+    code: `<ScrollArea maxHeight={200} className='w-full border border-gray-200 rounded'>
+  <div className='p-4'>
+    <h4 className='font-semibold mb-2'>Content with Max Height</h4>
+    <p className='mb-4'>
+      This scroll area has a maximum height of 200px set via the maxHeight prop. 
+      Even if the container would normally be taller, it will be limited to this height.
+    </p>
+    <p className='mb-4'>
+      This is particularly useful when you want to ensure a consistent maximum size 
+      regardless of the content or parent container dimensions.
+    </p>
+    <p className='mb-4'>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
+      nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    </p>
+    <p className='mb-4'>
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
+      eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
+      in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+    <p>
+      Additional content that would normally make the scroll area taller than 200px, 
+      but the maxHeight prop prevents this and enables scrolling instead.
+    </p>
+  </div>
+</ScrollArea>`,
+    children: (
+      <ScrollArea maxHeight={200} className='w-full border border-gray-200 rounded'>
+        <div className='p-4'>
+          <h4 className='font-semibold mb-2'>Content with Max Height</h4>
+          <p className='mb-4'>
+            This scroll area has a maximum height of 200px set via the maxHeight prop. 
+            Even if the container would normally be taller, it will be limited to this height.
+          </p>
+          <p className='mb-4'>
+            This is particularly useful when you want to ensure a consistent maximum size 
+            regardless of the content or parent container dimensions.
+          </p>
+          <p className='mb-4'>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
+            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+          <p className='mb-4'>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
+            eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
+            in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Additional content that would normally make the scroll area taller than 200px, 
+            but the maxHeight prop prevents this and enables scrolling instead.
+          </p>
+        </div>
+      </ScrollArea>
+    ),
+  },
+  {
     id: 'custom-styling',
     title: 'Custom Styling',
     description: 'Scroll area with custom scrollbar styling.',
@@ -180,6 +242,11 @@ const scrollAreaProps = [
     type: 'number',
     default: '10',
     description: 'Scrollbar thickness in pixels.',
+  },
+  {
+    name: 'maxHeight',
+    type: 'number',
+    description: 'Maximum height in pixels before scrolling. When set, the scroll area will not exceed this height.',
   },
   {
     name: 'children',
