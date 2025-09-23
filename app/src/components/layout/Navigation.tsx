@@ -3,6 +3,7 @@ import { Popover } from '@moondreamsdev/dreamer-ui/components';
 import { ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { isLocalhost } from '../../utils/isLocalhost';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
+import { SearchBar } from '../search-bar';
 
 interface NavigationProps {
 	className?: string;
@@ -67,6 +68,11 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 							Dreamer UI
 						</span>
 					</Link>
+
+					{/* Search Bar */}
+					<div className='flex-1 max-w-md mx-8 hidden lg:block'>
+						<SearchBar />
+					</div>
 
 					{/* Main Navigation */}
 					<div className='hidden md:block'>
@@ -145,7 +151,10 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 					</div>
 
 					{/* Mobile menu button */}
-					<div className='md:hidden'>
+					<div className='flex items-center gap-2 md:hidden'>
+						<div className='max-w-[200px]'>
+							<SearchBar />
+						</div>
 						<button className='text-gray-300 hover:text-white'>
 							<svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
 								<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 6h16M4 12h16M4 18h16' />
