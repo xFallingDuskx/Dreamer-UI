@@ -150,9 +150,15 @@ export function ComponentPage({
 
 	// Find current component index and navigation info
 	const currentPath = window.location.pathname;
-	const currentIndex = COMPONENTS_ORDER.findIndex((comp) => comp.path === currentPath);
-	const previousComponent = currentIndex === 0 ? COMPONENTS_ORDER[COMPONENTS_ORDER.length - 1] : COMPONENTS_ORDER[currentIndex - 1];
-	const nextComponent = currentIndex === COMPONENTS_ORDER.length - 1 ? COMPONENTS_ORDER[0] : COMPONENTS_ORDER[currentIndex + 1];
+	const currentComponentIndex = COMPONENTS_ORDER.findIndex((comp) => comp.path === currentPath);
+	const previousComponent =
+		currentComponentIndex === 0
+			? COMPONENTS_ORDER[COMPONENTS_ORDER.length - 1]
+			: COMPONENTS_ORDER[currentComponentIndex - 1];
+	const nextComponent =
+		currentComponentIndex === COMPONENTS_ORDER.length - 1
+			? COMPONENTS_ORDER[0]
+			: COMPONENTS_ORDER[currentComponentIndex + 1];
 
 	const handleCopyMarkdown = async () => {
 		// Generate markdown content
@@ -291,34 +297,45 @@ export function ComponentPage({
 						<h1 className='text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent pb-1'>
 							{title}
 						</h1>
-						<div className='absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2'>
-							{/* Copy Page Button */}
-							<Button size='sm' onClick={handleCopyMarkdown} className='inline-flex items-center gap-2 px-2.5'>
-								{copied ? <Check size={14} /> : <Copy size={14} />}
-								<span>{copied ? 'Copied!' : 'Copy page'}</span>
-							</Button>
+						{/* Component action buttons */}
+						{currentComponentIndex !== -1 && (
+							<div className='absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2'>
+								{/* Copy Page Button */}
+								<Button size='sm' onClick={handleCopyMarkdown} className='inline-flex items-center gap-2 px-2.5'>
+									{copied ? <Check size={14} /> : <Copy size={14} />}
+									<span>{copied ? 'Copied!' : 'Copy page'}</span>
+								</Button>
 
-							{/* Previous Component Button */}
-							<Button
-								size='fitted'
-								disabled={!previousComponent}
-								onClick={() => navigate(previousComponent!.path)}
-								className='p-1.5'
-								title={`Previous: ${previousComponent!.name}`}
-							>
-								<ChevronLeft size={16} />
-							</Button>
-
-							{/* Next Component Button */}
+								{/* Previous Component Button */}
 								<Button
 									size='fitted'
-									onClick={() => navigate(nextComponent.path)}
+									disabled={!previousComponent}
+									onClick={() => {
+										if (previousComponent) {
+											navigate(previousComponent.path);
+										}
+									}}
 									className='p-1.5'
-									title={`Next: ${nextComponent.name}`}
+									title={previousComponent ? `Previous: ${previousComponent.name}` : undefined}
+								>
+									<ChevronLeft size={16} />
+								</Button>
+
+								{/* Next Component Button */}
+								<Button
+									size='fitted'
+									onClick={() => {
+										if (nextComponent) {
+											navigate(nextComponent.path);
+										}
+									}}
+									className='p-1.5'
+									title={nextComponent ? `Next: ${nextComponent.name}` : undefined}
 								>
 									<ChevronRight size={16} />
 								</Button>
-						</div>
+							</div>
+						)}
 					</div>
 					<p className='text-xl text-gray-300 max-w-2xl mx-auto'>{description}</p>
 				</div>
@@ -398,11 +415,7 @@ export function ComponentPage({
 						</div>
 					)}
 
-					{children && (
-						<div className='bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6 lg:p-8'>
-							{children}
-						</div>
-					)}
+					{children && <div className='backdrop-blur-sm p-2 sm:p-4 lg:p-6'>{children}</div>}
 
 					{/* Component Props */}
 					{componentProps && componentProps.length > 0 && (
