@@ -18,6 +18,7 @@ export interface ModalProps {
 	contentOnly?: boolean;
 	className?: string;
 	overlayClassName?: string;
+	containerClassName?: string;
 	hideCloseButton?: boolean;
 	actions?: ModalAction[];
 	disableCloseOnOverlayClick?: boolean;
@@ -34,6 +35,7 @@ export function Modal({
 	contentOnly = false,
 	className,
 	overlayClassName,
+	containerClassName,
 	hideCloseButton = false,
 	actions = [],
 	disableCloseOnOverlayClick = false,
@@ -92,7 +94,7 @@ export function Modal({
 					aria-modal='true'
 					className='fixed inset-0 z-[100] overflow-y-auto'
 				>
-					<div className='flex min-h-screen items-center justify-center p-4'>
+					<div className={join('flex min-h-screen items-center justify-center p-4', containerClassName)}>
 						<div
 							className={join('fixed inset-0 bg-black/20 transition-all', overlayClassName)}
 							onClick={() => {

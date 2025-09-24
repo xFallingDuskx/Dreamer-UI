@@ -26,7 +26,7 @@ export function ScrollArea({
   thumbClassName,
   viewportClassName,
   scrollbarClassName,
-  scrollbarThickness = 10,
+  scrollbarThickness = 8,
   children,
   id,
   ref,
