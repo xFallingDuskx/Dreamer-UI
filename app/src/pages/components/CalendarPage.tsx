@@ -168,11 +168,13 @@ const calendarExamples = [
         size="medium"
         customStyles={{
           containerClassName: 'border-purple-500/50',
-          headerClassName: 'bg-purple-900/20',
+          headerClassName: 'bg-purple-900/20 border-purple-500/50',
           selectedCellClassName: 'bg-purple-500 text-white hover:bg-purple-600',
           todayCellClassName: 'border-purple-400 text-purple-300',
           prevButtonClassName: 'text-purple-400 hover:bg-purple-500/20',
           nextButtonClassName: 'text-purple-400 hover:bg-purple-500/20',
+          cellClassName: 'hover:bg-purple-500/30!',
+          weekdaysClassName: 'border-purple-500/80',
         }}
       />
     ),
