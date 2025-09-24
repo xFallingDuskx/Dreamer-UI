@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Popover } from '@moondreamsdev/dreamer-ui/components';
+import { Popover, ScrollArea } from '@moondreamsdev/dreamer-ui/components';
 import { ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { isLocalhost } from '../../utils/isLocalhost';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
@@ -103,10 +103,10 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 								}
 								placement='bottom'
 								alignment='start'
-								className='w-64 max-h-96 overflow-y-auto bg-gray-900! border border-gray-700 focus:outline-none'
+								className='w-64 border border-gray-700 focus:outline-none'
 								hoverable={true}
 							>
-								<div className='space-y-1'>
+								<ScrollArea viewportClassName='max-h-96 space-y-1' thumbClassName='bg-accent-dark!'>
 									{components.map((component) => (
 										<Link
 											id={componentPathToId(component.path)}
@@ -126,7 +126,7 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 											{component.name}
 										</Link>
 									))}
-								</div>
+								</ScrollArea>
 							</Popover>
 
 							{/* Draft Link - Only visible on localhost */}

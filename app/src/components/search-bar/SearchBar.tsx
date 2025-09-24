@@ -1,4 +1,4 @@
-import { Input, Modal } from '@moondreamsdev/dreamer-ui/components';
+import { Input, Modal, ScrollArea } from '@moondreamsdev/dreamer-ui/components';
 import { X } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { useEffect, useRef, useState } from 'react';
@@ -126,12 +126,12 @@ export function SearchBar({ id, className }: SearchBarProps) {
 						{isLoading ? (
 							<div className='text-center opacity-50 py-8'>Searching...</div>
 						) : results.length > 0 ? (
-							<div className='space-y-2 max-h-96 overflow-y-auto'>
-								{results.slice(0, 8).map((result, index) => (
+							<ScrollArea viewportClassName='space-y-2 max-h-96 p-0.5' thumbClassName='bg-accent-dark!'>
+								{results.slice(0, 12).map((result, index) => (
 									<button
 										key={`${result.path}-${index}`}
 										onClick={() => handleResultSelect(result)}
-										className='w-full text-left p-3 hover:bg-accent/10 rounded-md transition-colors group focus:outline-none focus:ring focus:ring-accent'
+										className='w-full text-left p-3 hover:bg-accent/10 rounded transition-colors group focus:outline-none focus:ring focus:ring-accent'
 									>
 										<div className='flex items-start justify-between'>
 											<div className='flex-1'>
@@ -156,7 +156,7 @@ export function SearchBar({ id, className }: SearchBarProps) {
 										</div>
 									</button>
 								))}
-							</div>
+							</ScrollArea>
 						) : (
 							<div className='text-center text-muted-foreground py-8'>No results found for "{query}"</div>
 						)}

@@ -3,6 +3,7 @@ import { useSelectDropdown, useSelectKeyboardNavigation, useSelectHighlight, Sel
 import { sizeVariants, SelectSize } from './variants';
 import { join } from '../../utils';
 import { Check, ChevronDown, X } from '../../symbols';
+import { ScrollArea } from '../scroll-area';
 
 export type { SelectOption };
 
@@ -249,7 +250,7 @@ export function Select({
           )}
 
           {/* Options */}
-          <div ref={optionsContainerRef} className='max-h-60 overflow-auto'>
+          <ScrollArea ref={optionsContainerRef} viewportClassName='max-h-60'>
             {filteredOptions.length > 0 ? (
               filteredOptions.map((option, index) => (
                 <div
@@ -284,7 +285,7 @@ export function Select({
                 {searchable && searchTerm ? 'No results found' : 'No options available'}
               </div>
             )}
-          </div>
+          </ScrollArea>
         </div>
       )}
     </div>
