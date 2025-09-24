@@ -592,7 +592,7 @@ function findBestMatch(query: string, item: Omit<SearchResult, 'matchedText' | '
 }
 
 /**
- * Search through indexed content with improved ranking and stricter matching
+ * Search through indexed content with improved ranking, stricter matching, and deduplication
  */
 export function searchContent(query: string): SearchResult[] {
 	if (!query || query.trim().length < 2) {
@@ -671,6 +671,62 @@ export function searchContent(query: string): SearchResult[] {
 		}
 	});
 
-	// Sort by score descending and remove score field
-	return results.sort((a, b) => b.score - a.score).map(({ score, ...item }) => item);
+	// Sort by score descending
+	const sortedResults = results.sort((a, b) => b.score - a.score);
+
+	// Deduplication logic: prioritize Props over Components when both exist for the same path
+	const deduplicatedResults: SearchResult[] = [];
+	const seenPaths = new Map<string, { component?: SearchResult; props?: SearchResult }>();
+
+	// First pass: group by path
+	sortedResults.forEach(result => {
+		const pathData = seenPaths.get(result.path) || {};
+		
+		if (result.type === 'Props') {
+			pathData.props = result;
+		} else if (result.type === 'Component') {
+			pathData.component = result;
+		} else {
+			// For non-Component/Props types (Guide, Example, etc.), add directly
+			deduplicatedResults.push(result);
+			return;
+		}
+		
+		seenPaths.set(result.path, pathData);
+	});
+
+	// Second pass: decide what to include for each path
+	seenPaths.forEach(({ component, props }) => {
+		if (props && component) {
+			// If we have both, prioritize Props if the query seems to be looking for specific prop info
+			const queryLower = query.toLowerCase();
+			const isSpecificPropQuery = queryLower.includes('props') || 
+				queryLower.includes('classname') || 
+				queryLower.includes('onclick') || 
+				queryLower.includes('onchange') ||
+				queryLower.includes('placeholder') ||
+				queryLower.includes('value') ||
+				queryLower.includes('disabled') ||
+				queryLower.includes('required') ||
+				queryLower.match(/^[a-z]+[A-Z]/); // camelCase pattern like containerClassName
+
+			if (isSpecificPropQuery) {
+				deduplicatedResults.push(props);
+			} else {
+				// For general searches, show component first, then props
+				deduplicatedResults.push(component);
+				// Only add props if it has a significantly different score or specific prop match
+				if (props.score > component.score * 0.8 && props.matchedField === 'content') {
+					deduplicatedResults.push(props);
+				}
+			}
+		} else if (props) {
+			deduplicatedResults.push(props);
+		} else if (component) {
+			deduplicatedResults.push(component);
+		}
+	});
+
+	// Final sort by score
+	return deduplicatedResults.sort((a, b) => b.score - a.score);
 }

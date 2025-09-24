@@ -36,6 +36,24 @@ function HighlightedText({ text, query }: { text: string; query: string }) {
 	);
 }
 
+/**
+ * Extract prop name from search query for display
+ */
+function extractPropFromQuery(query: string, result: any): string {
+	// Check if query matches common prop patterns
+	const queryLower = query.toLowerCase();
+	
+	// Look for the query in the result's content to find the actual prop name
+	if (result.content && result.content.includes(queryLower)) {
+		// Try to extract camelCase prop names
+		const propMatch = result.content.match(new RegExp(`\\b${queryLower}\\b`, 'i'));
+		if (propMatch) return propMatch[0];
+	}
+	
+	// Fallback to the query itself
+	return query;
+}
+
 export function SearchBar({ id, className }: SearchBarProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [query, setQuery] = useState('');
@@ -135,18 +153,33 @@ export function SearchBar({ id, className }: SearchBarProps) {
 									>
 										<div className='flex items-start justify-between'>
 											<div className='flex-1'>
-												<div className='font-medium group-hover:text-accent transition-colors'>
-													<HighlightedText text={result.title} query={query} />
-												</div>
-												{result.matchedText && result.matchedField !== 'title' && (
-													<div className='text-sm opacity-70 mt-1'>
-														<HighlightedText text={result.matchedText} query={query} />
-													</div>
+												{result.type === 'Props' ? (
+													// Special formatting for Props results
+													<>
+														<div className='font-medium group-hover:text-accent transition-colors'>
+															{result.title.replace(' Props', '')} → <HighlightedText text={extractPropFromQuery(query, result)} query={query} />
+														</div>
+														<div className='text-sm opacity-70 mt-1'>
+															{result.description}
+														</div>
+													</>
+												) : (
+													// Regular formatting for other results
+													<>
+														<div className='font-medium group-hover:text-accent transition-colors'>
+															<HighlightedText text={result.title} query={query} />
+														</div>
+														{result.matchedText && result.matchedField !== 'title' && (
+															<div className='text-sm opacity-70 mt-1'>
+																<HighlightedText text={result.matchedText} query={query} />
+															</div>
+														)}
+														{result.description && result.matchedField !== 'description' && (
+															<div className='text-sm opacity-70 mt-1'>{result.description}</div>
+														)}
+													</>
 												)}
-												{result.description && result.matchedField !== 'description' && (
-													<div className='text-sm opacity-70 mt-1'>{result.description}</div>
-												)}
-												{result.section && (
+												{result.section && result.type !== 'Props' && (
 													<div className='text-xs opacity-50 mt-1'>
 														in {result.section}
 													</div>
