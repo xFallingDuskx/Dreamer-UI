@@ -8,6 +8,7 @@ export interface SearchResult {
 	rank: number; // Higher is better
 	matchedText?: string; // The part of the text that matches the query
 	matchedField?: 'title' | 'description' | 'section' | 'content'; // Which field matched
+	score?: number;
 }
 
 // Content index for search
@@ -715,8 +716,9 @@ export function searchContent(query: string): SearchResult[] {
 			} else {
 				// For general searches, show component first, then props
 				deduplicatedResults.push(component);
+				const score = props.score || 0;
 				// Only add props if it has a significantly different score or specific prop match
-				if (props.score > component.score * 0.8 && props.matchedField === 'content') {
+				if (score > score * 0.8 && props.matchedField === 'content') {
 					deduplicatedResults.push(props);
 				}
 			}
@@ -728,5 +730,5 @@ export function searchContent(query: string): SearchResult[] {
 	});
 
 	// Final sort by score
-	return deduplicatedResults.sort((a, b) => b.score - a.score);
+	return deduplicatedResults.sort((a, b) => (b.score || 0) - (a.score || 0));
 }

@@ -16,21 +16,21 @@ export interface SearchBarProps {
  */
 function HighlightedText({ text, query }: { text: string; query: string }) {
 	if (!query || !text) return <span>{text}</span>;
-	
+
 	const queryLower = query.toLowerCase();
 	const textLower = text.toLowerCase();
 	const index = textLower.indexOf(queryLower);
-	
+
 	if (index === -1) return <span>{text}</span>;
-	
+
 	const beforeMatch = text.substring(0, index);
 	const match = text.substring(index, index + query.length);
 	const afterMatch = text.substring(index + query.length);
-	
+
 	return (
 		<span>
 			{beforeMatch}
-			<span className="text-accent font-medium">{match}</span>
+			<span className='text-accent font-medium'>{match}</span>
 			{afterMatch}
 		</span>
 	);
@@ -39,17 +39,17 @@ function HighlightedText({ text, query }: { text: string; query: string }) {
 /**
  * Extract prop name from search query for display
  */
-function extractPropFromQuery(query: string, result: any): string {
+function extractPropFromQuery(query: string, result: { content: string }): string {
 	// Check if query matches common prop patterns
 	const queryLower = query.toLowerCase();
-	
+
 	// Look for the query in the result's content to find the actual prop name
 	if (result.content && result.content.includes(queryLower)) {
 		// Try to extract camelCase prop names
 		const propMatch = result.content.match(new RegExp(`\\b${queryLower}\\b`, 'i'));
 		if (propMatch) return propMatch[0];
 	}
-	
+
 	// Fallback to the query itself
 	return query;
 }
@@ -134,7 +134,10 @@ export function SearchBar({ id, className }: SearchBarProps) {
 						autoComplete='off'
 						width={'100%'}
 					/>
-					<button onClick={handleClose} className='p-1 hover:bg-muted/50 rounded transition-colors focus:outline-none focus:ring focus:ring-accent'>
+					<button
+						onClick={handleClose}
+						className='p-1 hover:bg-muted/50 rounded transition-colors focus:outline-none focus:ring focus:ring-accent'
+					>
 						<X className='w-4 h-4' />
 					</button>
 				</div>
@@ -157,11 +160,10 @@ export function SearchBar({ id, className }: SearchBarProps) {
 													// Special formatting for Props results
 													<>
 														<div className='font-medium group-hover:text-accent transition-colors'>
-															{result.title.replace(' Props', '')} → <HighlightedText text={extractPropFromQuery(query, result)} query={query} />
+															{result.title.replace(' Props', '')} →{' '}
+															<HighlightedText text={extractPropFromQuery(query, result)} query={query} />
 														</div>
-														<div className='text-sm opacity-70 mt-1'>
-															{result.description}
-														</div>
+														<div className='text-sm opacity-70 mt-1'>{result.description}</div>
 													</>
 												) : (
 													// Regular formatting for other results
@@ -180,9 +182,7 @@ export function SearchBar({ id, className }: SearchBarProps) {
 													</>
 												)}
 												{result.section && result.type !== 'Props' && (
-													<div className='text-xs opacity-50 mt-1'>
-														in {result.section}
-													</div>
+													<div className='text-xs opacity-50 mt-1'>in {result.section}</div>
 												)}
 											</div>
 											<div className='text-xs opacity-50'>{result.type}</div>
@@ -212,7 +212,9 @@ export function SearchBar({ id, className }: SearchBarProps) {
 									className='w-full text-left p-2 hover:bg-accent/10 rounded transition-colors group focus:outline-none focus:ring focus:ring-accent'
 								>
 									<div className='flex items-center justify-between'>
-										<span className='group-hover:text-accent group-focus:text-accent transition-colors'>{item.title}</span>
+										<span className='group-hover:text-accent group-focus:text-accent transition-colors'>
+											{item.title}
+										</span>
 										<span className='text-xs opacity-50'>{item.type}</span>
 									</div>
 								</button>
