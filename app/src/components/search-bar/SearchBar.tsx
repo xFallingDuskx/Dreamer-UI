@@ -41,17 +41,17 @@ function HighlightedText({ text, query }: { text: string; query: string }) {
  */
 function extractPropFromQuery(query: string, result: { content: string; title: string }): string {
 	const queryLower = query.toLowerCase();
-	
+
 	// Split content into words to find prop names
 	const words = result.content.split(/[\s\-_.]+/);
-	
+
 	// Look for exact matches first
 	for (const word of words) {
 		if (word.toLowerCase() === queryLower) {
 			return word;
 		}
 	}
-	
+
 	// Look for words that start with the query (for partial matches)
 	for (const word of words) {
 		if (word.toLowerCase().startsWith(queryLower) && word.length > queryLower.length) {
@@ -61,7 +61,7 @@ function extractPropFromQuery(query: string, result: { content: string; title: s
 			}
 		}
 	}
-	
+
 	// Look for words that contain the query
 	for (const word of words) {
 		if (word.toLowerCase().includes(queryLower)) {
@@ -87,7 +87,7 @@ export function SearchBar({ id, className }: SearchBarProps) {
 	// Handle Command+K shortcut
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
-			if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+			if (e.key === '/') {
 				e.preventDefault();
 				setIsOpen(true);
 			}
@@ -106,13 +106,13 @@ export function SearchBar({ id, className }: SearchBarProps) {
 
 	const handleResultSelect = (result: { path: string; section?: string; type: string }) => {
 		let navigationPath = result.path;
-		
+
 		// Add section anchor for Props and Examples
 		if (result.section) {
 			const anchor = result.section.toLowerCase().replace(/\s+/g, '-');
 			navigationPath = `${result.path}#${anchor}`;
 		}
-		
+
 		navigate(navigationPath);
 		setIsOpen(false);
 		setQuery('');
@@ -139,7 +139,7 @@ export function SearchBar({ id, className }: SearchBarProps) {
 				<Search className='w-4 h-4 text-gray-300' />
 				<span className='text-gray-300 hidden lg:inline-block'>Search documentation...</span>
 				<kbd className='px-1.5 py-0.5 text-gray-300 bg-accent/20 border border-accent/50 rounded text-[10px] font-mono'>
-					⌘K
+					/
 				</kbd>
 			</button>
 
@@ -191,7 +191,10 @@ export function SearchBar({ id, className }: SearchBarProps) {
 													<>
 														<div className='font-medium group-hover:text-accent transition-colors'>
 															{result.title.replace(' Props', '')} →{' '}
-															<HighlightedText text={extractPropFromQuery(query, { content: result.content, title: result.title })} query={query} />
+															<HighlightedText
+																text={extractPropFromQuery(query, { content: result.content, title: result.title })}
+																query={query}
+															/>
 														</div>
 														<div className='text-sm opacity-70 mt-1'>{result.description}</div>
 													</>
