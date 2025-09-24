@@ -1,8 +1,7 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Popover, ScrollArea } from '@moondreamsdev/dreamer-ui/components';
-import { ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
-import { isLocalhost } from '../../utils/isLocalhost';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { isLocalhost } from '../../utils/isLocalhost';
 import { SearchBar } from '../search-bar';
 
 interface NavigationProps {
@@ -96,10 +95,12 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 							<Popover
 								id='nav-popover'
 								trigger={
-									<button className='px-3 py-2 text-sm font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-800 transition-colors flex items-center gap-1'>
+									<Link
+										to='/components'
+										className='px-3 py-2 text-sm font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-800 transition-colors flex items-center gap-1'
+									>
 										Components
-										<ChevronDown className='w-4 h-4' />
-									</button>
+									</Link>
 								}
 								placement='bottom'
 								alignment='start'
