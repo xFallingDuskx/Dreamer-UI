@@ -100,8 +100,8 @@ export function SearchBar({ id, className }: SearchBarProps) {
 				isOpen={isOpen}
 				onClose={handleClose}
 				hideCloseButton={true}
-				className='max-w-2xl !bg-gray-900 !text-foreground-dark !p-9'
-				overlayClassName='backdrop-blur-xs bg-background-dark/50'
+				className='max-w-2xl !bg-gray-900 !p-9'
+				overlayClassName='backdrop-blur-xs'
 				containerClassName='items-start pt-12 sm:pt-20 md:pt-28'
 			>
 				<div className='flex items-center mb-2'>
