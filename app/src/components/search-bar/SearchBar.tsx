@@ -82,8 +82,16 @@ export function SearchBar({ id, className }: SearchBarProps) {
 		}
 	}, [isOpen]);
 
-	const handleResultSelect = (result: { path: string }) => {
-		navigate(result.path);
+	const handleResultSelect = (result: { path: string; section?: string; type: string }) => {
+		let navigationPath = result.path;
+		
+		// Add section anchor for Props and Examples
+		if (result.section) {
+			const anchor = result.section.toLowerCase().replace(/\s+/g, '-');
+			navigationPath = `${result.path}#${anchor}`;
+		}
+		
+		navigate(navigationPath);
 		setIsOpen(false);
 		setQuery('');
 	};
