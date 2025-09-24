@@ -36,6 +36,7 @@ import { PaginationPage } from './pages/components/PaginationPage';
 import { PanelPage } from './pages/components/PanelPage';
 import { PopoverPage } from './pages/components/PopoverPage';
 import { RadioGroupPage } from './pages/components/RadioGroupPage';
+import { RichTextEditorPage } from './pages/components/RichTextEditorPage';
 import { ScrollAreaPage } from './pages/components/ScrollAreaPage';
 import { SelectPage } from './pages/components/SelectPage';
 import { SeparatorPage } from './pages/components/SeparatorPage';
@@ -94,6 +95,7 @@ function App() {
 							<Route path='components/panel' element={<PanelPage />} />
 							<Route path='components/popover' element={<PopoverPage />} />
 							<Route path='components/radiogroup' element={<RadioGroupPage />} />
+							<Route path='components/rich-text-editor' element={<RichTextEditorPage />} />
 							<Route path='components/scroll-area' element={<ScrollAreaPage />} />
 							<Route path='components/select' element={<SelectPage />} />
 							<Route path='components/separator' element={<SeparatorPage />} />

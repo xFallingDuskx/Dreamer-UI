@@ -154,6 +154,12 @@ const components = [
 		category: 'Form',
 	},
 	{
+		name: 'Rich Text Editor',
+		path: '/components/rich-text-editor',
+		description: 'Comprehensive WYSIWYG editor with formatting toolbar, custom styling, and keyboard shortcuts.',
+		category: 'Form',
+	},
+	{
 		name: 'Scroll Area',
 		path: '/components/scroll-area',
 		description: 'Custom scrollable area with styled scrollbars.',

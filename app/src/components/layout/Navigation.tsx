@@ -33,6 +33,7 @@ const components = [
 	{ name: 'Panel', path: '/components/panel' },
 	{ name: 'Popover', path: '/components/popover' },
 	{ name: 'Radio Group', path: '/components/radiogroup' },
+	{ name: 'Rich Text Editor', path: '/components/rich-text-editor' },
 	{ name: 'Scroll Area', path: '/components/scroll-area' },
 	{ name: 'Select', path: '/components/select' },
 	{ name: 'Separator', path: '/components/separator' },
