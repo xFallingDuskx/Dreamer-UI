@@ -15,6 +15,7 @@ import {
 	FormFactories,
 	Popover,
 } from '@moondreamsdev/dreamer-ui/components';
+import { Calendar } from '../../calendar';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
@@ -854,6 +855,95 @@ export const DraftPage = () => {
 								<Badge outline aspect='square'>
 									<ChevronDoubleLeft />
 								</Badge>
+							</div>
+						</div>
+
+						{/* Calendar Component Testing */}
+						<div>
+							<h3 className='text-lg font-medium text-white mb-3'>Calendar Component Testing</h3>
+							<div className='space-y-6'>
+								{/* Basic Calendar */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Basic Single Date Calendar</h4>
+									<Calendar 
+										mode="single"
+										size="medium"
+										onDateSelect={(date) => console.log('Selected date:', date)}
+									/>
+								</div>
+
+								{/* Range Calendar */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Date Range Calendar</h4>
+									<Calendar 
+										mode="range"
+										size="medium"
+										onRangeSelect={(range) => console.log('Selected range:', range)}
+									/>
+								</div>
+
+								{/* Different Sizes */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Different Sizes</h4>
+									<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+										<div>
+											<p className='text-xs text-gray-400 mb-2'>Small</p>
+											<Calendar size="small" />
+										</div>
+										<div>
+											<p className='text-xs text-gray-400 mb-2'>Medium</p>
+											<Calendar size="medium" />
+										</div>
+										<div>
+											<p className='text-xs text-gray-400 mb-2'>Large</p>
+											<Calendar size="large" />
+										</div>
+									</div>
+								</div>
+
+								{/* Different Views */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Different Views</h4>
+									<div className='space-y-4'>
+										<div>
+											<p className='text-xs text-gray-400 mb-2'>Month View with View Selector</p>
+											<Calendar view="month" showViewSelector={true} />
+										</div>
+										<div>
+											<p className='text-xs text-gray-400 mb-2'>Week View</p>
+											<Calendar view="week" />
+										</div>
+										<div>
+											<p className='text-xs text-gray-400 mb-2'>Day View</p>
+											<Calendar view="day" />
+										</div>
+									</div>
+								</div>
+
+								{/* Custom Styling */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Custom Styling</h4>
+									<Calendar 
+										size="medium"
+										customStyles={{
+											containerClassName: 'border-purple-500/50',
+											headerClassName: 'bg-purple-900/20',
+											selectedCellClassName: 'bg-purple-500 text-white hover:bg-purple-600',
+											todayCellClassName: 'border-purple-400 text-purple-300',
+											prevButtonClassName: 'text-purple-400 hover:bg-purple-500/20',
+											nextButtonClassName: 'text-purple-400 hover:bg-purple-500/20',
+										}}
+									/>
+								</div>
+
+								{/* With Min/Max Dates */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>With Date Constraints</h4>
+									<Calendar 
+										minDate={new Date()}
+										maxDate={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)}
+									/>
+								</div>
 							</div>
 						</div>
 
