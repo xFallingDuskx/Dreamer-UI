@@ -6,6 +6,8 @@ export interface SearchResult {
 	type: 'Component' | 'Guide' | 'Section' | 'Example' | 'Props';
 	content: string;
 	rank: number; // Higher is better
+	matchedText?: string; // The part of the text that matches the query
+	matchedField?: 'title' | 'description' | 'section' | 'content'; // Which field matched
 }
 
 // Content index for search
@@ -332,6 +334,79 @@ const searchIndex: SearchResult[] = [
 		content: 'table props properties columns data sorting selection pagination',
 		rank: 8,
 	},
+	// Example entries for component usage patterns
+	{
+		title: 'Button Variants Example',
+		path: '/components/button',
+		section: 'Variants',
+		description: 'Different button styles to fit your design needs.',
+		type: 'Example',
+		content: 'button variants primary secondary tertiary destructive outline link base example',
+		rank: 7,
+	},
+	{
+		title: 'Button States Example',
+		path: '/components/button',
+		section: 'States',
+		description: 'Loading and disabled states for different user interactions.',
+		type: 'Example',
+		content: 'button states loading disabled fitted size example',
+		rank: 7,
+	},
+	{
+		title: 'Input Validation Example',
+		path: '/components/input',
+		section: 'Examples',
+		description: 'Form input with validation states and error messages.',
+		type: 'Example',
+		content: 'input validation error success warning states form example',
+		rank: 7,
+	},
+	{
+		title: 'Modal with Actions Example',
+		path: '/components/modal',
+		section: 'Examples',
+		description: 'Modal dialog with action buttons and confirmation flow.',
+		type: 'Example',
+		content: 'modal dialog actions confirm cancel delete save example',
+		rank: 7,
+	},
+	{
+		title: 'Select with Search Example',
+		path: '/components/select',
+		section: 'Examples',
+		description: 'Searchable dropdown with filtering capabilities.',
+		type: 'Example',
+		content: 'select search dropdown filter combobox searchable example',
+		rank: 7,
+	},
+	{
+		title: 'Table with Sorting Example',
+		path: '/components/table',
+		section: 'Examples',
+		description: 'Data table with sortable columns and selection.',
+		type: 'Example',
+		content: 'table sort sorting columns data selection rows example',
+		rank: 7,
+	},
+	{
+		title: 'Form Validation Example',
+		path: '/components/form',
+		section: 'Examples',
+		description: 'Complete form with field validation and submission.',
+		type: 'Example',
+		content: 'form validation submit fields required optional example',
+		rank: 7,
+	},
+	{
+		title: 'Toast Notifications Example',
+		path: '/components/toast',
+		section: 'Examples',
+		description: 'Success, error, and info toast message patterns.',
+		type: 'Example',
+		content: 'toast notification success error info warning message example',
+		rank: 7,
+	},
 	// Add more components...
 	{
 		title: 'All Components',
@@ -370,6 +445,80 @@ function fuzzyMatch(query: string, text: string): number {
 
 	// Return match percentage scaled
 	return queryIndex === queryLower.length ? (matchCount / queryLower.length) * 100 : 0;
+}
+
+/**
+ * Extract matched text snippet with context
+ */
+function extractMatchedText(query: string, text: string, maxLength: number = 60): string {
+	const queryLower = query.toLowerCase();
+	const textLower = text.toLowerCase();
+	
+	// Find exact match first
+	const index = textLower.indexOf(queryLower);
+	if (index !== -1) {
+		// Extract context around the match
+		const start = Math.max(0, index - 20);
+		const end = Math.min(text.length, index + queryLower.length + 20);
+		let snippet = text.substring(start, end);
+		
+		// Add ellipsis if truncated
+		if (start > 0) snippet = '...' + snippet;
+		if (end < text.length) snippet = snippet + '...';
+		
+		return snippet;
+	}
+	
+	// If no exact match, return beginning of text
+	return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+}
+
+/**
+ * Find the best matching field and extract relevant text
+ */
+function findBestMatch(query: string, item: Omit<SearchResult, 'matchedText' | 'matchedField'>): {
+	matchedText: string;
+	matchedField: 'title' | 'description' | 'section' | 'content';
+} {
+	const queryLower = query.toLowerCase();
+	
+	// Check title first (highest priority)
+	if (item.title.toLowerCase().includes(queryLower)) {
+		return {
+			matchedText: item.title,
+			matchedField: 'title'
+		};
+	}
+	
+	// Check section
+	if (item.section && item.section.toLowerCase().includes(queryLower)) {
+		return {
+			matchedText: item.section,
+			matchedField: 'section'
+		};
+	}
+	
+	// Check description
+	if (item.description && item.description.toLowerCase().includes(queryLower)) {
+		return {
+			matchedText: extractMatchedText(query, item.description),
+			matchedField: 'description'
+		};
+	}
+	
+	// Check content
+	if (item.content.toLowerCase().includes(queryLower)) {
+		return {
+			matchedText: extractMatchedText(query, item.content),
+			matchedField: 'content'
+		};
+	}
+	
+	// Fallback to title
+	return {
+		matchedText: item.title,
+		matchedField: 'title'
+	};
 }
 
 /**
@@ -425,14 +574,18 @@ export function searchContent(query: string): SearchResult[] {
 		if (matchCount > 0) {
 			// Apply base rank multiplier
 			const finalScore = (totalScore * item.rank) / queryTerms.length;
+			
+			// Find the best matching text for highlighting
+			const matchInfo = findBestMatch(query, item);
 
 			results.push({
 				...item,
+				...matchInfo,
 				score: finalScore,
 			});
 		}
 	});
 
 	// Sort by score descending and remove score field
-	return results.sort((a, b) => b.score - a.score);
+	return results.sort((a, b) => b.score - a.score).map(({ score, ...item }) => item);
 }

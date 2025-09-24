@@ -11,6 +11,31 @@ export interface SearchBarProps {
 	className?: string;
 }
 
+/**
+ * Highlight matching text with accent color
+ */
+function HighlightedText({ text, query }: { text: string; query: string }) {
+	if (!query || !text) return <span>{text}</span>;
+	
+	const queryLower = query.toLowerCase();
+	const textLower = text.toLowerCase();
+	const index = textLower.indexOf(queryLower);
+	
+	if (index === -1) return <span>{text}</span>;
+	
+	const beforeMatch = text.substring(0, index);
+	const match = text.substring(index, index + query.length);
+	const afterMatch = text.substring(index + query.length);
+	
+	return (
+		<span>
+			{beforeMatch}
+			<span className="text-accent font-medium">{match}</span>
+			{afterMatch}
+		</span>
+	);
+}
+
 export function SearchBar({ id, className }: SearchBarProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [query, setQuery] = useState('');
@@ -110,9 +135,22 @@ export function SearchBar({ id, className }: SearchBarProps) {
 									>
 										<div className='flex items-start justify-between'>
 											<div className='flex-1'>
-												<div className='font-medium group-hover:text-accent transition-colors'>{result.title}</div>
-												{result.description && <div className='text-sm opacity-70 mt-1'>{result.description}</div>}
-												{result.section && <div className='text-xs opacity-70 mt-1'>{result.section}</div>}
+												<div className='font-medium group-hover:text-accent transition-colors'>
+													<HighlightedText text={result.title} query={query} />
+												</div>
+												{result.matchedText && result.matchedField !== 'title' && (
+													<div className='text-sm opacity-70 mt-1'>
+														<HighlightedText text={result.matchedText} query={query} />
+													</div>
+												)}
+												{result.description && result.matchedField !== 'description' && (
+													<div className='text-sm opacity-70 mt-1'>{result.description}</div>
+												)}
+												{result.section && (
+													<div className='text-xs opacity-50 mt-1'>
+														in {result.section}
+													</div>
+												)}
 											</div>
 											<div className='text-xs opacity-50'>{result.type}</div>
 										</div>
