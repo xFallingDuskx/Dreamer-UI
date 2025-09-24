@@ -1,6 +1,18 @@
 import { Carousel } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 
+const tableOfContents = [
+  { id: 'import', title: 'Import', level: 1 },
+  { id: 'examples', title: 'Examples', level: 1 },
+  { id: 'basic-usage', title: 'Basic Usage', level: 2 },
+  { id: 'multiple-items', title: 'Multiple Items', level: 2 },
+  { id: 'auto-scroll', title: 'Auto Scroll', level: 2 },
+  { id: 'responsive-breakpoints', title: 'Responsive Breakpoints', level: 2 },
+  { id: 'button-positions', title: 'Button Positions', level: 2 },
+  { id: 'props', title: 'Props', level: 1 },
+  { id: 'keyboard-shortcuts', title: 'Keyboard Shortcuts', level: 1 },
+];
+
 const componentProps = [
   {
     name: 'children',
@@ -369,6 +381,7 @@ export function CarouselPage() {
     <ComponentPage
       title="Carousel"
       description="Interactive slideshow component for displaying multiple items with navigation controls and responsive behavior."
+      tableOfContents={tableOfContents}
       usageInstructions="Use Carousel to showcase multiple pieces of content in a space-efficient slideshow format. Perfect for image galleries, product showcases, testimonials, or any content that benefits from sequential presentation with user controls."
       importStatement="import { Carousel } from '@moondreamsdev/dreamer-ui';"
       componentProps={componentProps}
