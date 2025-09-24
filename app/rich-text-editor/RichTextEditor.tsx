@@ -1,0 +1,613 @@
+import React, { useCallback, useEffect, useState } from 'react';
+import { join } from '@moondreamsdev/dreamer-ui/utils';
+import { 
+  richTextEditorVariants, 
+  toolbarVariants, 
+  toolbarButtonVariants,
+  type RichTextEditorSize,
+  type RichTextEditorVariant,
+  type ToolbarSize,
+  type ToolbarVariant
+} from './variants';
+import {
+  useUndoRedo,
+  useEditorSelection,
+  useAutoLink,
+  useKeyboardShortcuts,
+  useEditorContent,
+} from './hooks';
+import {
+  Bold,
+  Italic,
+  Underline,
+  Strikethrough,
+  Link,
+  ListBullet,
+  ListOrdered,
+  Quote,
+  HorizontalRule,
+  Undo,
+  Redo,
+  Header,
+  Superscript,
+  Subscript,
+  Indent,
+  Outdent,
+} from './icons';
+
+export interface CustomStyles {
+  bold?: string;
+  italic?: string;
+  underline?: string;
+  strikethrough?: string;
+  inlineCode?: string;
+  blockCode?: string;
+  superscript?: string;
+  subscript?: string;
+  h1?: string;
+  h2?: string;
+  h3?: string;
+  h4?: string;
+  h5?: string;
+  h6?: string;
+  paragraph?: string;
+  blockquote?: string;
+  bulletList?: string;
+  orderedList?: string;
+  checkList?: string;
+  link?: string;
+  hr?: string;
+  table?: string;
+}
+
+export interface RichTextEditorProps {
+  id?: string;
+  className?: string;
+  ref?: React.Ref<HTMLDivElement>;
+  size?: RichTextEditorSize;
+  variant?: RichTextEditorVariant;
+  toolbarSize?: ToolbarSize;
+  toolbarVariant?: ToolbarVariant;
+  value?: string;
+  defaultValue?: string;
+  onChange?: (content: string) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  customStyles?: CustomStyles;
+  showToolbar?: boolean;
+  toolbarActions?: string[];
+  maxLength?: number;
+  allowedElements?: string[];
+  onFocus?: () => void;
+  onBlur?: () => void;
+}
+
+const DEFAULT_TOOLBAR_ACTIONS = [
+  'bold', 'italic', 'underline', 'strikethrough', '|',
+  'h1', 'h2', 'h3', '|',
+  'bulletList', 'orderedList', 'checkList', '|',
+  'link', 'inlineCode', 'blockCode', '|',
+  'blockquote', 'hr', 'table', '|',
+  'superscript', 'subscript', '|',
+  'indent', 'outdent', '|',
+  'undo', 'redo'
+];
+
+export function RichTextEditor({
+  id,
+  className,
+  size = 'md',
+  variant = 'default',
+  toolbarSize = 'md',
+  toolbarVariant = 'default',
+  value,
+  defaultValue = '',
+  onChange,
+  placeholder = 'Start writing...',
+  disabled = false,
+  customStyles = {},
+  showToolbar = true,
+  toolbarActions = DEFAULT_TOOLBAR_ACTIONS,
+  maxLength,
+  allowedElements,
+  onFocus,
+  onBlur,
+}: RichTextEditorProps) {
+  const { content, editorRef, updateContent, getContent } = useEditorContent(defaultValue);
+  const { execute, undo, redo, canUndo, canRedo } = useUndoRedo();
+  const { selection, saveSelection, restoreSelection } = useEditorSelection(editorRef as React.RefObject<HTMLDivElement>);
+  const { autoLinkText } = useAutoLink();
+  const [activeFormats, setActiveFormats] = useState<Set<string>>(new Set());
+  const [isLinkDialogOpen, setIsLinkDialogOpen] = useState(false);
+  const [linkUrl, setLinkUrl] = useState('');
+
+  // Handle controlled vs uncontrolled
+  const isControlled = value !== undefined;
+  const currentContent = isControlled ? value : content;
+
+  const handleContentChange = useCallback(() => {
+    const newContent = getContent();
+    if (!isControlled) {
+      updateContent(newContent);
+    }
+    onChange?.(newContent);
+  }, [getContent, isControlled, updateContent, onChange]);
+
+  const executeCommand = useCallback((command: string, value?: string) => {
+    const oldContent = getContent();
+    
+    document.execCommand(command, false, value);
+    handleContentChange();
+    
+    // Add to undo/redo history
+    execute({
+      execute: () => {
+        if (editorRef.current) {
+          editorRef.current.innerHTML = getContent();
+        }
+      },
+      undo: () => {
+        if (editorRef.current) {
+          editorRef.current.innerHTML = oldContent;
+        }
+        handleContentChange();
+      }
+    });
+  }, [getContent, handleContentChange, execute, editorRef]);
+
+  const formatText = useCallback((format: string, value?: string) => {
+    if (disabled) return;
+    
+    saveSelection();
+    executeCommand(format, value);
+    restoreSelection();
+    
+    // Update active formats
+    setTimeout(() => {
+      const newActiveFormats = new Set<string>();
+      
+      if (document.queryCommandState('bold')) newActiveFormats.add('bold');
+      if (document.queryCommandState('italic')) newActiveFormats.add('italic');
+      if (document.queryCommandState('underline')) newActiveFormats.add('underline');
+      if (document.queryCommandState('strikeThrough')) newActiveFormats.add('strikethrough');
+      if (document.queryCommandState('insertUnorderedList')) newActiveFormats.add('bulletList');
+      if (document.queryCommandState('insertOrderedList')) newActiveFormats.add('orderedList');
+      
+      setActiveFormats(newActiveFormats);
+    }, 10);
+  }, [disabled, saveSelection, executeCommand, restoreSelection]);
+
+  const insertElement = useCallback((tagName: string, attributes?: Record<string, string>) => {
+    if (disabled) return;
+    
+    const element = document.createElement(tagName);
+    if (attributes) {
+      Object.entries(attributes).forEach(([key, value]) => {
+        element.setAttribute(key, value);
+      });
+    }
+    
+    const selection = window.getSelection();
+    if (selection?.rangeCount) {
+      const range = selection.getRangeAt(0);
+      range.insertNode(element);
+      range.setStartAfter(element);
+      range.setEndAfter(element);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    
+    handleContentChange();
+  }, [disabled, handleContentChange]);
+
+  const handleLinkInsert = useCallback(() => {
+    if (!linkUrl) return;
+    
+    if (selection?.text) {
+      formatText('createLink', linkUrl);
+    } else {
+      insertElement('a', { href: linkUrl, target: '_blank', rel: 'noopener noreferrer' });
+    }
+    
+    setIsLinkDialogOpen(false);
+    setLinkUrl('');
+  }, [linkUrl, selection, formatText, insertElement]);
+
+  const handleInput = useCallback((event: React.FormEvent<HTMLDivElement>) => {
+    const target = event.currentTarget;
+    let newContent = target.innerHTML;
+    
+    // Auto-link detection
+    newContent = autoLinkText(newContent);
+    
+    // Length validation
+    if (maxLength && target.textContent && target.textContent.length > maxLength) {
+      return;
+    }
+    
+    // Element filtering
+    if (allowedElements) {
+      // Simple filtering - in a real implementation, you'd want proper HTML sanitization
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = newContent;
+      const allElements = tempDiv.querySelectorAll('*');
+      
+      for (const element of Array.from(allElements)) {
+        if (!allowedElements.includes(element.tagName.toLowerCase())) {
+          element.replaceWith(...Array.from(element.childNodes));
+        }
+      }
+      
+      newContent = tempDiv.innerHTML;
+    }
+    
+    if (newContent !== target.innerHTML) {
+      target.innerHTML = newContent;
+    }
+    
+    handleContentChange();
+  }, [autoLinkText, maxLength, allowedElements, handleContentChange]);
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts(editorRef as React.RefObject<HTMLDivElement>, {
+    'mod+b': () => formatText('bold'),
+    'mod+i': () => formatText('italic'),
+    'mod+u': () => formatText('underline'),
+    'mod+shift+x': () => formatText('strikeThrough'),
+    'mod+k': () => setIsLinkDialogOpen(true),
+    'mod+z': undo,
+    'mod+y': redo,
+    'mod+shift+z': redo,
+    'tab': () => formatText('indent'),
+    'shift+tab': () => formatText('outdent'),
+  });
+
+  // Update content when value prop changes
+  useEffect(() => {
+    if (isControlled && value !== undefined && editorRef.current) {
+      if (editorRef.current.innerHTML !== value) {
+        editorRef.current.innerHTML = value;
+      }
+    }
+  }, [value, isControlled]);
+
+  const renderToolbarButton = (action: string) => {
+    if (action === '|') {
+      return <div key={action} className="w-px h-6 bg-border mx-1" />;
+    }
+
+    const isActive = activeFormats.has(action);
+    const buttonClass = join(
+      'inline-flex items-center justify-center rounded transition-colors',
+      toolbarButtonVariants.size[toolbarSize],
+      isActive ? toolbarButtonVariants.state.active : toolbarButtonVariants.state.default,
+      disabled && toolbarButtonVariants.state.disabled
+    );
+
+    const iconProps = { size: toolbarSize === 'sm' ? 12 : toolbarSize === 'lg' ? 20 : 16 };
+
+    switch (action) {
+      case 'bold':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('bold')}
+            disabled={disabled}
+            title="Bold (Ctrl+B)"
+          >
+            <Bold {...iconProps} />
+          </button>
+        );
+      case 'italic':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('italic')}
+            disabled={disabled}
+            title="Italic (Ctrl+I)"
+          >
+            <Italic {...iconProps} />
+          </button>
+        );
+      case 'underline':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('underline')}
+            disabled={disabled}
+            title="Underline (Ctrl+U)"
+          >
+            <Underline {...iconProps} />
+          </button>
+        );
+      case 'strikethrough':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('strikeThrough')}
+            disabled={disabled}
+            title="Strikethrough (Ctrl+Shift+X)"
+          >
+            <Strikethrough {...iconProps} />
+          </button>
+        );
+      case 'h1':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('formatBlock', 'h1')}
+            disabled={disabled}
+            title="Heading 1"
+          >
+            <Header {...iconProps} level={1} />
+          </button>
+        );
+      case 'h2':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('formatBlock', 'h2')}
+            disabled={disabled}
+            title="Heading 2"
+          >
+            <Header {...iconProps} level={2} />
+          </button>
+        );
+      case 'h3':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('formatBlock', 'h3')}
+            disabled={disabled}
+            title="Heading 3"
+          >
+            <Header {...iconProps} level={3} />
+          </button>
+        );
+      case 'bulletList':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('insertUnorderedList')}
+            disabled={disabled}
+            title="Bullet List"
+          >
+            <ListBullet {...iconProps} />
+          </button>
+        );
+      case 'orderedList':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('insertOrderedList')}
+            disabled={disabled}
+            title="Numbered List"
+          >
+            <ListOrdered {...iconProps} />
+          </button>
+        );
+      case 'link':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => setIsLinkDialogOpen(true)}
+            disabled={disabled}
+            title="Insert Link (Ctrl+K)"
+          >
+            <Link {...iconProps} />
+          </button>
+        );
+      case 'blockquote':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('formatBlock', 'blockquote')}
+            disabled={disabled}
+            title="Quote"
+          >
+            <Quote {...iconProps} />
+          </button>
+        );
+      case 'hr':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('insertHorizontalRule')}
+            disabled={disabled}
+            title="Horizontal Rule"
+          >
+            <HorizontalRule {...iconProps} />
+          </button>
+        );
+      case 'superscript':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('superscript')}
+            disabled={disabled}
+            title="Superscript"
+          >
+            <Superscript {...iconProps} />
+          </button>
+        );
+      case 'subscript':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('subscript')}
+            disabled={disabled}
+            title="Subscript"
+          >
+            <Subscript {...iconProps} />
+          </button>
+        );
+      case 'indent':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('indent')}
+            disabled={disabled}
+            title="Indent"
+          >
+            <Indent {...iconProps} />
+          </button>
+        );
+      case 'outdent':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={() => formatText('outdent')}
+            disabled={disabled}
+            title="Outdent"
+          >
+            <Outdent {...iconProps} />
+          </button>
+        );
+      case 'undo':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={join(buttonClass, !canUndo && toolbarButtonVariants.state.disabled)}
+            onClick={undo}
+            disabled={disabled || !canUndo}
+            title="Undo (Ctrl+Z)"
+          >
+            <Undo {...iconProps} />
+          </button>
+        );
+      case 'redo':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={join(buttonClass, !canRedo && toolbarButtonVariants.state.disabled)}
+            onClick={redo}
+            disabled={disabled || !canRedo}
+            title="Redo (Ctrl+Y)"
+          >
+            <Redo {...iconProps} />
+          </button>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div 
+      className={join(
+        'rounded-lg overflow-hidden',
+        richTextEditorVariants.variant[variant],
+        className
+      )}
+      data-variant={variant}
+      data-size={size}
+    >
+      {showToolbar && (
+        <div 
+          className={join(
+            'flex flex-wrap items-center gap-1',
+            toolbarVariants.variant[toolbarVariant],
+            toolbarVariants.size[toolbarSize]
+          )}
+        >
+          {toolbarActions.map((action, index) => (
+            <React.Fragment key={`${action}-${index}`}>
+              {renderToolbarButton(action)}
+            </React.Fragment>
+          ))}
+        </div>
+      )}
+
+      <div
+        ref={editorRef}
+        id={id}
+        contentEditable={!disabled}
+        className={join(
+          'w-full p-4 focus:outline-none overflow-auto',
+          richTextEditorVariants.size[size],
+          disabled && 'cursor-not-allowed opacity-50',
+          customStyles.paragraph || 'prose prose-neutral max-w-none dark:prose-invert'
+        )}
+        style={{
+          ...(!currentContent && { color: 'var(--color-muted-foreground)' }),
+        }}
+        onInput={handleInput}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        suppressContentEditableWarning
+        data-placeholder={placeholder}
+        dangerouslySetInnerHTML={{ __html: currentContent || '' }}
+      />
+
+      {/* Link Dialog */}
+      {isLinkDialogOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-background border border-border rounded-lg p-6 w-96 max-w-[90vw]">
+            <h3 className="text-lg font-semibold mb-4">Insert Link</h3>
+            <input
+              type="url"
+              placeholder="Enter URL..."
+              value={linkUrl}
+              onChange={(e) => setLinkUrl(e.target.value)}
+              className="w-full p-2 border border-border rounded mb-4 bg-background"
+              autoFocus
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsLinkDialogOpen(false);
+                  setLinkUrl('');
+                }}
+                className="px-4 py-2 text-sm border border-border rounded hover:bg-muted/10"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleLinkInsert}
+                className="px-4 py-2 text-sm bg-primary text-primary-foreground rounded hover:bg-primary/90"
+              >
+                Insert
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

@@ -18,6 +18,7 @@ import {
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
+import { RichTextEditor } from '../../rich-text-editor';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -956,9 +957,74 @@ export const DraftPage = () => {
 								</div>
 							</div>
 						</div>
+
+						{/* Rich Text Editor */}
+						<div>
+							<h3 className='text-xl font-bold text-white mb-4'>Rich Text Editor</h3>
+							<div className='space-y-6'>
+								{/* Default Editor */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Default Editor</h4>
+									<RichTextEditor 
+										placeholder="Start typing your rich content..."
+										defaultValue="<p>This is a <strong>rich text editor</strong> with <em>formatting</em> capabilities!</p>"
+									/>
+								</div>
+
+								{/* Minimal Editor */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Minimal Variant</h4>
+									<RichTextEditor 
+										variant="minimal"
+										toolbarVariant="minimal"
+										size="sm"
+										placeholder="Minimal editor..."
+									/>
+								</div>
+
+								{/* Custom Styled Editor */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Large Outlined Editor</h4>
+									<RichTextEditor 
+										variant="outlined"
+										size="lg"
+										toolbarSize="lg"
+										placeholder="Large editor with outline..."
+										customStyles={{
+											paragraph: 'prose-lg max-w-none text-gray-100',
+											bold: 'font-black text-blue-400',
+											italic: 'italic text-purple-400',
+										}}
+									/>
+								</div>
+
+								{/* Controlled Editor */}
+								<div>
+									<h4 className='text-md font-medium text-gray-300 mb-2'>Controlled Editor</h4>
+									<ControlledRichTextEditor />
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</ComponentPage>
+	);
+};
+
+const ControlledRichTextEditor = () => {
+	const [content, setContent] = useState('<p>This is controlled content. Try editing it!</p>');
+	
+	return (
+		<div className='space-y-4'>
+			<RichTextEditor 
+				value={content}
+				onChange={setContent}
+				placeholder="Type something..."
+			/>
+			<div className='p-3 bg-muted/10 rounded text-sm'>
+				<strong>Content:</strong> {content}
+			</div>
+		</div>
 	);
 };
