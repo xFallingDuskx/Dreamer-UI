@@ -71,8 +71,17 @@ const searchIndex: SearchResult[] = [
 		path: '/components/modal',
 		description: 'Overlay component for displaying content above the main interface.',
 		type: 'Component',
-		content: 'modal dialog overlay popup isOpen onClose className overlayClassName props',
+		content: 'modal dialog overlay popup isOpen onClose className overlayClassName containerClassName props',
 		rank: 10,
+	},
+	{
+		title: 'Modal Props',
+		path: '/components/modal',
+		section: 'Props',
+		description: 'Modal component properties including containerClassName and overlayClassName.',
+		type: 'Props',
+		content: 'modal props properties isOpen onClose className overlayClassName containerClassName hideCloseButton',
+		rank: 8,
 	},
 	{
 		title: 'Accordion',
@@ -127,8 +136,17 @@ const searchIndex: SearchResult[] = [
 		path: '/components/carousel',
 		description: 'Image and content carousel with navigation controls.',
 		type: 'Component',
-		content: 'carousel slider images content navigation controls autoplay props',
+		content: 'carousel slider images content navigation controls autoplay containerClassName props',
 		rank: 10,
+	},
+	{
+		title: 'Carousel Props',
+		path: '/components/carousel',
+		section: 'Props',
+		description: 'Carousel component properties including containerClassName for styling.',
+		type: 'Props',
+		content: 'carousel props properties slides autoplay controls containerClassName className navigation',
+		rank: 8,
 	},
 	{
 		title: 'Checkbox',
@@ -153,6 +171,23 @@ const searchIndex: SearchResult[] = [
 		type: 'Component',
 		content: 'dropdown menu context navigation keyboard submenu items actions props',
 		rank: 10,
+	},
+	{
+		title: 'Error Boundary',
+		path: '/components/error-boundary',
+		description: 'Error boundary component for catching and handling React errors.',
+		type: 'Component',
+		content: 'error boundary component catch handle react errors fallback props',
+		rank: 10,
+	},
+	{
+		title: 'Error Boundary Props',
+		path: '/components/error-boundary',
+		section: 'Props',
+		description: 'Error boundary component properties and error handling options.',
+		type: 'Props',
+		content: 'error boundary props properties fallback onError children reset simulation',
+		rank: 8,
 	},
 	{
 		title: 'Form',
@@ -354,6 +389,15 @@ const searchIndex: SearchResult[] = [
 		rank: 7,
 	},
 	{
+		title: 'Error Boundary Example',
+		path: '/components/error-boundary',
+		section: 'Examples',
+		description: 'Error simulation and boundary handling for component error states.',
+		type: 'Example',
+		content: 'error boundary example simulation fallback component crash handling testing',
+		rank: 7,
+	},
+	{
 		title: 'Input Validation Example',
 		path: '/components/input',
 		section: 'Examples',
@@ -419,7 +463,7 @@ const searchIndex: SearchResult[] = [
 ];
 
 /**
- * Simple fuzzy search implementation
+ * Improved fuzzy search implementation with stricter matching
  */
 function fuzzyMatch(query: string, text: string): number {
 	const queryLower = query.toLowerCase();
@@ -432,19 +476,45 @@ function fuzzyMatch(query: string, text: string): number {
 		return 1000 - index;
 	}
 
-	// Fuzzy match - check if all characters exist in order
-	let queryIndex = 0;
-	let matchCount = 0;
-
-	for (let i = 0; i < textLower.length && queryIndex < queryLower.length; i++) {
-		if (textLower[i] === queryLower[queryIndex]) {
-			queryIndex++;
-			matchCount++;
+	// Word boundary match - higher priority than character fuzzy match
+	const words = textLower.split(/\s+/);
+	for (const word of words) {
+		if (word.startsWith(queryLower)) {
+			return 800; // High score for word starts
+		}
+		if (word.includes(queryLower)) {
+			return 600; // Medium score for word contains
 		}
 	}
 
-	// Return match percentage scaled
-	return queryIndex === queryLower.length ? (matchCount / queryLower.length) * 100 : 0;
+	// Only do character fuzzy match for longer queries (3+ chars) to avoid too broad matches
+	if (queryLower.length >= 3) {
+		let queryIndex = 0;
+		let matchCount = 0;
+		let consecutiveMatches = 0;
+		let maxConsecutive = 0;
+
+		for (let i = 0; i < textLower.length && queryIndex < queryLower.length; i++) {
+			if (textLower[i] === queryLower[queryIndex]) {
+				queryIndex++;
+				matchCount++;
+				consecutiveMatches++;
+				maxConsecutive = Math.max(maxConsecutive, consecutiveMatches);
+			} else {
+				consecutiveMatches = 0;
+			}
+		}
+
+		// Only return fuzzy match if we have good coverage and some consecutive matches
+		const coverage = matchCount / queryLower.length;
+		const consecutiveBonus = maxConsecutive / queryLower.length;
+		
+		if (queryIndex === queryLower.length && coverage > 0.7 && consecutiveBonus > 0.3) {
+			return Math.min(400, coverage * consecutiveBonus * 400);
+		}
+	}
+
+	return 0;
 }
 
 /**
@@ -522,7 +592,7 @@ function findBestMatch(query: string, item: Omit<SearchResult, 'matchedText' | '
 }
 
 /**
- * Search through indexed content with ranking
+ * Search through indexed content with improved ranking and stricter matching
  */
 export function searchContent(query: string): SearchResult[] {
 	if (!query || query.trim().length < 2) {
@@ -532,9 +602,13 @@ export function searchContent(query: string): SearchResult[] {
 	const queryTerms = query.toLowerCase().trim().split(/\s+/);
 	const results: (SearchResult & { score: number })[] = [];
 
+	// Set minimum score threshold based on query length
+	const minScoreThreshold = queryTerms.length === 1 && queryTerms[0].length <= 4 ? 500 : 100;
+
 	searchIndex.forEach((item) => {
 		let totalScore = 0;
 		let matchCount = 0;
+		let hasStrongMatch = false; // Track if we have at least one strong match
 
 		queryTerms.forEach((term) => {
 			// Check title match (highest priority)
@@ -542,6 +616,17 @@ export function searchContent(query: string): SearchResult[] {
 			if (titleScore > 0) {
 				totalScore += titleScore;
 				matchCount++;
+				if (titleScore >= 1500) hasStrongMatch = true; // Strong title match
+			}
+
+			// Check section match (high priority for specific searches)
+			if (item.section) {
+				const sectionScore = fuzzyMatch(term, item.section) * 2.5;
+				if (sectionScore > 0) {
+					totalScore += sectionScore;
+					matchCount++;
+					if (sectionScore >= 1000) hasStrongMatch = true; // Strong section match
+				}
 			}
 
 			// Check description match
@@ -550,28 +635,28 @@ export function searchContent(query: string): SearchResult[] {
 				if (descScore > 0) {
 					totalScore += descScore;
 					matchCount++;
+					if (descScore >= 800) hasStrongMatch = true; // Strong description match
 				}
 			}
 
-			// Check content match
+			// Check content match (lower priority, but still important for props)
 			const contentScore = fuzzyMatch(term, item.content);
 			if (contentScore > 0) {
 				totalScore += contentScore;
 				matchCount++;
-			}
-
-			// Check section match
-			if (item.section) {
-				const sectionScore = fuzzyMatch(term, item.section) * 2.5;
-				if (sectionScore > 0) {
-					totalScore += sectionScore;
-					matchCount++;
-				}
+				if (contentScore >= 600) hasStrongMatch = true; // Strong content match
 			}
 		});
 
-		// Only include if we have some matches
-		if (matchCount > 0) {
+		// Only include results that meet criteria:
+		// 1. Have matches for all query terms OR have a very strong single match
+		// 2. Meet minimum score threshold
+		// 3. Have at least one strong match for short queries
+		const hasAllTerms = matchCount >= queryTerms.length;
+		const meetsThreshold = totalScore >= minScoreThreshold;
+		const qualifiesForShortQuery = queryTerms.length > 1 || hasStrongMatch || totalScore >= 800;
+
+		if (matchCount > 0 && meetsThreshold && (hasAllTerms || hasStrongMatch) && qualifiesForShortQuery) {
 			// Apply base rank multiplier
 			const finalScore = (totalScore * item.rank) / queryTerms.length;
 			
