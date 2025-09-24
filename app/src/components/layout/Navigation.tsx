@@ -69,11 +69,6 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 						</span>
 					</Link>
 
-					{/* Search Bar */}
-					<div className='flex-1 max-w-md mx-8 hidden lg:block'>
-						<SearchBar />
-					</div>
-
 					{/* Main Navigation */}
 					<div className='hidden md:block'>
 						<div className='flex items-baseline space-x-6'>
@@ -150,11 +145,13 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 						</div>
 					</div>
 
+					{/* Search Bar */}
+					<div className='flex-1 max-w-md mx-8 hidden md:flex justify-end'>
+						<SearchBar />
+					</div>
+
 					{/* Mobile menu button */}
 					<div className='flex items-center gap-2 md:hidden'>
-						<div className='max-w-[200px]'>
-							<SearchBar />
-						</div>
 						<button className='text-gray-300 hover:text-white'>
 							<svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
 								<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 6h16M4 12h16M4 18h16' />

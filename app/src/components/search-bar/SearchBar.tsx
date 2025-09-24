@@ -1,183 +1,154 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Modal } from '@moondreamsdev/dreamer-ui/components';
-import { Input } from '@moondreamsdev/dreamer-ui/components';
+import { Input, Modal } from '@moondreamsdev/dreamer-ui/components';
 import { X } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSearchContent } from './hooks';
 import { Search } from './icons';
 
 export interface SearchBarProps {
-  id?: string;
-  className?: string;
+	id?: string;
+	className?: string;
 }
 
 export function SearchBar({ id, className }: SearchBarProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [query, setQuery] = useState('');
-  const navigate = useNavigate();
-  const inputRef = useRef<HTMLInputElement>(null);
+	const [isOpen, setIsOpen] = useState(false);
+	const [query, setQuery] = useState('');
+	const navigate = useNavigate();
+	const inputRef = useRef<HTMLInputElement>(null);
 
-  const { results, isLoading } = useSearchContent(query);
+	const { results, isLoading } = useSearchContent(query);
 
-  // Handle Command+K shortcut
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setIsOpen(true);
-      }
-    };
+	// Handle Command+K shortcut
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+				e.preventDefault();
+				setIsOpen(true);
+			}
+		};
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, []);
+		document.addEventListener('keydown', handleKeyDown);
+		return () => document.removeEventListener('keydown', handleKeyDown);
+	}, []);
 
-  // Focus input when modal opens
-  useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isOpen]);
+	// Focus input when modal opens
+	useEffect(() => {
+		if (isOpen && inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, [isOpen]);
 
-  const handleResultSelect = (result: any) => {
-    navigate(result.path);
-    setIsOpen(false);
-    setQuery('');
-  };
+	const handleResultSelect = (result: { path: string }) => {
+		navigate(result.path);
+		setIsOpen(false);
+		setQuery('');
+	};
 
-  const handleClose = () => {
-    setIsOpen(false);
-    setQuery('');
-  };
+	const handleClose = () => {
+		setIsOpen(false);
+		setQuery('');
+	};
 
-  return (
-    <>
-      {/* Search trigger button */}
-      <button
-        id={id}
-        className={join(
-          'flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground bg-background/50 border border-border rounded-md hover:border-accent/50 transition-colors min-w-[240px]',
-          className
-        )}
-        onClick={() => setIsOpen(true)}
-        data-search-trigger
-      >
-        <Search className="w-4 h-4" />
-        <span>Search documentation...</span>
-        <div className="ml-auto flex items-center gap-1 text-xs">
-          <kbd className="px-1.5 py-0.5 bg-muted/50 border border-border/50 rounded text-[10px] font-mono">
-            ⌘
-          </kbd>
-          <kbd className="px-1.5 py-0.5 bg-muted/50 border border-border/50 rounded text-[10px] font-mono">
-            K
-          </kbd>
-        </div>
-      </button>
+	return (
+		<>
+			{/* Search trigger button */}
+			<button
+				id={id}
+				className={join(
+					'flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground bg-accent/20 rounded-lg hover:border-accent/50 transition-colors min-w-fit',
+					className
+				)}
+				onClick={() => setIsOpen(true)}
+				aria-label='Search documentation'
+				data-search-trigger
+			>
+				<Search className='w-4 h-4 text-gray-300' />
+				<span className='text-gray-300 hidden lg:inline-block'>Search documentation...</span>
+				<kbd className='px-1.5 py-0.5 text-gray-300 bg-accent/20 border border-accent/50 rounded text-[10px] font-mono'>
+					⌘K
+				</kbd>
+			</button>
 
-      {/* Search modal */}
-      <Modal
-        isOpen={isOpen}
-        onClose={handleClose}
-        className="max-w-2xl"
-        overlayClassName="backdrop-blur-sm"
-      >
-        <div className="p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <Search className="w-5 h-5 text-muted-foreground" />
-            <Input
-              ref={inputRef}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search components, examples, and documentation..."
-              className="flex-1 border-none bg-transparent focus:ring-0 text-lg"
-              autoComplete="off"
-            />
-            <button
-              onClick={handleClose}
-              className="p-1 hover:bg-muted/50 rounded transition-colors"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
+			{/* Search modal */}
+			<Modal
+				isOpen={isOpen}
+				onClose={handleClose}
+				hideCloseButton={true}
+				className='max-w-2xl !bg-gray-900 !text-foreground-dark !p-9'
+				overlayClassName='backdrop-blur-xs bg-background-dark/50'
+			>
+				<div className='flex items-center gap-3 mb-2'>
+					<Search className='w-5 h-5 text-muted-foreground' />
+					<Input
+						ref={inputRef}
+						value={query}
+						variant='base'
+						onChange={(e) => setQuery(e.target.value)}
+						placeholder='Search components, examples, and documentation...'
+						className='text-lg'
+						autoComplete='off'
+						width={'100%'}
+					/>
+					<button onClick={handleClose} className='p-1 hover:bg-muted/50 rounded transition-colors focus:outline-none focus:ring focus:ring-accent'>
+						<X className='w-4 h-4' />
+					</button>
+				</div>
 
-          {query && (
-            <div className="border-t border-border pt-4">
-              {isLoading ? (
-                <div className="text-center text-muted-foreground py-8">
-                  Searching...
-                </div>
-              ) : results.length > 0 ? (
-                <div className="space-y-2 max-h-96 overflow-y-auto">
-                  {results.slice(0, 8).map((result, index) => (
-                    <button
-                      key={`${result.path}-${index}`}
-                      onClick={() => handleResultSelect(result)}
-                      className="w-full text-left p-3 hover:bg-muted/50 rounded-md transition-colors group"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="font-medium text-foreground group-hover:text-accent transition-colors">
-                            {result.title}
-                          </div>
-                          {result.description && (
-                            <div className="text-sm text-muted-foreground mt-1">
-                              {result.description}
-                            </div>
-                          )}
-                          {result.section && (
-                            <div className="text-xs text-muted-foreground/70 mt-1">
-                              {result.section}
-                            </div>
-                          )}
-                        </div>
-                        <div className="text-xs text-muted-foreground/50">
-                          {result.type}
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center text-muted-foreground py-8">
-                  No results found for "{query}"
-                </div>
-              )}
-            </div>
-          )}
+				{query && (
+					<div className='border-t border-border pt-4'>
+						{isLoading ? (
+							<div className='text-center opacity-50 py-8'>Searching...</div>
+						) : results.length > 0 ? (
+							<div className='space-y-2 max-h-96 overflow-y-auto'>
+								{results.slice(0, 8).map((result, index) => (
+									<button
+										key={`${result.path}-${index}`}
+										onClick={() => handleResultSelect(result)}
+										className='w-full text-left p-3 hover:bg-accent/10 rounded-md transition-colors group focus:outline-none focus:ring focus:ring-accent'
+									>
+										<div className='flex items-start justify-between'>
+											<div className='flex-1'>
+												<div className='font-medium group-hover:text-accent transition-colors'>{result.title}</div>
+												{result.description && <div className='text-sm opacity-70 mt-1'>{result.description}</div>}
+												{result.section && <div className='text-xs opacity-70 mt-1'>{result.section}</div>}
+											</div>
+											<div className='text-xs opacity-50'>{result.type}</div>
+										</div>
+									</button>
+								))}
+							</div>
+						) : (
+							<div className='text-center text-muted-foreground py-8'>No results found for "{query}"</div>
+						)}
+					</div>
+				)}
 
-          {!query && (
-            <div className="border-t border-border pt-4">
-              <div className="text-sm text-muted-foreground mb-3">
-                Quick navigation
-              </div>
-              <div className="space-y-2">
-                {[
-                  { title: 'Getting Started', path: '/getting-started', type: 'Guide' },
-                  { title: 'All Components', path: '/components', type: 'Overview' },
-                  { title: 'Button', path: '/components/button', type: 'Component' },
-                  { title: 'Input', path: '/components/input', type: 'Component' },
-                ].map((item) => (
-                  <button
-                    key={item.path}
-                    onClick={() => handleResultSelect(item)}
-                    className="w-full text-left p-2 hover:bg-muted/50 rounded transition-colors group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-foreground group-hover:text-accent transition-colors">
-                        {item.title}
-                      </span>
-                      <span className="text-xs text-muted-foreground/50">
-                        {item.type}
-                      </span>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </Modal>
-    </>
-  );
+				{!query && (
+					<div className='border-t border-border pt-4'>
+						<div className='text-sm text-muted-foreground mb-3'>Quick navigation</div>
+						<div className='space-y-2'>
+							{[
+								{ title: 'Getting Started', path: '/getting-started', type: 'Guide' },
+								{ title: 'All Components', path: '/components', type: 'Overview' },
+								{ title: 'Button', path: '/components/button', type: 'Component' },
+								{ title: 'Input', path: '/components/input', type: 'Component' },
+							].map((item) => (
+								<button
+									key={item.path}
+									onClick={() => handleResultSelect(item)}
+									className='w-full text-left p-2 hover:bg-accent/10 rounded transition-colors group focus:outline-none focus:ring focus:ring-accent'
+								>
+									<div className='flex items-center justify-between'>
+										<span className='group-hover:text-accent group-focus:text-accent transition-colors'>{item.title}</span>
+										<span className='text-xs opacity-50'>{item.type}</span>
+									</div>
+								</button>
+							))}
+						</div>
+					</div>
+				)}
+			</Modal>
+		</>
+	);
 }
