@@ -519,17 +519,42 @@ const searchIndex: SearchResult[] = [
 ];
 
 /**
- * Improved fuzzy search implementation with stricter matching
+ * Improved fuzzy search implementation with stricter matching for specific queries
  */
 function fuzzyMatch(query: string, text: string): number {
 	const queryLower = query.toLowerCase();
 	const textLower = text.toLowerCase();
+
+	// For specific patterns like hooks, require exact or very close matches
+	const isHookQuery = queryLower.startsWith('use') && queryLower.length > 3;
+	const isPropQuery = queryLower.match(/^[a-z]+[A-Z]/); // camelCase like containerClassName
+	const isSpecificQuery = isHookQuery || isPropQuery || queryLower.length > 8;
 
 	// Exact match gets highest score
 	if (textLower.includes(queryLower)) {
 		const index = textLower.indexOf(queryLower);
 		// Earlier matches get higher scores
 		return 1000 - index;
+	}
+
+	// For specific queries (hooks, long camelCase, etc.), be very strict
+	if (isSpecificQuery) {
+		// Only allow word boundary matches for specific queries
+		const words = textLower.split(/\s+/);
+		for (const word of words) {
+			if (word === queryLower) {
+				return 900; // Exact word match
+			}
+			if (word.startsWith(queryLower)) {
+				return 800; // Word starts with query
+			}
+			// For hooks, check if word contains the exact hook name
+			if (isHookQuery && word.includes(queryLower)) {
+				return 700; // Contains exact hook name
+			}
+		}
+		// Don't do fuzzy matching for specific queries
+		return 0;
 	}
 
 	// Word boundary match - higher priority than character fuzzy match
