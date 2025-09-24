@@ -7,6 +7,7 @@ const tableOfContents = [
   { id: 'basic-usage', title: 'Basic Usage', level: 2 },
   { id: 'horizontal-scroll', title: 'Horizontal Scroll', level: 2 },
   { id: 'max-height', title: 'Max Height', level: 2 },
+  { id: 'max-width', title: 'Max Width', level: 2 },
   { id: 'custom-styling', title: 'Custom Styling', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
 ];
@@ -160,6 +161,49 @@ const scrollAreaExamples = [
     ),
   },
   {
+    id: 'max-width',
+    title: 'Max Width',
+    description: 'Scroll area with maximum width constraint.',
+    code: `<ScrollArea maxWidth={300} className='h-32 border border-gray-200 rounded'>
+  <div className='p-4 w-[600px]'>
+    <h4 className='font-semibold mb-2'>Content with Max Width</h4>
+    <p className='mb-4'>
+      This scroll area has a maximum width of 300px set via the maxWidth prop. 
+      The content inside is 600px wide, but the container is constrained to 300px maximum width.
+    </p>
+    <p className='mb-4'>
+      This creates horizontal scrolling when the content is wider than the maxWidth. 
+      It's useful for creating consistent layouts where you want to prevent components 
+      from becoming too wide regardless of content or screen size.
+    </p>
+    <p>
+      You can scroll horizontally to see the rest of this wide content that extends 
+      beyond the 300px width limit imposed by the maxWidth prop.
+    </p>
+  </div>
+</ScrollArea>`,
+    children: (
+      <ScrollArea maxWidth={300} className='h-32 border border-gray-200 rounded'>
+        <div className='p-4 w-[600px]'>
+          <h4 className='font-semibold mb-2'>Content with Max Width</h4>
+          <p className='mb-4'>
+            This scroll area has a maximum width of 300px set via the maxWidth prop. 
+            The content inside is 600px wide, but the container is constrained to 300px maximum width.
+          </p>
+          <p className='mb-4'>
+            This creates horizontal scrolling when the content is wider than the maxWidth. 
+            It's useful for creating consistent layouts where you want to prevent components 
+            from becoming too wide regardless of content or screen size.
+          </p>
+          <p>
+            You can scroll horizontally to see the rest of this wide content that extends 
+            beyond the 300px width limit imposed by the maxWidth prop.
+          </p>
+        </div>
+      </ScrollArea>
+    ),
+  },
+  {
     id: 'custom-styling',
     title: 'Custom Styling',
     description: 'Scroll area with custom scrollbar styling.',
@@ -247,6 +291,11 @@ const scrollAreaProps = [
     name: 'maxHeight',
     type: 'number',
     description: 'Maximum height in pixels before scrolling. When set, the scroll area will not exceed this height.',
+  },
+  {
+    name: 'maxWidth',
+    type: 'number',
+    description: 'Maximum width in pixels before scrolling. When set, the scroll area will not exceed this width.',
   },
   {
     name: 'children',

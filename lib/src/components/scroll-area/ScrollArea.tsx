@@ -15,6 +15,8 @@ export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {
   scrollbarThickness?: number;
   /** Maximum height in pixels before scrolling */
   maxHeight?: number;
+  /** Maximum width in pixels before scrolling */
+  maxWidth?: number;
   /** Children content to be scrolled */
   children: React.ReactNode;
   /** HTML id attribute */
@@ -30,6 +32,7 @@ export function ScrollArea({
   scrollbarClassName,
   scrollbarThickness = 10,
   maxHeight,
+  maxWidth,
   children,
   id,
   ref,
@@ -43,13 +46,18 @@ export function ScrollArea({
     thumbClassName
   );
 
+  const containerStyle = {
+    ...(maxHeight && { maxHeight: `${maxHeight}px` }),
+    ...(maxWidth && { maxWidth: `${maxWidth}px` })
+  };
+
   return (
     <div 
       ref={ref} 
       id={id} 
       className={join('relative overflow-hidden', className)} 
       data-scroll-area-root='' 
-      style={maxHeight ? { maxHeight: `${maxHeight}px` } : undefined}
+      style={Object.keys(containerStyle).length > 0 ? containerStyle : undefined}
       {...props}
     >
       <div
