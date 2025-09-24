@@ -74,6 +74,21 @@ export function Code({ className = '', size = 16 }: RichTextEditorIconProps) {
   );
 }
 
+export function CodeBlock({ className = '', size = 16 }: RichTextEditorIconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M2 3h12v10H2V3zm1 1v8h10V4H3zm1 1h8v1H4V5zm0 2h8v1H4V7zm0 2h6v1H4V9zm0 2h4v1H4v-1z"/>
+      <path d="M6 10l-1.5 1.5c-.4.4-.4 1 0 1.4.4.4 1 .4 1.4 0L8.4 10.4c.4-.4.4-1 0-1.4L6.9 7.5c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4L6 10z"/>
+    </svg>
+  );
+}
+
 export function Link({ className = '', size = 16 }: RichTextEditorIconProps) {
   return (
     <svg
@@ -112,6 +127,21 @@ export function ListOrdered({ className = '', size = 16 }: RichTextEditorIconPro
       className={className}
     >
       <path d="M2 3.5v-1h1v4.5H2V6H1v-.5h1zM6 4h8v1H6V4zM6 8h8v1H6V8zM6 12h8v1H6v-1zM1 8.5h1v1H1v.5h2v-3H1v.5h1v1zM3 11.5v1H1v-1h2z"/>
+    </svg>
+  );
+}
+
+export function ListChecklist({ className = '', size = 16 }: RichTextEditorIconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M2 4h2v2H2V4zM6 4h8v1H6V4zM6 8h8v1H6V8zM6 12h8v1H6v-1zM2 8h2v2H2V8zM2 12h2v2H2v-2z"/>
+      <path d="M2.5 4.5l.5.5 1-1M2.5 8.5l.5.5 1-1"/>
     </svg>
   );
 }

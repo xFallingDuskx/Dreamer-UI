@@ -21,10 +21,14 @@ import {
   Italic,
   Underline,
   Strikethrough,
+  Code,
+  CodeBlock,
   Link,
   ListBullet,
   ListOrdered,
+  ListChecklist,
   Quote,
+  Table as TableIcon,
   HorizontalRule,
   Undo,
   Redo,
@@ -177,7 +181,7 @@ export function RichTextEditor({
     }, 10);
   }, [disabled, saveSelection, executeCommand, restoreSelection]);
 
-  const insertElement = useCallback((tagName: string, attributes?: Record<string, string>) => {
+  const insertElement = useCallback((tagName: string, attributes?: Record<string, string>, content?: string) => {
     if (disabled) return;
     
     const element = document.createElement(tagName);
@@ -185,6 +189,10 @@ export function RichTextEditor({
       Object.entries(attributes).forEach(([key, value]) => {
         element.setAttribute(key, value);
       });
+    }
+    
+    if (content) {
+      element.innerHTML = content;
     }
     
     const selection = window.getSelection();
@@ -199,6 +207,99 @@ export function RichTextEditor({
     
     handleContentChange();
   }, [disabled, handleContentChange]);
+
+  const insertInlineCode = useCallback(() => {
+    const sel = window.getSelection();
+    if (sel?.rangeCount && sel.toString()) {
+      const range = sel.getRangeAt(0);
+      const code = document.createElement('code');
+      code.className = join('px-2 py-1 rounded text-accent bg-muted/10', customStyles.inlineCode || '');
+      code.textContent = sel.toString();
+      range.deleteContents();
+      range.insertNode(code);
+      handleContentChange();
+    }
+  }, [handleContentChange, customStyles.inlineCode]);
+
+  const insertBlockCode = useCallback(() => {
+    const pre = document.createElement('pre');
+    const code = document.createElement('code');
+    
+    pre.className = join('bg-muted/10 rounded-lg p-4 my-4 overflow-x-auto', customStyles.blockCode || '');
+    code.textContent = 'Your code here...';
+    
+    pre.appendChild(code);
+    
+    const selection = window.getSelection();
+    if (selection?.rangeCount) {
+      const range = selection.getRangeAt(0);
+      range.insertNode(pre);
+      handleContentChange();
+    }
+  }, [handleContentChange, customStyles.blockCode]);
+
+  const insertTable = useCallback(() => {
+    const tableHTML = `
+      <table class="${join('w-full border-collapse border border-border my-4', customStyles.table || '')}">
+        <thead>
+          <tr class="bg-muted/20">
+            <th class="border border-border p-2 text-left">Header 1</th>
+            <th class="border border-border p-2 text-left">Header 2</th>
+            <th class="border border-border p-2 text-left">Header 3</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border border-border p-2">Cell 1</td>
+            <td class="border border-border p-2">Cell 2</td>
+            <td class="border border-border p-2">Cell 3</td>
+          </tr>
+          <tr>
+            <td class="border border-border p-2">Cell 4</td>
+            <td class="border border-border p-2">Cell 5</td>
+            <td class="border border-border p-2">Cell 6</td>
+          </tr>
+        </tbody>
+      </table>
+    `;
+    
+    const selection = window.getSelection();
+    if (selection?.rangeCount) {
+      const range = selection.getRangeAt(0);
+      const div = document.createElement('div');
+      div.innerHTML = tableHTML;
+      range.insertNode(div.firstElementChild!);
+      handleContentChange();
+    }
+  }, [handleContentChange, customStyles.table]);
+
+  const insertCheckList = useCallback(() => {
+    const checklistHTML = `
+      <ul class="${join('space-y-2 my-4', customStyles.checkList || '')}">
+        <li class="flex items-center">
+          <input type="checkbox" class="mr-2 rounded" />
+          <span>First task</span>
+        </li>
+        <li class="flex items-center">
+          <input type="checkbox" class="mr-2 rounded" checked />
+          <span class="line-through text-muted-foreground">Completed task</span>
+        </li>
+        <li class="flex items-center">
+          <input type="checkbox" class="mr-2 rounded" />
+          <span>Another task</span>
+        </li>
+      </ul>
+    `;
+    
+    const selection = window.getSelection();
+    if (selection?.rangeCount) {
+      const range = selection.getRangeAt(0);
+      const div = document.createElement('div');
+      div.innerHTML = checklistHTML;
+      range.insertNode(div.firstElementChild!);
+      handleContentChange();
+    }
+  }, [handleContentChange, customStyles.checkList]);
 
   const handleLinkInsert = useCallback(() => {
     if (!linkUrl) return;
@@ -255,6 +356,9 @@ export function RichTextEditor({
     'mod+u': () => formatText('underline'),
     'mod+shift+x': () => formatText('strikeThrough'),
     'mod+k': () => setIsLinkDialogOpen(true),
+    'mod+e': insertInlineCode,
+    'mod+shift+e': insertBlockCode,
+    'mod+shift+t': insertTable,
     'mod+z': undo,
     'mod+y': redo,
     'mod+shift+z': redo,
@@ -269,6 +373,7 @@ export function RichTextEditor({
         editorRef.current.innerHTML = value;
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, isControlled]);
 
   const renderToolbarButton = (action: string) => {
@@ -402,6 +507,58 @@ export function RichTextEditor({
             title="Numbered List"
           >
             <ListOrdered {...iconProps} />
+          </button>
+        );
+      case 'checkList':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={insertCheckList}
+            disabled={disabled}
+            title="Checklist"
+          >
+            <ListChecklist {...iconProps} />
+          </button>
+        );
+      case 'inlineCode':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={insertInlineCode}
+            disabled={disabled}
+            title="Inline Code"
+          >
+            <Code {...iconProps} />
+          </button>
+        );
+      case 'blockCode':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={insertBlockCode}
+            disabled={disabled}
+            title="Code Block"
+          >
+            <CodeBlock {...iconProps} />
+          </button>
+        );
+      case 'table':
+        return (
+          <button
+            key={action}
+            type="button"
+            className={buttonClass}
+            onClick={insertTable}
+            disabled={disabled}
+            title="Insert Table"
+          >
+            <TableIcon {...iconProps} />
           </button>
         );
       case 'link':

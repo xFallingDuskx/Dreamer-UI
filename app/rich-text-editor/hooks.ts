@@ -122,11 +122,11 @@ export function useAutoLink() {
 
   const autoLinkText = useCallback((text: string): string => {
     return text.replace(linkRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
-  }, []);
+  }, [linkRegex]);
 
   const isValidUrl = useCallback((url: string): boolean => {
     return linkRegex.test(url);
-  }, []);
+  }, [linkRegex]);
 
   return { autoLinkText, isValidUrl };
 }
