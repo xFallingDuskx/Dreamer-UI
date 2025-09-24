@@ -11,7 +11,7 @@ export interface SearchResult {
 	score?: number;
 }
 
-// Content index for search
+// Content index for search - systematically organized by component
 const searchIndex: SearchResult[] = [
 	// Getting Started
 	{
@@ -23,67 +23,7 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 
-	// Component Pages
-	{
-		title: 'Button',
-		path: '/components/button',
-		description: 'Interactive button component with multiple variants and states.',
-		type: 'Component',
-		content:
-			'button interactive click variants primary secondary tertiary destructive outline link states loading disabled props',
-		rank: 10,
-	},
-	{
-		title: 'Button Props',
-		path: '/components/button',
-		section: 'Props',
-		description: 'Button component properties and configuration options.',
-		type: 'Props',
-		content: 'button props properties variant size loading disabled href target onClick className',
-		rank: 8,
-	},
-	{
-		title: 'Input',
-		path: '/components/input',
-		description: 'Text input component for forms with validation states.',
-		type: 'Component',
-		content: 'input text field form validation email password number tel url search file props variant',
-		rank: 10,
-	},
-	{
-		title: 'Input Props',
-		path: '/components/input',
-		section: 'Props',
-		description: 'Input component properties and configuration options.',
-		type: 'Props',
-		content: 'input props properties type placeholder value onChange onBlur className validation variant',
-		rank: 8,
-	},
-	{
-		title: 'Select',
-		path: '/components/select',
-		description: 'Dropdown selection component with search and multi-selection capabilities.',
-		type: 'Component',
-		content: 'select dropdown combobox searchable options value onChange placeholder props',
-		rank: 10,
-	},
-	{
-		title: 'Modal',
-		path: '/components/modal',
-		description: 'Overlay component for displaying content above the main interface.',
-		type: 'Component',
-		content: 'modal dialog overlay popup isOpen onClose className overlayClassName containerClassName props',
-		rank: 10,
-	},
-	{
-		title: 'Modal Props',
-		path: '/components/modal',
-		section: 'Props',
-		description: 'Modal component properties including containerClassName and overlayClassName.',
-		type: 'Props',
-		content: 'modal props properties isOpen onClose className overlayClassName containerClassName hideCloseButton',
-		rank: 8,
-	},
+	// Accordion Component
 	{
 		title: 'Accordion',
 		path: '/components/accordion',
@@ -93,6 +33,17 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 	{
+		title: 'Accordion Props',
+		path: '/components/accordion',
+		section: 'Props',
+		description: 'Accordion component properties including items, allowMultiple, and styling options.',
+		type: 'Props',
+		content: 'accordion props properties items allowMultiple defaultOpenItems triggersClassName bodiesClassName className children',
+		rank: 8,
+	},
+
+	// Action Modal Component
+	{
 		title: 'Action Modal',
 		path: '/components/actionmodal',
 		description: 'Modal component with built-in action buttons for confirmations and forms.',
@@ -100,6 +51,17 @@ const searchIndex: SearchResult[] = [
 		content: 'action modal confirmation dialog form buttons cancel save delete props',
 		rank: 10,
 	},
+	{
+		title: 'Action Modal Props',
+		path: '/components/actionmodal',
+		section: 'Props',
+		description: 'Action Modal component properties including type, isOpen, onClose, and action handlers.',
+		type: 'Props',
+		content: 'actionmodal props properties type isOpen onClose message onConfirm title confirmText cancelText destructive className',
+		rank: 8,
+	},
+
+	// Avatar Component
 	{
 		title: 'Avatar',
 		path: '/components/avatar',
@@ -109,6 +71,17 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 	{
+		title: 'Avatar Props',
+		path: '/components/avatar',
+		section: 'Props',
+		description: 'Avatar component properties including preset, size, shape, and image options.',
+		type: 'Props',
+		content: 'avatar props properties preset size shape src initials alt className',
+		rank: 8,
+	},
+
+	// Badge Component
+	{
 		title: 'Badge',
 		path: '/components/badge',
 		description: 'Small status indicators with multiple variant styles.',
@@ -116,6 +89,36 @@ const searchIndex: SearchResult[] = [
 		content: 'badge label status indicator highlight notification count variant props',
 		rank: 10,
 	},
+	{
+		title: 'Badge Props',
+		path: '/components/badge',
+		section: 'Props',
+		description: 'Badge component properties including variant, outline, size, and aspect options.',
+		type: 'Props',
+		content: 'badge props properties variant outline size aspect use className id children',
+		rank: 8,
+	},
+
+	// Button Component
+	{
+		title: 'Button',
+		path: '/components/button',
+		description: 'Interactive button component with multiple variants and states.',
+		type: 'Component',
+		content: 'button interactive click variants primary secondary tertiary destructive outline link states loading disabled props',
+		rank: 10,
+	},
+	{
+		title: 'Button Props',
+		path: '/components/button',
+		section: 'Props',
+		description: 'Button component properties and configuration options.',
+		type: 'Props',
+		content: 'button props properties variant size loading disabled href target rel children className id',
+		rank: 8,
+	},
+
+	// Callout Component
 	{
 		title: 'Callout',
 		path: '/components/callout',
@@ -125,6 +128,17 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 	{
+		title: 'Callout Props',
+		path: '/components/callout',
+		section: 'Props',
+		description: 'Callout component properties including variant, title, description, and dismissible options.',
+		type: 'Props',
+		content: 'callout props properties variant title description icon dismissible onDismiss className id ref',
+		rank: 8,
+	},
+
+	// Card Component
+	{
 		title: 'Card',
 		path: '/components/card',
 		description: 'Container component for grouping related content and actions.',
@@ -133,22 +147,35 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 	{
+		title: 'Card Props',
+		path: '/components/card',
+		section: 'Props',
+		description: 'Card component properties including header, footer, size, and padding options.',
+		type: 'Props',
+		content: 'card props properties header footer size padding className children imageSrc imageAlt imageComponent imageToEdge',
+		rank: 8,
+	},
+
+	// Carousel Component
+	{
 		title: 'Carousel',
 		path: '/components/carousel',
 		description: 'Image and content carousel with navigation controls.',
 		type: 'Component',
-		content: 'carousel slider images content navigation controls autoplay containerClassName props',
+		content: 'carousel slider images content navigation controls autoplay props',
 		rank: 10,
 	},
 	{
 		title: 'Carousel Props',
 		path: '/components/carousel',
 		section: 'Props',
-		description: 'Carousel component properties including containerClassName for styling.',
+		description: 'Carousel component properties including autoScroll, itemsToShow, and navigation controls.',
 		type: 'Props',
-		content: 'carousel props properties slides autoplay controls containerClassName className navigation',
+		content: 'carousel props properties children autoScroll scrollInterval pauseScrollOnHover itemsToShow infinite gap hidePrevNext hideDots buttonSize buttonVariant buttonPosition className containerClassName itemsClassName dotsClassName',
 		rank: 8,
 	},
+
+	// Checkbox Component
 	{
 		title: 'Checkbox',
 		path: '/components/checkbox',
@@ -158,6 +185,55 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 	{
+		title: 'Checkbox Props',
+		path: '/components/checkbox',
+		section: 'Props',
+		description: 'Checkbox component properties including size, color, filled, and state options.',
+		type: 'Props',
+		content: 'checkbox props properties size color filled rounded checked indeterminate disabled display onCheckedChange id className',
+		rank: 8,
+	},
+
+	// Clickable Component
+	{
+		title: 'Clickable',
+		path: '/components/clickable',
+		description: 'Wrapper component that makes content clickable as links or buttons.',
+		type: 'Component',
+		content: 'clickable wrapper link button interactive click navigation props',
+		rank: 10,
+	},
+	{
+		title: 'Clickable Props',
+		path: '/components/clickable',
+		section: 'Props',
+		description: 'Clickable component properties including linkTo, onButtonClick, and additional props.',
+		type: 'Props',
+		content: 'clickable props properties children linkTo linkProps onButtonClick buttonProps className',
+		rank: 8,
+	},
+
+	// Code Component
+	{
+		title: 'Code',
+		path: '/components/code',
+		description: 'Inline code display component for syntax highlighting.',
+		type: 'Component',
+		content: 'code inline syntax highlight programming props',
+		rank: 10,
+	},
+	{
+		title: 'Code Props',
+		path: '/components/code',
+		section: 'Props',
+		description: 'Code component properties including language and styling options.',
+		type: 'Props',
+		content: 'code props properties children className language',
+		rank: 8,
+	},
+
+	// Code Block Component
+	{
 		title: 'Code Block',
 		path: '/components/codeblock',
 		description: 'Syntax highlighted code display with copy and fullscreen features.',
@@ -166,6 +242,55 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 	{
+		title: 'Code Block Props',
+		path: '/components/codeblock',
+		section: 'Props',
+		description: 'Code Block component properties including code, language, filename, and feature toggles.',
+		type: 'Props',
+		content: 'codeblock props properties code language filename showLineNumbers allowCopy allowDownload allowFullscreen showTrafficLights hideHeader maxHeight',
+		rank: 8,
+	},
+
+	// Disclosure Component
+	{
+		title: 'Disclosure',
+		path: '/components/disclosure',
+		description: 'Expandable content section with show/hide functionality.',
+		type: 'Component',
+		content: 'disclosure expandable show hide toggle collapsible props',
+		rank: 10,
+	},
+	{
+		title: 'Disclosure Props',
+		path: '/components/disclosure',
+		section: 'Props',
+		description: 'Disclosure component properties including label, isOpen, onToggle, and styling options.',
+		type: 'Props',
+		content: 'disclosure props properties label isOpen onToggle disabled className buttonClassName children',
+		rank: 8,
+	},
+
+	// Drawer Component
+	{
+		title: 'Drawer',
+		path: '/components/drawer',
+		description: 'Slide-out panel component for additional content and actions.',
+		type: 'Component',
+		content: 'drawer slide panel sidebar navigation content actions props',
+		rank: 10,
+	},
+	{
+		title: 'Drawer Props',
+		path: '/components/drawer',
+		section: 'Props',
+		description: 'Drawer component properties including footer, title, and gesture controls.',
+		type: 'Props',
+		content: 'drawer props properties title footer isOpen onClose showCloseButton enableDragGestures disableCloseOnOverlayClick className overlayClassName',
+		rank: 8,
+	},
+
+	// Dropdown Menu Component
+	{
 		title: 'Dropdown Menu',
 		path: '/components/dropdown-menu',
 		description: 'Contextual menu component with keyboard navigation and sub-menus.',
@@ -173,6 +298,36 @@ const searchIndex: SearchResult[] = [
 		content: 'dropdown menu context navigation keyboard submenu items actions props',
 		rank: 10,
 	},
+	{
+		title: 'Dropdown Menu Props',
+		path: '/components/dropdown-menu',
+		section: 'Props',
+		description: 'Dropdown Menu component properties including trigger, items, placement, and selection handling.',
+		type: 'Props',
+		content: 'dropdownmenu props properties trigger items onItemSelect isOpen onOpenChange placement alignment className id',
+		rank: 8,
+	},
+
+	// Dynamic List Component
+	{
+		title: 'Dynamic List',
+		path: '/components/dynamic-list',
+		description: 'Interactive list component with add, delete, and reorder capabilities.',
+		type: 'Component',
+		content: 'dynamic list interactive add delete reorder sortable props',
+		rank: 10,
+	},
+	{
+		title: 'Dynamic List Props',
+		path: '/components/dynamic-list',
+		section: 'Props',
+		description: 'Dynamic List component properties including items, interactive features, and customization options.',
+		type: 'Props',
+		content: 'dynamiclist props properties items size id className allowAdd allowDelete allowReorder addPlaceholder onItemsChange marker title variant',
+		rank: 8,
+	},
+
+	// Error Boundary Component
 	{
 		title: 'Error Boundary',
 		path: '/components/error-boundary',
@@ -185,11 +340,13 @@ const searchIndex: SearchResult[] = [
 		title: 'Error Boundary Props',
 		path: '/components/error-boundary',
 		section: 'Props',
-		description: 'Error boundary component properties and error handling options.',
+		description: 'Error Boundary component properties and error handling options.',
 		type: 'Props',
 		content: 'error boundary props properties fallback onError children reset simulation',
 		rank: 8,
 	},
+
+	// Form Component
 	{
 		title: 'Form',
 		path: '/components/form',
@@ -199,61 +356,35 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 	{
-		title: 'Table',
-		path: '/components/table',
-		description: 'Data table component with sorting, selection, and responsive design.',
-		type: 'Component',
-		content: 'table data sorting selection responsive columns rows pagination props',
-		rank: 10,
-	},
-	{
-		title: 'Tabs',
-		path: '/components/tabs',
-		description: 'Tabbed interface component for organizing content into sections.',
-		type: 'Component',
-		content: 'tabs tabbed interface sections content organization navigation props',
-		rank: 10,
-	},
-	{
-		title: 'Toast',
-		path: '/components/toast',
-		description: 'Notification component for displaying temporary messages.',
-		type: 'Component',
-		content: 'toast notification temporary message alert success error info warning props',
-		rank: 10,
-	},
-	{
-		title: 'Tooltip',
-		path: '/components/tooltip',
-		description: 'Contextual information component that appears on hover or focus.',
-		type: 'Component',
-		content: 'tooltip hover focus contextual information help hint props',
-		rank: 10,
-	},
-	{
-		title: 'Checkbox',
-		path: '/components/checkbox',
-		description: 'Selection control for multiple choice scenarios.',
-		type: 'Component',
-		content: 'checkbox selection control multiple choice checked onChange props',
-		rank: 10,
-	},
-	{
-		title: 'Drawer',
-		path: '/components/drawer',
-		description: 'Slide-out panel component for additional content and actions.',
-		type: 'Component',
-		content: 'drawer slide panel sidebar navigation content actions props',
-		rank: 10,
-	},
-	{
-		title: 'Form',
+		title: 'Form Props',
 		path: '/components/form',
-		description: 'Form container with validation and submission handling.',
+		section: 'Props',
+		description: 'Form component properties including form fields, data handling, and layout options.',
+		type: 'Props',
+		content: 'form props properties form initialData onDataChange onSubmit submitButton spacing columns responsive className id',
+		rank: 8,
+	},
+
+	// Input Component
+	{
+		title: 'Input',
+		path: '/components/input',
+		description: 'Text input component for forms with validation states.',
 		type: 'Component',
-		content: 'form validation submission handling fields inputs controls props',
+		content: 'input text field form validation email password number tel url search file props',
 		rank: 10,
 	},
+	{
+		title: 'Input Props',
+		path: '/components/input',
+		section: 'Props',
+		description: 'Input component properties and configuration options.',
+		type: 'Props',
+		content: 'input props properties type placeholder value onChange onBlur className validation variant',
+		rank: 8,
+	},
+
+	// Label Component
 	{
 		title: 'Label',
 		path: '/components/label',
@@ -263,6 +394,36 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 	{
+		title: 'Label Props',
+		path: '/components/label',
+		section: 'Props',
+		description: 'Label component properties including htmlFor, required indicator, and styling options.',
+		type: 'Props',
+		content: 'label props properties htmlFor required className children',
+		rank: 8,
+	},
+
+	// Modal Component
+	{
+		title: 'Modal',
+		path: '/components/modal',
+		description: 'Overlay component for displaying content above the main interface.',
+		type: 'Component',
+		content: 'modal dialog overlay popup isOpen onClose props',
+		rank: 10,
+	},
+	{
+		title: 'Modal Props',
+		path: '/components/modal',
+		section: 'Props',
+		description: 'Modal component properties including containerClassName and overlayClassName.',
+		type: 'Props',
+		content: 'modal props properties isOpen onClose className overlayClassName containerClassName hideCloseButton',
+		rank: 8,
+	},
+
+	// Pagination Component
+	{
 		title: 'Pagination',
 		path: '/components/pagination',
 		description: 'Navigation component for paginated content.',
@@ -270,6 +431,17 @@ const searchIndex: SearchResult[] = [
 		content: 'pagination navigation pages previous next current total props',
 		rank: 10,
 	},
+	{
+		title: 'Pagination Props',
+		path: '/components/pagination',
+		section: 'Props',
+		description: 'Pagination component properties including page, pageCount, and variant.',
+		type: 'Props',
+		content: 'pagination props properties page pageCount variant size onPageChange showFirstLast maxVisiblePages buttonsClassName',
+		rank: 8,
+	},
+
+	// Panel Component
 	{
 		title: 'Panel',
 		path: '/components/panel',
@@ -279,6 +451,17 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 	{
+		title: 'Panel Props',
+		path: '/components/panel',
+		section: 'Props',
+		description: 'Panel component properties including footer, title, and size options.',
+		type: 'Props',
+		content: 'panel props properties title footer isOpen onClose size hideCloseButton disableCloseOnOverlayClick className overlayClassName',
+		rank: 8,
+	},
+
+	// Popover Component
+	{
 		title: 'Popover',
 		path: '/components/popover',
 		description: 'Floating content component that appears on trigger interaction.',
@@ -286,6 +469,17 @@ const searchIndex: SearchResult[] = [
 		content: 'popover floating content trigger hover click placement props',
 		rank: 10,
 	},
+	{
+		title: 'Popover Props',
+		path: '/components/popover',
+		section: 'Props',
+		description: 'Popover component properties including trigger, placement, and interaction options.',
+		type: 'Props',
+		content: 'popover props properties trigger placement isOpen onOpenChange className children',
+		rank: 8,
+	},
+
+	// Radio Group Component
 	{
 		title: 'Radio Group',
 		path: '/components/radiogroup',
@@ -295,6 +489,17 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 	{
+		title: 'Radio Group Props',
+		path: '/components/radiogroup',
+		section: 'Props',
+		description: 'Radio Group component properties including options, value, onChange, and styling options.',
+		type: 'Props',
+		content: 'radiogroup props properties options value onChange id className childrenClassName hideInputs children',
+		rank: 8,
+	},
+
+	// Scroll Area Component
+	{
 		title: 'Scroll Area',
 		path: '/components/scroll-area',
 		description: 'Custom scrollable container with styled scrollbars.',
@@ -302,6 +507,36 @@ const searchIndex: SearchResult[] = [
 		content: 'scroll area container scrollbar custom styling overflow props',
 		rank: 10,
 	},
+	{
+		title: 'Scroll Area Props',
+		path: '/components/scroll-area',
+		section: 'Props',
+		description: 'Scroll Area component properties including scrollbar styling and interaction options.',
+		type: 'Props',
+		content: 'scrollarea props properties className children scrollbarClassName hideScrollbar maxHeight',
+		rank: 8,
+	},
+
+	// Select Component
+	{
+		title: 'Select',
+		path: '/components/select',
+		description: 'Dropdown selection component with search and multi-selection capabilities.',
+		type: 'Component',
+		content: 'select dropdown combobox searchable options value onChange placeholder props',
+		rank: 10,
+	},
+	{
+		title: 'Select Props',
+		path: '/components/select',
+		section: 'Props',
+		description: 'Select component properties including searchable, clearable, and options.',
+		type: 'Props',
+		content: 'select props properties options searchable clearable value onChange placeholder disabled className',
+		rank: 8,
+	},
+
+	// Separator Component
 	{
 		title: 'Separator',
 		path: '/components/separator',
@@ -311,6 +546,17 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 	{
+		title: 'Separator Props',
+		path: '/components/separator',
+		section: 'Props',
+		description: 'Separator component properties including orientation and thickness.',
+		type: 'Props',
+		content: 'separator props properties orientation thickness decorative className horizontal vertical',
+		rank: 8,
+	},
+
+	// Skeleton Component
+	{
 		title: 'Skeleton',
 		path: '/components/skeleton',
 		description: 'Loading placeholders that mimic the structure of your content.',
@@ -318,6 +564,17 @@ const searchIndex: SearchResult[] = [
 		content: 'skeleton loading placeholder content structure shimmer props',
 		rank: 10,
 	},
+	{
+		title: 'Skeleton Props',
+		path: '/components/skeleton',
+		section: 'Props',
+		description: 'Skeleton component properties including variant, size, and animation options.',
+		type: 'Props',
+		content: 'skeleton props properties variant size animated className width height',
+		rank: 8,
+	},
+
+	// Slider Component
 	{
 		title: 'Slider',
 		path: '/components/slider',
@@ -327,6 +584,55 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 	{
+		title: 'Slider Props',
+		path: '/components/slider',
+		section: 'Props',
+		description: 'Slider component properties including min, max, step, value, and styling options.',
+		type: 'Props',
+		content: 'slider props properties min max step value onValueChange disabled rangeClassName thumbClassName',
+		rank: 8,
+	},
+
+	// Table Component
+	{
+		title: 'Table',
+		path: '/components/table',
+		description: 'Data table component with sorting, selection, and responsive design.',
+		type: 'Component',
+		content: 'table data sorting selection responsive columns rows pagination props',
+		rank: 10,
+	},
+	{
+		title: 'Table Props',
+		path: '/components/table',
+		section: 'Props',
+		description: 'Table component properties including data, columns, selection, and state options.',
+		type: 'Props',
+		content: 'table props properties data columns size selectable onSelectionChange loading emptyState striped hoverable caption',
+		rank: 8,
+	},
+
+	// Tabs Component
+	{
+		title: 'Tabs',
+		path: '/components/tabs',
+		description: 'Tabbed interface component for organizing content into sections.',
+		type: 'Component',
+		content: 'tabs tabbed interface sections content organization navigation props',
+		rank: 10,
+	},
+	{
+		title: 'Tabs Props',
+		path: '/components/tabs',
+		section: 'Props',
+		description: 'Tabs component properties including value, variant, and styling options.',
+		type: 'Props',
+		content: 'tabs props properties value onValueChange variant tabsWidth triggersClassName contentClassName defaultValue',
+		rank: 8,
+	},
+
+	// Textarea Component
+	{
 		title: 'Textarea',
 		path: '/components/textarea',
 		description: 'Multi-line text input with auto-expand and character limit features.',
@@ -335,6 +641,36 @@ const searchIndex: SearchResult[] = [
 		rank: 10,
 	},
 	{
+		title: 'Textarea Props',
+		path: '/components/textarea',
+		section: 'Props',
+		description: 'Textarea component properties including variant, autoExpand, characterLimit, and validation states.',
+		type: 'Props',
+		content: 'textarea props properties variant rounded displayOnlyMode errorMessage successMessage hideResizeHandle autoExpand characterLimit placeholder rows disabled value defaultValue onChange className',
+		rank: 8,
+	},
+
+	// Toast Component
+	{
+		title: 'Toast',
+		path: '/components/toast',
+		description: 'Notification component for displaying temporary messages.',
+		type: 'Component',
+		content: 'toast notification temporary message alert success error info warning props',
+		rank: 10,
+	},
+	{
+		title: 'Toast Props',
+		path: '/components/toast',
+		section: 'Props',
+		description: 'Toast component properties including type, title, description, and dismissal options.',
+		type: 'Props',
+		content: 'toast props properties type title description dismissible onDismiss duration className',
+		rank: 8,
+	},
+
+	// Toggle Component
+	{
 		title: 'Toggle',
 		path: '/components/toggle',
 		description: 'Switch component for boolean states and settings.',
@@ -342,35 +678,54 @@ const searchIndex: SearchResult[] = [
 		content: 'toggle switch boolean state settings on off checked onChange props',
 		rank: 10,
 	},
-	// Add more component props
 	{
-		title: 'Select Props',
-		path: '/components/select',
+		title: 'Toggle Props',
+		path: '/components/toggle',
 		section: 'Props',
-		description: 'Select component properties and configuration options.',
+		description: 'Toggle component properties including size, variant, and state controls.',
 		type: 'Props',
-		content: 'select props properties options searchable clearable value onChange placeholder',
+		content: 'toggle props properties size variant checked onCheckedChange disabled className thumbClassName backgroundClassNames',
 		rank: 8,
 	},
+
+	// Tooltip Component
 	{
-		title: 'Modal Props',
-		path: '/components/modal',
-		section: 'Props',
-		description: 'Modal component properties and configuration options.',
-		type: 'Props',
-		content: 'modal props properties isOpen onClose className overlayClassName',
-		rank: 8,
+		title: 'Tooltip',
+		path: '/components/tooltip',
+		description: 'Contextual information component that appears on hover or focus.',
+		type: 'Component',
+		content: 'tooltip hover focus contextual information help hint props',
+		rank: 10,
 	},
 	{
-		title: 'Table Props',
-		path: '/components/table',
+		title: 'Tooltip Props',
+		path: '/components/tooltip',
 		section: 'Props',
-		description: 'Table component properties and configuration options.',
+		description: 'Tooltip component properties including message, placement, delay, and disabled options.',
 		type: 'Props',
-		content: 'table props properties columns data sorting selection pagination',
+		content: 'tooltip props properties message placement delay disabled className id children',
 		rank: 8,
 	},
-	// Example entries for component usage patterns
+
+	// Hooks
+	{
+		title: 'useActionModal',
+		path: '/hooks/useActionModal',
+		description: 'Hook for managing action modal state and interactions.',
+		type: 'Guide',
+		content: 'useActionModal hook modal action state management open close confirm cancel',
+		rank: 9,
+	},
+	{
+		title: 'useToast',
+		path: '/hooks/useToast',
+		description: 'Hook for showing toast notifications with different types.',
+		type: 'Guide',
+		content: 'useToast hook toast notification success error info warning show hide',
+		rank: 9,
+	},
+
+	// Examples
 	{
 		title: 'Button Variants Example',
 		path: '/components/button',
@@ -390,39 +745,12 @@ const searchIndex: SearchResult[] = [
 		rank: 7,
 	},
 	{
-		title: 'Error Boundary Example',
-		path: '/components/error-boundary',
+		title: 'Form Validation Example',
+		path: '/components/form',
 		section: 'Examples',
-		description: 'Error simulation and boundary handling for component error states.',
+		description: 'Complete form with field validation and submission.',
 		type: 'Example',
-		content: 'error boundary example simulation fallback component crash handling testing',
-		rank: 7,
-	},
-	{
-		title: 'Input Validation Example',
-		path: '/components/input',
-		section: 'Examples',
-		description: 'Form input with validation states and error messages.',
-		type: 'Example',
-		content: 'input validation error success warning states form example',
-		rank: 7,
-	},
-	{
-		title: 'Modal with Actions Example',
-		path: '/components/modal',
-		section: 'Examples',
-		description: 'Modal dialog with action buttons and confirmation flow.',
-		type: 'Example',
-		content: 'modal dialog actions confirm cancel delete save example',
-		rank: 7,
-	},
-	{
-		title: 'Select with Search Example',
-		path: '/components/select',
-		section: 'Examples',
-		description: 'Searchable dropdown with filtering capabilities.',
-		type: 'Example',
-		content: 'select search dropdown filter combobox searchable example',
+		content: 'form validation submit fields required optional example',
 		rank: 7,
 	},
 	{
@@ -434,80 +762,8 @@ const searchIndex: SearchResult[] = [
 		content: 'table sort sorting columns data selection rows example',
 		rank: 7,
 	},
-	{
-		title: 'Form Validation Example',
-		path: '/components/form',
-		section: 'Examples',
-		description: 'Complete form with field validation and submission.',
-		type: 'Example',
-		content: 'form validation submit fields required optional example',
-		rank: 7,
-	},
-	{
-		title: 'Toast Notifications Example',
-		path: '/components/toast',
-		section: 'Examples',
-		description: 'Success, error, and info toast message patterns.',
-		type: 'Example',
-		content: 'toast notification success error info warning message example',
-		rank: 7,
-	},
-	
-	// Additional components with variant props
-	{
-		title: 'Pagination',
-		path: '/components/pagination',
-		description: 'Navigation component for paginated content with multiple variants.',
-		type: 'Component',
-		content: 'pagination navigation pages previous next current total variant props',
-		rank: 10,
-	},
-	{
-		title: 'Pagination Props',
-		path: '/components/pagination',
-		section: 'Props',
-		description: 'Pagination component properties including variant options.',
-		type: 'Props',
-		content: 'pagination props properties currentPage totalPages onPageChange variant size',
-		rank: 8,
-	},
-	{
-		title: 'Tabs',
-		path: '/components/tabs',
-		description: 'Tabbed interface component with different variants.',
-		type: 'Component',
-		content: 'tabs tabbed interface sections content organization navigation variant props',
-		rank: 10,
-	},
-	{
-		title: 'Tabs Props',
-		path: '/components/tabs',
-		section: 'Props',
-		description: 'Tabs component properties including variant configurations.',
-		type: 'Props',
-		content: 'tabs props properties value onChange variant size orientation',
-		rank: 8,
-	},
-	
-	// Hooks
-	{
-		title: 'useActionModal',
-		path: '/hooks/useActionModal',
-		description: 'Hook for managing action modal state and interactions.',
-		type: 'Guide',
-		content: 'useActionModal hook modal action state management open close confirm cancel',
-		rank: 9,
-	},
-	{
-		title: 'useToast',
-		path: '/hooks/useToast',
-		description: 'Hook for showing toast notifications with different types.',
-		type: 'Guide',
-		content: 'useToast hook toast notification success error info warning show hide',
-		rank: 9,
-	},
-	
-	// Add more components...
+
+	// Overview
 	{
 		title: 'All Components',
 		path: '/components',
@@ -519,79 +775,43 @@ const searchIndex: SearchResult[] = [
 ];
 
 /**
- * Improved fuzzy search implementation with stricter matching for specific queries
+ * Improved search matching with stricter requirements for relevance
  */
-function fuzzyMatch(query: string, text: string): number {
+function searchMatch(query: string, text: string): number {
 	const queryLower = query.toLowerCase();
 	const textLower = text.toLowerCase();
 
-	// For specific patterns like hooks, require exact or very close matches
-	const isHookQuery = queryLower.startsWith('use') && queryLower.length > 3;
-	const isPropQuery = queryLower.match(/^[a-z]+[A-Z]/); // camelCase like containerClassName
-	const isSpecificQuery = isHookQuery || isPropQuery || queryLower.length > 8;
-
-	// Exact match gets highest score
+	// Exact substring match gets highest score
 	if (textLower.includes(queryLower)) {
 		const index = textLower.indexOf(queryLower);
-		// Earlier matches get higher scores
+		// Prefer matches at the beginning of the text
 		return 1000 - index;
 	}
 
-	// For specific queries (hooks, long camelCase, etc.), be very strict
-	if (isSpecificQuery) {
-		// Only allow word boundary matches for specific queries
-		const words = textLower.split(/\s+/);
-		for (const word of words) {
-			if (word === queryLower) {
-				return 900; // Exact word match
-			}
-			if (word.startsWith(queryLower)) {
-				return 800; // Word starts with query
-			}
-			// For hooks, check if word contains the exact hook name
-			if (isHookQuery && word.includes(queryLower)) {
-				return 700; // Contains exact hook name
-			}
+	// Word boundary matches - split by spaces and common separators
+	const words = textLower.split(/[\s\-_.]+/);
+	for (const word of words) {
+		// Exact word match
+		if (word === queryLower) {
+			return 900;
 		}
-		// Don't do fuzzy matching for specific queries
+		// Word starts with query (useful for partial prop names)
+		if (word.startsWith(queryLower) && queryLower.length >= 2) {
+			return 800 - (word.length - queryLower.length); // Prefer shorter words
+		}
+	}
+
+	// For very short queries, be more restrictive
+	if (queryLower.length <= 2) {
 		return 0;
 	}
 
-	// Word boundary match - higher priority than character fuzzy match
-	const words = textLower.split(/\s+/);
-	for (const word of words) {
-		if (word.startsWith(queryLower)) {
-			return 800; // High score for word starts
-		}
-		if (word.includes(queryLower)) {
-			return 600; // Medium score for word contains
-		}
-	}
-
-	// Only do character fuzzy match for longer queries (3+ chars) to avoid too broad matches
-	if (queryLower.length >= 3) {
-		let queryIndex = 0;
-		let matchCount = 0;
-		let consecutiveMatches = 0;
-		let maxConsecutive = 0;
-
-		for (let i = 0; i < textLower.length && queryIndex < queryLower.length; i++) {
-			if (textLower[i] === queryLower[queryIndex]) {
-				queryIndex++;
-				matchCount++;
-				consecutiveMatches++;
-				maxConsecutive = Math.max(maxConsecutive, consecutiveMatches);
-			} else {
-				consecutiveMatches = 0;
+	// For longer queries (4+ chars), allow partial matches within words
+	if (queryLower.length >= 4) {
+		for (const word of words) {
+			if (word.includes(queryLower)) {
+				return 600 - (word.length - queryLower.length);
 			}
-		}
-
-		// Only return fuzzy match if we have good coverage and some consecutive matches
-		const coverage = matchCount / queryLower.length;
-		const consecutiveBonus = maxConsecutive / queryLower.length;
-		
-		if (queryIndex === queryLower.length && coverage > 0.7 && consecutiveBonus > 0.3) {
-			return Math.min(400, coverage * consecutiveBonus * 400);
 		}
 	}
 
@@ -625,7 +845,7 @@ function extractMatchedText(query: string, text: string, maxLength: number = 60)
 }
 
 /**
- * Find the best matching field and extract relevant text
+ * Find the best matching field and extract relevant text with proper prop name extraction
  */
 function findBestMatch(query: string, item: Omit<SearchResult, 'matchedText' | 'matchedField'>): {
 	matchedText: string;
@@ -657,8 +877,16 @@ function findBestMatch(query: string, item: Omit<SearchResult, 'matchedText' | '
 		};
 	}
 	
-	// Check content
+	// Check content - for Props type, try to extract the actual prop name
 	if (item.content.toLowerCase().includes(queryLower)) {
+		if (item.type === 'Props') {
+			// Try to find the full prop name in the content
+			const propName = extractFullPropName(query, item.content);
+			return {
+				matchedText: propName,
+				matchedField: 'content'
+			};
+		}
 		return {
 			matchedText: extractMatchedText(query, item.content),
 			matchedField: 'content'
@@ -673,6 +901,37 @@ function findBestMatch(query: string, item: Omit<SearchResult, 'matchedText' | '
 }
 
 /**
+ * Extract the full prop name from content when a partial match is found
+ */
+function extractFullPropName(query: string, content: string): string {
+	const queryLower = query.toLowerCase();
+	const words = content.split(/[\s\-_.]+/);
+	
+	// Look for exact matches first
+	for (const word of words) {
+		if (word.toLowerCase() === queryLower) {
+			return word;
+		}
+	}
+	
+	// Look for words that start with the query
+	for (const word of words) {
+		if (word.toLowerCase().startsWith(queryLower)) {
+			return word;
+		}
+	}
+	
+	// Look for words that contain the query
+	for (const word of words) {
+		if (word.toLowerCase().includes(queryLower)) {
+			return word;
+		}
+	}
+	
+	return query;
+}
+
+/**
  * Search through indexed content with improved ranking, stricter matching, and deduplication
  */
 export function searchContent(query: string): SearchResult[] {
@@ -683,61 +942,57 @@ export function searchContent(query: string): SearchResult[] {
 	const queryTerms = query.toLowerCase().trim().split(/\s+/);
 	const results: (SearchResult & { score: number })[] = [];
 
-	// Set minimum score threshold based on query length - make it more lenient
+	// Set minimum score threshold based on query length
 	const minScoreThreshold = queryTerms.length === 1 && queryTerms[0].length <= 4 ? 300 : 50;
 
 	searchIndex.forEach((item) => {
 		let totalScore = 0;
 		let matchCount = 0;
-		let hasStrongMatch = false; // Track if we have at least one strong match
+		let hasStrongMatch = false;
 
 		queryTerms.forEach((term) => {
 			// Check title match (highest priority)
-			const titleScore = fuzzyMatch(term, item.title) * 3;
+			const titleScore = searchMatch(term, item.title) * 3;
 			if (titleScore > 0) {
 				totalScore += titleScore;
 				matchCount++;
-				if (titleScore >= 1500) hasStrongMatch = true; // Strong title match
+				if (titleScore >= 1500) hasStrongMatch = true;
 			}
 
 			// Check section match (high priority for specific searches)
 			if (item.section) {
-				const sectionScore = fuzzyMatch(term, item.section) * 2.5;
+				const sectionScore = searchMatch(term, item.section) * 2.5;
 				if (sectionScore > 0) {
 					totalScore += sectionScore;
 					matchCount++;
-					if (sectionScore >= 1000) hasStrongMatch = true; // Strong section match
+					if (sectionScore >= 1000) hasStrongMatch = true;
 				}
 			}
 
 			// Check description match
 			if (item.description) {
-				const descScore = fuzzyMatch(term, item.description) * 2;
+				const descScore = searchMatch(term, item.description) * 2;
 				if (descScore > 0) {
 					totalScore += descScore;
 					matchCount++;
-					if (descScore >= 800) hasStrongMatch = true; // Strong description match
+					if (descScore >= 800) hasStrongMatch = true;
 				}
 			}
 
 			// Check content match (lower priority, but still important for props)
-			const contentScore = fuzzyMatch(term, item.content);
+			const contentScore = searchMatch(term, item.content);
 			if (contentScore > 0) {
 				totalScore += contentScore;
 				matchCount++;
-				if (contentScore >= 600) hasStrongMatch = true; // Strong content match
+				if (contentScore >= 600) hasStrongMatch = true;
 			}
 		});
 
-		// Only include results that meet criteria - make it more lenient
-		// 1. Have matches for all query terms OR have a strong single match
-		// 2. Meet minimum score threshold
-		// 3. Have at least one decent match for short queries
+		// Only include results that actually match the query terms
 		const hasAllTerms = matchCount >= queryTerms.length;
 		const meetsThreshold = totalScore >= minScoreThreshold;
-		const qualifiesForShortQuery = queryTerms.length > 1 || hasStrongMatch || totalScore >= 400;
 
-		if (matchCount > 0 && meetsThreshold && (hasAllTerms || hasStrongMatch || totalScore >= 600)) {
+		if (matchCount > 0 && meetsThreshold && (hasAllTerms || hasStrongMatch)) {
 			// Apply base rank multiplier
 			const finalScore = (totalScore * item.rank) / queryTerms.length;
 			
@@ -755,7 +1010,7 @@ export function searchContent(query: string): SearchResult[] {
 	// Sort by score descending
 	const sortedResults = results.sort((a, b) => b.score - a.score);
 
-	// Enhanced deduplication logic: smarter grouping and selection
+	// Enhanced deduplication logic
 	const deduplicatedResults: SearchResult[] = [];
 	const seenPaths = new Map<string, { 
 		component?: SearchResult; 
@@ -791,10 +1046,10 @@ export function searchContent(query: string): SearchResult[] {
 		queryLower.includes('value') ||
 		queryLower.includes('disabled') ||
 		queryLower.includes('required') ||
-		queryLower.match(/^[a-z]+[A-Z]/); // camelCase pattern like containerClassName
+		queryLower.match(/^[a-z]+[A-Z]/); // camelCase pattern
 
 	seenPaths.forEach(({ component, props, examples, otherTypes }, path) => {
-		// Always add non-Component/Props/Example types first (Guides, etc.)
+		// Always add non-Component/Props/Example types first
 		otherTypes.forEach(result => deduplicatedResults.push(result));
 
 		// For component paths, apply smart deduplication
@@ -804,12 +1059,12 @@ export function searchContent(query: string): SearchResult[] {
 			const hasExamples = examples.length > 0;
 
 			if (isSpecificPropQuery) {
-				// For prop queries, prioritize Props, then Component, then best Example
+				// For prop queries, prioritize Props, then Component
 				if (hasProps) deduplicatedResults.push(props);
 				else if (hasComponent) deduplicatedResults.push(component);
-				if (hasExamples) deduplicatedResults.push(examples[0]); // Best example
+				if (hasExamples) deduplicatedResults.push(examples[0]);
 			} else if (queryLower.includes('example')) {
-				// For example queries, prioritize Examples, then Component
+				// For example queries, prioritize Examples
 				examples.forEach(ex => deduplicatedResults.push(ex));
 				if (hasComponent && !hasExamples) deduplicatedResults.push(component);
 			} else {
@@ -817,27 +1072,21 @@ export function searchContent(query: string): SearchResult[] {
 				const candidates = [
 					...(hasComponent ? [component] : []),
 					...(hasProps ? [props] : []),
-					...examples.slice(0, 1) // Only the best example
+					...examples.slice(0, 1)
 				].filter(Boolean);
 
 				if (candidates.length === 1) {
 					deduplicatedResults.push(candidates[0]);
 				} else if (candidates.length > 1) {
-					// Sort candidates by score and pick top 2 max
 					const sortedCandidates = candidates.sort((a, b) => (b.score || 0) - (a.score || 0));
 					
-					// Add the top result
 					deduplicatedResults.push(sortedCandidates[0]);
 					
-					// Add second result only if it's significantly different or much higher scoring
 					if (sortedCandidates.length > 1) {
 						const first = sortedCandidates[0];
 						const second = sortedCandidates[1];
 						const scoreDiff = (first.score || 0) - (second.score || 0);
 						
-						// Add second result if:
-						// 1. It's a different type AND score difference is small (< 20% of first score)
-						// 2. OR it's a Props result and query might be prop-related
 						if ((first.type !== second.type && scoreDiff < (first.score || 0) * 0.2) ||
 							(second.type === 'Props' && queryLower.match(/\b(variant|size|type|value|disabled|required|className)\b/))) {
 							deduplicatedResults.push(second);

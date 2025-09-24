@@ -37,17 +37,39 @@ function HighlightedText({ text, query }: { text: string; query: string }) {
 }
 
 /**
- * Extract prop name from search query for display
+ * Extract the full prop name from search query for display
  */
-function extractPropFromQuery(query: string, result: { content: string }): string {
-	// Check if query matches common prop patterns
+function extractPropFromQuery(query: string, result: { content: string; title: string }): string {
 	const queryLower = query.toLowerCase();
-
-	// Look for the query in the result's content to find the actual prop name
-	if (result.content && result.content.includes(queryLower)) {
-		// Try to extract camelCase prop names
-		const propMatch = result.content.match(new RegExp(`\\b${queryLower}\\b`, 'i'));
-		if (propMatch) return propMatch[0];
+	
+	// Split content into words to find prop names
+	const words = result.content.split(/[\s\-_.]+/);
+	
+	// Look for exact matches first
+	for (const word of words) {
+		if (word.toLowerCase() === queryLower) {
+			return word;
+		}
+	}
+	
+	// Look for words that start with the query (for partial matches)
+	for (const word of words) {
+		if (word.toLowerCase().startsWith(queryLower) && word.length > queryLower.length) {
+			// Likely a prop name if it's camelCase or has specific prop patterns
+			if (/^[a-z][a-zA-Z]*$/.test(word) || word.includes('Class') || word.includes('Name') || word.endsWith('able')) {
+				return word;
+			}
+		}
+	}
+	
+	// Look for words that contain the query
+	for (const word of words) {
+		if (word.toLowerCase().includes(queryLower)) {
+			// Return the full word if it looks like a prop name
+			if (/^[a-z][a-zA-Z]*$/.test(word) || word.includes('Class') || word.includes('Name')) {
+				return word;
+			}
+		}
 	}
 
 	// Fallback to the query itself
@@ -169,7 +191,7 @@ export function SearchBar({ id, className }: SearchBarProps) {
 													<>
 														<div className='font-medium group-hover:text-accent transition-colors'>
 															{result.title.replace(' Props', '')} →{' '}
-															<HighlightedText text={extractPropFromQuery(query, result)} query={query} />
+															<HighlightedText text={extractPropFromQuery(query, { content: result.content, title: result.title })} query={query} />
 														</div>
 														<div className='text-sm opacity-70 mt-1'>{result.description}</div>
 													</>
