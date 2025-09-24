@@ -79,7 +79,7 @@ export function SearchBar({ id, className }: SearchBarProps) {
 				overlayClassName='backdrop-blur-xs bg-background-dark/50'
 				containerClassName='items-start pt-12 sm:pt-20 md:pt-28'
 			>
-				<div className='flex items-center gap-3 mb-2'>
+				<div className='flex items-center mb-2'>
 					<Search className='w-5 h-5 text-muted-foreground' />
 					<Input
 						ref={inputRef}
