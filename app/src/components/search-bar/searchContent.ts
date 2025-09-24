@@ -47,7 +47,7 @@ const searchIndex: SearchResult[] = [
 		path: '/components/input',
 		description: 'Text input component for forms with validation states.',
 		type: 'Component',
-		content: 'input text field form validation email password number tel url search file props',
+		content: 'input text field form validation email password number tel url search file props variant',
 		rank: 10,
 	},
 	{
@@ -56,7 +56,7 @@ const searchIndex: SearchResult[] = [
 		section: 'Props',
 		description: 'Input component properties and configuration options.',
 		type: 'Props',
-		content: 'input props properties type placeholder value onChange onBlur className validation',
+		content: 'input props properties type placeholder value onChange onBlur className validation variant',
 		rank: 8,
 	},
 	{
@@ -111,9 +111,9 @@ const searchIndex: SearchResult[] = [
 	{
 		title: 'Badge',
 		path: '/components/badge',
-		description: 'Small status indicators and labels for highlighting information.',
+		description: 'Small status indicators with multiple variant styles.',
 		type: 'Component',
-		content: 'badge label status indicator highlight notification count props',
+		content: 'badge label status indicator highlight notification count variant props',
 		rank: 10,
 	},
 	{
@@ -452,6 +452,61 @@ const searchIndex: SearchResult[] = [
 		content: 'toast notification success error info warning message example',
 		rank: 7,
 	},
+	
+	// Additional components with variant props
+	{
+		title: 'Pagination',
+		path: '/components/pagination',
+		description: 'Navigation component for paginated content with multiple variants.',
+		type: 'Component',
+		content: 'pagination navigation pages previous next current total variant props',
+		rank: 10,
+	},
+	{
+		title: 'Pagination Props',
+		path: '/components/pagination',
+		section: 'Props',
+		description: 'Pagination component properties including variant options.',
+		type: 'Props',
+		content: 'pagination props properties currentPage totalPages onPageChange variant size',
+		rank: 8,
+	},
+	{
+		title: 'Tabs',
+		path: '/components/tabs',
+		description: 'Tabbed interface component with different variants.',
+		type: 'Component',
+		content: 'tabs tabbed interface sections content organization navigation variant props',
+		rank: 10,
+	},
+	{
+		title: 'Tabs Props',
+		path: '/components/tabs',
+		section: 'Props',
+		description: 'Tabs component properties including variant configurations.',
+		type: 'Props',
+		content: 'tabs props properties value onChange variant size orientation',
+		rank: 8,
+	},
+	
+	// Hooks
+	{
+		title: 'useActionModal',
+		path: '/hooks/useActionModal',
+		description: 'Hook for managing action modal state and interactions.',
+		type: 'Guide',
+		content: 'useActionModal hook modal action state management open close confirm cancel',
+		rank: 9,
+	},
+	{
+		title: 'useToast',
+		path: '/hooks/useToast',
+		description: 'Hook for showing toast notifications with different types.',
+		type: 'Guide',
+		content: 'useToast hook toast notification success error info warning show hide',
+		rank: 9,
+	},
+	
 	// Add more components...
 	{
 		title: 'All Components',
@@ -603,8 +658,8 @@ export function searchContent(query: string): SearchResult[] {
 	const queryTerms = query.toLowerCase().trim().split(/\s+/);
 	const results: (SearchResult & { score: number })[] = [];
 
-	// Set minimum score threshold based on query length
-	const minScoreThreshold = queryTerms.length === 1 && queryTerms[0].length <= 4 ? 500 : 100;
+	// Set minimum score threshold based on query length - make it more lenient
+	const minScoreThreshold = queryTerms.length === 1 && queryTerms[0].length <= 4 ? 300 : 50;
 
 	searchIndex.forEach((item) => {
 		let totalScore = 0;
@@ -649,15 +704,15 @@ export function searchContent(query: string): SearchResult[] {
 			}
 		});
 
-		// Only include results that meet criteria:
-		// 1. Have matches for all query terms OR have a very strong single match
+		// Only include results that meet criteria - make it more lenient
+		// 1. Have matches for all query terms OR have a strong single match
 		// 2. Meet minimum score threshold
-		// 3. Have at least one strong match for short queries
+		// 3. Have at least one decent match for short queries
 		const hasAllTerms = matchCount >= queryTerms.length;
 		const meetsThreshold = totalScore >= minScoreThreshold;
-		const qualifiesForShortQuery = queryTerms.length > 1 || hasStrongMatch || totalScore >= 800;
+		const qualifiesForShortQuery = queryTerms.length > 1 || hasStrongMatch || totalScore >= 400;
 
-		if (matchCount > 0 && meetsThreshold && (hasAllTerms || hasStrongMatch) && qualifiesForShortQuery) {
+		if (matchCount > 0 && meetsThreshold && (hasAllTerms || hasStrongMatch || totalScore >= 600)) {
 			// Apply base rank multiplier
 			const finalScore = (totalScore * item.rank) / queryTerms.length;
 			
@@ -675,57 +730,101 @@ export function searchContent(query: string): SearchResult[] {
 	// Sort by score descending
 	const sortedResults = results.sort((a, b) => b.score - a.score);
 
-	// Deduplication logic: prioritize Props over Components when both exist for the same path
+	// Enhanced deduplication logic: smarter grouping and selection
 	const deduplicatedResults: SearchResult[] = [];
-	const seenPaths = new Map<string, { component?: SearchResult; props?: SearchResult }>();
+	const seenPaths = new Map<string, { 
+		component?: SearchResult; 
+		props?: SearchResult; 
+		examples: SearchResult[];
+		otherTypes: SearchResult[];
+	}>();
 
-	// First pass: group by path
+	// First pass: group by path and type
 	sortedResults.forEach(result => {
-		const pathData = seenPaths.get(result.path) || {};
+		const pathData = seenPaths.get(result.path) || { examples: [], otherTypes: [] };
 		
 		if (result.type === 'Props') {
 			pathData.props = result;
 		} else if (result.type === 'Component') {
 			pathData.component = result;
+		} else if (result.type === 'Example') {
+			pathData.examples.push(result);
 		} else {
-			// For non-Component/Props types (Guide, Example, etc.), add directly
-			deduplicatedResults.push(result);
-			return;
+			pathData.otherTypes.push(result);
 		}
 		
 		seenPaths.set(result.path, pathData);
 	});
 
 	// Second pass: decide what to include for each path
-	seenPaths.forEach(({ component, props }) => {
-		if (props && component) {
-			// If we have both, prioritize Props if the query seems to be looking for specific prop info
-			const queryLower = query.toLowerCase();
-			const isSpecificPropQuery = queryLower.includes('props') || 
-				queryLower.includes('classname') || 
-				queryLower.includes('onclick') || 
-				queryLower.includes('onchange') ||
-				queryLower.includes('placeholder') ||
-				queryLower.includes('value') ||
-				queryLower.includes('disabled') ||
-				queryLower.includes('required') ||
-				queryLower.match(/^[a-z]+[A-Z]/); // camelCase pattern like containerClassName
+	const queryLower = query.toLowerCase();
+	const isSpecificPropQuery = queryLower.includes('props') || 
+		queryLower.includes('classname') || 
+		queryLower.includes('onclick') || 
+		queryLower.includes('onchange') ||
+		queryLower.includes('placeholder') ||
+		queryLower.includes('value') ||
+		queryLower.includes('disabled') ||
+		queryLower.includes('required') ||
+		queryLower.match(/^[a-z]+[A-Z]/); // camelCase pattern like containerClassName
+
+	seenPaths.forEach(({ component, props, examples, otherTypes }, path) => {
+		// Always add non-Component/Props/Example types first (Guides, etc.)
+		otherTypes.forEach(result => deduplicatedResults.push(result));
+
+		// For component paths, apply smart deduplication
+		if (path.startsWith('/components/')) {
+			const hasComponent = !!component;
+			const hasProps = !!props;
+			const hasExamples = examples.length > 0;
 
 			if (isSpecificPropQuery) {
-				deduplicatedResults.push(props);
+				// For prop queries, prioritize Props, then Component, then best Example
+				if (hasProps) deduplicatedResults.push(props);
+				else if (hasComponent) deduplicatedResults.push(component);
+				if (hasExamples) deduplicatedResults.push(examples[0]); // Best example
+			} else if (queryLower.includes('example')) {
+				// For example queries, prioritize Examples, then Component
+				examples.forEach(ex => deduplicatedResults.push(ex));
+				if (hasComponent && !hasExamples) deduplicatedResults.push(component);
 			} else {
-				// For general searches, show component first, then props
-				deduplicatedResults.push(component);
-				const score = props.score || 0;
-				// Only add props if it has a significantly different score or specific prop match
-				if (score > score * 0.8 && props.matchedField === 'content') {
-					deduplicatedResults.push(props);
+				// For general queries, show the best match based on score
+				const candidates = [
+					...(hasComponent ? [component] : []),
+					...(hasProps ? [props] : []),
+					...examples.slice(0, 1) // Only the best example
+				].filter(Boolean);
+
+				if (candidates.length === 1) {
+					deduplicatedResults.push(candidates[0]);
+				} else if (candidates.length > 1) {
+					// Sort candidates by score and pick top 2 max
+					const sortedCandidates = candidates.sort((a, b) => (b.score || 0) - (a.score || 0));
+					
+					// Add the top result
+					deduplicatedResults.push(sortedCandidates[0]);
+					
+					// Add second result only if it's significantly different or much higher scoring
+					if (sortedCandidates.length > 1) {
+						const first = sortedCandidates[0];
+						const second = sortedCandidates[1];
+						const scoreDiff = (first.score || 0) - (second.score || 0);
+						
+						// Add second result if:
+						// 1. It's a different type AND score difference is small (< 20% of first score)
+						// 2. OR it's a Props result and query might be prop-related
+						if ((first.type !== second.type && scoreDiff < (first.score || 0) * 0.2) ||
+							(second.type === 'Props' && queryLower.match(/\b(variant|size|type|value|disabled|required|className)\b/))) {
+							deduplicatedResults.push(second);
+						}
+					}
 				}
 			}
-		} else if (props) {
-			deduplicatedResults.push(props);
-		} else if (component) {
-			deduplicatedResults.push(component);
+		} else {
+			// For non-component paths, add all results
+			if (component) deduplicatedResults.push(component);
+			if (props) deduplicatedResults.push(props);
+			examples.forEach(ex => deduplicatedResults.push(ex));
 		}
 	});
 
