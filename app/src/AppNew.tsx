@@ -16,6 +16,7 @@ import { ActionModalPage } from './pages/components/ActionModalPage';
 import { AvatarPage } from './pages/components/AvatarPage';
 import { BadgePage } from './pages/components/BadgePage';
 import { ButtonPage } from './pages/components/ButtonPage';
+import { CalendarPage } from './pages/components/CalendarPage';
 import { CalloutPage } from './pages/components/CalloutPage';
 import { CardPage } from './pages/components/CardPage';
 import { CarouselPage } from './pages/components/CarouselPage';
@@ -74,6 +75,7 @@ function App() {
 							<Route path='components/avatar' element={<AvatarPage />} />
 							<Route path='components/badge' element={<BadgePage />} />
 							<Route path='components/button' element={<ButtonPage />} />
+							<Route path='components/calendar' element={<CalendarPage />} />
 							<Route path='components/callout' element={<CalloutPage />} />
 							<Route path='components/card' element={<CardPage />} />
 							<Route path='components/carousel' element={<CarouselPage />} />

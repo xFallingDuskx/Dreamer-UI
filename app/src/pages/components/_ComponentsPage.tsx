@@ -34,6 +34,12 @@ const components = [
 		category: 'Form',
 	},
 	{
+		name: 'Calendar',
+		path: '/components/calendar',
+		description: 'Comprehensive calendar component supporting single date and range selection with multiple views.',
+		category: 'Form',
+	},
+	{
 		name: 'Callout',
 		path: '/components/callout',
 		description: 'Versatile component for displaying alerts, warnings, and informational messages.',
