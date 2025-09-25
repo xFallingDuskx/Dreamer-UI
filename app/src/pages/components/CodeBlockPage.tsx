@@ -1,6 +1,18 @@
 import { CodeBlock } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 
+const tableOfContents = [
+  { id: 'import', title: 'Import', level: 1 },
+  { id: 'examples', title: 'Examples', level: 1 },
+  { id: 'basic-usage', title: 'Basic Usage', level: 2 },
+  { id: 'with-filename', title: 'With Filename', level: 2 },
+  { id: 'interactive-features', title: 'Interactive Features', level: 2 },
+  { id: 'with-line-numbers', title: 'With Line Numbers', level: 2 },
+  { id: 'language-examples', title: 'Language Examples', level: 2 },
+  { id: 'props', title: 'Props', level: 1 },
+  { id: 'keyboard-shortcuts', title: 'Keyboard Shortcuts', level: 1 },
+];
+
 const componentProps = [
   {
     name: 'code',
@@ -376,6 +388,7 @@ export function CodeBlockPage() {
     <ComponentPage
       title="Code Block"
       description="Display syntax-highlighted code with copy, download, and fullscreen functionality."
+      tableOfContents={tableOfContents}
       usageInstructions="Use CodeBlock to display formatted code snippets with optional interactive features like copying, downloading, and fullscreen viewing."
       importStatement="import { CodeBlock } from '@moondreamsdev/dreamer-ui';"
       componentProps={componentProps}

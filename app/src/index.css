@@ -17,6 +17,8 @@
 
   /* Accent */
   --color-accent-medium: var(--color-violet-500); /* Mid-tone violet for consistent branding */
+
+  --color-accent-dark: var(--color-teal-700); /* Cosmic teal accent for aurora/nebula feel */
 }
 
 @layer base {
