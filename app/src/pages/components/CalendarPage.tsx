@@ -119,21 +119,21 @@ const calendarExamples = [
   <div>
     <h4 className='text-md font-medium mb-2'>With Month & Year Selector</h4>
     <Calendar 
-      showMonthYearSelector={true}
+      useMonthYearSelector={true}
       navigationLayout="around"
     />
   </div>
   <div>
     <h4 className='text-md font-medium mb-2'>Without Month & Year Selector (Default)</h4>
     <Calendar 
-      showMonthYearSelector={false}
+      useMonthYearSelector={false}
       navigationLayout="around"
     />
   </div>
   <div>
     <h4 className='text-md font-medium mb-2'>Adjacent Layout with Selectors</h4>
     <Calendar 
-      showMonthYearSelector={true}
+      useMonthYearSelector={true}
       navigationLayout="adjacent"
     />
   </div>
@@ -142,15 +142,15 @@ const calendarExamples = [
 			<div className='space-y-6'>
 				<div>
 					<h4 className='text-md font-medium mb-2'>With Month & Year Selector</h4>
-					<Calendar showMonthYearSelector={true} navigationLayout='around' />
+					<Calendar useMonthYearSelector={true} navigationLayout='around' />
 				</div>
 				<div>
 					<h4 className='text-md font-medium mb-2'>Without Month & Year Selector (Default)</h4>
-					<Calendar showMonthYearSelector={false} navigationLayout='around' />
+					<Calendar useMonthYearSelector={false} navigationLayout='around' />
 				</div>
 				<div>
 					<h4 className='text-md font-medium mb-2'>Adjacent Layout with Selectors</h4>
-					<Calendar showMonthYearSelector={true} navigationLayout='adjacent' />
+					<Calendar useMonthYearSelector={true} navigationLayout='adjacent' />
 				</div>
 			</div>
 		),
@@ -327,7 +327,7 @@ const calendarProps = [
 		description: 'Layout of navigation buttons - adjacent (both on left) or around (on sides of title)',
 	},
 	{
-		name: 'showMonthYearSelector',
+		name: 'useMonthYearSelector',
 		type: 'boolean',
 		default: 'false',
 		required: false,

@@ -133,16 +133,16 @@ const searchIndex: SearchResult[] = [
 		section: 'Props',
 		description: 'Calendar component properties including mode, view, size, date constraints, month year selector, and custom styling options.',
 		type: 'Props',
-		content: 'calendar props properties mode view size initialDate minDate maxDate onDateSelect onRangeSelect renderCell showViewSelector showNavigation showMonthYearSelector navigationLayout customStyles className',
+		content: 'calendar props properties mode view size initialDate minDate maxDate onDateSelect onRangeSelect renderCell showViewSelector showNavigation useMonthYearSelector navigationLayout customStyles className',
 		rank: 8,
 	},
 	{
-		title: 'Calendar showMonthYearSelector',
+		title: 'Calendar useMonthYearSelector',
 		path: '/components/calendar',
 		section: 'Props',
 		description: 'Enable dropdown selectors for quick navigation to specific months and years in the calendar.',
 		type: 'Props',
-		content: 'showMonthYearSelector month year selector dropdown navigation calendar quick jump date picker boolean prop property',
+		content: 'useMonthYearSelector month year selector dropdown navigation calendar quick jump date picker boolean prop property',
 		rank: 6,
 	},
 
@@ -796,7 +796,7 @@ const searchIndex: SearchResult[] = [
 		section: 'Month & Year Selector',
 		description: 'Enable dropdown selectors for quick navigation to specific months and years.',
 		type: 'Example',
-		content: 'calendar month year selector dropdown navigation showMonthYearSelector quick jump date navigationLayout example',
+		content: 'calendar month year selector dropdown navigation useMonthYearSelector quick jump date navigationLayout example',
 		rank: 7,
 	},
 	{

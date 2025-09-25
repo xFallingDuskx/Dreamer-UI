@@ -36,7 +36,7 @@ export interface CalendarProps extends Omit<UseCalendarOptions, 'onDateSelect' |
 	showViewSelector?: boolean;
 	showNavigation?: boolean;
 	navigationLayout?: 'adjacent' | 'around';
-	showMonthYearSelector?: boolean;
+	useMonthYearSelector?: boolean;
 	onDateSelect?: (date: Date) => void;
 	onRangeSelect?: (range: DateRange) => void;
 }
@@ -72,7 +72,7 @@ export function Calendar({
 	showViewSelector = false,
 	showNavigation = true,
 	navigationLayout = 'around',
-	showMonthYearSelector = false,
+	useMonthYearSelector = false,
 	onDateSelect,
 	onRangeSelect,
 	...rest
@@ -127,11 +127,11 @@ export function Calendar({
 	};
 
 	const renderMonthYearSelector = () => {
-		if (!showMonthYearSelector) return null;
+		if (!useMonthYearSelector) return null;
 
 		const currentMonth = calendar.currentDate.getMonth();
 		const currentYear = calendar.currentDate.getFullYear();
-		
+
 		// Generate year options (current year ± 100 years)
 		const startYear = currentYear - 100;
 		const endYear = currentYear + 100;
@@ -300,7 +300,7 @@ export function Calendar({
 								</div>
 							)}
 							<div className='flex items-center gap-3'>
-								<h2 className={titleClasses}>{formatTitle()}</h2>
+								{!useMonthYearSelector && <h2 className={titleClasses}>{formatTitle()}</h2>}
 								{renderMonthYearSelector()}
 							</div>
 						</div>
@@ -330,13 +330,13 @@ export function Calendar({
 								<PrevIcon className='w-4 h-4' />
 							</button>
 						)}
-						
+
 						<div className='flex flex-col items-center gap-2'>
 							<div className='flex items-center gap-3'>
-								<h2 className={titleClasses}>{formatTitle()}</h2>
+								{!useMonthYearSelector && <h2 className={titleClasses}>{formatTitle()}</h2>}
 								{renderMonthYearSelector()}
 							</div>
-							
+
 							{showViewSelector && (
 								<div className={viewSelectorClasses}>
 									{(['month', 'week', 'day'] as const).map((viewOption) => (
