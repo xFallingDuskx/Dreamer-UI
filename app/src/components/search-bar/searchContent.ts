@@ -118,6 +118,25 @@ const searchIndex: SearchResult[] = [
 		rank: 8,
 	},
 
+	// Calendar Component
+	{
+		title: 'Calendar',
+		path: '/components/calendar',
+		description: 'Comprehensive calendar component supporting single date and range selection with multiple views.',
+		type: 'Component',
+		content: 'calendar date picker range selection month week day view navigation single mode props',
+		rank: 10,
+	},
+	{
+		title: 'Calendar Props',
+		path: '/components/calendar',
+		section: 'Props',
+		description: 'Calendar component properties including mode, view, size, date constraints, and custom styling options.',
+		type: 'Props',
+		content: 'calendar props properties mode view size initialDate minDate maxDate onDateSelect onRangeSelect renderCell showViewSelector showNavigation customStyles className',
+		rank: 8,
+	},
+
 	// Callout Component
 	{
 		title: 'Callout',
@@ -742,6 +761,33 @@ const searchIndex: SearchResult[] = [
 		description: 'Loading and disabled states for different user interactions.',
 		type: 'Example',
 		content: 'button states loading disabled fitted size example',
+		rank: 7,
+	},
+	{
+		title: 'Calendar Selection Modes Example',
+		path: '/components/calendar',
+		section: 'Selection Modes',
+		description: 'Single date selection and date range selection modes for different use cases.',
+		type: 'Example',
+		content: 'calendar selection modes single range date picker onDateSelect onRangeSelect example',
+		rank: 7,
+	},
+	{
+		title: 'Calendar Views Example',
+		path: '/components/calendar',
+		section: 'Calendar Views',
+		description: 'Different calendar views for various display requirements and navigation patterns.',
+		type: 'Example',
+		content: 'calendar views month week day view showViewSelector navigation example',
+		rank: 7,
+	},
+	{
+		title: 'Calendar Custom Styling Example',
+		path: '/components/calendar',
+		section: 'Custom Styling',
+		description: 'Customize the calendar appearance with custom CSS classes for different elements.',
+		type: 'Example',
+		content: 'calendar custom styling customStyles containerClassName headerClassName selectedCellClassName example',
 		rank: 7,
 	},
 	{
