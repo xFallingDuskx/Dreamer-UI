@@ -35,6 +35,8 @@ export interface CalendarProps extends Omit<UseCalendarOptions, 'onDateSelect' |
 	renderCell?: (date: Date, isSelected: boolean, isDisabled: boolean, isToday: boolean) => ReactNode;
 	showViewSelector?: boolean;
 	showNavigation?: boolean;
+	navigationLayout?: 'adjacent' | 'around';
+	showMonthYearSelector?: boolean;
 	onDateSelect?: (date: Date) => void;
 	onRangeSelect?: (range: DateRange) => void;
 }
@@ -69,6 +71,8 @@ export function Calendar({
 	renderCell,
 	showViewSelector = false,
 	showNavigation = true,
+	navigationLayout = 'around',
+	showMonthYearSelector = false,
 	onDateSelect,
 	onRangeSelect,
 	...rest
@@ -120,6 +124,48 @@ export function Calendar({
 		} else {
 			return `${month} ${currentDate.getDate()}, ${year}`;
 		}
+	};
+
+	const renderMonthYearSelector = () => {
+		if (!showMonthYearSelector) return null;
+
+		const currentMonth = calendar.currentDate.getMonth();
+		const currentYear = calendar.currentDate.getFullYear();
+		
+		// Generate year options (current year ± 50 years)
+		const startYear = currentYear - 50;
+		const endYear = currentYear + 50;
+		const yearOptions = [];
+		for (let year = startYear; year <= endYear; year++) {
+			yearOptions.push(year);
+		}
+
+		return (
+			<div className='flex items-center gap-2'>
+				<select
+					value={currentMonth}
+					onChange={(e) => calendar.changeMonth(parseInt(e.target.value))}
+					className='bg-background border border-border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50'
+				>
+					{MONTHS.map((month, index) => (
+						<option key={month} value={index}>
+							{month}
+						</option>
+					))}
+				</select>
+				<select
+					value={currentYear}
+					onChange={(e) => calendar.changeYear(parseInt(e.target.value))}
+					className='bg-background border border-border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50'
+				>
+					{yearOptions.map((year) => (
+						<option key={year} value={year}>
+							{year}
+						</option>
+					))}
+				</select>
+			</div>
+		);
 	};
 
 	const renderDateCell = (date: Date) => {
@@ -185,7 +231,8 @@ export function Calendar({
 	);
 
 	const headerClasses = join(
-		'flex items-center justify-between border-b px-4 py-2',
+		'flex items-center border-b px-4 py-2',
+		navigationLayout === 'around' ? 'justify-between' : 'justify-between',
 		sizeStyles.header,
 		customStyles.headerClassName
 	);
@@ -238,35 +285,82 @@ export function Calendar({
 		>
 			{/* Header */}
 			<div className={headerClasses}>
-				<div className='flex items-center gap-4'>
-					{showNavigation && (
-						<div className={navigationClasses}>
+				{navigationLayout === 'adjacent' ? (
+					// Adjacent layout: nav buttons on left, title on right
+					<>
+						<div className='flex items-center gap-4'>
+							{showNavigation && (
+								<div className={navigationClasses}>
+									<button onClick={() => calendar.navigate('prev')} className={prevButtonClasses} aria-label='Previous'>
+										<PrevIcon className='w-4 h-4' />
+									</button>
+									<button onClick={() => calendar.navigate('next')} className={nextButtonClasses} aria-label='Next'>
+										<NextIcon className='w-4 h-4' />
+									</button>
+								</div>
+							)}
+							<div className='flex items-center gap-3'>
+								<h2 className={titleClasses}>{formatTitle()}</h2>
+								{renderMonthYearSelector()}
+							</div>
+						</div>
+
+						{showViewSelector && (
+							<div className={viewSelectorClasses}>
+								{(['month', 'week', 'day'] as const).map((viewOption) => (
+									<button
+										key={viewOption}
+										onClick={() => calendar.changeView(viewOption)}
+										className={join(
+											'px-2 py-1 rounded capitalize transition-colors',
+											calendar.view === viewOption ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/20'
+										)}
+									>
+										{viewOption}
+									</button>
+								))}
+							</div>
+						)}
+					</>
+				) : (
+					// Around layout: nav buttons around the title, center-aligned
+					<>
+						{showNavigation && (
 							<button onClick={() => calendar.navigate('prev')} className={prevButtonClasses} aria-label='Previous'>
 								<PrevIcon className='w-4 h-4' />
 							</button>
+						)}
+						
+						<div className='flex flex-col items-center gap-2'>
+							<div className='flex items-center gap-3'>
+								<h2 className={titleClasses}>{formatTitle()}</h2>
+								{renderMonthYearSelector()}
+							</div>
+							
+							{showViewSelector && (
+								<div className={viewSelectorClasses}>
+									{(['month', 'week', 'day'] as const).map((viewOption) => (
+										<button
+											key={viewOption}
+											onClick={() => calendar.changeView(viewOption)}
+											className={join(
+												'px-2 py-1 rounded capitalize transition-colors',
+												calendar.view === viewOption ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/20'
+											)}
+										>
+											{viewOption}
+										</button>
+									))}
+								</div>
+							)}
+						</div>
+
+						{showNavigation && (
 							<button onClick={() => calendar.navigate('next')} className={nextButtonClasses} aria-label='Next'>
 								<NextIcon className='w-4 h-4' />
 							</button>
-						</div>
-					)}
-					<h2 className={titleClasses}>{formatTitle()}</h2>
-				</div>
-
-				{showViewSelector && (
-					<div className={viewSelectorClasses}>
-						{(['month', 'week', 'day'] as const).map((viewOption) => (
-							<button
-								key={viewOption}
-								onClick={() => calendar.changeView(viewOption)}
-								className={join(
-									'px-2 py-1 rounded capitalize transition-colors',
-									calendar.view === viewOption ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/20'
-								)}
-							>
-								{viewOption}
-							</button>
-						))}
-					</div>
+						)}
+					</>
 				)}
 			</div>
 

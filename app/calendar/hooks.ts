@@ -130,6 +130,22 @@ export function useCalendar(options: UseCalendarOptions = {}) {
     setState(prev => ({ ...prev, currentDate: date }));
   }, []);
 
+  const changeMonth = useCallback((month: number) => {
+    setState(prev => {
+      const newDate = new Date(prev.currentDate);
+      newDate.setMonth(month);
+      return { ...prev, currentDate: newDate };
+    });
+  }, []);
+
+  const changeYear = useCallback((year: number) => {
+    setState(prev => {
+      const newDate = new Date(prev.currentDate);
+      newDate.setFullYear(year);
+      return { ...prev, currentDate: newDate };
+    });
+  }, []);
+
   const getDaysInView = useMemo(() => {
     const { currentDate, view } = state;
     const days: Date[] = [];
@@ -219,6 +235,8 @@ export function useCalendar(options: UseCalendarOptions = {}) {
     navigate,
     changeView,
     goToDate,
+    changeMonth,
+    changeYear,
     
     // Checkers
     isDateSelected,

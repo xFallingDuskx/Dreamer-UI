@@ -6,6 +6,7 @@ const tableOfContents = [
   { id: 'examples', title: 'Examples', level: 1 },
   { id: 'modes', title: 'Selection Modes', level: 2 },
   { id: 'views', title: 'Calendar Views', level: 2 },
+  { id: 'navigation', title: 'Navigation Options', level: 2 },
   { id: 'sizes', title: 'Sizes', level: 2 },
   { id: 'constraints', title: 'Date Constraints', level: 2 },
   { id: 'custom-styling', title: 'Custom Styling', level: 2 },
@@ -84,6 +85,45 @@ const calendarExamples = [
         <div>
           <h4 className='text-md font-medium mb-2'>Day View</h4>
           <Calendar view="day" />
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'navigation',
+    title: 'Navigation Options',
+    description: 'Different navigation layouts and options for easier date selection.',
+    code: `<div className='space-y-6'>
+  <div>
+    <h4 className='text-md font-medium mb-2'>Around Layout (Default)</h4>
+    <Calendar 
+      navigationLayout="around"
+      showMonthYearSelector={true}
+    />
+  </div>
+  <div>
+    <h4 className='text-md font-medium mb-2'>Adjacent Layout</h4>
+    <Calendar 
+      navigationLayout="adjacent"
+      showMonthYearSelector={true}
+    />
+  </div>
+</div>`,
+    children: (
+      <div className='space-y-6'>
+        <div>
+          <h4 className='text-md font-medium mb-2'>Around Layout (Default)</h4>
+          <Calendar 
+            navigationLayout="around"
+            showMonthYearSelector={true}
+          />
+        </div>
+        <div>
+          <h4 className='text-md font-medium mb-2'>Adjacent Layout</h4>
+          <Calendar 
+            navigationLayout="adjacent"
+            showMonthYearSelector={true}
+          />
         </div>
       </div>
     ),
@@ -254,6 +294,20 @@ const calendarProps = [
     default: 'true',
     required: false,
     description: 'Whether to show the navigation buttons'
+  },
+  {
+    name: 'navigationLayout',
+    type: "'adjacent' | 'around'",
+    default: "'around'",
+    required: false,
+    description: 'Layout of navigation buttons - adjacent (both on left) or around (on sides of title)'
+  },
+  {
+    name: 'showMonthYearSelector',
+    type: 'boolean',
+    default: 'false',
+    required: false,
+    description: 'Whether to show month and year dropdown selectors for easier navigation'
   },
   {
     name: 'customStyles',
