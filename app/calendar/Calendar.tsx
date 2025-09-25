@@ -132,9 +132,9 @@ export function Calendar({
 		const currentMonth = calendar.currentDate.getMonth();
 		const currentYear = calendar.currentDate.getFullYear();
 		
-		// Generate year options (current year ± 50 years)
-		const startYear = currentYear - 50;
-		const endYear = currentYear + 50;
+		// Generate year options (current year ± 100 years)
+		const startYear = currentYear - 100;
+		const endYear = currentYear + 100;
 		const yearOptions = [];
 		for (let year = startYear; year <= endYear; year++) {
 			yearOptions.push(year);
