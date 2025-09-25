@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
+import { Modal, Checkbox } from '@moondreamsdev/dreamer-ui/components';
 import { 
   richTextEditorVariants, 
   toolbarVariants, 
@@ -124,6 +125,7 @@ export function RichTextEditor({
   const [activeFormats, setActiveFormats] = useState<Set<string>>(new Set());
   const [isLinkDialogOpen, setIsLinkDialogOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState('');
+  const [linkText, setLinkText] = useState('');
 
   // Handle controlled vs uncontrolled
   const isControlled = value !== undefined;
@@ -304,15 +306,48 @@ export function RichTextEditor({
   const handleLinkInsert = useCallback(() => {
     if (!linkUrl) return;
     
+    const linkTextToUse = linkText || linkUrl;
+    
     if (selection?.text) {
+      // Replace selected text with link
       formatText('createLink', linkUrl);
     } else {
-      insertElement('a', { href: linkUrl, target: '_blank', rel: 'noopener noreferrer' });
+      // Insert new link with specified text
+      const a = document.createElement('a');
+      a.href = linkUrl;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.textContent = linkTextToUse;
+      a.className = join('text-blue-400 underline hover:text-blue-300', customStyles.link || '');
+      
+      const sel = window.getSelection();
+      if (sel?.rangeCount) {
+        const range = sel.getRangeAt(0);
+        range.insertNode(a);
+        range.setStartAfter(a);
+        range.setEndAfter(a);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
     }
     
     setIsLinkDialogOpen(false);
     setLinkUrl('');
-  }, [linkUrl, selection, formatText, insertElement]);
+    setLinkText('');
+    handleContentChange();
+  }, [linkUrl, linkText, selection, formatText, customStyles.link, handleContentChange]);
+
+  const toggleBulletList = useCallback(() => {
+    const isActive = document.queryCommandState('insertUnorderedList');
+    formatText('insertUnorderedList');
+    handleContentChange();
+  }, [formatText, handleContentChange]);
+
+  const toggleOrderedList = useCallback(() => {
+    const isActive = document.queryCommandState('insertOrderedList');
+    formatText('insertOrderedList');
+    handleContentChange();
+  }, [formatText, handleContentChange]);
 
   const handleInput = useCallback((event: React.FormEvent<HTMLDivElement>) => {
     const target = event.currentTarget;
@@ -348,6 +383,29 @@ export function RichTextEditor({
     
     handleContentChange();
   }, [autoLinkText, maxLength, allowedElements, handleContentChange]);
+
+  const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      // Handle Enter key properly for line breaks
+      event.preventDefault();
+      
+      const selection = window.getSelection();
+      if (selection?.rangeCount) {
+        const range = selection.getRangeAt(0);
+        const br = document.createElement('br');
+        range.deleteContents();
+        range.insertNode(br);
+        
+        // Move cursor after the br
+        range.setStartAfter(br);
+        range.setEndAfter(br);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        
+        handleContentChange();
+      }
+    }
+  }, [handleContentChange]);
 
   // Keyboard shortcuts
   useKeyboardShortcuts(editorRef as React.RefObject<HTMLDivElement>, {
@@ -489,7 +547,7 @@ export function RichTextEditor({
             key={action}
             type="button"
             className={buttonClass}
-            onClick={() => formatText('insertUnorderedList')}
+            onClick={toggleBulletList}
             disabled={disabled}
             title="Bullet List"
           >
@@ -502,7 +560,7 @@ export function RichTextEditor({
             key={action}
             type="button"
             className={buttonClass}
-            onClick={() => formatText('insertOrderedList')}
+            onClick={toggleOrderedList}
             disabled={disabled}
             title="Numbered List"
           >
@@ -723,6 +781,7 @@ export function RichTextEditor({
           ...(!currentContent && { color: 'var(--color-muted-foreground)' }),
         }}
         onInput={handleInput}
+        onKeyDown={handleKeyDown}
         onFocus={onFocus}
         onBlur={onBlur}
         suppressContentEditableWarning
@@ -731,40 +790,62 @@ export function RichTextEditor({
       />
 
       {/* Link Dialog */}
-      {isLinkDialogOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-background border border-border rounded-lg p-6 w-96 max-w-[90vw]">
-            <h3 className="text-lg font-semibold mb-4">Insert Link</h3>
+      <Modal
+        isOpen={isLinkDialogOpen}
+        onClose={() => {
+          setIsLinkDialogOpen(false);
+          setLinkUrl('');
+          setLinkText('');
+        }}
+        title="Insert Link"
+        actions={[
+          {
+            label: 'Cancel',
+            variant: 'secondary',
+            onClick: () => {
+              setIsLinkDialogOpen(false);
+              setLinkUrl('');
+              setLinkText('');
+            },
+          },
+          {
+            label: 'Insert',
+            variant: 'primary',
+            onClick: handleLinkInsert,
+            disabled: !linkUrl,
+          },
+        ]}
+      >
+        <div className="space-y-4">
+          <div>
+            <label htmlFor="link-text" className="block text-sm font-medium mb-2">
+              Link Text
+            </label>
             <input
+              id="link-text"
+              type="text"
+              placeholder="Enter link text (optional)"
+              value={linkText}
+              onChange={(e) => setLinkText(e.target.value)}
+              className="w-full p-2 border border-border rounded bg-background"
+            />
+          </div>
+          <div>
+            <label htmlFor="link-url" className="block text-sm font-medium mb-2">
+              URL
+            </label>
+            <input
+              id="link-url"
               type="url"
               placeholder="Enter URL..."
               value={linkUrl}
               onChange={(e) => setLinkUrl(e.target.value)}
-              className="w-full p-2 border border-border rounded mb-4 bg-background"
+              className="w-full p-2 border border-border rounded bg-background"
               autoFocus
             />
-            <div className="flex justify-end gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setIsLinkDialogOpen(false);
-                  setLinkUrl('');
-                }}
-                className="px-4 py-2 text-sm border border-border rounded hover:bg-muted/10"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleLinkInsert}
-                className="px-4 py-2 text-sm bg-primary text-primary-foreground rounded hover:bg-primary/90"
-              >
-                Insert
-              </button>
-            </div>
           </div>
         </div>
-      )}
+      </Modal>
     </div>
   );
 }
