@@ -213,7 +213,7 @@ export function RichTextEditor({
     if (sel?.rangeCount && sel.toString()) {
       const range = sel.getRangeAt(0);
       const code = document.createElement('code');
-      code.className = join('px-2 py-1 rounded text-accent bg-muted/10', customStyles.inlineCode || '');
+      code.className = join('px-2 py-1 rounded text-accent bg-muted/10', customStyles.inlineCode) ?? '';
       code.textContent = sel.toString();
       range.deleteContents();
       range.insertNode(code);
@@ -225,7 +225,7 @@ export function RichTextEditor({
     const pre = document.createElement('pre');
     const code = document.createElement('code');
     
-    pre.className = join('bg-muted/10 rounded-lg p-4 my-4 overflow-x-auto', customStyles.blockCode || '');
+    pre.className = join('bg-muted/10 rounded-lg p-4 my-4 overflow-x-auto', customStyles.blockCode) ?? '';
     code.textContent = 'Your code here...';
     
     pre.appendChild(code);

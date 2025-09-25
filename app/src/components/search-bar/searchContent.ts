@@ -707,6 +707,25 @@ const searchIndex: SearchResult[] = [
 		rank: 8,
 	},
 
+	// Rich Text Editor Component
+	{
+		title: 'Rich Text Editor',
+		path: '/components/richtexteditor',
+		description: 'A comprehensive rich text editor with formatting toolbar, custom styling, and extensive keyboard shortcuts for creating rich content.',
+		type: 'Component',
+		content: 'rich text editor wysiwyg formatting toolbar bold italic underline strikethrough headings lists links code blocks tables html content customizable props',
+		rank: 10,
+	},
+	{
+		title: 'Rich Text Editor Props',
+		path: '/components/richtexteditor',
+		section: 'Props',
+		description: 'Rich Text Editor component properties including size, variant, toolbar customization, and content handling.',
+		type: 'Props',
+		content: 'richtexteditor props properties size variant toolbarSize toolbarVariant value defaultValue onChange placeholder disabled customStyles showToolbar toolbarActions maxLength allowedElements onFocus onBlur className id ref',
+		rank: 8,
+	},
+
 	// Hooks
 	{
 		title: 'useActionModal',
@@ -760,6 +779,33 @@ const searchIndex: SearchResult[] = [
 		description: 'Data table with sortable columns and selection.',
 		type: 'Example',
 		content: 'table sort sorting columns data selection rows example',
+		rank: 7,
+	},
+	{
+		title: 'Rich Text Editor Variants Example',
+		path: '/components/richtexteditor',
+		section: 'Variants',
+		description: 'Different visual styles and sizes for various use cases.',
+		type: 'Example',
+		content: 'rich text editor variants default minimal outlined filled sizes example',
+		rank: 7,
+	},
+	{
+		title: 'Rich Text Editor Toolbar Customization Example',
+		path: '/components/richtexteditor',
+		section: 'Toolbar Customization',
+		description: 'Customize the toolbar to show only the tools you need for your specific use case.',
+		type: 'Example',
+		content: 'rich text editor toolbar customization actions essential code focused no toolbar example',
+		rank: 7,
+	},
+	{
+		title: 'Rich Text Editor Custom Styling Example',
+		path: '/components/richtexteditor',
+		section: 'Custom Styling',
+		description: 'Apply custom Tailwind CSS styles to different text elements within the editor.',
+		type: 'Example',
+		content: 'rich text editor custom styling tailwind css colors fonts text elements example',
 		rank: 7,
 	},
 
