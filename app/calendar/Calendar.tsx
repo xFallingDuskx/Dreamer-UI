@@ -377,7 +377,14 @@ export function Calendar({
 			)}
 
 			{/* Calendar grid */}
-			<div className={gridClasses}>{calendar.daysInView.map((date) => renderDateCell(date))}</div>
+			{/* Key forces React to re-render the entire grid when month/year/view changes,
+					preventing flickering of previous month's dates with incorrect opacity during navigation */}
+			<div
+				key={`${calendar.currentDate.getFullYear()}-${calendar.currentDate.getMonth()}-${calendar.view}`}
+				className={gridClasses}
+			>
+				{calendar.daysInView.map((date) => renderDateCell(date))}
+			</div>
 		</div>
 	);
 }
