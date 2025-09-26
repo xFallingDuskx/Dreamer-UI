@@ -13,6 +13,7 @@ export interface CalendarCustomStyles {
 	titleClassName?: string;
 	viewSelectorClassName?: string;
 	monthYearSelectorsClassName?: string;
+	todayButtonClassName?: string;
 	weekdaysClassName?: string;
 	weekdayClassName?: string;
 	monthGridClassName?: string;
@@ -38,6 +39,7 @@ export interface CalendarProps extends Omit<UseCalendarOptions, 'onDateSelect' |
 	showNavigation?: boolean;
 	navigationLayout?: 'adjacent' | 'around';
 	useMonthYearSelector?: boolean;
+	showTodayButton?: boolean;
 	onDateSelect?: (date: Date) => void;
 	onRangeSelect?: (range: CalendarDateRange) => void;
 }
@@ -76,6 +78,7 @@ export function Calendar({
 	showNavigation = true,
 	navigationLayout = 'around',
 	useMonthYearSelector = false,
+	showTodayButton = false,
 	onDateSelect,
 	onRangeSelect,
 	...rest
@@ -102,6 +105,10 @@ export function Calendar({
 		return (
 			date.getMonth() === calendar.currentDate.getMonth() && date.getFullYear() === calendar.currentDate.getFullYear()
 		);
+	};
+
+	const goToToday = () => {
+		calendar.goToDate(new Date());
 	};
 
 	const formatTitle = () => {
@@ -195,6 +202,21 @@ export function Calendar({
 					))}
 				</select>
 			</div>
+		);
+	};
+
+	const renderTodayButton = () => {
+		if (!showTodayButton) return null;
+
+		const todayButtonClasses = join(
+			'px-3 py-1 text-xs rounded border border-border hover:bg-accent/20 transition-colors focus:outline-none focus:ring focus:ring-accent/50',
+			customStyles.todayButtonClassName
+		);
+
+		return (
+			<button onClick={goToToday} className={todayButtonClasses} aria-label='Go to today'>
+				Today
+			</button>
 		);
 	};
 
@@ -335,7 +357,10 @@ export function Calendar({
 							</div>
 						</div>
 
-						{renderViewSelector()}
+						<div className='flex items-center gap-2'>
+							{renderViewSelector()}
+							{renderTodayButton()}
+						</div>
 					</>
 				)}
 				{/* Around layout: nav buttons on sides, title in center */}
@@ -353,7 +378,10 @@ export function Calendar({
 								{renderMonthYearSelector()}
 							</div>
 
-							{renderViewSelector()}
+							<div className='flex items-center gap-2'>
+								{renderViewSelector()}
+								{renderTodayButton()}
+							</div>
 						</div>
 
 						{showNavigation && (

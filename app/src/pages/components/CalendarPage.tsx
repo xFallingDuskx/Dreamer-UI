@@ -8,6 +8,7 @@ const tableOfContents = [
 	{ id: 'views', title: 'Calendar Views', level: 2 },
 	{ id: 'navigation', title: 'Navigation Options', level: 2 },
 	{ id: 'month-year-selector', title: 'Month & Year Selector', level: 2 },
+	{ id: 'today-button', title: 'Today Button', level: 2 },
 	{ id: 'sizes', title: 'Sizes', level: 2 },
 	{ id: 'constraints', title: 'Date Constraints', level: 2 },
 	{ id: 'custom-styling', title: 'Custom Styling', level: 2 },
@@ -151,6 +152,40 @@ const calendarExamples = [
 				<div>
 					<h4 className='text-md font-medium mb-2'>Adjacent Layout with Selectors</h4>
 					<Calendar useMonthYearSelector={true} navigationLayout='adjacent' />
+				</div>
+			</div>
+		),
+	},
+	{
+		id: 'today-button',
+		title: 'Today Button',
+		description: 'Add a "Today" button for quick navigation to the current date.',
+		code: `<div className='space-y-6'>
+  <div>
+    <h4 className='text-md font-medium mb-2'>With Today Button</h4>
+    <Calendar 
+      showTodayButton={true}
+      showViewSelector={true}
+    />
+  </div>
+  <div>
+    <h4 className='text-md font-medium mb-2'>Today Button with Month/Year Selector</h4>
+    <Calendar 
+      showTodayButton={true}
+      useMonthYearSelector={true}
+      navigationLayout="adjacent"
+    />
+  </div>
+</div>`,
+		children: (
+			<div className='space-y-6'>
+				<div>
+					<h4 className='text-md font-medium mb-2'>With Today Button</h4>
+					<Calendar showTodayButton={true} showViewSelector={true} />
+				</div>
+				<div>
+					<h4 className='text-md font-medium mb-2'>Today Button with Month/Year Selector</h4>
+					<Calendar showTodayButton={true} useMonthYearSelector={true} navigationLayout='adjacent' />
 				</div>
 			</div>
 		),
@@ -332,6 +367,13 @@ const calendarProps = [
 		default: 'false',
 		required: false,
 		description: 'Whether to show month and year dropdown selectors for easier navigation',
+	},
+	{
+		name: 'showTodayButton',
+		type: 'boolean',
+		default: 'false',
+		required: false,
+		description: 'Whether to show a button to quickly jump to the current date',
 	},
 	{
 		name: 'customStyles',

@@ -133,7 +133,7 @@ const searchIndex: SearchResult[] = [
 		section: 'Props',
 		description: 'Calendar component properties including mode, view, size, date constraints, month year selector, and custom styling options.',
 		type: 'Props',
-		content: 'calendar props properties mode view size initialDate minDate maxDate onDateSelect onRangeSelect renderCell showViewSelector showNavigation useMonthYearSelector navigationLayout customStyles className',
+		content: 'calendar props properties mode view size initialDate minDate maxDate onDateSelect onRangeSelect renderCell showViewSelector showNavigation useMonthYearSelector showTodayButton navigationLayout customStyles className',
 		rank: 8,
 	},
 	{
@@ -143,6 +143,15 @@ const searchIndex: SearchResult[] = [
 		description: 'Enable dropdown selectors for quick navigation to specific months and years in the calendar.',
 		type: 'Props',
 		content: 'useMonthYearSelector month year selector dropdown navigation calendar quick jump date picker boolean prop property',
+		rank: 6,
+	},
+	{
+		title: 'Calendar showTodayButton',
+		path: '/components/calendar',
+		section: 'Props',
+		description: 'Show a "Today" button for quick navigation to the current date in the calendar.',
+		type: 'Props',
+		content: 'showTodayButton today button navigation calendar current date jump quick today boolean prop property',
 		rank: 6,
 	},
 
@@ -797,6 +806,15 @@ const searchIndex: SearchResult[] = [
 		description: 'Enable dropdown selectors for quick navigation to specific months and years.',
 		type: 'Example',
 		content: 'calendar month year selector dropdown navigation useMonthYearSelector quick jump date navigationLayout example',
+		rank: 7,
+	},
+	{
+		title: 'Calendar Today Button Example',
+		path: '/components/calendar',
+		section: 'Today Button',
+		description: 'Add a "Today" button for quick navigation to the current date.',
+		type: 'Example',
+		content: 'calendar today button current date navigation showTodayButton quick jump today example',
 		rank: 7,
 	},
 	{
