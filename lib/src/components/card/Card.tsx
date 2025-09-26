@@ -2,21 +2,21 @@ import { join } from '../../utils';
 import { CardSize, CardSizes } from './variants';
 
 export interface CardProps {
-	/** Unique identifier for the card */
+	/** The HTML id attribute for the card */
 	id?: string;
-	/** Custom CSS classes */
+	/** Additional CSS classes to apply to the card */
 	className?: string;
 	/** React ref for the card container */
 	ref?: React.Ref<HTMLDivElement>;
-	/** Card size variant. Affects text styles and internal padding. */
+	/** The size variant of the card */
 	size?: CardSize;
-	/** Padding in pixels (defaults to 16). Used for card itself and spacing between its content within the card. */
+	/** The amount of padding inside the card */
 	padding?: number;
-	/** Card header content */
+	/** Content to display in the card header */
 	header?: React.ReactNode;
-	/** Card footer content */
+	/** Content to display in the card footer */
 	footer?: React.ReactNode;
-	/** Main card content */
+	/** The main content of the card */
 	children?: React.ReactNode;
 	/** Image source for the card */
 	imageSrc?: string;
@@ -28,6 +28,28 @@ export interface CardProps {
 	imageToEdge?: boolean;
 }
 
+/**
+ * A flexible container component for displaying content in a structured format.
+ * Supports headers, footers, images, and customizable padding with responsive design.
+ * 
+ * @example
+ * ```tsx
+ * // Simple card
+ * <Card header="Card Title" size="lg">
+ *   <p>Your content goes here</p>
+ * </Card>
+ * 
+ * // Card with image and footer
+ * <Card 
+ *   imageSrc="/photo.jpg" 
+ *   imageAlt="Product photo"
+ *   header={<h3>Product Name</h3>}
+ *   footer={<Button>Buy Now</Button>}
+ * >
+ *   Product description text here.
+ * </Card>
+ * ```
+ */
 export function Card({
 	id,
 	className,

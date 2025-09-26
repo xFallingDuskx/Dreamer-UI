@@ -6,21 +6,42 @@ import { ButtonSize, ButtonVariants, buttonDefaults, buttonVariants, roundedVari
 
 interface ButtonButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttributes<HTMLButtonElement> {
 	href?: never;
+	/** Reference to the button element. */
 	ref?: Ref<HTMLButtonElement>;
+	/** Whether the button is in a loading state. */
 	loading?: boolean;
 }
 
 interface ButtonLinkProps
 	extends Partial<ButtonVariants>,
 		Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'role'> {
+	/** When provided, renders the button as a link. */
 	href: string;
+	/** Reference to the anchor element. */
 	ref?: Ref<HTMLAnchorElement>;
 	loading?: never;
+	/** Whether the button is disabled. */
 	disabled?: boolean;
 }
 
 export type ButtonProps = ButtonButtonProps | ButtonLinkProps;
 
+/**
+ * A versatile button component that can render as either a button or anchor element.
+ * Supports loading states, various visual variants, and accessibility features.
+ * 
+ * @example
+ * ```tsx
+ * // Regular button
+ * <Button variant="primary" onClick={() => save()}>Save</Button>
+ * 
+ * // Loading state
+ * <Button loading variant="primary">Processing...</Button>
+ * 
+ * // Link button
+ * <Button href="/dashboard" variant="secondary">Go to Dashboard</Button>
+ * ```
+ */
 export function Button({
 	variant = buttonDefaults.variant,
 	size,

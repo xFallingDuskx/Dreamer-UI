@@ -6,12 +6,42 @@ import './styles.css';
 import { inputDefaults, inputVariants, InputVariants, roundedVariants } from './variants';
 
 export interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<HTMLInputElement> {
+  /** Reference to the input element. */
   ref?: Ref<HTMLInputElement>;
+  /** Whether the input is in read-only display mode. */
   displayOnlyMode?: boolean;
+  /** Error message to display below the input when invalid. */
   errorMessage?: string;
+  /** Success message to display below the input when valid. */
   successMessage?: string;
 }
 
+/**
+ * A versatile input component with support for various types, validation states,
+ * and password visibility toggle. Includes error/success message display.
+ * 
+ * @example
+ * ```tsx
+ * // Basic input
+ * <Input 
+ *   placeholder="Enter your name"
+ *   value={name}
+ *   onChange={(e) => setName(e.target.value)}
+ * />
+ * 
+ * // Password input with validation
+ * <Input
+ *   type="password"
+ *   placeholder="Enter password"
+ *   errorMessage={passwordError}
+ *   variant="outline"
+ *   rounded="lg"
+ * />
+ * 
+ * // Read-only display mode
+ * <Input value="John Doe" displayOnlyMode />
+ * ```
+ */
 export function Input({
   variant = inputDefaults.variant,
   rounded,

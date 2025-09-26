@@ -4,23 +4,23 @@ import { ExclamationTriangle, InfoCircled } from '../../symbols';
 import { join } from '../../utils';
 
 export interface ErrorBoundaryProps {
-  /** The id of the ErrorBoundary. */
+  /** The HTML id attribute for the error boundary */
   id?: string;
-  /** The variant of the ErrorBoundary. */
+  /** The visual style variant of the error boundary */
   variant?: ErrorBoundaryVariants;
-  /** Whether to show a retry button. */
+  /** Whether to show a retry button in the error fallback UI */
   showRetry?: boolean;
-  /** Custom error message to display. */
+  /** Custom error message to display in the fallback UI */
   fallbackMessage?: string;
-  /** Custom fallback UI to render on error. */
+  /** Custom fallback UI to render on error instead of the default error display */
   fallback?: ReactNode;
-  /** Callback function when retry is clicked. */
+  /** Callback function executed when the retry button is clicked */
   onRetry?: () => void;
-  /** Callback function when error occurs. */
+  /** Callback function when error occurs */
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
-  /** Additional classes to apply to the ErrorBoundary container. */
+  /** Additional classes to apply to the ErrorBoundary container */
   className?: string;
-  /** The children to render inside the ErrorBoundary. */
+  /** The children to render inside the ErrorBoundary */
   children: ReactNode;
   /** Flag to indicate if the app is in development mode. For showing error details in development mode */
   inDevEnv?: boolean;
@@ -38,6 +38,29 @@ const VariantIcons: Record<ErrorBoundaryVariants, React.ReactNode> = {
   info: <InfoCircled size={24} />,
 };
 
+/**
+ * A React error boundary component that catches JavaScript errors in child components
+ * and displays a fallback UI instead of crashing the entire application.
+ * 
+ * @example
+ * ```tsx
+ * // Basic error boundary
+ * <ErrorBoundary>
+ *   <MyComponent />
+ * </ErrorBoundary>
+ * 
+ * // With custom error handling and retry
+ * <ErrorBoundary
+ *   variant="warning"
+ *   fallbackMessage="Failed to load user profile"
+ *   onError={(error) => logError(error)}
+ *   onRetry={() => refetchUserData()}
+ *   inDevEnv={process.env.NODE_ENV === 'development'}
+ * >
+ *   <UserProfile />
+ * </ErrorBoundary>
+ * ```
+ */
 export function ErrorBoundary({
   id,
   variant = 'danger',

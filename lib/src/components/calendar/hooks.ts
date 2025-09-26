@@ -1,7 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
 
 export interface CalendarDateRange {
+	/** The start date of the range, or null if not selected. */
 	start: Date | null;
+	/** The end date of the range, or null if not selected. */
 	end: Date | null;
 }
 
@@ -13,12 +15,19 @@ interface CalendarState {
 }
 
 export interface UseCalendarOptions {
+	/** The initial date to display and optionally select. */
 	initialDate?: Date;
+	/** The selection mode - single date or date range selection. */
 	mode?: 'single' | 'range';
+	/** The minimum selectable date (dates before this will be disabled). */
 	minDate?: Date;
+	/** The maximum selectable date (dates after this will be disabled). */
 	maxDate?: Date;
+	/** The calendar view to display. */
 	view?: 'month' | 'week' | 'day';
+	/** Callback fired when a date is selected in single mode. */
 	onDateSelect?: (date: Date) => void;
+	/** Callback fired when a date range is selected in range mode. */
 	onRangeSelect?: (range: CalendarDateRange) => void;
 }
 

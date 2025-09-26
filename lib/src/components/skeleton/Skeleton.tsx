@@ -3,16 +3,36 @@ import { join } from '../../utils';
 import { skeletonVariants, type SkeletonVariants } from './variants';
 
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement>, SkeletonVariants {
-  /** Custom class name for additional styling */
+  /** Additional CSS classes to apply to the skeleton */
   className?: string;
   /** Number of skeleton lines to render (for text-like skeletons) */
   lines?: number;
-  /** Whether the skeleton should animate */
+  /** Whether the skeleton should animate with a pulse effect */
   animate?: boolean;
   /** Ref to be passed to the skeleton element */
   ref?: React.Ref<HTMLDivElement>;
 }
 
+/**
+ * A loading placeholder component that mimics the structure of content being loaded.
+ * Provides visual feedback during data fetching with customizable shapes and animations.
+ * 
+ * @example
+ * ```tsx
+ * // Basic skeleton
+ * <Skeleton className="h-4 w-48" />
+ * 
+ * // Multiple text lines
+ * <Skeleton lines={3} lineSpacing="md" />
+ * 
+ * // Different shapes
+ * <Skeleton shape="circle" className="h-12 w-12" />
+ * <Skeleton shape="rounded" className="h-32 w-full" />
+ * 
+ * // Without animation
+ * <Skeleton animate={false} className="h-6 w-32" />
+ * ```
+ */
 export function Skeleton({
   shape = 'rectangle',
   lineSpacing = 'sm',

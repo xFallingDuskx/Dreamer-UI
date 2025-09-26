@@ -4,17 +4,51 @@ import { join } from '../../utils';
 import { useFilledBackgroundColor } from './hooks';
 
 export interface CheckboxProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+	/** Reference to the checkbox element. */
 	ref?: Ref<HTMLButtonElement>;
+	/** The size of the checkbox in pixels. */
 	size?: number;
+	/** CSS color value or Tailwind class for the checkbox color. */
 	color?: string; // can be adjusted with tailwindcss by using `text-<color>`
+	/** Whether to fill the checkbox background when checked. */
 	filled?: boolean;
+	/** Whether the checkbox should have rounded corners. */
 	rounded?: boolean;
+	/** Whether the checkbox is checked (controlled). */
 	checked?: boolean;
+	/** Whether the checkbox is in an indeterminate state. */
 	indeterminate?: boolean;
+	/** Callback fired when the checkbox state changes. */
 	onCheckedChange?: (checked: boolean) => void;
+	/** The display style of the checkbox. */
 	display?: 'inline' | 'block';
 }
 
+/**
+ * A customizable checkbox component with support for checked, unchecked, and indeterminate states.
+ * Provides keyboard navigation and accessibility features with flexible styling options.
+ * 
+ * @example
+ * ```tsx
+ * // Basic checkbox
+ * <Checkbox 
+ *   checked={isChecked}
+ *   onCheckedChange={setIsChecked}
+ * />
+ * 
+ * // Styled checkbox
+ * <Checkbox
+ *   size={24}
+ *   color="blue"
+ *   filled
+ *   rounded={false}
+ *   onCheckedChange={(checked) => console.log(checked)}
+ * />
+ * 
+ * // Indeterminate state
+ * <Checkbox indeterminate onCheckedChange={handleSelection} />
+ * ```
+ */
 export function Checkbox({
 	ref,
 	id,

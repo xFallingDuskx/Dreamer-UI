@@ -6,26 +6,71 @@ import { Button, ButtonProps } from '../button';
 import { useAnimationOpenClose, useDocumentChanges, useHandleFocus } from './hooks';
 
 interface ModalAction extends Omit<ButtonProps, 'children'> {
+	/** The text label for the action button. */
 	label: string;
 }
 
 export interface ModalProps {
+	/** Optional ID for the modal element. */
 	id?: string;
+	/** Whether the modal is open. */
 	isOpen: boolean;
+	/** Callback fired when the modal should close. */
 	onClose: () => void;
+	/** Optional title for the modal header. */
 	title?: React.ReactNode;
+	/** The content to display inside the modal. */
 	children: React.ReactNode;
+	/** When true, renders only the children with no default modal styling. */
 	contentOnly?: boolean;
+	/** Additional CSS classes to apply to the modal content. */
 	className?: string;
+	/** Additional CSS classes to apply to the backdrop overlay. */
 	overlayClassName?: string;
+	/** Additional CSS classes to apply to the modal container. */
 	containerClassName?: string;
+	/** Whether to hide the X close button in the top-right corner. */
 	hideCloseButton?: boolean;
+	/** Array of action buttons to display at the bottom of the modal. */
 	actions?: ModalAction[];
+	/** Whether clicking the backdrop/overlay closes the modal. */
 	disableCloseOnOverlayClick?: boolean;
+	/** ID of an element that labels the modal. */
 	ariaLabelledBy?: string;
+	/** ID of an element that describes the modal. */
 	ariaDescribedBy?: string;
 }
 
+/**
+ * A flexible modal dialog component with focus management, animation, and action buttons.
+ * Supports both styled and content-only modes with comprehensive accessibility features.
+ * 
+ * @example
+ * ```tsx
+ * // Basic modal
+ * <Modal
+ *   isOpen={showModal}
+ *   onClose={() => setShowModal(false)}
+ *   title="Confirm Action"
+ * >
+ *   <p>Are you sure you want to proceed?</p>
+ * </Modal>
+ * 
+ * // Modal with actions
+ * <Modal
+ *   isOpen={showDeleteModal}
+ *   onClose={handleClose}
+ *   title="Delete Item"
+ *   actions={[
+ *     { label: "Cancel", variant: "secondary", onClick: handleClose },
+ *     { label: "Delete", variant: "destructive", onClick: handleDelete }
+ *   ]}
+ *   disableCloseOnOverlayClick
+ * >
+ *   <p>This action cannot be undone.</p>
+ * </Modal>
+ * ```
+ */
 export function Modal({
 	id,
 	isOpen,

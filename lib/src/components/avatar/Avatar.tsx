@@ -4,26 +4,42 @@ import { AvatarPresets } from './icons';
 import { AvatarPreset, AvatarShape, AvatarShapes, AvatarSize, AvatarSizes } from './variants';
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
-	/** Unique identifier for the avatar */
+	/** The HTML id attribute for the avatar */
 	id?: string;
 	/** Reference to the avatar element */
 	ref?: React.Ref<HTMLDivElement>;
-	/** Size of the avatar */
+	/** The size of the avatar */
 	size?: AvatarSize;
-	/** Shape of the avatar */
+	/** The shape of the avatar */
 	shape?: AvatarShape;
-	/** Pre-defined avatar preset */
+	/** Pre-defined cartoon-like avatar to display */
 	preset?: AvatarPreset;
-	/** Alt text for accessibility */
+	/** Alternative text for the avatar image */
 	alt?: string;
-	/** Additional CSS classes */
+	/** Additional CSS classes to apply to the avatar */
 	className?: string;
-	/** Custom image source (overrides preset) */
+	/** Custom image source URL */
 	src?: string;
-	/** Initials to display (overrides preset if no src) */
+	/** Initials to display when no preset or src is provided */
 	initials?: string;
 }
 
+/**
+ * Displays user avatars with support for images, preset icons, or initials.
+ * Provides various size and shape options with built-in fallback handling.
+ * 
+ * @example
+ * ```tsx
+ * // With custom image
+ * <Avatar src="/user-photo.jpg" alt="John Doe" size="lg" />
+ * 
+ * // With preset character
+ * <Avatar preset="astronaut" size="md" shape="circle" />
+ * 
+ * // With initials fallback
+ * <Avatar initials="JD" size="sm" />
+ * ```
+ */
 export function Avatar({
 	id,
 	ref,

@@ -19,7 +19,9 @@ export const roundedVariants = {
 export type InputRounded = keyof typeof roundedVariants;
 
 export interface InputVariants {
+  /** The visual style variant of the input. */
   variant: InputVariant;
+  /** The border radius of the input. */
   rounded: InputRounded;
 }
 

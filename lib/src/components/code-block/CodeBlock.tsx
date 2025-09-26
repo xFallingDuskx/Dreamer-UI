@@ -12,25 +12,25 @@ export type CodeBlockLanguages = 'typescript' | 'ts' | 'tsx' | 'json' | 'bash' |
 export interface CodeBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   /** The code content to display */
   code: string;
-  /** Programming language for syntax highlighting (TS/TSX/JSON supported) */
+  /** Programming language for syntax highlighting */
   language?: CodeBlockLanguages;
-  /** Whether to show copy button */
+  /** Enable copy to clipboard functionality */
   allowCopy?: boolean;
-  /** Whether to show download button */
+  /** Enable download as file functionality */
   allowDownload?: boolean;
-  /** Whether to allow fullscreen mode */
+  /** Enable fullscreen viewing mode */
   allowFullscreen?: boolean;
-  /** Optional filename to display in header */
+  /** Optional filename to display in the header */
   filename?: string;
-  /** Whether to show macOS-style traffic light buttons */
+  /** Show macOS-style traffic light buttons in header */
   showTrafficLights?: boolean;
-  /** Whether to show line numbers */
+  /** Whether to show line numbers on the left side */
   showLineNumbers?: boolean;
-  /** Whether to hide the header bar (buttons will appear in top-right corner) */
+  /** Hide the header completely for a minimal appearance */
   hideHeader?: boolean;
   /** Whether to hide the file type label */
   hideFiletype?: boolean;
-  /** Maximum height in pixels before scrolling */
+  /** Maximum height in pixels before showing scroll */
   maxHeight?: number;
   /** Custom token classes for syntax highlighting */
   tokenClasses?: TokenClasses;
@@ -42,6 +42,31 @@ export interface CodeBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement
   ref?: React.Ref<HTMLDivElement>;
 }
 
+/**
+ * A feature-rich code block component with syntax highlighting, copy functionality,
+ * download options, and fullscreen viewing. Supports multiple programming languages.
+ * 
+ * @example
+ * ```tsx
+ * // Basic code block
+ * <CodeBlock 
+ *   code="const greeting = 'Hello World';" 
+ *   language="typescript"
+ *   filename="example.ts"
+ * />
+ * 
+ * // Full-featured block
+ * <CodeBlock
+ *   code={jsonData}
+ *   language="json"
+ *   allowCopy
+ *   allowDownload
+ *   allowFullscreen
+ *   showLineNumbers
+ *   maxHeight={400}
+ * />
+ * ```
+ */
 export function CodeBlock({
   code,
   language = 'typescript',

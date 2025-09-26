@@ -3,26 +3,47 @@ import { CaretCollapse, CaretExpand } from '../../symbols';
 import { join } from '../../utils';
 
 export interface DisclosureProps {
-  /** The content to show/hide when disclosure is open.*/
+  /** The content to show/hide */
   children: React.ReactNode;
-  /** The label for the disclosure button. */
+  /** The label text or content for the disclosure button */
   label: React.ReactNode;
-  /** Controls the open state (uncontrolled if not provided).*/
+  /** Controls the open state (uncontrolled if not provided) */
   isOpen?: boolean;
-  /**Called when disclosure is toggled.*/
+  /** Called when disclosure is toggled */
   onToggle?: (open: boolean) => void;
-  /** Optional id for accessibility and testing. */
+  /** Optional id for accessibility and testing */
   id?: string;
-  /** Optional ref to the root div. */
+  /** Optional ref to the root div */
   ref?: React.Ref<HTMLDivElement>;
-  /** Disabled state for the button. */
+  /** Whether the disclosure is disabled */
   disabled?: boolean;
-  /** Optional class name for the root div. */
+  /** Additional CSS classes to apply to the disclosure */
   className?: string;
-  /** Optional class name for the button. */
+  /** Additional CSS classes to apply to the disclosure button */
   buttonClassName?: string;
 }
 
+/**
+ * A simple disclosure component for showing and hiding content sections.
+ * Provides keyboard navigation and accessibility features with expand/collapse functionality.
+ * 
+ * @example
+ * ```tsx
+ * // Uncontrolled disclosure
+ * <Disclosure label="Show Details">
+ *   <p>Hidden content that will be revealed when expanded.</p>
+ * </Disclosure>
+ * 
+ * // Controlled disclosure
+ * <Disclosure 
+ *   label="Advanced Options"
+ *   isOpen={showAdvanced}
+ *   onToggle={setShowAdvanced}
+ * >
+ *   <div>Advanced configuration options...</div>
+ * </Disclosure>
+ * ```
+ */
 export function Disclosure({
   children,
   label,

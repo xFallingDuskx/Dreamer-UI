@@ -6,7 +6,7 @@ import { Checkbox } from '../checkbox';
 import { ChevronDown, ChevronUp } from '../../symbols';
 
 export interface TableColumn<T extends object, U = unknown> {
-	/** Unique key for the column. Used for cell value if no `accessor` is provided. */
+	/** Unique key for the column. Used for cell value if no `accessor` is provided */
 	key: Extract<keyof T, string>;
 	/** Column header label */
 	header: string;
@@ -16,7 +16,7 @@ export interface TableColumn<T extends object, U = unknown> {
 	cell?: (item: T, value: U) => React.ReactNode;
 	/** Whether the column is sortable */
 	sortable?: boolean;
-	/** Custom sort function. Negative result indicates descending order. */
+	/** Custom sort function. Negative result indicates descending order */
 	sortFunction?: (a: T, b: T) => number;
 	/** Column width */
 	width?: string | number;
@@ -37,11 +37,11 @@ export interface TableProps<T extends object> {
 	className?: string;
 	/** React ref for the table container */
 	ref?: React.Ref<HTMLDivElement>;
-	/** Table size variant */
+	/** Size variant affecting padding and font sizes */
 	size?: TableSize;
-	/** Table data */
+	/** Array of data objects to display in the table */
 	data: T[];
-	/** Column definitions */
+	/** Column definitions specifying headers, accessors, and rendering options */
 	columns: TableColumn<T>[];
 	/** Whether to show row selection checkboxes */
 	selectable?: boolean;
@@ -49,7 +49,7 @@ export interface TableProps<T extends object> {
 	getRowId?: (item: T, index: number) => string | number;
 	/** Initial selected row IDs */
 	initialSelected?: (string | number)[];
-	/** Callback when selection changes */
+	/** Callback fired when row selection changes */
 	onSelectionChange?: (selectedIds: (string | number)[]) => void;
 	/** Whether to show table header */
 	showHeader?: boolean;
@@ -59,7 +59,7 @@ export interface TableProps<T extends object> {
 	hoverable?: boolean;
 	/** Empty state content */
 	emptyState?: React.ReactNode;
-	/** Loading state */
+	/** Whether to show loading state */
 	loading?: boolean;
 	/** Loading content */
 	loadingContent?: React.ReactNode;
@@ -67,6 +67,39 @@ export interface TableProps<T extends object> {
 	caption?: string;
 }
 
+/**
+ * A feature-rich table component with sorting, selection, and accessibility features.
+ * Supports custom cell rendering, row selection, and responsive design.
+ * 
+ * **Important:** The `data` prop should be stable (either declared outside the component or memoized)
+ * to prevent unnecessary re-renders and maintain performance.
+ * 
+ * @example
+ * ```tsx
+ * // Define stable data and columns outside component or use useMemo
+ * const tableData = [
+ *   { id: 1, name: 'John Doe', email: 'john@example.com' },
+ *   { id: 2, name: 'Jane Smith', email: 'jane@example.com' }
+ * ];
+ * 
+ * const columns = [
+ *   { key: 'name', header: 'Name', sortable: true },
+ *   { key: 'email', header: 'Email', sortable: true },
+ *   { 
+ *     key: 'actions', 
+ *     header: 'Actions',
+ *     cell: (item) => <Button onClick={() => edit(item.id)}>Edit</Button>
+ *   }
+ * ];
+ * 
+ * <Table
+ *   data={tableData}
+ *   columns={columns}
+ *   selectable
+ *   onSelectionChange={(selected) => setSelectedIds(selected)}
+ * />
+ * ```
+ */
 export function Table<T extends object>({
 	id,
 	className,

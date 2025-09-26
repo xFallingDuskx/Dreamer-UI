@@ -4,20 +4,31 @@ import { useAutoSwitchPlacement } from './hooks';
 import { placementVariants, PopoverAlignment, PopoverPlacement } from './variants';
 
 export interface PopoverProps {
+	/** Unique identifier for the popover */
 	id?: string;
+	/** Reference to the popover element */
 	ref?: React.Ref<HTMLDivElement>;
+	/** Whether the popover is open (controlled) */
 	isOpen?: boolean;
+	/** Callback fired when the open state changes */
 	onOpenChange?: (open: boolean) => void;
+	/** The content to display in the popover */
 	children: React.ReactNode;
+	/** The element that triggers the popover */
 	trigger: React.ReactElement;
+	/** The preferred side of the trigger to render against */
 	placement?: PopoverPlacement;
+	/** The preferred alignment against the trigger */
 	alignment?: PopoverAlignment;
+	/** Additional CSS classes to apply to the popover content */
 	className?: string;
+	/** Whether to close popover when clicking outside */
 	closeOnOverlayClick?: boolean;
+	/** Whether to close popover when clicking the trigger again */
 	closeOnTriggerClick?: boolean;
-	/** Offset of the popover from the trigger element in pixel */
+	/** Offset of the popover from the trigger element in pixels */
 	offset?: number;
-	/** Automatically switch placement to opposite side if there is not enough space in the viewport */
+	/** Automatically switch placement to opposite side if there is not enough space */
 	autoSwitchPlacement?: boolean;
 	/** Enable hover behavior - shows on hover, hides 200ms after mouse leaves */
 	hoverable?: boolean;
@@ -38,6 +49,43 @@ function getOffsetStyle(effectivePlacement: PopoverPlacement, offset: number) {
 	}
 }
 
+/**
+ * A floating content container that appears relative to a trigger element.
+ * Supports hover and click interactions with intelligent positioning and focus management.
+ * 
+ * @example
+ * ```tsx
+ * // Basic popover
+ * <Popover 
+ *   trigger={<Button>Click me</Button>}
+ *   placement="bottom"
+ * >
+ *   <div className="p-4">
+ *     <h3>Popover Content</h3>
+ *     <p>This is the popover content.</p>
+ *   </div>
+ * </Popover>
+ * 
+ * // Hover popover
+ * <Popover
+ *   trigger={<span>Hover me</span>}
+ *   hoverable
+ *   placement="top"
+ *   alignment="start"
+ * >
+ *   <div className="p-2 text-sm">Tooltip-like content</div>
+ * </Popover>
+ * 
+ * // Controlled popover
+ * <Popover
+ *   trigger={<Button>Controlled</Button>}
+ *   isOpen={showPopover}
+ *   onOpenChange={setShowPopover}
+ * >
+ *   <PopoverMenu />
+ * </Popover>
+ * ```
+ */
 export function Popover({
 	id,
 	ref,

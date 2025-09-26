@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react';
 import { join } from '../../utils';
 
+/**
+ * An animated loading indicator with three bouncing dots.
+ * Used internally by Button component to show loading state.
+ * 
+ * @example
+ * ```tsx
+ * <LoadingDots />
+ * ```
+ */
 export function LoadingDots() {
   const [activeIndex, setActiveIndex] = useState(0);
 

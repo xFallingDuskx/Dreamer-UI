@@ -8,23 +8,72 @@ import { ScrollArea } from '../scroll-area';
 export type { SelectOption };
 
 export interface SelectProps {
+  /** Array of option objects. SelectOption: { text: string, value: string, disabled?: boolean, description?: string } */
   options: SelectOption[];
+  /** The current value of the select (controlled). */
   value?: string;
+  /** Placeholder text to show when no option is selected. */
   placeholder?: string;
+  /** Whether the select is searchable (combobox mode). */
   searchable?: boolean;
+  /** Whether the entire select is disabled. */
   disabled?: boolean;
+  /** Whether to show a clear button to reset selection. */
   clearable?: boolean;
+  /** The size variant of the select. */
   size?: SelectSize;
+  /** Additional CSS classes to apply to the select container. */
   className?: string;
+  /** Additional CSS classes to apply to the trigger button. */
   triggerClassName?: string;
+  /** Additional CSS classes to apply to the dropdown menu. */
   dropdownClassName?: string;
+  /** The HTML id attribute for the select. */
   id?: string;
+  /** Reference to the select container element. */
   ref?: React.Ref<HTMLDivElement>;
+  /** Callback fired when the selection changes. */
   onChange?: (value: string) => void;
+  /** Callback fired when search input changes (searchable mode). */
   onSearch?: (searchTerm: string) => void;
+  /** Placeholder text for the search input (searchable mode). */
   searchPlaceholder?: string;
 }
 
+/**
+ * A feature-rich select component with search, keyboard navigation, and accessibility.
+ * Supports both simple selection and searchable combobox functionality.
+ * 
+ * @example
+ * ```tsx
+ * // Basic select
+ * const options = [
+ *   { text: 'Apple', value: 'apple' },
+ *   { text: 'Banana', value: 'banana' },
+ *   { text: 'Orange', value: 'orange' }
+ * ];
+ * 
+ * <Select
+ *   options={options}
+ *   value={selectedFruit}
+ *   onChange={setSelectedFruit}
+ *   placeholder="Choose a fruit"
+ * />
+ * 
+ * // Searchable select with descriptions
+ * <Select
+ *   options={[
+ *     { text: 'React', value: 'react', description: 'A library for building UIs' },
+ *     { text: 'Vue', value: 'vue', description: 'The progressive framework' }
+ *   ]}
+ *   searchable
+ *   clearable
+ *   placeholder="Select framework..."
+ *   searchPlaceholder="Search frameworks..."
+ *   onChange={setFramework}
+ * />
+ * ```
+ */
 export function Select({
   options,
   value,

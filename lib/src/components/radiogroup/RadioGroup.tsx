@@ -6,16 +6,49 @@ import { useRadioFocus } from './hooks';
 export type RadioOption = { label: string; value: string; disabled?: boolean; description?: string };
 
 export type RadioGroupProps = {
+  /** Array of option objects or strings. RadioOption: { label: string, value: string, disabled?: boolean, description?: string } */
   options?: (string | RadioOption)[];
+  /** The current selected value (controlled). */
   value: string | undefined;
+  /** Callback fired when the selected value changes. */
   onChange: (value: string) => void;
+  /** The id for the radio group element. */
   id?: string;
+  /** RadioGroupItem components when using the component approach. */
   children?: React.ReactElement<RadioGroupItemProps>[] | React.ReactElement<RadioGroupItemProps>;
+  /** Additional CSS classes to apply to the radio group. */
   className?: string;
+  /** Additional CSS classes to apply to each radio item. */
   childrenClassName?: string;
+  /** Whether to hide the native radio input elements. */
   hideInputs?: boolean;
 };
 
+/**
+ * A radio button group component for selecting one option from multiple choices.
+ * Supports both array-based options and RadioGroupItem child components.
+ * 
+ * @example
+ * ```tsx
+ * // Using options array
+ * <RadioGroup
+ *   options={[
+ *     { label: 'Small', value: 's', description: 'Perfect for personal use' },
+ *     { label: 'Medium', value: 'm' },
+ *     { label: 'Large', value: 'l', disabled: true }
+ *   ]}
+ *   value={selectedSize}
+ *   onChange={setSelectedSize}
+ * />
+ * 
+ * // Using child components
+ * <RadioGroup value={color} onChange={setColor}>
+ *   <RadioGroupItem value="red">Red</RadioGroupItem>
+ *   <RadioGroupItem value="blue">Blue</RadioGroupItem>
+ *   <RadioGroupItem value="green">Green</RadioGroupItem>
+ * </RadioGroup>
+ * ```
+ */
 export function RadioGroup({
   options = [],
   value,

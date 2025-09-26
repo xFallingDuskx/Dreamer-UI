@@ -7,15 +7,52 @@ import './styles.css';
 import { roundedVariants, textareaDefaults, textareaVariants, TextareaVariants } from './variants';
 
 export interface TextareaProps extends Partial<TextareaVariants>, React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  /** Reference to the textarea element. */
   ref?: Ref<HTMLTextAreaElement>;
+  /** Read-only mode for displaying text content without interaction styling. */
   displayOnlyMode?: boolean;
+  /** Error message to display below the textarea. */
   errorMessage?: string;
+  /** Success message to display below the textarea. */
   successMessage?: string;
+  /** Whether to hide the resize handle (Webkit browsers only). */
   hideResizeHandle?: boolean; // only works for Webkit browsers
+  /** Whether the textarea should automatically expand based on content. */
   autoExpand?: boolean;
+  /** Maximum number of characters allowed. Shows character count when > 0. */
   characterLimit?: number;
 }
 
+/**
+ * A versatile textarea component with auto-expand, character counting, and validation states.
+ * Supports both interactive and display-only modes with various styling options.
+ * 
+ * @example
+ * ```tsx
+ * // Basic textarea
+ * <Textarea 
+ *   placeholder="Enter your message..."
+ *   rows={4}
+ *   value={message}
+ *   onChange={(e) => setMessage(e.target.value)}
+ * />
+ * 
+ * // Auto-expanding with character limit
+ * <Textarea
+ *   autoExpand
+ *   characterLimit={500}
+ *   placeholder="Write your bio..."
+ *   errorMessage={bioError}
+ *   variant="outline"
+ * />
+ * 
+ * // Display-only mode
+ * <Textarea 
+ *   displayOnlyMode 
+ *   value="Read-only content display"
+ * />
+ * ```
+ */
 export function Textarea({
   variant = textareaDefaults.variant,
   rounded,

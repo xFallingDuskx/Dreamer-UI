@@ -74,15 +74,24 @@ export interface FormErrors {
 }
 
 export interface FormProps<T extends FormData = FormData> {
+	/** Array of form fields created using FormFactories. */
 	form: FormField[];
+	/** Initial data to populate the form fields. */
 	initialData?: T;
+	/** Callback fired when form data changes. */
 	onDataChange?: (data: T) => void;
+	/** Callback fired when form is submitted with valid data. */
 	onSubmit?: (data: T) => void;
+	/** Submit button element to render at the bottom of the form. */
 	submitButton?: React.ReactNode;
+	/** Additional CSS classes to apply to the form. */
 	className?: string;
+	/** The HTML id attribute for the form. */
 	id?: string;
+	/** Reference to the form element. */
 	ref?: React.Ref<HTMLFormElement>;
-	// Layout configuration
+	/** Number of columns in the form grid layout. */
 	columns?: 1 | 2 | 3 | 4; // Default number of columns in the grid
+	/** Whether to collapse to single column on mobile devices. */
 	responsive?: boolean; // Whether to collapse to single column on mobile
 }

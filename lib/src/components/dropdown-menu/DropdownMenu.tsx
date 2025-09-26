@@ -19,6 +19,40 @@ function getMenuItem(dropdownId: string, level: number, index: number): HTMLElem
 	);
 }
 
+/**
+ * A fully-featured dropdown menu with keyboard navigation, nested submenus, and flexible item types.
+ * Supports separators, groups, and custom content with accessibility features.
+ * 
+ * @example
+ * ```tsx
+ * // Basic dropdown menu
+ * <DropdownMenu
+ *   trigger={<Button>Options</Button>}
+ *   items={[
+ *     { type: 'item', label: 'Edit', value: 'edit' },
+ *     { type: 'item', label: 'Delete', value: 'delete' },
+ *     { type: 'separator' }
+ *   ]}
+ *   onItemSelect={(value) => handleAction(value)}
+ * />
+ * 
+ * // With nested submenus
+ * <DropdownMenu
+ *   trigger={<Button>More Actions</Button>}
+ *   items={[
+ *     { 
+ *       type: 'submenu', 
+ *       label: 'Export',
+ *       items: [
+ *         { type: 'item', label: 'PDF', value: 'pdf' },
+ *         { type: 'item', label: 'CSV', value: 'csv' }
+ *       ]
+ *     }
+ *   ]}
+ *   placement="bottom-end"
+ * />
+ * ```
+ */
 export function DropdownMenu({
 	id,
 	items,

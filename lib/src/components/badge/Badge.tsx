@@ -11,18 +11,40 @@ import {
 } from './variants';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+	/** The HTML id attribute for the badge */
 	id?: string;
+	/** Reference to the badge element */
 	ref?: React.Ref<HTMLSpanElement>;
+	/** The visual style variant of the badge */
 	variant?: BadgeVariant;
+	/** Whether to render the badge with an outline style */
 	outline?: boolean;
+	/** The content to display inside the badge */
 	children?: React.ReactNode;
+	/** The aspect ratio of the badge - square for equal padding, video for horizontal padding */
 	aspect?: 'square' | 'video';
-	/** Used for accessibility purposes to define the aria attributes of the badge. */
+	/** The semantic use of the badge for accessibility purposes */
 	use?: BadgeUse;
-	/** Size of the badge. `md` uses `text-base` */
+	/** The size of the badge */
 	size?: BadgeSize;
 }
 
+/**
+ * A small UI element for displaying status, labels, or categories.
+ * Supports various colors, sizes, and semantic accessibility attributes.
+ * 
+ * @example
+ * ```tsx
+ * // Status badge
+ * <Badge variant="success" use="status">Active</Badge>
+ * 
+ * // Notification count
+ * <Badge variant="destructive" aspect="square" use="status">5</Badge>
+ * 
+ * // Category tag
+ * <Badge variant="muted" outline>JavaScript</Badge>
+ * ```
+ */
 export function Badge({
 	id,
 	ref,

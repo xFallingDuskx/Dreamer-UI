@@ -30,8 +30,11 @@ export const roundedVariants = {
 export type ButtonRounded = keyof typeof roundedVariants;
 
 export interface ButtonVariants {
+  /** The visual style variant of the button. */
   variant: ButtonVariant;
+  /** The size of the button. */
   size: ButtonSize;
+  /** The border radius of the button. */
   rounded: ButtonRounded;
 }
 

@@ -10,12 +10,19 @@ export interface ToastAction {
 
 /** Data for a toast notification */
 export interface ToastData {
+  /** Unique identifier for the toast */
   id: string;
+  /** The main message text for the toast */
   title: string;
+  /** Optional secondary message text */
   description?: string;
+  /** The type of toast which determines styling and icon. Can be extended with customTypes */
   type?: ToastType;
+  /** Optional action button configuration */
   action?: ToastAction;
+  /** Duration in milliseconds before auto-dismiss. Set to 0 to disable auto-dismiss */
   duration?: number;
+  /** Callback fired when the toast is removed */
   onRemove?: (id: string) => void;
 }
 
@@ -40,6 +47,38 @@ const defaultTypeStyles: Record<ToastType, { className: string; icon: ReactNode 
   },
 };
 
+/**
+ * A notification toast component for displaying temporary messages to users.
+ * Supports different types, actions, and auto-dismissal with customizable styling.
+ * 
+ * @example
+ * ```tsx
+ * // Basic toast
+ * <Toast
+ *   id="notification-1"
+ *   title="Success!"
+ *   description="Your changes have been saved."
+ *   type="info"
+ * />
+ * 
+ * // Toast with action button
+ * <Toast
+ *   id="undo-toast"
+ *   title="Item deleted"
+ *   action={{ label: "Undo", onClick: restoreItem }}
+ *   duration={5000}
+ * />
+ * 
+ * // Warning toast with custom duration
+ * <Toast
+ *   id="warning-toast"
+ *   title="Connection lost"
+ *   description="Trying to reconnect..."
+ *   type="warning"
+ *   duration={0}
+ * />
+ * ```
+ */
 export function Toast({
   id,
   title,
