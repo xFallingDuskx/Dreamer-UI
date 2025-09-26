@@ -1,14 +1,14 @@
 import { useState, useCallback, useMemo } from 'react';
 
-export interface DateRange {
+export interface CalendarDateRange {
   start: Date | null;
   end: Date | null;
 }
 
-export interface CalendarState {
+interface CalendarState {
   currentDate: Date;
   selectedDate: Date | null;
-  selectedRange: DateRange | null;
+  selectedRange: CalendarDateRange | null;
   view: 'month' | 'week' | 'day';
 }
 
@@ -19,7 +19,7 @@ export interface UseCalendarOptions {
   maxDate?: Date;
   view?: 'month' | 'week' | 'day';
   onDateSelect?: (date: Date) => void;
-  onRangeSelect?: (range: DateRange) => void;
+  onRangeSelect?: (range: CalendarDateRange) => void;
 }
 
 export function useCalendar(options: UseCalendarOptions = {}) {

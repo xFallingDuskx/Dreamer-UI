@@ -1,10 +1,10 @@
 import { Ref, ReactNode } from 'react';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import { useCalendar, DateRange, UseCalendarOptions } from './hooks';
+import { useCalendar, CalendarDateRange, UseCalendarOptions } from './hooks';
 import { calendarSizeVariants, calendarViewVariants, calendarDefaults, CalendarSize } from './variants';
 import { PrevIcon, NextIcon } from './icons';
 
-export interface CustomStyles {
+export interface CalendarCustomStyles {
 	containerClassName?: string;
 	headerClassName?: string;
 	navigationClassName?: string;
@@ -12,6 +12,7 @@ export interface CustomStyles {
 	nextButtonClassName?: string;
 	titleClassName?: string;
 	viewSelectorClassName?: string;
+	monthYearSelectorsClassName?: string;
 	weekdaysClassName?: string;
 	weekdayClassName?: string;
 	monthGridClassName?: string;
@@ -31,14 +32,14 @@ export interface CalendarProps extends Omit<UseCalendarOptions, 'onDateSelect' |
 	ref?: Ref<HTMLDivElement>;
 	className?: string;
 	size?: CalendarSize;
-	customStyles?: CustomStyles;
+	customStyles?: CalendarCustomStyles;
 	renderCell?: (date: Date, isSelected: boolean, isDisabled: boolean, isToday: boolean) => ReactNode;
 	showViewSelector?: boolean;
 	showNavigation?: boolean;
 	navigationLayout?: 'adjacent' | 'around';
 	useMonthYearSelector?: boolean;
 	onDateSelect?: (date: Date) => void;
-	onRangeSelect?: (range: DateRange) => void;
+	onRangeSelect?: (range: CalendarDateRange) => void;
 }
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -56,6 +57,8 @@ const MONTHS = [
 	'November',
 	'December',
 ];
+
+const YEAR_RANGE = 100;
 
 export function Calendar({
 	id,
@@ -108,7 +111,9 @@ export function Calendar({
 
 		if (view === 'month') {
 			return `${month} ${year}`;
-		} else if (view === 'week') {
+		}
+
+		if (view === 'week') {
 			const startOfWeek = new Date(currentDate);
 			startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
 			const endOfWeek = new Date(startOfWeek);
@@ -116,14 +121,35 @@ export function Calendar({
 
 			if (startOfWeek.getMonth() === endOfWeek.getMonth()) {
 				return `${month} ${startOfWeek.getDate()}-${endOfWeek.getDate()}, ${year}`;
-			} else {
-				return `${MONTHS[startOfWeek.getMonth()]} ${startOfWeek.getDate()} - ${
-					MONTHS[endOfWeek.getMonth()]
-				} ${endOfWeek.getDate()}, ${year}`;
 			}
-		} else {
-			return `${month} ${currentDate.getDate()}, ${year}`;
+
+			return `${MONTHS[startOfWeek.getMonth()]} ${startOfWeek.getDate()} - ${
+				MONTHS[endOfWeek.getMonth()]
+			} ${endOfWeek.getDate()}, ${year}`;
 		}
+
+		return `${month} ${currentDate.getDate()}, ${year}`;
+	};
+
+	const renderViewSelector = () => {
+		if (!showViewSelector) return null;
+
+		return (
+			<div className={viewSelectorClasses}>
+				{(['month', 'week', 'day'] as const).map((viewOption) => (
+					<button
+						key={viewOption}
+						onClick={() => calendar.changeView(viewOption)}
+						className={join(
+							'px-2 py-1 rounded capitalize transition-colors',
+							calendar.view === viewOption ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/20'
+						)}
+					>
+						{viewOption}
+					</button>
+				))}
+			</div>
+		);
 	};
 
 	const renderMonthYearSelector = () => {
@@ -132,20 +158,24 @@ export function Calendar({
 		const currentMonth = calendar.currentDate.getMonth();
 		const currentYear = calendar.currentDate.getFullYear();
 
-		// Generate year options (current year ± 100 years)
-		const startYear = currentYear - 100;
-		const endYear = currentYear + 100;
+		// Generate year options (current year ± YEAR_RANGE years)
+		const startYear = currentYear - YEAR_RANGE;
+		const endYear = currentYear + YEAR_RANGE;
 		const yearOptions = [];
 		for (let year = startYear; year <= endYear; year++) {
 			yearOptions.push(year);
 		}
 
+		const monthYearSelectorsClasses = join(
+			'border border-border rounded px-2 py-1 text-sm focus:outline-none focus:ring focus:ring-accent/50',
+			customStyles.monthYearSelectorsClassName
+		);
 		return (
 			<div className='flex items-center gap-2'>
 				<select
 					value={currentMonth}
 					onChange={(e) => calendar.changeMonth(parseInt(e.target.value))}
-					className='bg-background border border-border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50'
+					className={monthYearSelectorsClasses}
 				>
 					{MONTHS.map((month, index) => (
 						<option key={month} value={index}>
@@ -156,7 +186,7 @@ export function Calendar({
 				<select
 					value={currentYear}
 					onChange={(e) => calendar.changeYear(parseInt(e.target.value))}
-					className='bg-background border border-border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50'
+					className={monthYearSelectorsClasses}
 				>
 					{yearOptions.map((year) => (
 						<option key={year} value={year}>
@@ -285,8 +315,8 @@ export function Calendar({
 		>
 			{/* Header */}
 			<div className={headerClasses}>
-				{navigationLayout === 'adjacent' ? (
-					// Adjacent layout: nav buttons on left, title on right
+				{/* Adjacent layout: nav buttons on left, title on right */}
+				{navigationLayout === 'adjacent' && (
 					<>
 						<div className='flex items-center gap-4'>
 							{showNavigation && (
@@ -305,25 +335,11 @@ export function Calendar({
 							</div>
 						</div>
 
-						{showViewSelector && (
-							<div className={viewSelectorClasses}>
-								{(['month', 'week', 'day'] as const).map((viewOption) => (
-									<button
-										key={viewOption}
-										onClick={() => calendar.changeView(viewOption)}
-										className={join(
-											'px-2 py-1 rounded capitalize transition-colors',
-											calendar.view === viewOption ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/20'
-										)}
-									>
-										{viewOption}
-									</button>
-								))}
-							</div>
-						)}
+						{renderViewSelector()}
 					</>
-				) : (
-					// Around layout: nav buttons around the title, center-aligned
+				)}
+				{/* Around layout: nav buttons on sides, title in center */}
+				{navigationLayout === 'around' && (
 					<>
 						{showNavigation && (
 							<button onClick={() => calendar.navigate('prev')} className={prevButtonClasses} aria-label='Previous'>
@@ -337,22 +353,7 @@ export function Calendar({
 								{renderMonthYearSelector()}
 							</div>
 
-							{showViewSelector && (
-								<div className={viewSelectorClasses}>
-									{(['month', 'week', 'day'] as const).map((viewOption) => (
-										<button
-											key={viewOption}
-											onClick={() => calendar.changeView(viewOption)}
-											className={join(
-												'px-2 py-1 rounded capitalize transition-colors',
-												calendar.view === viewOption ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/20'
-											)}
-										>
-											{viewOption}
-										</button>
-									))}
-								</div>
-							)}
+							{renderViewSelector()}
 						</div>
 
 						{showNavigation && (

@@ -1,2 +1,2 @@
-export { Calendar, type CalendarProps, type CustomStyles } from './Calendar';
-export { type DateRange } from './hooks';
+export { Calendar, type CalendarProps, type CalendarCustomStyles } from './Calendar';
+export { type CalendarDateRange } from './hooks';

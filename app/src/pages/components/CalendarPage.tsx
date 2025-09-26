@@ -295,7 +295,7 @@ const calendarProps = [
 	},
 	{
 		name: 'onRangeSelect',
-		type: '(range: DateRange) => void',
+		type: '(range: CalendarDateRange) => void',
 		required: false,
 		description: 'Callback fired when a date range is selected in range mode',
 	},
@@ -335,7 +335,7 @@ const calendarProps = [
 	},
 	{
 		name: 'customStyles',
-		type: 'CustomStyles',
+		type: 'CalendarCustomStyles',
 		required: false,
 		description: 'Object containing custom CSS classes for different calendar elements',
 	},
