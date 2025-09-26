@@ -74,25 +74,31 @@ export function Input({
     !displayOnlyMode && roundedVariants[adjustedRound],
     type === 'password' && 'pr-10',
     !displayOnlyMode && 'px-2 py-1',
-    displayOnlyMode && 'pointer-events-none',
+    displayOnlyMode && 'pointer-events-none cursor-text',
     className
   );
 
-  return (
-    <div className={join(displayOnlyMode && 'cursor-text')} style={{ height: rest.height, width: rest.width }}>
-      <div className={join(type === 'password' && 'relative')}>
-        <input
-          {...rest}
-          id={id}
-          type={type === 'password' && showPassword ? 'text' : type}
-          aria-disabled={rest.disabled}
-          readOnly={displayOnlyMode}
-          aria-readonly={displayOnlyMode || rest['aria-readonly']}
-          data-error={errorMessage ? true : undefined}
-          data-success={successMessage ? true : undefined}
-          className={inputClasses}
-        />
-        {type === 'password' && (
+  const inputElement = (
+    <input
+      {...rest}
+      id={id}
+      type={type === 'password' && showPassword ? 'text' : type}
+      aria-disabled={rest.disabled}
+      readOnly={displayOnlyMode}
+      aria-readonly={displayOnlyMode || rest['aria-readonly']}
+      data-error={errorMessage ? true : undefined}
+      data-success={successMessage ? true : undefined}
+      className={inputClasses}
+      style={{ height: rest.height, width: rest.width }}
+    />
+  );
+
+  // For password inputs, we need a wrapper for the toggle button positioning
+  if (type === 'password') {
+    return (
+      <>
+        <div className='relative'>
+          {inputElement}
           <button
             onClick={() => setShowPassword(!showPassword)}
             className='absolute inset-y-0 right-0 px-2 hover:cursor-pointer'
@@ -101,10 +107,19 @@ export function Input({
           >
             {showPassword ? <EyeOpened size={20} /> : <EyeClosed size={20} />}
           </button>
-        )}
-      </div>
+        </div>
+        {!displayOnlyMode && <StatusHelpMessage elementId={id} type='error' message={errorMessage} />}
+        {!displayOnlyMode && <StatusHelpMessage elementId={id} type='success' message={successMessage} />}
+      </>
+    );
+  }
+
+  // For non-password inputs, return the input directly with messages below
+  return (
+    <>
+      {inputElement}
       {!displayOnlyMode && <StatusHelpMessage elementId={id} type='error' message={errorMessage} />}
       {!displayOnlyMode && <StatusHelpMessage elementId={id} type='success' message={successMessage} />}
-    </div>
+    </>
   );
 }
