@@ -5,42 +5,76 @@ import { CalendarDateRange, useCalendar, UseCalendarOptions } from './hooks';
 import { calendarDefaults, CalendarSize, calendarSizeVariants, calendarViewVariants } from './variants';
 
 export interface CalendarCustomStyles {
+	/** Custom CSS classes for the main calendar container. */
 	containerClassName?: string;
+	/** Custom CSS classes for the calendar header. */
 	headerClassName?: string;
+	/** Custom CSS classes for the navigation button container. */
 	navigationClassName?: string;
+	/** Custom CSS classes for the previous navigation button. */
 	prevButtonClassName?: string;
+	/** Custom CSS classes for the next navigation button. */
 	nextButtonClassName?: string;
+	/** Custom CSS classes for the calendar title. */
 	titleClassName?: string;
+	/** Custom CSS classes for the view selector buttons. */
 	viewSelectorClassName?: string;
+	/** Custom CSS classes for the month and year dropdown selectors. */
 	monthYearSelectorsClassName?: string;
+	/** Custom CSS classes for the today button. */
 	todayButtonClassName?: string;
+	/** Custom CSS classes for the weekdays header row. */
 	weekdaysClassName?: string;
+	/** Custom CSS classes for individual weekday cells. */
 	weekdayClassName?: string;
+	/** Custom CSS classes for the month view grid. */
 	monthGridClassName?: string;
+	/** Custom CSS classes for the week view grid. */
 	weekGridClassName?: string;
+	/** Custom CSS classes for the day view grid. */
 	dayGridClassName?: string;
+	/** Custom CSS classes for date cells. */
 	cellClassName?: string;
+	/** Custom CSS classes for selected date cells. */
 	selectedCellClassName?: string;
+	/** Custom CSS classes for today's date cell. */
 	todayCellClassName?: string;
+	/** Custom CSS classes for disabled date cells. */
 	disabledCellClassName?: string;
+	/** Custom CSS classes for date cells within a selected range. */
 	rangeCellClassName?: string;
+	/** Custom CSS classes for the start date of a selected range. */
 	rangeStartCellClassName?: string;
+	/** Custom CSS classes for the end date of a selected range. */
 	rangeEndCellClassName?: string;
 }
 
 export interface CalendarProps extends Omit<UseCalendarOptions, 'onDateSelect' | 'onRangeSelect'> {
+	/** The HTML id attribute for the calendar. */
 	id?: string;
+	/** Reference to the calendar container element. */
 	ref?: Ref<HTMLDivElement>;
+	/** Additional CSS classes to apply to the calendar container. */
 	className?: string;
+	/** The size of the calendar component. */
 	size?: CalendarSize;
+	/** Object containing custom CSS classes for different calendar elements. */
 	customStyles?: CalendarCustomStyles;
+	/** Custom render function for date cells. */
 	renderCell?: (date: Date, isSelected: boolean, isDisabled: boolean, isToday: boolean) => ReactNode;
+	/** Whether to show the view selector buttons. */
 	showViewSelector?: boolean;
+	/** Whether to show the navigation buttons. */
 	showNavigation?: boolean;
+	/** Layout of navigation buttons - adjacent (both on left) or around (on sides of title). */
 	navigationLayout?: 'adjacent' | 'around';
+	/** Whether to show month and year as dropdown selectors for easier navigation. */
 	useMonthYearSelector?: boolean;
+	/** Whether to show a button to quickly jump to the current date. */
 	showTodayButton?: boolean;
+	/** Callback fired when a date is selected in single mode. */
 	onDateSelect?: (date: Date) => void;
+	/** Callback fired when a date range is selected in range mode. */
 	onRangeSelect?: (range: CalendarDateRange) => void;
 }
 

@@ -3,11 +3,17 @@ import { QuestionMarkCircled } from '../../symbols';
 import { join } from '../../utils';
 
 export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
+  /** The display type of the label. */
   display?: 'block' | 'inline';
+  /** The width of the label element. */
   width?: React.CSSProperties['width'];
+  /** Whether to show a required indicator (*) next to the label. */
   required?: boolean;
+  /** Help text to display in a tooltip next to the label. */
   helpMessage?: string;
+  /** Additional content to display after the label text. */
   suffix?: React.ReactNode;
+  /** Description text to display below the label. */
   description?: string;
 }
 

@@ -4,9 +4,13 @@ import { useFontMetrics } from './hooks';
 import { CodeVariant, codeVariants } from './variants';
 
 export interface CodeProps extends Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
+  /** Unique identifier for the code element. */
   id?: string;
+  /** Reference to the code element. */
   ref?: React.Ref<HTMLElement>;
+  /** The code content to display. */
   content: string;
+  /** The visual style variant of the code. */
   variant?: CodeVariant;
 }
 

@@ -1,10 +1,15 @@
 import { join } from '../../utils';
 
 export interface ClickableProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onClick'> {
+  /** The content to make clickable. */
   children: React.ReactNode;
+  /** URL for link functionality. When provided, renders an anchor element. */
   linkTo?: React.HTMLProps<HTMLAnchorElement>['href'];
+  /** Additional props to pass to the anchor element when using linkTo. */
   linkProps?: Omit<React.HTMLProps<HTMLAnchorElement>, 'href'>;
+  /** Click handler for button functionality. Ignored when linkTo is provided. */
   onButtonClick?: React.HTMLProps<HTMLButtonElement>['onClick'];
+  /** Additional props to pass to the button element when using onButtonClick. */
   buttonProps?: Omit<React.HTMLProps<HTMLButtonElement>, 'onClick'>;
 }
 

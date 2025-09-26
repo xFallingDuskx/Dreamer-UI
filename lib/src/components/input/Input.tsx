@@ -6,9 +6,13 @@ import './styles.css';
 import { inputDefaults, inputVariants, InputVariants, roundedVariants } from './variants';
 
 export interface InputProps extends Partial<InputVariants>, React.InputHTMLAttributes<HTMLInputElement> {
+  /** Reference to the input element. */
   ref?: Ref<HTMLInputElement>;
+  /** Whether the input is in read-only display mode. */
   displayOnlyMode?: boolean;
+  /** Error message to display below the input when invalid. */
   errorMessage?: string;
+  /** Success message to display below the input when valid. */
   successMessage?: string;
 }
 

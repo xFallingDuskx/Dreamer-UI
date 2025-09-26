@@ -24,8 +24,11 @@ export type FormColumns = keyof typeof formVariants.columns;
 export type FormColSpan = keyof typeof formVariants.colSpan;
 
 export interface FormVariants {
+  /** Spacing between form fields. */
   spacing: FormSpacing;
+  /** Number of columns in the form grid layout. */
   columns?: FormColumns;
+  /** Whether to collapse to single column on mobile devices. */
   responsive?: boolean;
 }
 

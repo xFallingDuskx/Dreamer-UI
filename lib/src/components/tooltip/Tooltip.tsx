@@ -6,13 +6,21 @@ import { useCalculatePosition, useTooltipEvents, useTooltipPosition } from './ho
 export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
 
 export interface TooltipProps {
+  /** The HTML id attribute for the tooltip. */
   id?: string;
+  /** The element that triggers the tooltip on hover. */
   children: React.ReactElement;
+  /** The content to display in the tooltip. */
   message: React.ReactNode;
+  /** The preferred side of the trigger to render the tooltip. */
   placement?: TooltipPlacement;
+  /** Whether the tooltip is disabled and should not appear. */
   disabled?: boolean;
+  /** The delay in milliseconds before the tooltip appears. */
   delay?: number;
+  /** Additional CSS classes to apply to the tooltip. */
   className?: string;
+  /** Additional CSS classes to apply to the tooltip arrow. */
   arrowClassName?: string;
 }
 

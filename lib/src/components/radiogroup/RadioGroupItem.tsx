@@ -3,14 +3,23 @@ import { join } from '../../utils';
 import { RadioInput } from './RadioInput';
 
 export interface RadioGroupItemProps {
+  /** The value associated with this radio item. */
   value: string;
+  /** The content to display for this radio item. */
   children: React.ReactNode;
+  /** Additional CSS classes to apply to this radio item. */
   className?: string;
+  /** Whether this radio item is currently selected. */
   isSelected?: boolean;
+  /** Callback fired when this radio item is selected. */
   onChange?: (value: string) => void;
+  /** Whether this radio item is disabled. */
   disabled?: boolean;
+  /** The name attribute for the radio input group. */
   name?: string;
+  /** Whether to hide the native radio input element. */
   hideInput?: boolean;
+  /** Optional description text for this radio item. */
   description?: string;
 }
 

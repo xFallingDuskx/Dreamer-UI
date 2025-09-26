@@ -10,13 +10,21 @@ import {
 } from './variants';
 
 export interface ToggleProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'> {
+  /** Reference to the toggle button element. */
   ref?: Ref<HTMLButtonElement>;
+  /** The size of the toggle switch. */
   size?: ToggleSize;
+  /** The color variant of the toggle switch. */
   variant?: ToggleVariant;
+  /** Whether the toggle is checked. If not provided, the toggle will be uncontrolled. */
   checked?: boolean;
+  /** Callback fired when the toggle state changes. */
   onCheckedChange?: (checked: boolean) => void;
+  /** Whether the toggle is disabled. */
   disabled?: boolean;
+  /** Additional CSS classes to apply to the toggle thumb. */
   thumbClassName?: string;
+  /** Custom background CSS classes for different toggle states. */
   backgroundClassNames?: ToggleBackgroundClasses;
 }
 

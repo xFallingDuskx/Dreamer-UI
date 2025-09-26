@@ -6,23 +6,38 @@ import { Button, ButtonProps } from '../button';
 import { useAnimationOpenClose, useDocumentChanges, useHandleFocus } from './hooks';
 
 interface ModalAction extends Omit<ButtonProps, 'children'> {
+	/** The text label for the action button. */
 	label: string;
 }
 
 export interface ModalProps {
+	/** Optional ID for the modal element. */
 	id?: string;
+	/** Whether the modal is open. */
 	isOpen: boolean;
+	/** Callback fired when the modal should close. */
 	onClose: () => void;
+	/** Optional title for the modal header. */
 	title?: React.ReactNode;
+	/** The content to display inside the modal. */
 	children: React.ReactNode;
+	/** When true, renders only the children with no default modal styling. */
 	contentOnly?: boolean;
+	/** Additional CSS classes to apply to the modal content. */
 	className?: string;
+	/** Additional CSS classes to apply to the backdrop overlay. */
 	overlayClassName?: string;
+	/** Additional CSS classes to apply to the modal container. */
 	containerClassName?: string;
+	/** Whether to hide the X close button in the top-right corner. */
 	hideCloseButton?: boolean;
+	/** Array of action buttons to display at the bottom of the modal. */
 	actions?: ModalAction[];
+	/** Whether clicking the backdrop/overlay closes the modal. */
 	disableCloseOnOverlayClick?: boolean;
+	/** ID of an element that labels the modal. */
 	ariaLabelledBy?: string;
+	/** ID of an element that describes the modal. */
 	ariaDescribedBy?: string;
 }
 

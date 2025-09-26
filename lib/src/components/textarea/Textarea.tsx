@@ -7,12 +7,19 @@ import './styles.css';
 import { roundedVariants, textareaDefaults, textareaVariants, TextareaVariants } from './variants';
 
 export interface TextareaProps extends Partial<TextareaVariants>, React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  /** Reference to the textarea element. */
   ref?: Ref<HTMLTextAreaElement>;
+  /** Read-only mode for displaying text content without interaction styling. */
   displayOnlyMode?: boolean;
+  /** Error message to display below the textarea. */
   errorMessage?: string;
+  /** Success message to display below the textarea. */
   successMessage?: string;
+  /** Whether to hide the resize handle (Webkit browsers only). */
   hideResizeHandle?: boolean; // only works for Webkit browsers
+  /** Whether the textarea should automatically expand based on content. */
   autoExpand?: boolean;
+  /** Maximum number of characters allowed. Shows character count when > 0. */
   characterLimit?: number;
 }
 

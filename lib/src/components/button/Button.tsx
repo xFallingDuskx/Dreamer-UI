@@ -6,16 +6,21 @@ import { ButtonSize, ButtonVariants, buttonDefaults, buttonVariants, roundedVari
 
 interface ButtonButtonProps extends Partial<ButtonVariants>, ButtonHTMLAttributes<HTMLButtonElement> {
 	href?: never;
+	/** Reference to the button element. */
 	ref?: Ref<HTMLButtonElement>;
+	/** Whether the button is in a loading state. */
 	loading?: boolean;
 }
 
 interface ButtonLinkProps
 	extends Partial<ButtonVariants>,
 		Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'role'> {
+	/** When provided, renders the button as a link. */
 	href: string;
+	/** Reference to the anchor element. */
 	ref?: Ref<HTMLAnchorElement>;
 	loading?: never;
+	/** Whether the button is disabled. */
 	disabled?: boolean;
 }
 

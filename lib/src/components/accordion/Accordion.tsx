@@ -3,22 +3,36 @@ import { join } from '../../utils';
 import { AccordionItem, AccordionItemProps } from './AccordionItem';
 
 export interface AccordionOption {
+  /** Unique identifier for the accordion item. */
   id?: string;
+  /** The title/header content for the accordion item. */
   title: React.ReactNode;
+  /** The main content that will be shown when the item is expanded. */
   content: React.ReactNode;
+  /** Whether the accordion item is disabled and cannot be toggled. */
   disabled?: boolean;
+  /** Whether the accordion item should be open by default. */
   defaultOpen?: boolean;
 }
 
 export interface AccordionProps {
+  /** Unique identifier for the accordion container. */
   id?: string;
+  /** Array of accordion items with id, title, content, and optional disabled state. */
   items?: AccordionOption[];
+  /** AccordionItem components when using the component approach. */
   children?: React.ReactElement<AccordionItemProps>[] | React.ReactElement<AccordionItemProps>;
+  /** Additional CSS classes to apply to the accordion container. */
   className?: string;
+  /** Additional CSS classes to apply to individual accordion items. */
   itemClassName?: string;
+  /** Whether multiple items can be open simultaneously. */
   allowMultiple?: boolean;
+  /** Array of item IDs that should be open by default. */
   defaultOpenItems?: string[];
+  /** Additional CSS classes to apply to all trigger buttons. */
   triggersClassName?: string;
+  /** Additional CSS classes to apply to all content bodies. */
   bodiesClassName?: string;
 }
 

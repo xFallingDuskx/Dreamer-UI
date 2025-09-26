@@ -4,11 +4,17 @@ import { join } from '../../utils';
 import { AccordionOption } from './Accordion';
 
 export interface AccordionItemProps extends Omit<AccordionOption, 'defaultOpen'> {
+  /** Content to render inside the accordion item. */
   children?: React.ReactNode;
+  /** Additional CSS classes to apply to the accordion item. */
   className?: string;
+  /** Whether the accordion item is currently open. */
   isOpen?: boolean;
+  /** Callback function called when the accordion item is toggled. */
   onToggle?: () => void;
+  /** Additional CSS classes to apply to the trigger button. */
   triggerClassName?: string;
+  /** Additional CSS classes to apply to the content body. */
   bodyClassName?: string;
 }
 
