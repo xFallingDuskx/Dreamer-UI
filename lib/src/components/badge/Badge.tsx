@@ -11,15 +11,21 @@ import {
 } from './variants';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+	/** The HTML id attribute for the badge */
 	id?: string;
+	/** Reference to the badge element */
 	ref?: React.Ref<HTMLSpanElement>;
+	/** The visual style variant of the badge */
 	variant?: BadgeVariant;
+	/** Whether to render the badge with an outline style */
 	outline?: boolean;
+	/** The content to display inside the badge */
 	children?: React.ReactNode;
+	/** The aspect ratio of the badge - square for equal padding, video for horizontal padding */
 	aspect?: 'square' | 'video';
-	/** Used for accessibility purposes to define the aria attributes of the badge. */
+	/** The semantic use of the badge for accessibility purposes */
 	use?: BadgeUse;
-	/** Size of the badge. `md` uses `text-base` */
+	/** The size of the badge */
 	size?: BadgeSize;
 }
 

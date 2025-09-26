@@ -4,23 +4,23 @@ import { join } from '../../utils';
 import { CalloutVariants } from './variants';
 
 export interface CalloutProps {
-	/**The id of the Callout. */
+	/** The id of the callout element */
 	id?: string;
-	/**The ref for the Callout. */
+	/** Reference to the callout element */
 	ref?: React.Ref<HTMLDivElement>;
-	/**The variant of the Callout. */
+	/** The visual style variant of the callout */
 	variant?: CalloutVariants;
-	/** The icon to display in the top-left corner of the Callout. Will use default icon if not provided. Pass in `null` to hide the icon. */
+	/** Custom icon to display. Will use default icon if not provided. Pass null to hide the icon */
 	icon?: string | React.ReactElement | null;
-	/** The title of the Callout. */
+	/** Optional title for the callout */
 	title?: React.ReactNode;
-	/** The description of the Callout. */
+	/** The main content to display inside the callout */
 	description?: React.ReactNode;
-	/** Additional classes to apply to the Callout. */
+	/** Additional CSS classes to apply to the callout */
 	className?: string;
-	/** Whether the Callout can be dismissed. */
+	/** Whether the callout can be dismissed */
 	dismissible?: boolean;
-	/** Callback function when the Callout is dismissed. */
+	/** Callback fired when the dismiss button is clicked */
 	onDismiss?: () => void;
 }
 
