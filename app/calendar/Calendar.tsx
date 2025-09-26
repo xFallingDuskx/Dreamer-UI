@@ -1,8 +1,8 @@
-import { Ref, ReactNode } from 'react';
+import { ChevronLeft, ChevronRight } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
-import { useCalendar, CalendarDateRange, UseCalendarOptions } from './hooks';
-import { calendarSizeVariants, calendarViewVariants, calendarDefaults, CalendarSize } from './variants';
-import { PrevIcon, NextIcon } from './icons';
+import { ReactNode, Ref } from 'react';
+import { CalendarDateRange, useCalendar, UseCalendarOptions } from './hooks';
+import { calendarDefaults, CalendarSize, calendarSizeVariants, calendarViewVariants } from './variants';
 
 export interface CalendarCustomStyles {
 	containerClassName?: string;
@@ -174,7 +174,7 @@ export function Calendar({
 		}
 
 		const monthYearSelectorsClasses = join(
-			'border border-border rounded px-2 py-1 text-sm focus:outline-none focus:ring focus:ring-accent/50',
+			'border border-border rounded px-2 py-1 text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/50',
 			customStyles.monthYearSelectorsClassName
 		);
 		return (
@@ -344,10 +344,10 @@ export function Calendar({
 							{showNavigation && (
 								<div className={navigationClasses}>
 									<button onClick={() => calendar.navigate('prev')} className={prevButtonClasses} aria-label='Previous'>
-										<PrevIcon className='w-4 h-4' />
+										<ChevronLeft className='w-4 h-4' />
 									</button>
 									<button onClick={() => calendar.navigate('next')} className={nextButtonClasses} aria-label='Next'>
-										<NextIcon className='w-4 h-4' />
+										<ChevronRight className='w-4 h-4' />
 									</button>
 								</div>
 							)}
@@ -368,7 +368,7 @@ export function Calendar({
 					<>
 						{showNavigation && (
 							<button onClick={() => calendar.navigate('prev')} className={prevButtonClasses} aria-label='Previous'>
-								<PrevIcon className='w-4 h-4' />
+								<ChevronLeft className='w-4 h-4' />
 							</button>
 						)}
 
@@ -386,7 +386,7 @@ export function Calendar({
 
 						{showNavigation && (
 							<button onClick={() => calendar.navigate('next')} className={nextButtonClasses} aria-label='Next'>
-								<NextIcon className='w-4 h-4' />
+								<ChevronRight className='w-4 h-4' />
 							</button>
 						)}
 					</>
