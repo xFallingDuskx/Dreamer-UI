@@ -366,7 +366,7 @@ const calendarProps = [
 		type: 'boolean',
 		default: 'false',
 		required: false,
-		description: 'Whether to show month and year dropdown selectors for easier navigation',
+		description: 'Whether to show month and year as dropdown selectors for easier navigation',
 	},
 	{
 		name: 'showTodayButton',
