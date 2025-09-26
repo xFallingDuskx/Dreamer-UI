@@ -17,6 +17,33 @@ export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> 
   description?: string;
 }
 
+/**
+ * A form label component with support for required indicators, help tooltips,
+ * and description text. Provides accessibility features for form elements.
+ * 
+ * @example
+ * ```tsx
+ * // Basic label
+ * <Label htmlFor="email">Email Address</Label>
+ * 
+ * // Required field with description
+ * <Label 
+ *   htmlFor="password"
+ *   required
+ *   description="Must be at least 8 characters"
+ * >
+ *   Password
+ * </Label>
+ * 
+ * // With help tooltip
+ * <Label 
+ *   htmlFor="username"
+ *   helpMessage="Username will be visible to other users"
+ * >
+ *   Display Name
+ * </Label>
+ * ```
+ */
 export function Label({
   display = 'inline',
   width = 'fit-content',

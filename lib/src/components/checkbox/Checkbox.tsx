@@ -24,6 +24,31 @@ export interface CheckboxProps extends React.ButtonHTMLAttributes<HTMLButtonElem
 	display?: 'inline' | 'block';
 }
 
+/**
+ * A customizable checkbox component with support for checked, unchecked, and indeterminate states.
+ * Provides keyboard navigation and accessibility features with flexible styling options.
+ * 
+ * @example
+ * ```tsx
+ * // Basic checkbox
+ * <Checkbox 
+ *   checked={isChecked}
+ *   onCheckedChange={setIsChecked}
+ * />
+ * 
+ * // Styled checkbox
+ * <Checkbox
+ *   size={24}
+ *   color="blue"
+ *   filled
+ *   rounded={false}
+ *   onCheckedChange={(checked) => console.log(checked)}
+ * />
+ * 
+ * // Indeterminate state
+ * <Checkbox indeterminate onCheckedChange={handleSelection} />
+ * ```
+ */
 export function Checkbox({
 	ref,
 	id,

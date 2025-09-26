@@ -41,6 +41,36 @@ export interface ModalProps {
 	ariaDescribedBy?: string;
 }
 
+/**
+ * A flexible modal dialog component with focus management, animation, and action buttons.
+ * Supports both styled and content-only modes with comprehensive accessibility features.
+ * 
+ * @example
+ * ```tsx
+ * // Basic modal
+ * <Modal
+ *   isOpen={showModal}
+ *   onClose={() => setShowModal(false)}
+ *   title="Confirm Action"
+ * >
+ *   <p>Are you sure you want to proceed?</p>
+ * </Modal>
+ * 
+ * // Modal with actions
+ * <Modal
+ *   isOpen={showDeleteModal}
+ *   onClose={handleClose}
+ *   title="Delete Item"
+ *   actions={[
+ *     { label: "Cancel", variant: "secondary", onClick: handleClose },
+ *     { label: "Delete", variant: "destructive", onClick: handleDelete }
+ *   ]}
+ *   disableCloseOnOverlayClick
+ * >
+ *   <p>This action cannot be undone.</p>
+ * </Modal>
+ * ```
+ */
 export function Modal({
 	id,
 	isOpen,

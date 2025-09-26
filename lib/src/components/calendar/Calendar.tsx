@@ -96,6 +96,35 @@ const MONTHS = [
 
 const YEAR_RANGE = 100;
 
+/**
+ * A full-featured calendar component supporting single date selection, date ranges, 
+ * and multiple view modes (month/week/day). Includes navigation, accessibility features,
+ * and extensive customization options.
+ * 
+ * @example
+ * ```tsx
+ * // Basic date picker
+ * <Calendar
+ *   mode="single"
+ *   onDateSelect={(date) => setSelectedDate(date)}
+ *   initialDate={new Date()}
+ * />
+ * 
+ * // Date range picker
+ * <Calendar
+ *   mode="range"
+ *   onRangeSelect={(range) => setDateRange(range)}
+ *   showTodayButton
+ * />
+ * 
+ * // Multi-view calendar
+ * <Calendar
+ *   showViewSelector
+ *   useMonthYearSelector
+ *   navigationLayout="adjacent"
+ * />
+ * ```
+ */
 export function Calendar({
 	id,
 	ref,

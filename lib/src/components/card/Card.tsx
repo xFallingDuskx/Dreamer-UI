@@ -28,6 +28,28 @@ export interface CardProps {
 	imageToEdge?: boolean;
 }
 
+/**
+ * A flexible container component for displaying content in a structured format.
+ * Supports headers, footers, images, and customizable padding with responsive design.
+ * 
+ * @example
+ * ```tsx
+ * // Simple card
+ * <Card header="Card Title" size="lg">
+ *   <p>Your content goes here</p>
+ * </Card>
+ * 
+ * // Card with image and footer
+ * <Card 
+ *   imageSrc="/photo.jpg" 
+ *   imageAlt="Product photo"
+ *   header={<h3>Product Name</h3>}
+ *   footer={<Button>Buy Now</Button>}
+ * >
+ *   Product description text here.
+ * </Card>
+ * ```
+ */
 export function Card({
 	id,
 	className,

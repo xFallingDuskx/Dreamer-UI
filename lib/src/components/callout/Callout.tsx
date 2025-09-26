@@ -32,6 +32,27 @@ const VariantIcons: Record<CalloutVariants, React.ReactNode> = {
 	base: <DeepRing size={22} />,
 };
 
+/**
+ * A prominent notice component for displaying important information, alerts, or status messages.
+ * Supports different visual variants with appropriate icons and dismissible functionality.
+ * 
+ * @example
+ * ```tsx
+ * // Info callout
+ * <Callout variant="info" title="Tip" description="Save your work frequently" />
+ * 
+ * // Warning with custom content
+ * <Callout 
+ *   variant="warning" 
+ *   title="Unsaved Changes"
+ *   description={<>You have <strong>3 unsaved</strong> documents.</>}
+ *   dismissible
+ * />
+ * 
+ * // Success notification
+ * <Callout variant="success" description="Profile updated successfully!" />
+ * ```
+ */
 export function Callout({
 	id,
 	ref,

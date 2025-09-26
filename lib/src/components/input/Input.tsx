@@ -16,6 +16,32 @@ export interface InputProps extends Partial<InputVariants>, React.InputHTMLAttri
   successMessage?: string;
 }
 
+/**
+ * A versatile input component with support for various types, validation states,
+ * and password visibility toggle. Includes error/success message display.
+ * 
+ * @example
+ * ```tsx
+ * // Basic input
+ * <Input 
+ *   placeholder="Enter your name"
+ *   value={name}
+ *   onChange={(e) => setName(e.target.value)}
+ * />
+ * 
+ * // Password input with validation
+ * <Input
+ *   type="password"
+ *   placeholder="Enter password"
+ *   errorMessage={passwordError}
+ *   variant="outline"
+ *   rounded="lg"
+ * />
+ * 
+ * // Read-only display mode
+ * <Input value="John Doe" displayOnlyMode />
+ * ```
+ */
 export function Input({
   variant = inputDefaults.variant,
   rounded,

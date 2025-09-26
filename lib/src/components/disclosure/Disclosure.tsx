@@ -23,6 +23,27 @@ export interface DisclosureProps {
   buttonClassName?: string;
 }
 
+/**
+ * A simple disclosure component for showing and hiding content sections.
+ * Provides keyboard navigation and accessibility features with expand/collapse functionality.
+ * 
+ * @example
+ * ```tsx
+ * // Uncontrolled disclosure
+ * <Disclosure label="Show Details">
+ *   <p>Hidden content that will be revealed when expanded.</p>
+ * </Disclosure>
+ * 
+ * // Controlled disclosure
+ * <Disclosure 
+ *   label="Advanced Options"
+ *   isOpen={showAdvanced}
+ *   onToggle={setShowAdvanced}
+ * >
+ *   <div>Advanced configuration options...</div>
+ * </Disclosure>
+ * ```
+ */
 export function Disclosure({
   children,
   label,

@@ -26,6 +26,22 @@ interface ButtonLinkProps
 
 export type ButtonProps = ButtonButtonProps | ButtonLinkProps;
 
+/**
+ * A versatile button component that can render as either a button or anchor element.
+ * Supports loading states, various visual variants, and accessibility features.
+ * 
+ * @example
+ * ```tsx
+ * // Regular button
+ * <Button variant="primary" onClick={() => save()}>Save</Button>
+ * 
+ * // Loading state
+ * <Button loading variant="primary">Processing...</Button>
+ * 
+ * // Link button
+ * <Button href="/dashboard" variant="secondary">Go to Dashboard</Button>
+ * ```
+ */
 export function Button({
 	variant = buttonDefaults.variant,
 	size,

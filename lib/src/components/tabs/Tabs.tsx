@@ -27,6 +27,31 @@ export interface TabsProps {
   contentClassName?: string;
 }
 
+/**
+ * A tabs component for organizing content into switchable sections.
+ * Works with TabsList, TabsTrigger, and TabsContent child components.
+ * 
+ * @example
+ * ```tsx
+ * <Tabs defaultValue="tab1" variant="underline">
+ *   <TabsList>
+ *     <TabsTrigger value="tab1">Overview</TabsTrigger>
+ *     <TabsTrigger value="tab2">Details</TabsTrigger>
+ *     <TabsTrigger value="tab3">Settings</TabsTrigger>
+ *   </TabsList>
+ *   
+ *   <TabsContent value="tab1">
+ *     <h3>Overview Content</h3>
+ *   </TabsContent>
+ *   <TabsContent value="tab2">
+ *     <h3>Details Content</h3>
+ *   </TabsContent>
+ *   <TabsContent value="tab3">
+ *     <h3>Settings Content</h3>
+ *   </TabsContent>
+ * </Tabs>
+ * ```
+ */
 export function Tabs({
   defaultValue,
   value,

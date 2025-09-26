@@ -64,6 +64,29 @@ export interface CarouselProps {
   gap?: number;
 }
 
+/**
+ * A responsive carousel component for displaying multiple items in a sliding interface.
+ * Supports auto-scroll, infinite looping, responsive breakpoints, and extensive customization.
+ * 
+ * @example
+ * ```tsx
+ * // Basic carousel
+ * <Carousel itemsToShow={3} autoScroll infinite>
+ *   <div>Slide 1</div>
+ *   <div>Slide 2</div>
+ *   <div>Slide 3</div>
+ * </Carousel>
+ * 
+ * // Responsive carousel with breakpoints
+ * <Carousel 
+ *   itemsToShow={{ xs: 1, md: 2, lg: 3 }}
+ *   gap={16}
+ *   buttonPosition="aligned"
+ * >
+ *   {products.map(product => <ProductCard key={product.id} {...product} />)}
+ * </Carousel>
+ * ```
+ */
 export function Carousel({
   children,
   id,

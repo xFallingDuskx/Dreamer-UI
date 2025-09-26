@@ -24,6 +24,38 @@ export interface PaginationProps extends React.HTMLAttributes<HTMLDivElement> {
   buttonsClassName?: string;
 }
 
+/**
+ * A pagination component for navigating through multiple pages of content.
+ * Supports both finite and infinite pagination with customizable appearance.
+ * 
+ * @example
+ * ```tsx
+ * // Basic pagination
+ * <Pagination
+ *   page={currentPage}
+ *   pageCount={totalPages}
+ *   onPageChange={setCurrentPage}
+ * />
+ * 
+ * // Infinite pagination
+ * <Pagination
+ *   page={currentPage}
+ *   pageCount={Infinity}
+ *   onPageChange={handlePageChange}
+ *   showFirstLast={false}
+ * />
+ * 
+ * // Customized appearance
+ * <Pagination
+ *   page={currentPage}
+ *   pageCount={100}
+ *   maxVisiblePages={7}
+ *   variant="outline"
+ *   size="lg"
+ *   onPageChange={setCurrentPage}
+ * />
+ * ```
+ */
 export function Pagination({
   page,
   pageCount = 5,

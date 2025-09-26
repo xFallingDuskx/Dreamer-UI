@@ -44,6 +44,33 @@ export interface DynamicListProps<T extends object> {
 	truncateText?: boolean;
 }
 
+/**
+ * An interactive list component with add, delete, and reorder functionality.
+ * Supports drag-and-drop reordering, keyboard navigation, and custom item rendering.
+ * 
+ * @example
+ * ```tsx
+ * // Basic dynamic list
+ * <DynamicList
+ *   items={[
+ *     { id: '1', content: 'First item' },
+ *     { id: '2', content: 'Second item' }
+ *   ]}
+ *   onItemsChange={(items) => setListItems(items)}
+ *   title="My Tasks"
+ * />
+ * 
+ * // Custom rendering with limited functionality
+ * <DynamicList
+ *   items={todos}
+ *   renderItem={(item, index) => (
+ *     <TodoItem {...item} onToggle={() => toggleTodo(item.id)} />
+ *   )}
+ *   allowDelete={false}
+ *   marker="decimal"
+ * />
+ * ```
+ */
 export function DynamicList<T extends object>({
 	items: initialItems = [],
 	size = 'md',

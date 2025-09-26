@@ -38,6 +38,29 @@ const VariantIcons: Record<ErrorBoundaryVariants, React.ReactNode> = {
   info: <InfoCircled size={24} />,
 };
 
+/**
+ * A React error boundary component that catches JavaScript errors in child components
+ * and displays a fallback UI instead of crashing the entire application.
+ * 
+ * @example
+ * ```tsx
+ * // Basic error boundary
+ * <ErrorBoundary>
+ *   <MyComponent />
+ * </ErrorBoundary>
+ * 
+ * // With custom error handling and retry
+ * <ErrorBoundary
+ *   variant="warning"
+ *   fallbackMessage="Failed to load user profile"
+ *   onError={(error) => logError(error)}
+ *   onRetry={() => refetchUserData()}
+ *   inDevEnv={process.env.NODE_ENV === 'development'}
+ * >
+ *   <UserProfile />
+ * </ErrorBoundary>
+ * ```
+ */
 export function ErrorBoundary({
   id,
   variant = 'danger',

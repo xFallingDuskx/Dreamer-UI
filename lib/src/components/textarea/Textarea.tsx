@@ -23,6 +23,36 @@ export interface TextareaProps extends Partial<TextareaVariants>, React.Textarea
   characterLimit?: number;
 }
 
+/**
+ * A versatile textarea component with auto-expand, character counting, and validation states.
+ * Supports both interactive and display-only modes with various styling options.
+ * 
+ * @example
+ * ```tsx
+ * // Basic textarea
+ * <Textarea 
+ *   placeholder="Enter your message..."
+ *   rows={4}
+ *   value={message}
+ *   onChange={(e) => setMessage(e.target.value)}
+ * />
+ * 
+ * // Auto-expanding with character limit
+ * <Textarea
+ *   autoExpand
+ *   characterLimit={500}
+ *   placeholder="Write your bio..."
+ *   errorMessage={bioError}
+ *   variant="outline"
+ * />
+ * 
+ * // Display-only mode
+ * <Textarea 
+ *   displayOnlyMode 
+ *   value="Read-only content display"
+ * />
+ * ```
+ */
 export function Textarea({
   variant = textareaDefaults.variant,
   rounded,

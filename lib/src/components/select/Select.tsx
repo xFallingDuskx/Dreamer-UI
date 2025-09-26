@@ -40,6 +40,40 @@ export interface SelectProps {
   searchPlaceholder?: string;
 }
 
+/**
+ * A feature-rich select component with search, keyboard navigation, and accessibility.
+ * Supports both simple selection and searchable combobox functionality.
+ * 
+ * @example
+ * ```tsx
+ * // Basic select
+ * const options = [
+ *   { text: 'Apple', value: 'apple' },
+ *   { text: 'Banana', value: 'banana' },
+ *   { text: 'Orange', value: 'orange' }
+ * ];
+ * 
+ * <Select
+ *   options={options}
+ *   value={selectedFruit}
+ *   onChange={setSelectedFruit}
+ *   placeholder="Choose a fruit"
+ * />
+ * 
+ * // Searchable select with descriptions
+ * <Select
+ *   options={[
+ *     { text: 'React', value: 'react', description: 'A library for building UIs' },
+ *     { text: 'Vue', value: 'vue', description: 'The progressive framework' }
+ *   ]}
+ *   searchable
+ *   clearable
+ *   placeholder="Select framework..."
+ *   searchPlaceholder="Search frameworks..."
+ *   onChange={setFramework}
+ * />
+ * ```
+ */
 export function Select({
   options,
   value,

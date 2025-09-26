@@ -33,6 +33,42 @@ export interface SliderProps {
   ariaLabelledBy?: string;
 }
 
+/**
+ * A horizontal slider component for selecting numeric values within a specified range.
+ * Supports both controlled and uncontrolled modes with keyboard navigation and touch support.
+ * 
+ * @example
+ * ```tsx
+ * // Basic slider
+ * <Slider
+ *   min={0}
+ *   max={100}
+ *   value={volume}
+ *   onValueChange={setVolume}
+ *   ariaLabel="Volume control"
+ * />
+ * 
+ * // Uncontrolled with custom step
+ * <Slider
+ *   defaultValue={50}
+ *   min={0}
+ *   max={200}
+ *   step={5}
+ *   onValueChange={(value) => console.log('Price:', value)}
+ * />
+ * 
+ * // Customized appearance
+ * <Slider
+ *   value={opacity}
+ *   onValueChange={setOpacity}
+ *   min={0}
+ *   max={1}
+ *   step={0.1}
+ *   rangeClassName="bg-blue-500"
+ *   thumbClassName="bg-blue-600 border-2 border-white"
+ * />
+ * ```
+ */
 export function Slider({
   id,
   value,

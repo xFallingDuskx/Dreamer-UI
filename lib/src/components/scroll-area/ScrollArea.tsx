@@ -21,6 +21,31 @@ export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {
   ref?: React.Ref<HTMLDivElement>;
 }
 
+/**
+ * A custom scrollable area component with styled scrollbars that appear on hover/scroll.
+ * Provides cross-browser consistent scrolling experience with customizable appearance.
+ * 
+ * @example
+ * ```tsx
+ * // Basic scroll area
+ * <ScrollArea className="h-64 w-full border rounded">
+ *   <div className="p-4 space-y-2">
+ *     {Array.from({length: 50}).map((_, i) => (
+ *       <div key={i}>Item {i + 1}</div>
+ *     ))}
+ *   </div>
+ * </ScrollArea>
+ * 
+ * // Customized scrollbars
+ * <ScrollArea 
+ *   className="h-96 w-80"
+ *   scrollbarThickness={12}
+ *   thumbClassName="bg-primary/60 hover:bg-primary/80"
+ * >
+ *   <LongContent />
+ * </ScrollArea>
+ * ```
+ */
 export function ScrollArea({
   className,
   thumbClassName,

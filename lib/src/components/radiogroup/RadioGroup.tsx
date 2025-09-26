@@ -24,6 +24,31 @@ export type RadioGroupProps = {
   hideInputs?: boolean;
 };
 
+/**
+ * A radio button group component for selecting one option from multiple choices.
+ * Supports both array-based options and RadioGroupItem child components.
+ * 
+ * @example
+ * ```tsx
+ * // Using options array
+ * <RadioGroup
+ *   options={[
+ *     { label: 'Small', value: 's', description: 'Perfect for personal use' },
+ *     { label: 'Medium', value: 'm' },
+ *     { label: 'Large', value: 'l', disabled: true }
+ *   ]}
+ *   value={selectedSize}
+ *   onChange={setSelectedSize}
+ * />
+ * 
+ * // Using child components
+ * <RadioGroup value={color} onChange={setColor}>
+ *   <RadioGroupItem value="red">Red</RadioGroupItem>
+ *   <RadioGroupItem value="blue">Blue</RadioGroupItem>
+ *   <RadioGroupItem value="green">Green</RadioGroupItem>
+ * </RadioGroup>
+ * ```
+ */
 export function RadioGroup({
   options = [],
   value,

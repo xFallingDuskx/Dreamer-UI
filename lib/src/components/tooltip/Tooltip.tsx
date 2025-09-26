@@ -34,6 +34,32 @@ export interface TooltipPosition {
   };
 }
 
+/**
+ * A tooltip component that displays contextual information on hover or focus.
+ * Automatically positions itself to stay within viewport bounds.
+ * 
+ * @example
+ * ```tsx
+ * // Basic tooltip
+ * <Tooltip message="This is helpful information">
+ *   <Button>Hover me</Button>
+ * </Tooltip>
+ * 
+ * // Custom placement and delay
+ * <Tooltip 
+ *   message="Tooltip on the right side" 
+ *   placement="right"
+ *   delay={500}
+ * >
+ *   <span>Hover for delayed tooltip</span>
+ * </Tooltip>
+ * 
+ * // Rich content tooltip
+ * <Tooltip message={<div>Complex <strong>HTML</strong> content</div>}>
+ *   <Icon name="info" />
+ * </Tooltip>
+ * ```
+ */
 export function Tooltip({
   id,
   children,

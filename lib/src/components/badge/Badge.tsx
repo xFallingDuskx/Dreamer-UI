@@ -29,6 +29,22 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 	size?: BadgeSize;
 }
 
+/**
+ * A small UI element for displaying status, labels, or categories.
+ * Supports various colors, sizes, and semantic accessibility attributes.
+ * 
+ * @example
+ * ```tsx
+ * // Status badge
+ * <Badge variant="success" use="status">Active</Badge>
+ * 
+ * // Notification count
+ * <Badge variant="destructive" aspect="square" use="status">5</Badge>
+ * 
+ * // Category tag
+ * <Badge variant="muted" outline>JavaScript</Badge>
+ * ```
+ */
 export function Badge({
 	id,
 	ref,

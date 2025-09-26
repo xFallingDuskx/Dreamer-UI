@@ -21,6 +21,29 @@ import { RadioGroup } from '../radiogroup';
 
 export interface FormComponentProps<T extends FormData = FormData> extends FormProps<T>, Partial<FormVariants> {}
 
+/**
+ * A comprehensive form component with built-in validation, responsive layouts,
+ * and support for various field types (input, textarea, select, checkbox, radio).
+ * 
+ * @example
+ * ```tsx
+ * // Define form fields - should be stable (memoized or declared outside component)
+ * const userForm = [
+ *   { __type: 'input', name: 'name', label: 'Full Name', required: true },
+ *   { __type: 'input', name: 'email', type: 'email', label: 'Email', required: true },
+ *   { __type: 'textarea', name: 'bio', label: 'Bio', rows: 4 },
+ *   { __type: 'checkbox', name: 'subscribe', text: 'Subscribe to newsletter' }
+ * ];
+ * 
+ * // Usage
+ * <Form
+ *   form={userForm}
+ *   columns={2}
+ *   onSubmit={(data) => saveUser(data)}
+ *   submitButton={<Button type="submit">Save User</Button>}
+ * />
+ * ```
+ */
 export function Form<T extends FormData = FormData>({
 	form,
 	initialData = {} as T,

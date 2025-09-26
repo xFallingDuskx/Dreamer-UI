@@ -32,6 +32,31 @@ interface ConfirmModalProps extends BaseActionModalProps {
 
 export type ActionModalProps = AlertModalProps | ConfirmModalProps;
 
+/**
+ * A modal dialog for user confirmation or alerts with predefined action buttons.
+ * Supports both alert (single OK button) and confirm (OK + Cancel buttons) modes.
+ * 
+ * @example
+ * ```tsx
+ * // Alert modal
+ * <ActionModal
+ *   type="alert"
+ *   message="Operation completed successfully!"
+ *   onClose={() => setShowModal(false)}
+ *   isOpen={showModal}
+ * />
+ * 
+ * // Confirmation modal
+ * <ActionModal
+ *   type="confirm"
+ *   message="Are you sure you want to delete this item?"
+ *   destructive
+ *   onConfirm={() => deleteItem()}
+ *   onClose={() => setShowModal(false)}
+ *   isOpen={showModal}
+ * />
+ * ```
+ */
 export function ActionModal({
   type,
   message,

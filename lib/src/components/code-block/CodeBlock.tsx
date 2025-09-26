@@ -42,6 +42,31 @@ export interface CodeBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement
   ref?: React.Ref<HTMLDivElement>;
 }
 
+/**
+ * A feature-rich code block component with syntax highlighting, copy functionality,
+ * download options, and fullscreen viewing. Supports multiple programming languages.
+ * 
+ * @example
+ * ```tsx
+ * // Basic code block
+ * <CodeBlock 
+ *   code="const greeting = 'Hello World';" 
+ *   language="typescript"
+ *   filename="example.ts"
+ * />
+ * 
+ * // Full-featured block
+ * <CodeBlock
+ *   code={jsonData}
+ *   language="json"
+ *   allowCopy
+ *   allowDownload
+ *   allowFullscreen
+ *   showLineNumbers
+ *   maxHeight={400}
+ * />
+ * ```
+ */
 export function CodeBlock({
   code,
   language = 'typescript',

@@ -49,6 +49,43 @@ function getOffsetStyle(effectivePlacement: PopoverPlacement, offset: number) {
 	}
 }
 
+/**
+ * A floating content container that appears relative to a trigger element.
+ * Supports hover and click interactions with intelligent positioning and focus management.
+ * 
+ * @example
+ * ```tsx
+ * // Basic popover
+ * <Popover 
+ *   trigger={<Button>Click me</Button>}
+ *   placement="bottom"
+ * >
+ *   <div className="p-4">
+ *     <h3>Popover Content</h3>
+ *     <p>This is the popover content.</p>
+ *   </div>
+ * </Popover>
+ * 
+ * // Hover popover
+ * <Popover
+ *   trigger={<span>Hover me</span>}
+ *   hoverable
+ *   placement="top"
+ *   alignment="start"
+ * >
+ *   <div className="p-2 text-sm">Tooltip-like content</div>
+ * </Popover>
+ * 
+ * // Controlled popover
+ * <Popover
+ *   trigger={<Button>Controlled</Button>}
+ *   isOpen={showPopover}
+ *   onOpenChange={setShowPopover}
+ * >
+ *   <PopoverMenu />
+ * </Popover>
+ * ```
+ */
 export function Popover({
 	id,
 	ref,

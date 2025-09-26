@@ -13,6 +13,29 @@ export interface ClickableProps extends Omit<React.HTMLProps<HTMLDivElement>, 'o
   buttonProps?: Omit<React.HTMLProps<HTMLButtonElement>, 'onClick'>;
 }
 
+/**
+ * A wrapper component that makes any content clickable by overlaying an invisible button or link.
+ * Preserves the visual layout while adding interaction behavior.
+ * 
+ * @example
+ * ```tsx
+ * // Make a card clickable as a link
+ * <Clickable linkTo="/product/123">
+ *   <Card>
+ *     <h3>Product Title</h3>
+ *     <p>Product description</p>
+ *   </Card>
+ * </Clickable>
+ * 
+ * // Make content clickable as a button
+ * <Clickable onButtonClick={() => openModal()}>
+ *   <div className="flex items-center gap-2">
+ *     <Icon />
+ *     <span>Click me</span>
+ *   </div>
+ * </Clickable>
+ * ```
+ */
 export function Clickable({
   children,
   className,

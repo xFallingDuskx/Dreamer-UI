@@ -28,6 +28,27 @@ export interface ToggleProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonE
   backgroundClassNames?: ToggleBackgroundClasses;
 }
 
+/**
+ * A toggle switch component for binary on/off states with smooth animations.
+ * Supports both controlled and uncontrolled modes with keyboard navigation.
+ * 
+ * @example
+ * ```tsx
+ * // Uncontrolled toggle
+ * <Toggle onCheckedChange={(checked) => console.log('Toggled:', checked)} />
+ * 
+ * // Controlled toggle
+ * <Toggle 
+ *   checked={isEnabled}
+ *   onCheckedChange={setIsEnabled}
+ *   size="lg"
+ *   variant="success"
+ * />
+ * 
+ * // Disabled state
+ * <Toggle disabled checked />
+ * ```
+ */
 export function Toggle({
   ref,
   id,

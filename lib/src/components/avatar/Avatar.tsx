@@ -24,6 +24,22 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
 	initials?: string;
 }
 
+/**
+ * Displays user avatars with support for images, preset icons, or initials.
+ * Provides various size and shape options with built-in fallback handling.
+ * 
+ * @example
+ * ```tsx
+ * // With custom image
+ * <Avatar src="/user-photo.jpg" alt="John Doe" size="lg" />
+ * 
+ * // With preset character
+ * <Avatar preset="astronaut" size="md" shape="circle" />
+ * 
+ * // With initials fallback
+ * <Avatar initials="JD" size="sm" />
+ * ```
+ */
 export function Avatar({
 	id,
 	ref,

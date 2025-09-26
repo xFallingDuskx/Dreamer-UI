@@ -18,6 +18,20 @@ export interface AccordionItemProps extends Omit<AccordionOption, 'defaultOpen'>
   bodyClassName?: string;
 }
 
+/**
+ * Individual accordion item component with expandable content.
+ * Provides keyboard navigation and accessibility features.
+ * 
+ * @example
+ * ```tsx
+ * <AccordionItem
+ *   title="FAQ Question"
+ *   content="This is the answer to the question"
+ *   isOpen={false}
+ *   onToggle={() => console.log('toggled')}
+ * />
+ * ```
+ */
 export function AccordionItem({
   id,
   title,

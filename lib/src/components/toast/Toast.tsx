@@ -47,6 +47,38 @@ const defaultTypeStyles: Record<ToastType, { className: string; icon: ReactNode 
   },
 };
 
+/**
+ * A notification toast component for displaying temporary messages to users.
+ * Supports different types, actions, and auto-dismissal with customizable styling.
+ * 
+ * @example
+ * ```tsx
+ * // Basic toast
+ * <Toast
+ *   id="notification-1"
+ *   title="Success!"
+ *   description="Your changes have been saved."
+ *   type="info"
+ * />
+ * 
+ * // Toast with action button
+ * <Toast
+ *   id="undo-toast"
+ *   title="Item deleted"
+ *   action={{ label: "Undo", onClick: restoreItem }}
+ *   duration={5000}
+ * />
+ * 
+ * // Warning toast with custom duration
+ * <Toast
+ *   id="warning-toast"
+ *   title="Connection lost"
+ *   description="Trying to reconnect..."
+ *   type="warning"
+ *   duration={0}
+ * />
+ * ```
+ */
 export function Toast({
   id,
   title,

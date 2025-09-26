@@ -15,6 +15,25 @@ export interface SeparatorProps extends Omit<React.HTMLAttributes<HTMLDivElement
   thickness?: Thickness;
 }
 
+/**
+ * A visual separator component for dividing content sections.
+ * Supports both horizontal and vertical orientations with customizable thickness.
+ * 
+ * @example
+ * ```tsx
+ * // Horizontal separator
+ * <Separator />
+ * 
+ * // Vertical separator
+ * <Separator orientation="vertical" className="h-6" />
+ * 
+ * // Thick separator
+ * <Separator thickness="thick" />
+ * 
+ * // Decorative separator (hidden from screen readers)
+ * <Separator decorative />
+ * ```
+ */
 export function Separator({
   orientation = 'horizontal',
   decorative = false,

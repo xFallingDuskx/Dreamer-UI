@@ -67,6 +67,39 @@ export interface TableProps<T extends object> {
 	caption?: string;
 }
 
+/**
+ * A feature-rich table component with sorting, selection, and accessibility features.
+ * Supports custom cell rendering, row selection, and responsive design.
+ * 
+ * **Important:** The `data` prop should be stable (either declared outside the component or memoized)
+ * to prevent unnecessary re-renders and maintain performance.
+ * 
+ * @example
+ * ```tsx
+ * // Define stable data and columns outside component or use useMemo
+ * const tableData = [
+ *   { id: 1, name: 'John Doe', email: 'john@example.com' },
+ *   { id: 2, name: 'Jane Smith', email: 'jane@example.com' }
+ * ];
+ * 
+ * const columns = [
+ *   { key: 'name', header: 'Name', sortable: true },
+ *   { key: 'email', header: 'Email', sortable: true },
+ *   { 
+ *     key: 'actions', 
+ *     header: 'Actions',
+ *     cell: (item) => <Button onClick={() => edit(item.id)}>Edit</Button>
+ *   }
+ * ];
+ * 
+ * <Table
+ *   data={tableData}
+ *   columns={columns}
+ *   selectable
+ *   onSelectionChange={(selected) => setSelectedIds(selected)}
+ * />
+ * ```
+ */
 export function Table<T extends object>({
 	id,
 	className,

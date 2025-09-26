@@ -36,8 +36,32 @@ export interface DrawerProps {
 }
 
 /**
- * Drawer component that slides in from the bottom of the screen.
- * Provides an overlay and slide-in animation for bottom sheet content display.
+ * A bottom-slide drawer component for mobile-friendly overlays and forms.
+ * Includes drag gestures, focus management, and smooth animations.
+ * 
+ * @example
+ * ```tsx
+ * // Basic drawer
+ * <Drawer
+ *   isOpen={showDrawer}
+ *   onClose={() => setShowDrawer(false)}
+ *   title="Settings"
+ * >
+ *   <p>Drawer content goes here</p>
+ * </Drawer>
+ * 
+ * // Full-featured drawer
+ * <Drawer
+ *   isOpen={showForm}
+ *   onClose={handleClose}
+ *   title="Edit Profile"
+ *   footer={<Button onClick={save}>Save Changes</Button>}
+ *   enableDragGestures
+ *   showCloseButton
+ * >
+ *   <ProfileForm />
+ * </Drawer>
+ * ```
  */
 export function Drawer({
   ref,
