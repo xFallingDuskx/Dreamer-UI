@@ -14,6 +14,7 @@ import {
 	FormData,
 	FormFactories,
 	Popover,
+	Tooltip,
 } from '@moondreamsdev/dreamer-ui/components';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { useState } from 'react';
@@ -953,6 +954,67 @@ export const DraftPage = () => {
 											</div>
 										</div>
 									</Card>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Tooltip Border Testing */}
+					<div className='mb-8'>
+						<h3 className='text-2xl font-bold mb-4'>Tooltip Component Testing</h3>
+						<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+							<div>
+								<h4 className='text-lg font-medium mb-2'>Basic Tooltip</h4>
+								<div className='flex space-x-4'>
+									<Tooltip message='This is a basic tooltip'>
+										<Button>Basic Tooltip</Button>
+									</Tooltip>
+								</div>
+							</div>
+
+							<div>
+								<h4 className='text-lg font-medium mb-2'>Bordered Tooltip</h4>
+								<div className='flex space-x-4'>
+									<Tooltip
+										message='Custom styled tooltip with border!'
+										className='bg-purple-600 text-white border-4 border-purple-400'
+									>
+										<Button variant='secondary'>Bordered Tooltip</Button>
+									</Tooltip>
+								</div>
+							</div>
+
+							<div>
+								<h4 className='text-lg font-medium mb-2'>Different Positions with Borders</h4>
+								<div className='grid grid-cols-2 gap-4'>
+									<Tooltip
+										message='Top tooltip with border'
+										placement='top'
+										className='bg-red-600 text-white border-2 border-red-400'
+									>
+										<Button size='sm'>Top</Button>
+									</Tooltip>
+									<Tooltip
+										message='Right tooltip with border'
+										placement='right'
+										className='bg-green-600 text-white border-2 border-green-400'
+									>
+										<Button size='sm'>Right</Button>
+									</Tooltip>
+									<Tooltip
+										message='Bottom tooltip with border'
+										placement='bottom'
+										className='bg-blue-600 text-white border-2 border-blue-400'
+									>
+										<Button size='sm'>Bottom</Button>
+									</Tooltip>
+									<Tooltip
+										message='Left tooltip with border'
+										placement='left'
+										className='bg-yellow-600 text-white border-2 border-yellow-400'
+									>
+										<Button size='sm'>Left</Button>
+									</Tooltip>
 								</div>
 							</div>
 						</div>
