@@ -5,25 +5,25 @@ import { TabsVariant, TabsWidth } from './variants';
 
 export interface TabsProps {
   id?: string;
-  /** The default selected tab value (uncontrolled) */
+  /** The value of the tab that should be active when initially rendered */
   defaultValue?: string;
-  /** The selected tab value (controlled) */
+  /** The controlled value of the tab to activate */
   value?: string;
-  /** Callback fired when the tab selection changes */
+  /** Event handler called when the value changes */
   onValueChange?: (value: string) => void;
-  /** How the tabs should be sized */
+  /** How the tabs should be sized. "fit" sizes tabs to content, "full" makes them equal width */
   tabsWidth?: TabsWidth;
-  /** The visual style variant */
+  /** The visual style variant of the tabs */
   variant?: TabsVariant;
-  /** Additional class names for the tabs container */
+  /** Additional CSS classes to apply to the tabs container */
   className?: string;
-  /** The tab content and triggers */
+  /** The tab list and content elements */
   children?: React.ReactNode;
   /** Ref to the tabs container */
   ref?: React.Ref<HTMLDivElement>;
-  /** Additional class names for the tab triggers */
+  /** Additional CSS classes to apply to the tab triggers */
   triggersClassName?: string;
-  /** Additional class names for the tab content */
+  /** Additional CSS classes to apply to the tab content */
   contentClassName?: string;
 }
 

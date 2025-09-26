@@ -5,28 +5,29 @@ import { join } from '../../utils';
 import { useAnimationSlideIn, useDrawerDocumentChanges, useDrawerDrag, useDrawerFocus } from './hooks';
 
 export interface DrawerProps {
+  /** Reference to the drawer element */
   ref?: React.Ref<HTMLDivElement>;
   /** Unique identifier for the drawer */
   id?: string;
   /** Whether the drawer is open */
   isOpen: boolean;
-  /** Callback when drawer should close */
+  /** Callback fired when the drawer should close */
   onClose: () => void;
-  /** Drawer title - can be a string or React node */
+  /** Optional title for the drawer header */
   title?: React.ReactNode;
-  /** Drawer content */
+  /** The content to display inside the drawer */
   children: React.ReactNode;
-  /** Drawer footer - can be a string or React node */
+  /** Optional footer content for the drawer */
   footer?: React.ReactNode;
-  /** Additional CSS classes for the drawer */
+  /** Additional CSS classes to apply to the drawer */
   className?: string;
-  /** Additional CSS classes for the overlay */
+  /** Additional CSS classes to apply to the overlay */
   overlayClassName?: string;
-  /** Whether to show the close button */
+  /** Whether to show the close button in the top-right corner */
   showCloseButton?: boolean;
   /** Whether to disable closing when clicking the overlay */
   disableCloseOnOverlayClick?: boolean;
-  /** Whether to enable drag gestures on the notch */
+  /** Whether to enable drag gestures on the notch for closing */
   enableDragGestures?: boolean;
   /** ARIA labelledby attribute */
   ariaLabelledBy?: string;
