@@ -14,6 +14,7 @@ const components = [
 	{ name: 'Avatar', path: '/components/avatar' },
 	{ name: 'Badge', path: '/components/badge' },
 	{ name: 'Button', path: '/components/button' },
+	{ name: 'Calendar', path: '/components/calendar' },
 	{ name: 'Callout', path: '/components/callout' },
 	{ name: 'Card', path: '/components/card' },
 	{ name: 'Carousel', path: '/components/carousel' },
