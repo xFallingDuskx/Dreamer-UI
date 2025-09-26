@@ -93,17 +93,17 @@ export function Tooltip({
   const reactId = useId();
   const tooltipId = id ?? reactId;
 
-  // const getArrowClasses = (arrowPlacement: TooltipPlacement) => {
-  //   const baseArrow = 'absolute w-0 h-0';
-  //   const arrowClasses = {
-  //     top: 'border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-border',
-  //     bottom: 'border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-border',
-  //     left: 'border-t-[6px] border-b-[6px] border-l-[6px] border-t-transparent border-b-transparent border-l-border',
-  //     right: 'border-t-[6px] border-b-[6px] border-r-[6px] border-t-transparent border-b-transparent border-r-border',
-  //   };
+  const getArrowClasses = (arrowPlacement: TooltipPlacement) => {
+    const baseArrow = 'absolute w-0 h-0 pointer-events-none';
+    const arrowClasses = {
+      top: 'border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-popover',
+      bottom: 'border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-popover', 
+      left: 'border-t-[6px] border-b-[6px] border-l-[6px] border-t-transparent border-b-transparent border-l-popover',
+      right: 'border-t-[6px] border-b-[6px] border-r-[6px] border-t-transparent border-b-transparent border-r-popover',
+    };
 
-  //   return join(baseArrow, arrowClasses[arrowPlacement], arrowClassName);
-  // };
+    return join(baseArrow, arrowClasses[arrowPlacement]);
+  };
 
   return (
     <>
@@ -156,12 +156,12 @@ export function Tooltip({
             }}
           >
             {message}
-            {/* {position && (
+            {position && (
               <div
                 className={getArrowClasses(position.placement)}
                 style={{ left: position.arrow.x, top: position.arrow.y }}
               />
-            )} */}
+            )}
           </div>,
           document.body
         )}
