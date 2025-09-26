@@ -5,14 +5,13 @@ import { sizeVariants, Thickness, thicknessVariants } from './variants';
 export type Orientation = 'horizontal' | 'vertical';
 
 export interface SeparatorProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'role'> {
+  /** Reference to the separator element */
   ref?: Ref<HTMLDivElement>;
+  /** The orientation of the separator */
   orientation?: Orientation;
-  /**
-   * Whether the separator is decorative only or serves a semantic purpose.
-   * When decorative=true, it's hidden from screen readers.
-   * @default false
-   */
+  /** Whether the separator is decorative only. When true, it's hidden from screen readers */
   decorative?: boolean;
+  /** The thickness variant of the separator */
   thickness?: Thickness;
 }
 

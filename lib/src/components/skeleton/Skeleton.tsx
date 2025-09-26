@@ -3,11 +3,11 @@ import { join } from '../../utils';
 import { skeletonVariants, type SkeletonVariants } from './variants';
 
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement>, SkeletonVariants {
-  /** Custom class name for additional styling */
+  /** Additional CSS classes to apply to the skeleton */
   className?: string;
   /** Number of skeleton lines to render (for text-like skeletons) */
   lines?: number;
-  /** Whether the skeleton should animate */
+  /** Whether the skeleton should animate with a pulse effect */
   animate?: boolean;
   /** Ref to be passed to the skeleton element */
   ref?: React.Ref<HTMLDivElement>;

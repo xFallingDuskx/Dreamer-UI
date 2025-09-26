@@ -3,27 +3,27 @@ import { join } from '@moondreamsdev/dreamer-ui/utils';
 
 export interface SliderProps {
   id?: string;
-  /** Current value of the slider */
+  /** The controlled value of the slider */
   value?: number;
-  /** Default value when uncontrolled */
+  /** The initial value of the slider (uncontrolled) */
   defaultValue?: number;
-  /** Callback fired when the value changes */
+  /** Callback fired when the slider value changes */
   onValueChange?: (value: number) => void;
-  /** Minimum value */
+  /** The minimum value of the slider */
   min?: number;
-  /** Maximum value */
+  /** The maximum value of the slider */
   max?: number;
-  /** Step increment */
+  /** The step increment of the slider */
   step?: number;
   /** Whether the slider is disabled */
   disabled?: boolean;
-  /** Custom class name for the track element */
+  /** Additional CSS classes to apply to the track element */
   trackClassName?: string;
-  /** Custom class name for the range element */
+  /** Additional CSS classes to apply to the filled range element */
   rangeClassName?: string;
-  /** Custom class name for the thumb element */
+  /** Additional CSS classes to apply to the thumb element */
   thumbClassName?: string;
-  /** Custom class name for the root element */
+  /** Additional CSS classes to apply to the slider */
   className?: string;
   /** Ref to the root element */
   ref?: React.Ref<HTMLDivElement>;

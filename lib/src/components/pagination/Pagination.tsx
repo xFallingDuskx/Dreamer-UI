@@ -4,23 +4,23 @@ import { ChevronDoubleLeft, ChevronDoubleRight, ChevronLeft, ChevronRight } from
 import { PaginationSize, paginationSizes, PaginationVariant, paginationVariants } from './variants';
 
 export interface PaginationProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** The current page number (1-indexed) */
+  /** The current active page (1-indexed) */
   page: number;
   /** Total number of pages. Use Infinity for infinite pagination */
   pageCount?: number;
   /** Maximum number of page buttons to show */
   maxVisiblePages?: number;
-  /** Show first and last page buttons */
+  /** Whether to show first and last page buttons */
   showFirstLast?: boolean;
   /** Button variant style */
   variant?: PaginationVariant;
   /** Button size */
   size?: PaginationSize;
-  /** Callback when page changes */
+  /** Callback fired when the page changes */
   onPageChange: (page: number) => void;
   /** Ref for the pagination container */
   ref?: React.Ref<HTMLDivElement>;
-  /** Additional class names for the button elements */
+  /** Additional CSS classes for the button elements */
   buttonsClassName?: string;
 }
 

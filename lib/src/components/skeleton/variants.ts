@@ -14,6 +14,8 @@ export const skeletonVariants = {
 } as const;
 
 export interface SkeletonVariants {
+  /** The shape of the skeleton element */
   shape?: keyof typeof skeletonVariants.shape;
+  /** Spacing between skeleton lines when multiple lines are used */
   lineSpacing?: keyof typeof skeletonVariants.lineSpacing;
 }

@@ -4,20 +4,31 @@ import { useAutoSwitchPlacement } from './hooks';
 import { placementVariants, PopoverAlignment, PopoverPlacement } from './variants';
 
 export interface PopoverProps {
+	/** Unique identifier for the popover */
 	id?: string;
+	/** Reference to the popover element */
 	ref?: React.Ref<HTMLDivElement>;
+	/** Whether the popover is open (controlled) */
 	isOpen?: boolean;
+	/** Callback fired when the open state changes */
 	onOpenChange?: (open: boolean) => void;
+	/** The content to display in the popover */
 	children: React.ReactNode;
+	/** The element that triggers the popover */
 	trigger: React.ReactElement;
+	/** The preferred side of the trigger to render against */
 	placement?: PopoverPlacement;
+	/** The preferred alignment against the trigger */
 	alignment?: PopoverAlignment;
+	/** Additional CSS classes to apply to the popover content */
 	className?: string;
+	/** Whether to close popover when clicking outside */
 	closeOnOverlayClick?: boolean;
+	/** Whether to close popover when clicking the trigger again */
 	closeOnTriggerClick?: boolean;
-	/** Offset of the popover from the trigger element in pixel */
+	/** Offset of the popover from the trigger element in pixels */
 	offset?: number;
-	/** Automatically switch placement to opposite side if there is not enough space in the viewport */
+	/** Automatically switch placement to opposite side if there is not enough space */
 	autoSwitchPlacement?: boolean;
 	/** Enable hover behavior - shows on hover, hides 200ms after mouse leaves */
 	hoverable?: boolean;

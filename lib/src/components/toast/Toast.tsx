@@ -10,12 +10,19 @@ export interface ToastAction {
 
 /** Data for a toast notification */
 export interface ToastData {
+  /** Unique identifier for the toast */
   id: string;
+  /** The main message text for the toast */
   title: string;
+  /** Optional secondary message text */
   description?: string;
+  /** The type of toast which determines styling and icon. Can be extended with customTypes */
   type?: ToastType;
+  /** Optional action button configuration */
   action?: ToastAction;
+  /** Duration in milliseconds before auto-dismiss. Set to 0 to disable auto-dismiss */
   duration?: number;
+  /** Callback fired when the toast is removed */
   onRemove?: (id: string) => void;
 }
 
