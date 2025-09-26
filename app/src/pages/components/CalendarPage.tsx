@@ -1,4 +1,4 @@
-import { Calendar } from '../../../calendar';
+import { Calendar } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 
 const tableOfContents = [

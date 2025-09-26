@@ -1,6 +1,6 @@
-import { ChevronLeft, ChevronRight } from '@moondreamsdev/dreamer-ui/symbols';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { ReactNode, Ref } from 'react';
+import { ChevronLeft, ChevronRight } from '../../symbols';
+import { join } from '../../utils';
 import { CalendarDateRange, useCalendar, UseCalendarOptions } from './hooks';
 import { calendarDefaults, CalendarSize, calendarSizeVariants, calendarViewVariants } from './variants';
 
