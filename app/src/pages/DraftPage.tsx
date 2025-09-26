@@ -13,6 +13,7 @@ import {
 	Form,
 	FormData,
 	FormFactories,
+	Input,
 	Popover,
 } from '@moondreamsdev/dreamer-ui/components';
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
@@ -471,6 +472,62 @@ export const DraftPage = () => {
 					<p className='text-gray-300 mb-6'>
 						Use this space to test and develop new components before adding them to the official documentation.
 					</p>
+
+					{/* Input Component Flex Testing */}
+					<div className='mb-6'>
+						<h3 className='text-lg font-medium text-white mb-3'>Input Component Flex & Layout Testing</h3>
+						<div className='space-y-6 bg-gray-800/50 p-6 rounded-lg'>
+							{/* Flex Layout Test */}
+							<div>
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Flex Layout Test (flex-1 should work)</h4>
+								<div className='flex gap-4'>
+									<Input placeholder='Input 1' className='flex-1' />
+									<Input placeholder='Input 2' className='flex-1' />
+									<Button variant='primary'>Submit</Button>
+								</div>
+							</div>
+
+							{/* Grid Layout Test */}
+							<div>
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Grid Layout Test</h4>
+								<div className='grid grid-cols-3 gap-4'>
+									<Input placeholder='Grid 1' />
+									<Input placeholder='Grid 2' />
+									<Input placeholder='Grid 3' />
+								</div>
+							</div>
+
+							{/* Width Classes Test */}
+							<div>
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Width Classes Test</h4>
+								<div className='space-y-2'>
+									<Input placeholder='w-full (default)' className='w-full' />
+									<Input placeholder='w-1/2' className='w-1/2' />
+									<Input placeholder='w-64' className='w-64' />
+								</div>
+							</div>
+
+							{/* Password Input Test (should still work with wrapper) */}
+							<div>
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Password Input Test (with flex)</h4>
+								<div className='flex gap-4'>
+									<Input type='password' placeholder='Password 1' className='flex-1' />
+									<Input type='password' placeholder='Password 2' className='flex-1' />
+									<Button variant='secondary'>Login</Button>
+								</div>
+							</div>
+
+							{/* Mixed Input Types in Flex */}
+							<div>
+								<h4 className='text-md font-medium text-gray-300 mb-2'>Mixed Types in Flex</h4>
+								<div className='flex gap-4'>
+									<Input type='text' placeholder='Username' className='flex-1' />
+									<Input type='password' placeholder='Password' className='flex-1' />
+									<Input type='email' placeholder='Email' className='flex-1' />
+								</div>
+							</div>
+						</div>
+					</div>
 
 					{/* Example testing section */}
 					<div className='space-y-6'>
