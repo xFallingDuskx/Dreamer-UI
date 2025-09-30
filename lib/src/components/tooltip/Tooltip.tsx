@@ -143,9 +143,10 @@ export function Tooltip({
 	}, []);
 
 	const getTooltipClasses = () => {
-		const baseClasses = 'absolute z-50 px-2 py-1 text-sm rounded shadow-lg bg-tooltip text-tooltip-foreground pointer-events-auto transition-all duration-150 ease-out w-max max-w-xs';
+		const baseClasses =
+			'absolute z-50 px-2 py-1 text-sm rounded shadow-lg bg-tooltip text-tooltip-foreground pointer-events-auto transition-all duration-150 ease-out w-max max-w-xs';
 		const visibilityClasses = isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none';
-		
+
 		const placementClasses = {
 			top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
 			bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
@@ -160,13 +161,7 @@ export function Tooltip({
 			right: 'origin-left',
 		};
 
-		return join(
-			baseClasses,
-			placementClasses[placement],
-			transformOrigins[placement],
-			visibilityClasses,
-			className
-		);
+		return join(baseClasses, placementClasses[placement], transformOrigins[placement], visibilityClasses, className);
 	};
 
 	const getArrowClasses = () => {
@@ -175,25 +170,27 @@ export function Tooltip({
 		const baseArrow = 'absolute w-0 h-0 pointer-events-none';
 		const arrowClasses = {
 			top: 'top-full left-1/2 -translate-x-1/2 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-tooltip',
-			bottom: 'bottom-full left-1/2 -translate-x-1/2 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-tooltip',
+			bottom:
+				'bottom-full left-1/2 -translate-x-1/2 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-tooltip',
 			left: 'left-full top-1/2 -translate-y-1/2 border-t-[6px] border-b-[6px] border-l-[6px] border-t-transparent border-b-transparent border-l-tooltip',
-			right: 'right-full top-1/2 -translate-y-1/2 border-t-[6px] border-b-[6px] border-r-[6px] border-t-transparent border-b-transparent border-r-tooltip',
+			right:
+				'right-full top-1/2 -translate-y-1/2 border-t-[6px] border-b-[6px] border-r-[6px] border-t-transparent border-b-transparent border-r-tooltip',
 		};
 
 		return join(baseArrow, arrowClasses[placement]);
 	};
 
-	const childrenProps = children.props as Record<string, unknown> & { 
-		style?: React.CSSProperties; 
-		children?: React.ReactNode; 
+	const childrenProps = children.props as {
+		style?: React.CSSProperties;
+		children?: React.ReactNode;
 	};
 
 	return (
 		<>
 			{React.cloneElement(children, {
-				style: { 
-					...childrenProps.style, 
-					position: 'relative' 
+				style: {
+					...childrenProps.style,
+					position: 'relative',
 				},
 				onMouseEnter: () => {
 					setIsHoveringTrigger(true);
@@ -219,23 +216,27 @@ export function Tooltip({
 				children: (
 					<>
 						{childrenProps.children}
-						<div
-							id={tooltipId}
-							role="tooltip"
-							className={getTooltipClasses()}
-							onMouseEnter={() => {
-								setIsHoveringTooltip(true);
-								if (timeoutRef.current) {
-									clearTimeout(timeoutRef.current);
-								}
-							}}
-							onMouseLeave={() => {
-								setIsHoveringTooltip(false);
-							}}
-						>
-							{message}
-							{showArrow && <div className={getArrowClasses()} />}
-						</div>
+						{!disabled && (
+							<div
+								id={tooltipId}
+								role='tooltip'
+								className={getTooltipClasses()}
+								aria-hidden={!isVisible}
+								aria-live={isVisible ? 'polite' : undefined}
+								onMouseEnter={() => {
+									setIsHoveringTooltip(true);
+									if (timeoutRef.current) {
+										clearTimeout(timeoutRef.current);
+									}
+								}}
+								onMouseLeave={() => {
+									setIsHoveringTooltip(false);
+								}}
+							>
+								{message}
+								{showArrow && <div className={getArrowClasses()} aria-hidden={true} />}
+							</div>
+						)}
 					</>
 				),
 			} as Record<string, unknown>)}
