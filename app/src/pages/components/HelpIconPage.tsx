@@ -46,30 +46,30 @@ const helpIconExamples = [
 		code: `<div className='flex items-center space-x-6'>
   <div className='space-x-1'>
     <span>Small</span>
-    <HelpIcon message="Small help icon" iconSize={8} />
+    <HelpIcon message="Small help icon" iconSize={10} />
   </div>
   <div className='space-x-1'>
     <span>Medium</span>
-    <HelpIcon message="Medium help icon (default)" iconSize={12} />
+    <HelpIcon message="Medium help icon (default)" iconSize={14} />
   </div>
   <div className='space-x-1'>
     <span>Large</span>
-    <HelpIcon message="Large help icon" iconSize={16} />
+    <HelpIcon message="Large help icon" iconSize={18} />
   </div>
 </div>`,
 		children: (
 			<div className='flex items-center space-x-6'>
 				<div className='space-x-1'>
 					<span className='text-sm'>Small</span>
-					<HelpIcon message='Small help icon' iconSize={8} />
+					<HelpIcon message='Small help icon' iconSize={10} />
 				</div>
 				<div className='space-x-1'>
 					<span>Medium</span>
-					<HelpIcon message='Medium help icon (default)' iconSize={12} />
+					<HelpIcon message='Medium help icon (default)' iconSize={14} />
 				</div>
 				<div className='space-x-1'>
 					<span className='text-lg'>Large</span>
-					<HelpIcon message='Large help icon' iconSize={16} />
+					<HelpIcon message='Large help icon' iconSize={18} />
 				</div>
 			</div>
 		),

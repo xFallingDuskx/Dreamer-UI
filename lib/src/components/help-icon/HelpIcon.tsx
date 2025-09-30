@@ -49,7 +49,7 @@ export interface HelpIconProps extends Omit<TooltipProps, 'children'> {
  * />
  * ```
  */
-export function HelpIcon({ id, ref, design = 'filled', iconSize = 12, className, ...tooltipProps }: HelpIconProps) {
+export function HelpIcon({ id, ref, design = 'filled', iconSize = 14, className, ...tooltipProps }: HelpIconProps) {
 	const IconComponent = design === 'filled' ? InfoCircledFilled : InfoCircled;
 
 	return (
