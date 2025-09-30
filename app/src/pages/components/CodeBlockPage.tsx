@@ -382,11 +382,11 @@ This is a **bold text** and this is _italic text_.
 
 ### Code Example
 
-\\\`\\\`\\\`javascript
+\`\`\`javascript
 function greet() {
   console.log("Hello from markdown!");
 }
-\\\`\\\`\\\`
+\`\`\`
 
 > This is a blockquote with proper styling
 
