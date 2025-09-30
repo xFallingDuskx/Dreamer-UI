@@ -17,22 +17,22 @@ const helpIconExamples = [
     title: 'Design Variants',
     description: 'Help icons can be displayed with filled or outlined designs to match your interface style.',
     code: `<div className='flex items-center space-x-6'>
-  <div className='flex items-center space-x-1'>
+  <div className='space-x-1'>
     <span>Filled Design</span>
     <HelpIcon message="This is a help tooltip with filled design" />
   </div>
-  <div className='flex items-center space-x-1'>
+  <div className='space-x-1'>
     <span>Outlined Design</span>
     <HelpIcon message="This is a help tooltip with outlined design" design="outlined" />
   </div>
 </div>`,
     children: (
       <div className='flex items-center space-x-6'>
-        <div className='flex items-center space-x-1'>
+        <div className='space-x-1'>
           <span>Filled Design</span>
           <HelpIcon message="This is a help tooltip with filled design" />
         </div>
-        <div className='flex items-center space-x-1'>
+        <div className='space-x-1'>
           <span>Outlined Design</span>
           <HelpIcon message="This is a help tooltip with outlined design" design="outlined" />
         </div>
@@ -44,32 +44,32 @@ const helpIconExamples = [
     title: 'Sizes',
     description: 'Multiple size variants to fit different contexts and layout requirements.',
     code: `<div className='flex items-center space-x-6'>
-  <div className='flex items-center space-x-1'>
+  <div className='space-x-1'>
     <span>Small</span>
-    <HelpIcon message="Small help icon" iconSize={14} />
+    <HelpIcon message="Small help icon" iconSize={8} />
   </div>
-  <div className='flex items-center space-x-1'>
+  <div className='space-x-1'>
     <span>Medium</span>
-    <HelpIcon message="Medium help icon (default)" iconSize={16} />
+    <HelpIcon message="Medium help icon (default)" iconSize={12} />
   </div>
-  <div className='flex items-center space-x-1'>
+  <div className='space-x-1'>
     <span>Large</span>
-    <HelpIcon message="Large help icon" iconSize={20} />
+    <HelpIcon message="Large help icon" iconSize={16} />
   </div>
 </div>`,
     children: (
       <div className='flex items-center space-x-6'>
-        <div className='flex items-center space-x-1'>
-          <span>Small</span>
-          <HelpIcon message="Small help icon" iconSize={12} />
+        <div className='space-x-1'>
+          <span className='text-sm'>Small</span>
+          <HelpIcon message="Small help icon" iconSize={8} />
         </div>
-        <div className='flex items-center space-x-1'>
+        <div className='space-x-1'>
           <span>Medium</span>
-          <HelpIcon message="Medium help icon (default)" iconSize={16} />
+          <HelpIcon message="Medium help icon (default)" iconSize={12} />
         </div>
-        <div className='flex items-center space-x-1'>
-          <span>Large</span>
-          <HelpIcon message="Large help icon" iconSize={20} />
+        <div className='space-x-1'>
+          <span className='text-lg'>Large</span>
+          <HelpIcon message="Large help icon" iconSize={16} />
         </div>
       </div>
     ),

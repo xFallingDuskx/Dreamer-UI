@@ -49,7 +49,7 @@ export interface HelpIconProps extends Omit<TooltipProps, 'children'> {
  * />
  * ```
  */
-export function HelpIcon({ id, ref, design = 'filled', iconSize = 16, className, ...tooltipProps }: HelpIconProps) {
+export function HelpIcon({ id, ref, design = 'filled', iconSize = 12, className, ...tooltipProps }: HelpIconProps) {
 	const IconComponent = design === 'filled' ? InfoCircledFilled : InfoCircled;
 
 	return (
@@ -58,7 +58,7 @@ export function HelpIcon({ id, ref, design = 'filled', iconSize = 16, className,
 				id={id}
 				ref={ref}
 				className={join(
-					'inline-flex items-center justify-center cursor-help text-muted-foreground hover:text-current transition-colors',
+					'inline-block cursor-help text-muted-foreground hover:text-current transition-colors align-top',
 					className
 				)}
 				data-help-icon='true'
