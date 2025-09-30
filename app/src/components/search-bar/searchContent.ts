@@ -275,7 +275,7 @@ const searchIndex: SearchResult[] = [
 		path: '/components/codeblock',
 		description: 'Syntax highlighted code display with copy and fullscreen features.',
 		type: 'Component',
-		content: 'code block syntax highlight copy fullscreen language programming props',
+		content: 'code block syntax highlight copy fullscreen language programming markdown props',
 		rank: 10,
 	},
 	{
@@ -284,7 +284,16 @@ const searchIndex: SearchResult[] = [
 		section: 'Props',
 		description: 'Code Block component properties including code, language, filename, and feature toggles.',
 		type: 'Props',
-		content: 'codeblock props properties code language filename showLineNumbers allowCopy allowDownload allowFullscreen showTrafficLights hideHeader maxHeight',
+		content: 'codeblock props properties code language filename showLineNumbers allowCopy allowDownload allowFullscreen showTrafficLights hideHeader maxHeight markdown',
+		rank: 8,
+	},
+	{
+		title: 'Code Block Markdown Support',
+		path: '/components/codeblock',
+		section: 'Markdown Support',
+		description: 'Display and syntax highlight markdown content with proper formatting for headers, links, code, and lists.',
+		type: 'Feature',
+		content: 'markdown md syntax highlighting headers bold italic links inline code blockquotes lists numbered formatting',
 		rank: 8,
 	},
 

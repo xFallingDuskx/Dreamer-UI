@@ -36,6 +36,30 @@ export interface JsonTokenClasses {
 }
 export type JsonTokenType = keyof JsonTokenClasses;
 
+export interface MarkdownTokenClasses {
+  heading?: string;
+  'heading-hash'?: string;
+  bold?: string;
+  italic?: string;
+  'bold-marker'?: string;
+  'italic-marker'?: string;
+  link?: string;
+  'link-text'?: string;
+  'link-url'?: string;
+  'link-bracket'?: string;
+  'link-paren'?: string;
+  code?: string;
+  'code-marker'?: string;
+  'code-block'?: string;
+  'code-block-marker'?: string;
+  'list-marker'?: string;
+  'list-item'?: string;
+  blockquote?: string;
+  'blockquote-marker'?: string;
+  plain?: string;
+}
+export type MarkdownTokenType = keyof MarkdownTokenClasses;
+
 export interface TSTokenClasses {
   keyword?: string;
   type?: string;
@@ -55,4 +79,4 @@ export interface TSTokenClasses {
 }
 export type TSTokenType = keyof TSTokenClasses;
 
-export type TokenClasses = TSTokenClasses | JsonTokenClasses | BashTokenClasses | CSSTokenClasses;
+export type TokenClasses = TSTokenClasses | JsonTokenClasses | BashTokenClasses | CSSTokenClasses | MarkdownTokenClasses;
