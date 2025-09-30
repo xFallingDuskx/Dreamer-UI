@@ -747,9 +747,9 @@ const searchIndex: SearchResult[] = [
 		title: 'Tooltip Props',
 		path: '/components/tooltip',
 		section: 'Props',
-		description: 'Tooltip component properties including message, placement, delay, and disabled options.',
+		description: 'Tooltip component properties including message, placement, delay, showArrow, and disabled options.',
 		type: 'Props',
-		content: 'tooltip props properties message placement delay disabled className id children',
+		content: 'tooltip props properties message placement delay disabled showArrow arrow className id children',
 		rank: 8,
 	},
 
