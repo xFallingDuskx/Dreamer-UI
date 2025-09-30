@@ -219,21 +219,21 @@ export function useTooltipEvents(
   }, [disabled, delay, setShouldRender, updatePosition, setIsVisible]);
 
   const hideTooltip = useCallback(
-    (forceHide = false) => {
+    (forceHide = false, delay = 150) => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
 
       if (forceHide) {
         setIsVisible(false);
-        setTimeout(() => setShouldRender(false), 150);
+        setTimeout(() => setShouldRender(false), delay);
         return;
       }
 
       // Small delay to allow moving from trigger to tooltip
       timeoutRef.current = window.setTimeout(() => {
         setIsVisible(false);
-        setTimeout(() => setShouldRender(false), 150);
+        setTimeout(() => setShouldRender(false), delay);
       }, 100);
     },
     [setIsVisible, setShouldRender]
@@ -246,6 +246,22 @@ export function useTooltipEvents(
       hideTooltip();
     }
   }, [isHoveringTrigger, isHoveringTooltip, isFocused, isVisible, hideTooltip]);
+
+  // Hide tooltip on scroll
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const handleScroll = () => {
+      hideTooltip(true, 0);
+    };
+
+    // Listen for scroll events on window and all scrollable ancestors
+    window.addEventListener('scroll', handleScroll, true);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll, true);
+    };
+  }, [isVisible, hideTooltip]);
 
   // Cleanup timeout on unmount
   useEffect(() => {
