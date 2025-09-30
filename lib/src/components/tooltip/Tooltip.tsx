@@ -71,7 +71,7 @@ export function Tooltip({
 	message,
 	placement = 'top',
 	disabled = false,
-	delay = 200,
+	delay = 100,
 	showArrow = true,
 	className,
 }: TooltipProps) {
