@@ -28,6 +28,7 @@ const components = [
 	{ name: 'Dynamic List', path: '/components/dynamic-list' },
 	{ name: 'Error Boundary', path: '/components/error-boundary' },
 	{ name: 'Form', path: '/components/form' },
+	{ name: 'Help Icon', path: '/components/help-icon' },
 	{ name: 'Input', path: '/components/input' },
 	{ name: 'Label', path: '/components/label' },
 	{ name: 'Modal', path: '/components/modal' },

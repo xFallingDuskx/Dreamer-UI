@@ -292,7 +292,7 @@ const searchIndex: SearchResult[] = [
 		path: '/components/codeblock',
 		section: 'Markdown Support',
 		description: 'Display and syntax highlight markdown content with proper formatting for headers, links, code, and lists.',
-		type: 'Feature',
+		type: 'Section',
 		content: 'markdown md syntax highlighting headers bold italic links inline code blockquotes lists numbered formatting',
 		rank: 8,
 	},
@@ -408,6 +408,25 @@ const searchIndex: SearchResult[] = [
 		description: 'Form component properties including form fields, data handling, and layout options.',
 		type: 'Props',
 		content: 'form props properties form initialData onDataChange onSubmit submitButton spacing columns responsive className id',
+		rank: 8,
+	},
+
+	// Help Icon Component
+	{
+		title: 'Help Icon',
+		path: '/components/help-icon',
+		description: 'Help icon component that combines InfoCircled icon with tooltip for contextual assistance.',
+		type: 'Component',
+		content: 'help icon tooltip info information contextual assistance filled outlined design props',
+		rank: 10,
+	},
+	{
+		title: 'Help Icon Props',
+		path: '/components/help-icon',
+		section: 'Props',
+		description: 'Help icon component properties including design variants, sizes, and tooltip options.',
+		type: 'Props',
+		content: 'help icon props properties design size placement message delay showArrow disabled className id',
 		rank: 8,
 	},
 

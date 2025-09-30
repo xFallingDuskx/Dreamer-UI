@@ -118,6 +118,12 @@ const components = [
 		category: 'Form',
 	},
 	{
+		name: 'Help Icon',
+		path: '/components/help-icon',
+		description: 'Help icon component that combines InfoCircled icon with tooltip for contextual assistance.',
+		category: 'Feedback',
+	},
+	{
 		name: 'Input',
 		path: '/components/input',
 		description: 'Flexible input component with validation states and different types.',
