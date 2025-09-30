@@ -1,120 +1,332 @@
 import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { 
+	createBrowserRouter, 
+	createRoutesFromElements, 
+	Route, 
+	RouterProvider 
+} from 'react-router-dom';
 
 // Layout
 import { Layout } from './components/layout/Layout';
 
-// Pages
-import { DraftPage } from './pages/DraftPage';
-import { GettingStartedPage } from './pages/GettingStartedPage';
+// Only import pages that are needed immediately (like LandingPage for the index route)
 import { LandingPage } from './pages/LandingPage';
-import { ComponentsPage } from './pages/components/_ComponentsPage';
-
-// Component Pages
-import { AccordionPage } from './pages/components/AccordionPage';
-import { ActionModalPage } from './pages/components/ActionModalPage';
-import { AvatarPage } from './pages/components/AvatarPage';
-import { BadgePage } from './pages/components/BadgePage';
-import { ButtonPage } from './pages/components/ButtonPage';
-import { CalendarPage } from './pages/components/CalendarPage';
-import { CalloutPage } from './pages/components/CalloutPage';
-import { CardPage } from './pages/components/CardPage';
-import { CarouselPage } from './pages/components/CarouselPage';
-import { CheckboxPage } from './pages/components/CheckboxPage';
-import { ClickablePage } from './pages/components/ClickablePage';
-import { CodeBlockPage } from './pages/components/CodeBlockPage';
-import { CodePage } from './pages/components/CodePage';
-import { DisclosurePage } from './pages/components/DisclosurePage';
-import { DrawerPage } from './pages/components/DrawerPage';
-import { DropdownMenuPage } from './pages/components/DropdownMenuPage';
-import { DynamicListPage } from './pages/components/DynamicListPage';
-import { ErrorBoundaryPage } from './pages/components/ErrorBoundaryPage';
-import { FormPage } from './pages/components/FormPage';
-import { HelpIconPage } from './pages/components/HelpIconPage';
-import { InputPage } from './pages/components/InputPage';
-import { LabelPage } from './pages/components/LabelPage';
-import { ModalPage } from './pages/components/ModalPage';
-import { PaginationPage } from './pages/components/PaginationPage';
-import { PanelPage } from './pages/components/PanelPage';
-import { PopoverPage } from './pages/components/PopoverPage';
-import { RadioGroupPage } from './pages/components/RadioGroupPage';
-import { ScrollAreaPage } from './pages/components/ScrollAreaPage';
-import { SelectPage } from './pages/components/SelectPage';
-import { SeparatorPage } from './pages/components/SeparatorPage';
-import { SkeletonPage } from './pages/components/SkeletonPage';
-import { SliderPage } from './pages/components/SliderPage';
-import { TablePage } from './pages/components/TablePage';
-import { TabsPage } from './pages/components/TabsPage';
-import { TextareaPage } from './pages/components/TextareaPage';
-import { ToastPage } from './pages/components/ToastPage';
-import { TogglePage } from './pages/components/TogglePage';
-import { TooltipPage } from './pages/components/TooltipPage';
 
 import { isLocalhost } from './utils/isLocalhost';
 
-function App() {
-	const showDraftRoute = isLocalhost();
+const showDraftRoute = isLocalhost();
 
+const routes = createRoutesFromElements(
+	<Route path='/' element={<Layout />}>
+		{/* Landing Page */}
+		<Route index element={<LandingPage />} />
+
+		{/* Getting Started Page */}
+		<Route 
+			path='getting-started' 
+			lazy={async () => {
+				const { GettingStartedPage } = await import('./pages/GettingStartedPage');
+				return { Component: GettingStartedPage };
+			}} 
+		/>
+
+		{/* Components Index */}
+		<Route 
+			path='components' 
+			lazy={async () => {
+				const { ComponentsPage } = await import('./pages/components/_ComponentsPage');
+				return { Component: ComponentsPage };
+			}} 
+		/>
+
+		{/* Component Pages */}
+		<Route 
+			path='components/accordion' 
+			lazy={async () => {
+				const { AccordionPage } = await import('./pages/components/AccordionPage');
+				return { Component: AccordionPage };
+			}} 
+		/>
+		<Route 
+			path='components/actionmodal' 
+			lazy={async () => {
+				const { ActionModalPage } = await import('./pages/components/ActionModalPage');
+				return { Component: ActionModalPage };
+			}} 
+		/>
+		<Route 
+			path='components/avatar' 
+			lazy={async () => {
+				const { AvatarPage } = await import('./pages/components/AvatarPage');
+				return { Component: AvatarPage };
+			}} 
+		/>
+		<Route 
+			path='components/badge' 
+			lazy={async () => {
+				const { BadgePage } = await import('./pages/components/BadgePage');
+				return { Component: BadgePage };
+			}} 
+		/>
+		<Route 
+			path='components/button' 
+			lazy={async () => {
+				const { ButtonPage } = await import('./pages/components/ButtonPage');
+				return { Component: ButtonPage };
+			}} 
+		/>
+		<Route 
+			path='components/calendar' 
+			lazy={async () => {
+				const { CalendarPage } = await import('./pages/components/CalendarPage');
+				return { Component: CalendarPage };
+			}} 
+		/>
+		<Route 
+			path='components/callout' 
+			lazy={async () => {
+				const { CalloutPage } = await import('./pages/components/CalloutPage');
+				return { Component: CalloutPage };
+			}} 
+		/>
+		<Route 
+			path='components/card' 
+			lazy={async () => {
+				const { CardPage } = await import('./pages/components/CardPage');
+				return { Component: CardPage };
+			}} 
+		/>
+		<Route 
+			path='components/carousel' 
+			lazy={async () => {
+				const { CarouselPage } = await import('./pages/components/CarouselPage');
+				return { Component: CarouselPage };
+			}} 
+		/>
+		<Route 
+			path='components/checkbox' 
+			lazy={async () => {
+				const { CheckboxPage } = await import('./pages/components/CheckboxPage');
+				return { Component: CheckboxPage };
+			}} 
+		/>
+		<Route 
+			path='components/clickable' 
+			lazy={async () => {
+				const { ClickablePage } = await import('./pages/components/ClickablePage');
+				return { Component: ClickablePage };
+			}} 
+		/>
+		<Route 
+			path='components/code' 
+			lazy={async () => {
+				const { CodePage } = await import('./pages/components/CodePage');
+				return { Component: CodePage };
+			}} 
+		/>
+		<Route 
+			path='components/codeblock' 
+			lazy={async () => {
+				const { CodeBlockPage } = await import('./pages/components/CodeBlockPage');
+				return { Component: CodeBlockPage };
+			}} 
+		/>
+		<Route 
+			path='components/disclosure' 
+			lazy={async () => {
+				const { DisclosurePage } = await import('./pages/components/DisclosurePage');
+				return { Component: DisclosurePage };
+			}} 
+		/>
+		<Route 
+			path='components/drawer' 
+			lazy={async () => {
+				const { DrawerPage } = await import('./pages/components/DrawerPage');
+				return { Component: DrawerPage };
+			}} 
+		/>
+		<Route 
+			path='components/dropdown-menu' 
+			lazy={async () => {
+				const { DropdownMenuPage } = await import('./pages/components/DropdownMenuPage');
+				return { Component: DropdownMenuPage };
+			}} 
+		/>
+		<Route 
+			path='components/dynamic-list' 
+			lazy={async () => {
+				const { DynamicListPage } = await import('./pages/components/DynamicListPage');
+				return { Component: DynamicListPage };
+			}} 
+		/>
+		<Route 
+			path='components/error-boundary' 
+			lazy={async () => {
+				const { ErrorBoundaryPage } = await import('./pages/components/ErrorBoundaryPage');
+				return { Component: ErrorBoundaryPage };
+			}} 
+		/>
+		<Route 
+			path='components/form' 
+			lazy={async () => {
+				const { FormPage } = await import('./pages/components/FormPage');
+				return { Component: FormPage };
+			}} 
+		/>
+		<Route 
+			path='components/help-icon' 
+			lazy={async () => {
+				const { HelpIconPage } = await import('./pages/components/HelpIconPage');
+				return { Component: HelpIconPage };
+			}} 
+		/>
+		<Route 
+			path='components/input' 
+			lazy={async () => {
+				const { InputPage } = await import('./pages/components/InputPage');
+				return { Component: InputPage };
+			}} 
+		/>
+		<Route 
+			path='components/label' 
+			lazy={async () => {
+				const { LabelPage } = await import('./pages/components/LabelPage');
+				return { Component: LabelPage };
+			}} 
+		/>
+		<Route 
+			path='components/modal' 
+			lazy={async () => {
+				const { ModalPage } = await import('./pages/components/ModalPage');
+				return { Component: ModalPage };
+			}} 
+		/>
+		<Route 
+			path='components/pagination' 
+			lazy={async () => {
+				const { PaginationPage } = await import('./pages/components/PaginationPage');
+				return { Component: PaginationPage };
+			}} 
+		/>
+		<Route 
+			path='components/panel' 
+			lazy={async () => {
+				const { PanelPage } = await import('./pages/components/PanelPage');
+				return { Component: PanelPage };
+			}} 
+		/>
+		<Route 
+			path='components/popover' 
+			lazy={async () => {
+				const { PopoverPage } = await import('./pages/components/PopoverPage');
+				return { Component: PopoverPage };
+			}} 
+		/>
+		<Route 
+			path='components/radiogroup' 
+			lazy={async () => {
+				const { RadioGroupPage } = await import('./pages/components/RadioGroupPage');
+				return { Component: RadioGroupPage };
+			}} 
+		/>
+		<Route 
+			path='components/scroll-area' 
+			lazy={async () => {
+				const { ScrollAreaPage } = await import('./pages/components/ScrollAreaPage');
+				return { Component: ScrollAreaPage };
+			}} 
+		/>
+		<Route 
+			path='components/select' 
+			lazy={async () => {
+				const { SelectPage } = await import('./pages/components/SelectPage');
+				return { Component: SelectPage };
+			}} 
+		/>
+		<Route 
+			path='components/separator' 
+			lazy={async () => {
+				const { SeparatorPage } = await import('./pages/components/SeparatorPage');
+				return { Component: SeparatorPage };
+			}} 
+		/>
+		<Route 
+			path='components/skeleton' 
+			lazy={async () => {
+				const { SkeletonPage } = await import('./pages/components/SkeletonPage');
+				return { Component: SkeletonPage };
+			}} 
+		/>
+		<Route 
+			path='components/slider' 
+			lazy={async () => {
+				const { SliderPage } = await import('./pages/components/SliderPage');
+				return { Component: SliderPage };
+			}} 
+		/>
+		<Route 
+			path='components/table' 
+			lazy={async () => {
+				const { TablePage } = await import('./pages/components/TablePage');
+				return { Component: TablePage };
+			}} 
+		/>
+		<Route 
+			path='components/tabs' 
+			lazy={async () => {
+				const { TabsPage } = await import('./pages/components/TabsPage');
+				return { Component: TabsPage };
+			}} 
+		/>
+		<Route 
+			path='components/textarea' 
+			lazy={async () => {
+				const { TextareaPage } = await import('./pages/components/TextareaPage');
+				return { Component: TextareaPage };
+			}} 
+		/>
+		<Route 
+			path='components/toast' 
+			lazy={async () => {
+				const { ToastPage } = await import('./pages/components/ToastPage');
+				return { Component: ToastPage };
+			}} 
+		/>
+		<Route 
+			path='components/toggle' 
+			lazy={async () => {
+				const { TogglePage } = await import('./pages/components/TogglePage');
+				return { Component: TogglePage };
+			}} 
+		/>
+		<Route 
+			path='components/tooltip' 
+			lazy={async () => {
+				const { TooltipPage } = await import('./pages/components/TooltipPage');
+				return { Component: TooltipPage };
+			}} 
+		/>
+
+		{/* Draft Page - Only available on localhost */}
+		{showDraftRoute && (
+			<Route 
+				path='draft' 
+				lazy={async () => {
+					const { DraftPage } = await import('./pages/DraftPage');
+					return { Component: DraftPage };
+				}} 
+			/>
+		)}
+	</Route>
+);
+
+const router = createBrowserRouter(routes);
+
+function App() {
 	return (
 		<ActionModalProvider>
 			<ToastProvider position='top-center'>
-				<Router>
-					<Routes>
-						<Route path='/' element={<Layout />}>
-							{/* Landing Page */}
-							<Route index element={<LandingPage />} />
-
-							{/* Getting Started Page */}
-							<Route path='getting-started' element={<GettingStartedPage />} />
-
-							{/* Components Index */}
-							<Route path='components' element={<ComponentsPage />} />
-
-							{/* Component Pages */}
-							<Route path='components/accordion' element={<AccordionPage />} />
-							<Route path='components/actionmodal' element={<ActionModalPage />} />
-							<Route path='components/avatar' element={<AvatarPage />} />
-							<Route path='components/badge' element={<BadgePage />} />
-							<Route path='components/button' element={<ButtonPage />} />
-							<Route path='components/calendar' element={<CalendarPage />} />
-							<Route path='components/callout' element={<CalloutPage />} />
-							<Route path='components/card' element={<CardPage />} />
-							<Route path='components/carousel' element={<CarouselPage />} />
-							<Route path='components/checkbox' element={<CheckboxPage />} />
-							<Route path='components/clickable' element={<ClickablePage />} />
-							<Route path='components/code' element={<CodePage />} />
-							<Route path='components/codeblock' element={<CodeBlockPage />} />
-							<Route path='components/disclosure' element={<DisclosurePage />} />
-							<Route path='components/drawer' element={<DrawerPage />} />
-							<Route path='components/dropdown-menu' element={<DropdownMenuPage />} />
-							<Route path='components/dynamic-list' element={<DynamicListPage />} />
-							<Route path='components/error-boundary' element={<ErrorBoundaryPage />} />
-							<Route path='components/form' element={<FormPage />} />
-							<Route path='components/help-icon' element={<HelpIconPage />} />
-							<Route path='components/input' element={<InputPage />} />
-							<Route path='components/label' element={<LabelPage />} />
-							<Route path='components/modal' element={<ModalPage />} />
-							<Route path='components/pagination' element={<PaginationPage />} />
-							<Route path='components/panel' element={<PanelPage />} />
-							<Route path='components/popover' element={<PopoverPage />} />
-							<Route path='components/radiogroup' element={<RadioGroupPage />} />
-							<Route path='components/scroll-area' element={<ScrollAreaPage />} />
-							<Route path='components/select' element={<SelectPage />} />
-							<Route path='components/separator' element={<SeparatorPage />} />
-							<Route path='components/skeleton' element={<SkeletonPage />} />
-							<Route path='components/slider' element={<SliderPage />} />
-							<Route path='components/table' element={<TablePage />} />
-							<Route path='components/tabs' element={<TabsPage />} />
-							<Route path='components/textarea' element={<TextareaPage />} />
-							<Route path='components/toast' element={<ToastPage />} />
-							<Route path='components/toggle' element={<TogglePage />} />
-							<Route path='components/tooltip' element={<TooltipPage />} />
-
-							{/* Draft Page - Only available on localhost */}
-							{showDraftRoute && <Route path='draft' element={<DraftPage />} />}
-						</Route>
-					</Routes>
-				</Router>
+				<RouterProvider router={router} />
 			</ToastProvider>
 		</ActionModalProvider>
 	);
