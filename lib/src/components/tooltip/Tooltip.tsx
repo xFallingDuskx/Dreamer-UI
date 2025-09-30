@@ -18,6 +18,8 @@ export interface TooltipProps {
   disabled?: boolean;
   /** The delay in milliseconds before the tooltip appears. */
   delay?: number;
+  /** Whether to show the arrow pointing to the trigger element. */
+  showArrow?: boolean;
   /** Additional CSS classes to apply to the tooltip. */
   className?: string;
   /** Additional CSS classes to apply to the tooltip arrow. */
@@ -54,6 +56,11 @@ export interface TooltipPosition {
  *   <span>Hover for delayed tooltip</span>
  * </Tooltip>
  * 
+ * // Tooltip without arrow
+ * <Tooltip message="No arrow tooltip" showArrow={false}>
+ *   <Button>No arrow</Button>
+ * </Tooltip>
+ * 
  * // Rich content tooltip
  * <Tooltip message={<div>Complex <strong>HTML</strong> content</div>}>
  *   <Icon name="info" />
@@ -67,6 +74,7 @@ export function Tooltip({
   placement = 'top',
   disabled = false,
   delay = 200,
+  showArrow = true,
   className,
 }: TooltipProps) {
   const [isVisible, setIsVisible] = useState(false); // Controls visibility of the tooltip
@@ -93,17 +101,17 @@ export function Tooltip({
   const reactId = useId();
   const tooltipId = id ?? reactId;
 
-  // const getArrowClasses = (arrowPlacement: TooltipPlacement) => {
-  //   const baseArrow = 'absolute w-0 h-0';
-  //   const arrowClasses = {
-  //     top: 'border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-border',
-  //     bottom: 'border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-border',
-  //     left: 'border-t-[6px] border-b-[6px] border-l-[6px] border-t-transparent border-b-transparent border-l-border',
-  //     right: 'border-t-[6px] border-b-[6px] border-r-[6px] border-t-transparent border-b-transparent border-r-border',
-  //   };
+  const getArrowClasses = (arrowPlacement: TooltipPlacement) => {
+    const baseArrow = 'absolute w-0 h-0 pointer-events-none';
+    const arrowClasses = {
+      top: 'border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-tooltip',
+      bottom: 'border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-tooltip',
+      left: 'border-t-[6px] border-b-[6px] border-l-[6px] border-t-transparent border-b-transparent border-l-tooltip',
+      right: 'border-t-[6px] border-b-[6px] border-r-[6px] border-t-transparent border-b-transparent border-r-tooltip',
+    };
 
-  //   return join(baseArrow, arrowClasses[arrowPlacement], arrowClassName);
-  // };
+    return join(baseArrow, arrowClasses[arrowPlacement]);
+  };
 
   return (
     <>
@@ -156,12 +164,12 @@ export function Tooltip({
             }}
           >
             {message}
-            {/* {position && (
+            {position && showArrow && (
               <div
                 className={getArrowClasses(position.placement)}
                 style={{ left: position.arrow.x, top: position.arrow.y }}
               />
-            )} */}
+            )}
           </div>,
           document.body
         )}

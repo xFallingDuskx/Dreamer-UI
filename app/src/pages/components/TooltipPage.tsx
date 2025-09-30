@@ -8,6 +8,7 @@ const tableOfContents = [
   { id: 'positions', title: 'Positions', level: 2 },
   { id: 'with-delay', title: 'With Delay', level: 2 },
   { id: 'rich-content', title: 'Rich Content', level: 2 },
+  { id: 'arrow-visibility', title: 'Arrow Visibility', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
 ];
 
@@ -164,6 +165,37 @@ const tooltipExamples = [
       </div>
     ),
   },
+  {
+    id: 'arrow-visibility',
+    title: 'Arrow Visibility',
+    description: 'Control whether the tooltip arrow is displayed.',
+    code: `<div className='flex space-x-4'>
+  <Tooltip message='Tooltip with arrow (default)'>
+    <button className='px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700'>
+      With Arrow
+    </button>
+  </Tooltip>
+  <Tooltip message='Tooltip without arrow' showArrow={false}>
+    <button className='px-4 py-2 bg-cyan-600 text-white rounded hover:bg-cyan-700'>
+      No Arrow
+    </button>
+  </Tooltip>
+</div>`,
+    children: (
+      <div className='flex space-x-4'>
+        <Tooltip message='Tooltip with arrow (default)'>
+          <button className='px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700'>
+            With Arrow
+          </button>
+        </Tooltip>
+        <Tooltip message='Tooltip without arrow' showArrow={false}>
+          <button className='px-4 py-2 bg-cyan-600 text-white rounded hover:bg-cyan-700'>
+            No Arrow
+          </button>
+        </Tooltip>
+      </div>
+    ),
+  },
 ];
 
 const tooltipProps = [
@@ -184,6 +216,12 @@ const tooltipProps = [
     type: 'number',
     default: '200',
     description: 'The delay in milliseconds before the tooltip appears.',
+  },
+  {
+    name: 'showArrow',
+    type: 'boolean',
+    default: 'true',
+    description: 'Whether to show the arrow pointing to the trigger element.',
   },
   {
     name: 'disabled',

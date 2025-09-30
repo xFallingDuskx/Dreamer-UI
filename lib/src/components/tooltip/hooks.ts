@@ -2,8 +2,18 @@ import { useCallback, useEffect, useRef } from 'react';
 import { TooltipPlacement, TooltipPosition } from './Tooltip';
 
 export const VIEWPORT_PADDING = 8; // Padding from viewport edges
-export const TOOLTIP_OFFSET = 4; // Distance from target element
+export const TOOLTIP_OFFSET = 8; // Distance from target element
 export const ARROW_SIZE = 6; // Size of the arrow
+
+/**
+ * Gets the border width of an element by parsing computed styles.
+ * Returns the border width in pixels for proper arrow positioning.
+ */
+function getBorderWidth(element: HTMLElement): number {
+  const computedStyle = window.getComputedStyle(element);
+  const borderWidth = parseFloat(computedStyle.borderWidth) || 0;
+  return borderWidth;
+}
 
 /**
  * Calculates the optimal position for a tooltip based on the target element and viewport constraints.
@@ -14,6 +24,7 @@ export function useCalculatePosition(placement: TooltipPlacement) {
     (targetElement: HTMLElement, tooltipElement: HTMLElement): TooltipPosition => {
       const targetRect = targetElement.getBoundingClientRect();
       const tooltipRect = tooltipElement.getBoundingClientRect();
+      const borderWidth = getBorderWidth(tooltipElement);
       const viewport = {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -30,7 +41,7 @@ export function useCalculatePosition(placement: TooltipPlacement) {
           y: targetRect.top - tooltipRect.height - TOOLTIP_OFFSET,
           arrow: {
             x: tooltipRect.width / 2 - ARROW_SIZE,
-            y: tooltipRect.height,
+            y: tooltipRect.height - borderWidth,
           },
         },
         bottom: {
@@ -38,14 +49,14 @@ export function useCalculatePosition(placement: TooltipPlacement) {
           y: targetRect.bottom + TOOLTIP_OFFSET,
           arrow: {
             x: tooltipRect.width / 2 - ARROW_SIZE,
-            y: -ARROW_SIZE,
+            y: -ARROW_SIZE - borderWidth,
           },
         },
         left: {
           x: targetRect.left - tooltipRect.width - TOOLTIP_OFFSET,
           y: targetRect.top + targetRect.height / 2 - tooltipRect.height / 2,
           arrow: {
-            x: tooltipRect.width,
+            x: tooltipRect.width - borderWidth,
             y: tooltipRect.height / 2 - ARROW_SIZE,
           },
         },
@@ -53,7 +64,7 @@ export function useCalculatePosition(placement: TooltipPlacement) {
           x: targetRect.right + TOOLTIP_OFFSET,
           y: targetRect.top + targetRect.height / 2 - tooltipRect.height / 2,
           arrow: {
-            x: -ARROW_SIZE,
+            x: -ARROW_SIZE - borderWidth,
             y: tooltipRect.height / 2 - ARROW_SIZE,
           },
         },
