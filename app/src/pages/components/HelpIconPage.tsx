@@ -210,7 +210,7 @@ const helpIconProps = [
 	{
 		name: 'iconSize',
 		type: 'number',
-		default: '16',
+		default: '14',
 		description: 'The size of the help icon in pixels.',
 	},
 	{
