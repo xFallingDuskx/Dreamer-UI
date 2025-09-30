@@ -292,7 +292,7 @@ const searchIndex: SearchResult[] = [
 		path: '/components/codeblock',
 		section: 'Markdown Support',
 		description: 'Display and syntax highlight markdown content with proper formatting for headers, links, code, and lists.',
-		type: 'Feature',
+		type: 'Section',
 		content: 'markdown md syntax highlighting headers bold italic links inline code blockquotes lists numbered formatting',
 		rank: 8,
 	},

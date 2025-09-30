@@ -18,6 +18,7 @@ export { EyeClosed } from './EyeClosed';
 export { EyeOpened } from './EyeOpened';
 export { GripVertical } from './GripVertical';
 export { InfoCircled } from './InfoCircled';
+export { InfoCircledFilled } from './InfoCircledFilled';
 export { Plus } from './Plus';
 export { QuestionMarkCircled } from './QuestionMarkCircled';
 export { Trash } from './Trash';

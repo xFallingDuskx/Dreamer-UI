@@ -980,15 +980,15 @@ export const DraftPage = () => {
 						<div className='flex items-center space-x-6'>
 							<div className='flex items-center space-x-2'>
 								<span>Small</span>
-								<HelpIcon message="Small help icon" size="sm" />
+								<HelpIcon message="Small help icon" iconSize={14} />
 							</div>
 							<div className='flex items-center space-x-2'>
 								<span>Medium</span>
-								<HelpIcon message="Medium help icon" size="md" />
+								<HelpIcon message="Medium help icon" iconSize={16} />
 							</div>
 							<div className='flex items-center space-x-2'>
 								<span>Large</span>
-								<HelpIcon message="Large help icon" size="lg" />
+								<HelpIcon message="Large help icon" iconSize={20} />
 							</div>
 						</div>
 						
