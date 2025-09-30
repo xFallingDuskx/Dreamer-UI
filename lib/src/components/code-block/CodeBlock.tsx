@@ -2,12 +2,12 @@ import { useCallback, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Check, Copy, Dash, Download, Window } from '../../symbols';
 import { downloadFile, join } from '../../utils';
-import { formatBash, formatJson, formatTypescript, formatCSS } from './format';
+import { formatBash, formatJson, formatTypescript, formatCSS, formatMarkdown } from './format';
 import { useCopyToClipboard, useFullscreenMode, useKeyboardShortcuts } from './hooks';
 import { TokenClasses } from './types';
 import { getFileExtension } from './util';
 
-export type CodeBlockLanguages = 'typescript' | 'ts' | 'tsx' | 'json' | 'bash' | 'sh' | 'css';
+export type CodeBlockLanguages = 'typescript' | 'ts' | 'tsx' | 'json' | 'bash' | 'sh' | 'css' | 'markdown' | 'md';
 
 export interface CodeBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   /** The code content to display */
@@ -179,6 +179,10 @@ export function CodeBlock({
 
     if (language === 'css') {
       return formatCSS(codeLines, customTokenClasses);
+    }
+
+    if (language === 'markdown' || language === 'md') {
+      return formatMarkdown(codeLines, customTokenClasses);
     }
 
     return [

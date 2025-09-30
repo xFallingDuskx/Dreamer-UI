@@ -1,5 +1,5 @@
 import { BASH_KEYWORDS, BASH_RUNNERS } from './constants';
-import { BashTokenType, CSSTokenClasses, JsonTokenClasses, TSTokenType } from './types';
+import { BashTokenType, CSSTokenClasses, JsonTokenClasses, MarkdownTokenType, TSTokenType } from './types';
 
 export function tokenizeBash(codeLine: string): { text: string; type: BashTokenType }[] {
   const tokens: { text: string; type: BashTokenType }[] = [];
@@ -370,4 +370,118 @@ export function tokenizeTypeScript(
   }
 
   return tokens;
+}
+
+export function tokenizeMarkdown(codeLine: string): { text: string; type: MarkdownTokenType }[] {
+  const tokens: { text: string; type: MarkdownTokenType }[] = [];
+  
+  // Preserve empty lines as a non-breaking space
+  if (codeLine.trim() === '') {
+    tokens.push({ text: '\u00A0', type: 'plain' });
+    return tokens;
+  }
+
+  let remaining = codeLine;
+  
+  // Headers (# ## ### etc.)
+  const headerMatch = remaining.match(/^(#{1,6})\s*(.*)$/);
+  if (headerMatch) {
+    tokens.push({ text: headerMatch[1], type: 'heading-hash' });
+    if (headerMatch[2]) {
+      tokens.push({ text: ' ', type: 'plain' });
+      tokens.push({ text: headerMatch[2], type: 'heading' });
+    }
+    return tokens;
+  }
+
+  // Blockquote
+  const blockquoteMatch = remaining.match(/^(>\s*)(.*)$/);
+  if (blockquoteMatch) {
+    tokens.push({ text: blockquoteMatch[1], type: 'blockquote-marker' });
+    if (blockquoteMatch[2]) {
+      tokens.push({ text: blockquoteMatch[2], type: 'blockquote' });
+    }
+    return tokens;
+  }
+
+  // List items (- * + or numbered)
+  const listMatch = remaining.match(/^(\s*)([-*+]|\d+\.)\s*(.*)$/);
+  if (listMatch) {
+    if (listMatch[1]) tokens.push({ text: listMatch[1], type: 'plain' });
+    tokens.push({ text: listMatch[2], type: 'list-marker' });
+    tokens.push({ text: ' ', type: 'plain' });
+    if (listMatch[3]) {
+      // Parse the rest of the line for inline formatting
+      parseInlineMarkdown(listMatch[3], tokens);
+    }
+    return tokens;
+  }
+
+  // Code blocks (```language)
+  const codeBlockMatch = remaining.match(/^(```)\s*(.*)$/);
+  if (codeBlockMatch) {
+    tokens.push({ text: codeBlockMatch[1], type: 'code-block-marker' });
+    if (codeBlockMatch[2]) {
+      tokens.push({ text: ' ', type: 'plain' });
+      tokens.push({ text: codeBlockMatch[2], type: 'code-block' });
+    }
+    return tokens;
+  }
+
+  // Regular line - parse for inline formatting
+  parseInlineMarkdown(remaining, tokens);
+  return tokens;
+}
+
+function parseInlineMarkdown(text: string, tokens: { text: string; type: MarkdownTokenType }[]) {
+  let remaining = text;
+  
+  while (remaining.length > 0) {
+    // Links [text](url)
+    const linkMatch = remaining.match(/^(\[)([^\]]*?)(\])(\()([^)]*?)(\))/);
+    if (linkMatch) {
+      tokens.push({ text: linkMatch[1], type: 'link-bracket' });
+      tokens.push({ text: linkMatch[2], type: 'link-text' });
+      tokens.push({ text: linkMatch[3], type: 'link-bracket' });
+      tokens.push({ text: linkMatch[4], type: 'link-paren' });
+      tokens.push({ text: linkMatch[5], type: 'link-url' });
+      tokens.push({ text: linkMatch[6], type: 'link-paren' });
+      remaining = remaining.slice(linkMatch[0].length);
+      continue;
+    }
+
+    // Inline code `code`
+    const codeMatch = remaining.match(/^(`+)([^`]*?)\1/);
+    if (codeMatch) {
+      tokens.push({ text: codeMatch[1], type: 'code-marker' });
+      tokens.push({ text: codeMatch[2], type: 'code' });
+      tokens.push({ text: codeMatch[1], type: 'code-marker' });
+      remaining = remaining.slice(codeMatch[0].length);
+      continue;
+    }
+
+    // Bold **text** or __text__
+    const boldMatch = remaining.match(/^(\*\*|__)([^*_]*?)\1/);
+    if (boldMatch) {
+      tokens.push({ text: boldMatch[1], type: 'bold-marker' });
+      tokens.push({ text: boldMatch[2], type: 'bold' });
+      tokens.push({ text: boldMatch[1], type: 'bold-marker' });
+      remaining = remaining.slice(boldMatch[0].length);
+      continue;
+    }
+
+    // Italic *text* or _text_
+    const italicMatch = remaining.match(/^(\*|_)([^*_]*?)\1/);
+    if (italicMatch) {
+      tokens.push({ text: italicMatch[1], type: 'italic-marker' });
+      tokens.push({ text: italicMatch[2], type: 'italic' });
+      tokens.push({ text: italicMatch[1], type: 'italic-marker' });
+      remaining = remaining.slice(italicMatch[0].length);
+      continue;
+    }
+
+    // If no special formatting, take one character as plain text
+    tokens.push({ text: remaining[0], type: 'plain' });
+    remaining = remaining.slice(1);
+  }
 }

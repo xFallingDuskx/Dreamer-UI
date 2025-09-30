@@ -1,4 +1,4 @@
-import { BashTokenClasses, CSSTokenClasses, JsonTokenClasses, TSTokenClasses } from './types';
+import { BashTokenClasses, CSSTokenClasses, JsonTokenClasses, MarkdownTokenClasses, TSTokenClasses } from './types';
 
 export const defaultBashTokenClasses: BashTokenClasses = {
   keyword: 'text-rose-400',
@@ -33,6 +33,29 @@ export const defaultJsonTokenClasses: JsonTokenClasses = {
   boolean: 'text-cyan-400 font-medium',
   punctuation: 'text-gray-400',
   plain: 'text-gray-100',
+};
+
+export const defaultMarkdownTokenClasses: MarkdownTokenClasses = {
+  heading: 'text-blue-400 font-bold',
+  'heading-hash': 'text-gray-500',
+  bold: 'text-white font-bold',
+  italic: 'text-white italic',
+  'bold-marker': 'text-gray-400',
+  'italic-marker': 'text-gray-400',
+  link: 'text-blue-400 underline',
+  'link-text': 'text-blue-400',
+  'link-url': 'text-green-400',
+  'link-bracket': 'text-gray-400',
+  'link-paren': 'text-gray-400',
+  code: 'text-pink-400 bg-gray-800 px-1 rounded text-sm',
+  'code-marker': 'text-gray-500',
+  'code-block': 'text-green-400',
+  'code-block-marker': 'text-gray-500',
+  'list-marker': 'text-orange-400 font-medium',
+  'list-item': 'text-gray-200',
+  blockquote: 'text-gray-300 italic',
+  'blockquote-marker': 'text-gray-500',
+  plain: 'text-gray-200',
 };
 
 export const defaultTSTokenClasses: TSTokenClasses = {

@@ -12,6 +12,11 @@ export function getFileExtension(lang: CodeBlockLanguages): string {
     case 'bash':
     case 'sh':
       return 'sh';
+    case 'css':
+      return 'css';
+    case 'markdown':
+    case 'md':
+      return 'md';
     default:
       return 'txt';
   }

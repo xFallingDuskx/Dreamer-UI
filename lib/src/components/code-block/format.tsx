@@ -2,10 +2,11 @@ import {
   defaultBashTokenClasses,
   defaultCSSTokenClasses,
   defaultJsonTokenClasses,
+  defaultMarkdownTokenClasses,
   defaultTSTokenClasses,
 } from './classes';
-import { tokenizeBash, tokenizeCSS, tokenizeJSON, tokenizeTypeScript } from './tokenize';
-import { BashTokenClasses, CSSTokenClasses, JsonTokenClasses, TSTokenClasses } from './types';
+import { tokenizeBash, tokenizeCSS, tokenizeJSON, tokenizeMarkdown, tokenizeTypeScript } from './tokenize';
+import { BashTokenClasses, CSSTokenClasses, JsonTokenClasses, MarkdownTokenClasses, TSTokenClasses } from './types';
 
 export function formatBash(codeLines: string[], customTokenClasses?: BashTokenClasses) {
   const mergedTokenClasses = {
@@ -106,4 +107,18 @@ export function formatTypescript(codeLines: string[], customTokenClasses?: TSTok
       </div>
     );
   });
+}
+
+export function formatMarkdown(codeLines: string[], customTokenClasses?: MarkdownTokenClasses) {
+  const mergedTokenClasses = { ...defaultMarkdownTokenClasses, ...customTokenClasses };
+
+  return codeLines.map((line, lineIndex) => (
+    <div key={lineIndex} className='leading-6'>
+      {tokenizeMarkdown(line).map((token, tokenIndex) => (
+        <span key={tokenIndex} className={mergedTokenClasses[token.type] || 'text-gray-100'}>
+          {token.text}
+        </span>
+      ))}
+    </div>
+  ));
 }

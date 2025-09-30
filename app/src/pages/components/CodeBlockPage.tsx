@@ -9,6 +9,7 @@ const tableOfContents = [
   { id: 'interactive-features', title: 'Interactive Features', level: 2 },
   { id: 'with-line-numbers', title: 'With Line Numbers', level: 2 },
   { id: 'language-examples', title: 'Language Examples', level: 2 },
+  { id: 'markdown-support', title: 'Markdown Support', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
   { id: 'keyboard-shortcuts', title: 'Keyboard Shortcuts', level: 1 },
 ];
@@ -22,7 +23,7 @@ const componentProps = [
   },
   {
     name: 'language',
-    type: '"typescript" | "ts" | "tsx" | "json" | "bash" | "sh" | "css"',
+    type: '"typescript" | "ts" | "tsx" | "json" | "bash" | "sh" | "css" | "markdown" | "md"',
     required: true,
     description: 'Programming language for syntax highlighting',
   },
@@ -360,6 +361,77 @@ echo "✅ Deployment completed successfully!"`}
           />
         </div>
       </div>
+    ),
+  },
+  {
+    id: 'markdown-support',
+    title: 'Markdown Support',
+    description: 'Display and syntax highlight markdown content with proper formatting',
+    code: `<CodeBlock
+  code={\`# Welcome to Markdown Support
+
+This is a **bold text** and this is _italic text_.
+
+## Features
+
+- Syntax highlighting for headers
+- \`Inline code\` support
+- **Bold** and _italic_ text formatting
+- [Links](https://example.com) are highlighted
+- List items with proper markers
+
+### Code Example
+
+\\\`\\\`\\\`javascript
+function greet() {
+  console.log("Hello from markdown!");
+}
+\\\`\\\`\\\`
+
+> This is a blockquote with proper styling
+
+1. Numbered lists
+2. Are also supported
+3. With proper formatting\`}
+  language="markdown"
+  filename="README.md"
+  allowCopy
+  showLineNumbers
+  maxHeight={400}
+/>`,
+    children: (
+      <CodeBlock
+        code={`# Welcome to Markdown Support
+
+This is a **bold text** and this is _italic text_.
+
+## Features
+
+- Syntax highlighting for headers
+- \`Inline code\` support
+- **Bold** and _italic_ text formatting
+- [Links](https://example.com) are highlighted
+- List items with proper markers
+
+### Code Example
+
+\`\`\`javascript
+function greet() {
+  console.log("Hello from markdown!");
+}
+\`\`\`
+
+> This is a blockquote with proper styling
+
+1. Numbered lists
+2. Are also supported
+3. With proper formatting`}
+        language="markdown"
+        filename="README.md"
+        allowCopy
+        showLineNumbers
+        maxHeight={400}
+      />
     ),
   },
 ];
