@@ -59,7 +59,7 @@ export const LandingPage = () => {
       {/* Quick Stats */}
       <div className='absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-8 text-center z-10'>
         <div className='text-gray-400'>
-          <div className='text-2xl font-bold text-primary'>22+</div>
+          <div className='text-2xl font-bold text-primary'>35+</div>
           <div className='text-sm'>Components</div>
         </div>
         <div className='text-gray-400'>
