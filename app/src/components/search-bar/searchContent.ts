@@ -411,6 +411,25 @@ const searchIndex: SearchResult[] = [
 		rank: 8,
 	},
 
+	// Help Icon Component
+	{
+		title: 'Help Icon',
+		path: '/components/help-icon',
+		description: 'Help icon component that combines InfoCircled icon with tooltip for contextual assistance.',
+		type: 'Component',
+		content: 'help icon tooltip info information contextual assistance filled outlined design props',
+		rank: 10,
+	},
+	{
+		title: 'Help Icon Props',
+		path: '/components/help-icon',
+		section: 'Props',
+		description: 'Help icon component properties including design variants, sizes, and tooltip options.',
+		type: 'Props',
+		content: 'help icon props properties design size placement message delay showArrow disabled className id',
+		rank: 8,
+	},
+
 	// Input Component
 	{
 		title: 'Input',

@@ -85,7 +85,7 @@ export function HelpIcon({
 			>
 				<InfoCircled 
 					size={iconSize}
-					className={design === 'outlined' ? 'stroke-current fill-transparent stroke-2' : 'fill-current'}
+					className={design === 'outlined' ? 'opacity-60' : 'fill-current'}
 				/>
 			</div>
 		</Tooltip>

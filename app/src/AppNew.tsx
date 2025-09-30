@@ -30,6 +30,7 @@ import { DropdownMenuPage } from './pages/components/DropdownMenuPage';
 import { DynamicListPage } from './pages/components/DynamicListPage';
 import { ErrorBoundaryPage } from './pages/components/ErrorBoundaryPage';
 import { FormPage } from './pages/components/FormPage';
+import { HelpIconPage } from './pages/components/HelpIconPage';
 import { InputPage } from './pages/components/InputPage';
 import { LabelPage } from './pages/components/LabelPage';
 import { ModalPage } from './pages/components/ModalPage';
@@ -89,6 +90,7 @@ function App() {
 							<Route path='components/dynamic-list' element={<DynamicListPage />} />
 							<Route path='components/error-boundary' element={<ErrorBoundaryPage />} />
 							<Route path='components/form' element={<FormPage />} />
+							<Route path='components/help-icon' element={<HelpIconPage />} />
 							<Route path='components/input' element={<InputPage />} />
 							<Route path='components/label' element={<LabelPage />} />
 							<Route path='components/modal' element={<ModalPage />} />
