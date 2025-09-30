@@ -18,7 +18,6 @@ import {
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
-import { HelpIcon } from '../help-icon';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -955,79 +954,6 @@ export const DraftPage = () => {
 										</div>
 									</Card>
 								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				{/* HelpIcon Examples */}
-				<div className='mb-8'>
-					<h2 className='text-2xl font-bold mb-4'>Help Icon Examples</h2>
-					<div className='space-y-6'>
-						{/* Basic Examples */}
-						<div className='flex items-center space-x-6'>
-							<div className='flex items-center space-x-2'>
-								<span>Basic filled</span>
-								<HelpIcon message="This is a basic help tooltip with filled design" />
-							</div>
-							<div className='flex items-center space-x-2'>
-								<span>Basic outlined</span>
-								<HelpIcon message="This is a basic help tooltip with outlined design" design="outlined" />
-							</div>
-						</div>
-						
-						{/* Size Variants */}
-						<div className='flex items-center space-x-6'>
-							<div className='flex items-center space-x-2'>
-								<span>Small</span>
-								<HelpIcon message="Small help icon" iconSize={14} />
-							</div>
-							<div className='flex items-center space-x-2'>
-								<span>Medium</span>
-								<HelpIcon message="Medium help icon" iconSize={16} />
-							</div>
-							<div className='flex items-center space-x-2'>
-								<span>Large</span>
-								<HelpIcon message="Large help icon" iconSize={20} />
-							</div>
-						</div>
-						
-						{/* Rich Content Example */}
-						<div className='flex items-center space-x-2'>
-							<span>Password Requirements</span>
-							<HelpIcon 
-								message={
-									<div>
-										<p className="font-semibold mb-1">Password Requirements</p>
-										<ul className="text-xs space-y-1">
-											<li>• At least 8 characters</li>
-											<li>• One uppercase letter</li>
-											<li>• One number or symbol</li>
-										</ul>
-									</div>
-								}
-								placement="bottom"
-								className="ml-2"
-							/>
-						</div>
-						
-						{/* Different Placements */}
-						<div className='grid grid-cols-2 md:grid-cols-4 gap-4 p-8'>
-							<div className='flex items-center justify-center'>
-								<HelpIcon message="Tooltip on top (default)" placement="top" />
-								<span className='ml-2'>Top</span>
-							</div>
-							<div className='flex items-center justify-center'>
-								<HelpIcon message="Tooltip on right" placement="right" />
-								<span className='ml-2'>Right</span>
-							</div>
-							<div className='flex items-center justify-center'>
-								<HelpIcon message="Tooltip on bottom" placement="bottom" />
-								<span className='ml-2'>Bottom</span>
-							</div>
-							<div className='flex items-center justify-center'>
-								<HelpIcon message="Tooltip on left" placement="left" />
-								<span className='ml-2'>Left</span>
 							</div>
 						</div>
 					</div>

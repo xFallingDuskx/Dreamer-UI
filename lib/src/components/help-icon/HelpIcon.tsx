@@ -1,7 +1,7 @@
-import { Tooltip, TooltipProps } from '@moondreamsdev/dreamer-ui/components';
-import { InfoCircled, InfoCircledFilled } from '@moondreamsdev/dreamer-ui/symbols';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React from 'react';
+import { InfoCircled, InfoCircledFilled } from '../../symbols';
+import { join } from '../../utils';
+import { Tooltip, TooltipProps } from '../tooltip';
 
 export interface HelpIconProps extends Omit<TooltipProps, 'children'> {
 	/** HTML id attribute for the help icon. */
@@ -29,7 +29,7 @@ export interface HelpIconProps extends Omit<TooltipProps, 'children'> {
  * <HelpIcon
  *   message="Click here for more information about pricing"
  *   design="outlined"
- *   size="lg"
+ *   iconSize={20}
  *   placement="bottom"
  * />
  *
@@ -58,7 +58,7 @@ export function HelpIcon({ id, ref, design = 'filled', iconSize = 12, className,
 				id={id}
 				ref={ref}
 				className={join(
-					'inline-block cursor-help text-muted-foreground hover:text-current transition-colors align-top',
+					'inline-block cursor-help text-muted-foreground transition-colors align-top',
 					className
 				)}
 				data-help-icon='true'

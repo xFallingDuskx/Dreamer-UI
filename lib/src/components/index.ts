@@ -17,6 +17,7 @@ export * from './dropdown-menu';
 export * from './dynamic-list';
 export * from './error-boundary';
 export * from './form';
+export * from './help-icon';
 export * from './input';
 export * from './label';
 export * from './modal';
