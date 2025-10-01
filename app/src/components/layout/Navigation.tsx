@@ -133,7 +133,7 @@ export const Navigation = () => {
 				</div>
 
 				{/* Search Bar */}
-				<div className='w-max mx-8 hidden md:flex justify-end'>
+				<div className='w-max hidden md:block'>
 					<SearchBar />
 				</div>
 
