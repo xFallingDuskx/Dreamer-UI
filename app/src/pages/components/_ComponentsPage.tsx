@@ -254,13 +254,13 @@ export const ComponentsPage = () => {
 								<Link
 									key={component.path}
 									to={component.path}
-									className='block p-6 bg-gray-800/50 border border-gray-600 rounded-xl hover:border-primary/50 hover:bg-gray-800/70 transition-all duration-200 group'
+									className='block p-6 bg-gray-800/50 border border-gray-600 rounded-xl hover:border-accent/50 hover:bg-gray-800/70 transition-all duration-200 group'
 								>
-									<h3 className='text-xl font-semibold text-white group-hover:text-primary transition-colors mb-2'>
+									<h3 className='text-xl font-semibold text-white group-hover:text-accent transition-colors mb-2'>
 										{component.name}
 									</h3>
 									<p className='text-gray-400 text-sm mb-4'>{component.description}</p>
-									<div className='flex items-center text-primary text-sm'>View Component →</div>
+									<div className='flex items-center text-accent text-sm'>View Component →</div>
 								</Link>
 							))}
 					</div>
@@ -272,7 +272,7 @@ export const ComponentsPage = () => {
 				description='Our approach to building reusable and accessible components.'
 			>
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-					<div className='bg-gray-700 p-6 rounded-lg'>
+					<div className='bg-accent/50 p-6 rounded-lg'>
 						<h4 className='text-white font-semibold mb-3'>🎨 Design Principles</h4>
 						<ul className='text-gray-300 space-y-2 text-sm'>
 							<li>• Consistent visual language across all components</li>
@@ -281,7 +281,7 @@ export const ComponentsPage = () => {
 							<li>• Thoughtful spacing and typography hierarchy</li>
 						</ul>
 					</div>
-					<div className='bg-gray-700 p-6 rounded-lg'>
+					<div className='bg-accent/50 p-6 rounded-lg'>
 						<h4 className='text-white font-semibold mb-3'>♿ Accessibility First</h4>
 						<ul className='text-gray-300 space-y-2 text-sm'>
 							<li>• Full keyboard navigation support</li>
@@ -290,7 +290,7 @@ export const ComponentsPage = () => {
 							<li>• Focus indicators and state management</li>
 						</ul>
 					</div>
-					<div className='bg-gray-700 p-6 rounded-lg'>
+					<div className='bg-accent/50 p-6 rounded-lg'>
 						<h4 className='text-white font-semibold mb-3'>⚡ Developer Experience</h4>
 						<ul className='text-gray-300 space-y-2 text-sm'>
 							<li>• Full TypeScript support with complete types</li>
@@ -299,7 +299,7 @@ export const ComponentsPage = () => {
 							<li>• Tree-shakeable imports for optimal bundle size</li>
 						</ul>
 					</div>
-					<div className='bg-gray-700 p-6 rounded-lg'>
+					<div className='bg-accent/50 p-6 rounded-lg'>
 						<h4 className='text-white font-semibold mb-3'>🔧 Customization</h4>
 						<ul className='text-gray-300 space-y-2 text-sm'>
 							<li>• CSS custom properties for easy theming</li>
