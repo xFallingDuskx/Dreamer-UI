@@ -7,6 +7,8 @@
     "dev": "vite",
     "devh": "vite --host",
     "build": "tsc -b && vite build",
+    "predeploy": "npm run build && npm run preview",
+    "fbdeploy": "npm run build && firebase deploy",
     "lint": "eslint .",
     "preview": "vite preview"
   },
