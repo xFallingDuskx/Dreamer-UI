@@ -44,14 +44,6 @@ export const LandingPage = () => {
             <Link to='/components' className='text-accent hover:text-accent/80 underline'>
               components
             </Link>
-            ,{' '}
-            <Link to='/hooks' className='text-accent hover:text-accent/80 underline'>
-              hooks
-            </Link>
-            , and{' '}
-            <Link to='/utils' className='text-accent hover:text-accent/80 underline'>
-              utilities
-            </Link>
           </p>
         </div>
       </div>

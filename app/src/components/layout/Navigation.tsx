@@ -56,6 +56,12 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 	const navigate = useNavigate();
 	const showDraft = isLocalhost();
 
+	const getNavButtonClasses = (path: string) =>
+		join(
+			'px-3 py-2 text-sm font-medium rounded-md transition-colors',
+			location.pathname === path ? 'bg-accent/50' : 'text-gray-300 hover:text-white hover:bg-gray-800'
+		);
+
 	return (
 		<nav className={`bg-gray-900/80 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50 ${className}`}>
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -72,23 +78,17 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 
 					{/* Main Navigation */}
 					<div className='hidden md:block'>
-						<div className='flex items-baseline space-x-6'>
+						<div className='flex items-baseline space-x-4'>
 							<Link
 								to='/'
-								className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-									location.pathname === '/' ? 'bg-accent/50' : 'text-gray-300 hover:text-white hover:bg-gray-800'
-								}`}
+								className={getNavButtonClasses('/')}
 							>
 								Home
 							</Link>
 
 							<Link
 								to='/getting-started'
-								className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-									location.pathname === '/getting-started'
-										? 'bg-accent/50'
-										: 'text-gray-300 hover:text-white hover:bg-gray-800'
-								}`}
+								className={getNavButtonClasses('/getting-started')}
 							>
 								Getting Started
 							</Link>
@@ -99,7 +99,7 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 								trigger={
 									<Link
 										to='/components'
-										className='px-3 py-2 text-sm font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-800 transition-colors flex items-center gap-1'
+										className={getNavButtonClasses('/components')}
 									>
 										Components
 									</Link>

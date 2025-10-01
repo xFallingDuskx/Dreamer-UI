@@ -16,7 +16,7 @@ We should ensure that the component is discoverable in our app. We will do that 
 2. Ensure that the component is listed in all correct places:
 
 - Routes: Ensure the component page is added to the app's routes.
-  - File: app/src/AppNew.tsx
+  - File: app/src/App.tsx
 - Top Nav: Ensure the component is listed in the top navigation bar under the "Components" dropdown menu.
   - File: app/src/components/layout/Navigation.tsx
 - Navigation: Ensure the component is listed on the Component page under the appropriate category (e.g., "Alerts" or "Notifications").
