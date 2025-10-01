@@ -1,4 +1,6 @@
-export interface SymbolProps extends React.SVGProps<SVGSVGElement> {
+import { SVGProps } from 'react';
+
+export interface SymbolProps extends SVGProps<SVGSVGElement> {
   size?: number;
   color?: string;
 }
