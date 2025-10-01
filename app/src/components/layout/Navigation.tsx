@@ -4,10 +4,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { isLocalhost } from '../../utils/isLocalhost';
 import { SearchBar } from '../search-bar';
 
-interface NavigationProps {
-	className?: string;
-}
-
 const components = [
 	{ name: 'Accordion', path: '/components/accordion' },
 	{ name: 'Action Modal', path: '/components/actionmodal' },
@@ -51,7 +47,7 @@ const components = [
 
 const componentPathToId = (path: string) => `nav-item-${path.replace('/components/', '')}`;
 
-export const Navigation = ({ className = '' }: NavigationProps) => {
+export const Navigation = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const showDraft = isLocalhost();
@@ -63,104 +59,91 @@ export const Navigation = ({ className = '' }: NavigationProps) => {
 		);
 
 	return (
-		<nav className={`bg-gray-900/80 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50 ${className}`}>
-			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-				<div className='flex items-center justify-between h-16'>
-					{/* Logo */}
-					<Link to='/' className='flex items-center space-x-2'>
-						<div className='w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center'>
-							<span className='text-white font-bold text-sm'>D</span>
-						</div>
-						<span className='text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent'>
-							Dreamer UI
-						</span>
+		<nav className='bg-gray-900/80 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50'>
+			<div className='flex items-center h-16 px-4 sm:px-6 lg:px-8'>
+				{/* Logo */}
+				<Link to='/' className='flex items-center space-x-2'>
+					<div className='w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center'>
+						<span className='text-white font-bold text-sm'>D</span>
+					</div>
+					<span className='text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent'>
+						Dreamer UI
+					</span>
+				</Link>
+
+				{/* Main Navigation */}
+				<div className='flex-1 hidden md:flex items-baseline justify-center space-x-4'>
+					<Link to='/' className={getNavButtonClasses('/')}>
+						Home
 					</Link>
 
-					{/* Main Navigation */}
-					<div className='hidden md:block'>
-						<div className='flex items-baseline space-x-4'>
-							<Link
-								to='/'
-								className={getNavButtonClasses('/')}
-							>
-								Home
+					<Link to='/getting-started' className={getNavButtonClasses('/getting-started')}>
+						Getting Started
+					</Link>
+
+					{/* Components Popover */}
+					<Popover
+						id='nav-popover'
+						trigger={
+							<Link to='/components' className={getNavButtonClasses('/components')}>
+								Components
 							</Link>
-
-							<Link
-								to='/getting-started'
-								className={getNavButtonClasses('/getting-started')}
-							>
-								Getting Started
-							</Link>
-
-							{/* Components Popover */}
-							<Popover
-								id='nav-popover'
-								trigger={
-									<Link
-										to='/components'
-										className={getNavButtonClasses('/components')}
-									>
-										Components
-									</Link>
-								}
-								placement='bottom'
-								alignment='start'
-								className='w-64 border border-gray-700 focus:outline-none'
-								hoverable={true}
-							>
-								<ScrollArea viewportClassName='max-h-96 space-y-1' thumbClassName='bg-accent-dark!'>
-									{components.map((component) => (
-										<Link
-											id={componentPathToId(component.path)}
-											key={component.path}
-											to={component.path}
-											className={join(
-												'block px-3 py-2 text-sm transition-colors',
-												location.pathname === component.path
-													? 'bg-accent/50 text-white'
-													: 'text-gray-300 hover:text-white hover:bg-gray-800'
-											)}
-											onClick={() => {
-												// Close popover by navigating (optional, depends on desired UX)
-												navigate(component.path);
-											}}
-										>
-											{component.name}
-										</Link>
-									))}
-								</ScrollArea>
-							</Popover>
-
-							{/* Draft Link - Only visible on localhost */}
-							{showDraft && (
+						}
+						placement='bottom'
+						alignment='start'
+						className='w-64 border border-gray-700 focus:outline-none'
+						hoverable={true}
+					>
+						<ScrollArea viewportClassName='max-h-96 space-y-1' thumbClassName='bg-accent-dark!'>
+							{components.map((component) => (
 								<Link
-									to='/draft'
-									className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-										location.pathname === '/draft'
-											? 'text-orange-400 bg-orange-400/20'
-											: 'text-orange-300 hover:text-orange-200 hover:bg-orange-400/10'
-									}`}
+									id={componentPathToId(component.path)}
+									key={component.path}
+									to={component.path}
+									className={join(
+										'block px-3 py-2 text-sm transition-colors',
+										location.pathname === component.path
+											? 'bg-accent/50 text-white'
+											: 'text-gray-300 hover:text-white hover:bg-gray-800'
+									)}
+									onClick={() => {
+										// Close popover by navigating (optional, depends on desired UX)
+										navigate(component.path);
+									}}
 								>
-									Draft
+									{component.name}
 								</Link>
-							)}
-						</div>
-					</div>
+							))}
+						</ScrollArea>
+					</Popover>
 
-					{/* Search Bar */}
-					<div className='flex-1 max-w-md mx-8 hidden md:flex justify-end'>
-						<SearchBar />
-					</div>
+					{/* Draft Link - Only visible on localhost */}
+					{showDraft && (
+						<Link
+							to='/draft'
+							className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+								location.pathname === '/draft'
+									? 'text-orange-400 bg-orange-400/20'
+									: 'text-orange-300 hover:text-orange-200 hover:bg-orange-400/10'
+							}`}
+						>
+							Draft
+						</Link>
+					)}
+				</div>
 
-					{/* Mobile menu button */}
-					<div className='flex items-center gap-2 md:hidden'>
-						<button className='text-gray-300 hover:text-white'>
-							<svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-								<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 6h16M4 12h16M4 18h16' />
-							</svg>
-						</button>
-					</div>
+				{/* Search Bar */}
+				<div className='w-max mx-8 hidden md:flex justify-end'>
+					<SearchBar />
+				</div>
+
+				{/* Mobile menu button */}
+				<div className='flex items-center gap-2 md:hidden'>
+					<button className='text-gray-300 hover:text-white'>
+						<svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+							<path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 6h16M4 12h16M4 18h16' />
+						</svg>
+					</button>
 				</div>
 			</div>
 		</nav>
