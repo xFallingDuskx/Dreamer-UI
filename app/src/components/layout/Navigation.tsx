@@ -73,7 +73,7 @@ export const Navigation = () => {
 
 	return (
 		<nav className='bg-gray-900/80 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50'>
-			<div className='flex items-center h-16 px-4 sm:px-6 lg:px-8'>
+			<div className='relative flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8'>
 				{/* Logo */}
 				<Link to='/' className='flex items-center space-x-2'>
 					{/* <div className='w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center'>
@@ -86,7 +86,7 @@ export const Navigation = () => {
 				</Link>
 
 				{/* Main Navigation */}
-				<div className='flex-1 hidden md:flex items-baseline justify-center space-x-4'>
+				<div className='h-16 px-4 sm:px-6 lg:px-8 absolute top-0 left-0 w-screen hidden md:flex items-center justify-center space-x-4'>
 					<Link to='/' className={getNavButtonClasses('/')}>
 						Home
 					</Link>
