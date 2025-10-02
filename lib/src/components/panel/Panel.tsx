@@ -3,7 +3,6 @@ import React, { useId } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from '../../symbols';
 import { useAnimationSlideIn, usePanelDocumentChanges, usePanelFocus } from './hooks';
-import { PanelSize, panelVariants } from './variants';
 
 export interface PanelProps {
   ref?: React.Ref<HTMLDivElement>;
@@ -19,8 +18,6 @@ export interface PanelProps {
   children: React.ReactNode;
   /** Panel footer - can be a string or React node */
   footer?: React.ReactNode;
-  /** Panel size variant */
-  size?: PanelSize;
   /** Additional CSS classes for the panel */
   className?: string;
   /** Additional CSS classes for the overlay */
@@ -47,7 +44,6 @@ export function Panel({
   title,
   children,
   footer,
-  size = 'md',
   className,
   overlayClassName,
   hideCloseButton = false,
@@ -124,13 +120,10 @@ export function Panel({
               ref={ref}
               tabIndex={-1}
               className={join(
-                'relative h-full transform shadow-xl bg-popover text-popover-foreground transition-transform duration-300 ease-in-out',
-                size !== 'screen' && 'border-l border-border',
-                panelVariants.size[size],
+                'relative h-full max-w-md transform shadow-xl bg-popover text-popover-foreground transition-transform duration-300 ease-in-out border-l border-border',
                 show ? 'translate-x-0' : 'translate-x-full',
                 className
               )}
-              data-panel-size={size}
             >
               <div className='flex h-full flex-col'>
                 {title && <div className='px-6 pt-6'>{renderTitle()}</div>}

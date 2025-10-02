@@ -168,7 +168,7 @@ export const Navigation = () => {
 				isOpen={isMobileMenuOpen}
 				onClose={() => setIsMobileMenuOpen(false)}
 				title='Navigation'
-				className='md:hidden'
+				className='md:hidden max-w-sm'
 			>
 				<div className='space-y-1 w-sm'>
 					{/* Main Navigation Links */}
