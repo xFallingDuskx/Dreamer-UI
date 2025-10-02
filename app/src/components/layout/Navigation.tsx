@@ -73,12 +73,9 @@ export const Navigation = () => {
 
 	return (
 		<nav className='bg-gray-900/80 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50'>
-			<div className='relative flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8'>
+			<div className='relative flex items-center justify-center h-16 px-4 sm:px-6 lg:px-8'>
 				{/* Logo */}
-				<Link to='/' className='flex items-center space-x-2'>
-					{/* <div className='w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center'>
-						<span className='text-white font-bold text-sm'>D</span>
-					</div> */}
+				<Link to='/' className='absolute left-0 pl-4 sm:pl-6 lg:pl-8 flex items-center space-x-2'>
 					<img src='/logo.svg' alt='Dreamer UI Logo' className='size-8' />
 					<span className='text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent'>
 						Dreamer UI
@@ -86,7 +83,7 @@ export const Navigation = () => {
 				</Link>
 
 				{/* Main Navigation */}
-				<div className='h-16 px-4 sm:px-6 lg:px-8 absolute top-0 left-0 w-screen hidden md:flex items-center justify-center space-x-4'>
+				<div className='hidden md:flex items-center justify-center space-x-4'>
 					<Link to='/' className={getNavButtonClasses('/')}>
 						Home
 					</Link>
@@ -147,7 +144,7 @@ export const Navigation = () => {
 				</div>
 
 				{/* Search Bar */}
-				<div className='w-max hidden md:block'>
+				<div className='absolute right-0 pr-4 sm:pr-6 lg:pr-8 w-max hidden md:block'>
 					<SearchBar />
 				</div>
 
