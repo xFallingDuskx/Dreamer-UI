@@ -2,7 +2,7 @@ import React from 'react';
 import './SpaceBackground.css';
 
 interface SpaceBackgroundProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
 }
 

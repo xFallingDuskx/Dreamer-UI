@@ -8,6 +8,7 @@ import { Layout } from './components/layout/Layout';
 import { LandingPage } from './pages/LandingPage';
 
 import { isLocalhost } from './utils/isLocalhost';
+import { SpaceBackground } from './components/ui/SpaceBackground';
 
 const showDraftRoute = isLocalhost();
 
@@ -20,6 +21,11 @@ const router = createBrowserRouter([
 			{
 				index: true,
 				element: <LandingPage />,
+			},
+			// Background
+			{
+				path: 'background',
+				element: <SpaceBackground/>,
 			},
 			// Getting Started Page
 			{

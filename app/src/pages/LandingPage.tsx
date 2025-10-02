@@ -14,8 +14,8 @@ export const LandingPage = () => {
         </div>
 
         {/* Subtitle */}
-        <p className='text-xl md:text-2xl text-gray-300 font-light max-w-md mx-auto leading-relaxed'>
-          A beautiful React component library built with Tailwind CSS for modern web applications.
+        <p className='text-lg md:text-xl text-gray-300 font-light max-w-md mx-auto leading-relaxed'>
+          An opinionated React UI library to help bring your visions to reality. Made for dreamers by a dreamer.
         </p>
 
         {/* Feature Highlights */}
