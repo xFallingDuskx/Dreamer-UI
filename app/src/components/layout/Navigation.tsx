@@ -76,9 +76,10 @@ export const Navigation = () => {
 			<div className='flex items-center h-16 px-4 sm:px-6 lg:px-8'>
 				{/* Logo */}
 				<Link to='/' className='flex items-center space-x-2'>
-					<div className='w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center'>
+					{/* <div className='w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center'>
 						<span className='text-white font-bold text-sm'>D</span>
-					</div>
+					</div> */}
+					<img src='/logo-concepts/concept-14.svg' alt='Dreamer UI Logo' className='size-8' />
 					<span className='text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent'>
 						Dreamer UI
 					</span>
