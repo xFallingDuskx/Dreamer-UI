@@ -7,8 +7,9 @@ import { Layout } from './components/layout/Layout';
 // Only import pages that are needed immediately (like LandingPage for the index route)
 import { LandingPage } from './pages/LandingPage';
 
-import { isLocalhost } from './utils/isLocalhost';
+import { Suspense } from 'react';
 import { SpaceBackground } from './components/ui/SpaceBackground';
+import { isLocalhost } from './utils/isLocalhost';
 
 const showDraftRoute = isLocalhost();
 
@@ -25,11 +26,12 @@ const router = createBrowserRouter([
 			// Background
 			{
 				path: 'background',
-				element: <SpaceBackground/>,
+				element: <SpaceBackground />,
 			},
 			// Getting Started Page
 			{
 				path: 'getting-started',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { GettingStartedPage } = await import('./pages/GettingStartedPage');
 					return { Component: GettingStartedPage };
@@ -38,6 +40,7 @@ const router = createBrowserRouter([
 			// Components Index
 			{
 				path: 'components',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { ComponentsPage } = await import('./pages/components/_ComponentsPage');
 					return { Component: ComponentsPage };
@@ -46,6 +49,7 @@ const router = createBrowserRouter([
 			// Component Pages
 			{
 				path: 'components/accordion',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { AccordionPage } = await import('./pages/components/AccordionPage');
 					return { Component: AccordionPage };
@@ -53,6 +57,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/actionmodal',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { ActionModalPage } = await import('./pages/components/ActionModalPage');
 					return { Component: ActionModalPage };
@@ -60,6 +65,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/avatar',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { AvatarPage } = await import('./pages/components/AvatarPage');
 					return { Component: AvatarPage };
@@ -67,6 +73,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/badge',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { BadgePage } = await import('./pages/components/BadgePage');
 					return { Component: BadgePage };
@@ -74,6 +81,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/button',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { ButtonPage } = await import('./pages/components/ButtonPage');
 					return { Component: ButtonPage };
@@ -81,6 +89,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/calendar',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { CalendarPage } = await import('./pages/components/CalendarPage');
 					return { Component: CalendarPage };
@@ -88,6 +97,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/callout',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { CalloutPage } = await import('./pages/components/CalloutPage');
 					return { Component: CalloutPage };
@@ -95,6 +105,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/card',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { CardPage } = await import('./pages/components/CardPage');
 					return { Component: CardPage };
@@ -102,6 +113,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/carousel',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { CarouselPage } = await import('./pages/components/CarouselPage');
 					return { Component: CarouselPage };
@@ -109,6 +121,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/checkbox',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { CheckboxPage } = await import('./pages/components/CheckboxPage');
 					return { Component: CheckboxPage };
@@ -116,6 +129,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/clickable',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { ClickablePage } = await import('./pages/components/ClickablePage');
 					return { Component: ClickablePage };
@@ -123,6 +137,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/code',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { CodePage } = await import('./pages/components/CodePage');
 					return { Component: CodePage };
@@ -130,6 +145,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/codeblock',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { CodeBlockPage } = await import('./pages/components/CodeBlockPage');
 					return { Component: CodeBlockPage };
@@ -137,6 +153,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/disclosure',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { DisclosurePage } = await import('./pages/components/DisclosurePage');
 					return { Component: DisclosurePage };
@@ -144,6 +161,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/drawer',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { DrawerPage } = await import('./pages/components/DrawerPage');
 					return { Component: DrawerPage };
@@ -151,6 +169,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/dropdown-menu',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { DropdownMenuPage } = await import('./pages/components/DropdownMenuPage');
 					return { Component: DropdownMenuPage };
@@ -158,6 +177,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/dynamic-list',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { DynamicListPage } = await import('./pages/components/DynamicListPage');
 					return { Component: DynamicListPage };
@@ -165,6 +185,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/error-boundary',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { ErrorBoundaryPage } = await import('./pages/components/ErrorBoundaryPage');
 					return { Component: ErrorBoundaryPage };
@@ -172,6 +193,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/form',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { FormPage } = await import('./pages/components/FormPage');
 					return { Component: FormPage };
@@ -179,6 +201,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/help-icon',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { HelpIconPage } = await import('./pages/components/HelpIconPage');
 					return { Component: HelpIconPage };
@@ -186,6 +209,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/input',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { InputPage } = await import('./pages/components/InputPage');
 					return { Component: InputPage };
@@ -193,6 +217,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/label',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { LabelPage } = await import('./pages/components/LabelPage');
 					return { Component: LabelPage };
@@ -200,6 +225,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/modal',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { ModalPage } = await import('./pages/components/ModalPage');
 					return { Component: ModalPage };
@@ -207,6 +233,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/pagination',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { PaginationPage } = await import('./pages/components/PaginationPage');
 					return { Component: PaginationPage };
@@ -214,6 +241,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/panel',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { PanelPage } = await import('./pages/components/PanelPage');
 					return { Component: PanelPage };
@@ -221,6 +249,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/popover',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { PopoverPage } = await import('./pages/components/PopoverPage');
 					return { Component: PopoverPage };
@@ -228,6 +257,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/radiogroup',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { RadioGroupPage } = await import('./pages/components/RadioGroupPage');
 					return { Component: RadioGroupPage };
@@ -235,6 +265,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/scroll-area',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { ScrollAreaPage } = await import('./pages/components/ScrollAreaPage');
 					return { Component: ScrollAreaPage };
@@ -242,6 +273,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/select',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { SelectPage } = await import('./pages/components/SelectPage');
 					return { Component: SelectPage };
@@ -249,6 +281,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/separator',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { SeparatorPage } = await import('./pages/components/SeparatorPage');
 					return { Component: SeparatorPage };
@@ -256,6 +289,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/skeleton',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { SkeletonPage } = await import('./pages/components/SkeletonPage');
 					return { Component: SkeletonPage };
@@ -263,6 +297,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/slider',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { SliderPage } = await import('./pages/components/SliderPage');
 					return { Component: SliderPage };
@@ -270,6 +305,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/table',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { TablePage } = await import('./pages/components/TablePage');
 					return { Component: TablePage };
@@ -277,6 +313,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/tabs',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { TabsPage } = await import('./pages/components/TabsPage');
 					return { Component: TabsPage };
@@ -284,6 +321,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/textarea',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { TextareaPage } = await import('./pages/components/TextareaPage');
 					return { Component: TextareaPage };
@@ -291,6 +329,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/toast',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { ToastPage } = await import('./pages/components/ToastPage');
 					return { Component: ToastPage };
@@ -298,6 +337,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/toggle',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { TogglePage } = await import('./pages/components/TogglePage');
 					return { Component: TogglePage };
@@ -305,19 +345,25 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'components/tooltip',
+				HydrateFallback: SpaceBackground,
 				lazy: async () => {
 					const { TooltipPage } = await import('./pages/components/TooltipPage');
 					return { Component: TooltipPage };
 				},
 			},
 			// Draft Page - Only available on localhost
-			...(showDraftRoute ? [{
-				path: 'draft',
-				lazy: async () => {
-					const { DraftPage } = await import('./pages/DraftPage');
-					return { Component: DraftPage };
-				},
-			}] : []),
+			...(showDraftRoute
+				? [
+						{
+							path: 'draft',
+							HydrateFallback: SpaceBackground,
+							lazy: async () => {
+								const { DraftPage } = await import('./pages/DraftPage');
+								return { Component: DraftPage };
+							},
+						},
+				  ]
+				: []),
 		],
 	},
 ]);
@@ -326,7 +372,9 @@ function App() {
 	return (
 		<ActionModalProvider>
 			<ToastProvider position='top-center'>
-				<RouterProvider router={router} />
+				<Suspense fallback={<div>Loading...</div>}>
+					<RouterProvider router={router} />
+				</Suspense>
 			</ToastProvider>
 		</ActionModalProvider>
 	);
