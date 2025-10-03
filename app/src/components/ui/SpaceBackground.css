@@ -66,17 +66,6 @@
   }
 }
 
-@keyframes nebulaDrift {
-  0%, 100% { 
-    transform: translate(0, 0) scale(1) rotate(0deg); 
-    opacity: 0.1; 
-  }
-  50% { 
-    transform: translate(10px, 5px) scale(1.1) rotate(180deg); 
-    opacity: 0.15; 
-  }
-}
-
 /* Colored Star Glow Animations */
 @keyframes primaryStarGlow {
   0%, 100% { 
@@ -146,20 +135,9 @@
   animation: secondaryStarGlow 6s ease-in-out infinite;
 }
 
-.nebula-drift {
-  animation: nebulaDrift 8s ease-in-out infinite;
-}
-
 /* Animation Delays */
 .star-delay-1 { animation-delay: 0.5s; }
 .star-delay-2 { animation-delay: 1s; }
 .star-delay-3 { animation-delay: 1.5s; }
 .star-delay-4 { animation-delay: 2s; }
 .star-delay-5 { animation-delay: 2.5s; }
-
-.nebula-delay-1 { animation-delay: 1s; }
-.nebula-delay-2 { animation-delay: 2s; }
-.nebula-delay-3 { animation-delay: 3s; }
-.nebula-delay-4 { animation-delay: 4s; }
-.nebula-delay-5 { animation-delay: 5s; }
-.nebula-delay-6 { animation-delay: 6s; }
