@@ -4,7 +4,7 @@ import { AddToastOptions, ToastContextValue } from '../hooks/useToast';
 import { ToastContext } from '../hooks/useToast';
 import { join } from '../utils';
 
-interface ToastProviderProps {
+export interface ToastProviderProps {
   children: ReactNode;
   customTypes?: Record<string, { className: string; icon?: ReactNode }>;
   customComponent?: React.ComponentType<ToastData>;
