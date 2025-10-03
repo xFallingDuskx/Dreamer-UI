@@ -3,22 +3,33 @@ import { ActionModal } from '../components';
 import { ActionModalContext } from '../hooks';
 
 export interface ConfirmOptions {
+  /** The title displayed in the confirmation modal header */
   title?: string;
+  /** The main message content displayed in the modal body */
   message: ReactNode;
+  /** Text for the confirm/accept button. Defaults to "Confirm" */
   confirmText?: string;
+  /** Text for the cancel/dismiss button. Defaults to "Cancel" */
   cancelText?: string;
+  /** Whether the action is destructive, affects button styling */
   destructive?: boolean;
 }
 
 export interface AlertOptions {
+  /** The title displayed in the alert modal header */
   title?: string;
+  /** The main message content displayed in the modal body */
   message: ReactNode;
+  /** Text for the confirm/dismiss button. Defaults to "OK" */
   confirmText?: string;
+  /** Whether the alert represents a destructive action, affects button styling */
   destructive?: boolean;
 }
 
 export interface ActionModalContextValue {
+  /** Shows a confirmation modal and returns a promise that resolves to true if confirmed, false if cancelled */
   confirm: (options: ConfirmOptions) => Promise<boolean>;
+  /** Shows an alert modal and returns a promise that resolves when dismissed */
   alert: (options: AlertOptions) => Promise<void>;
 }
 
