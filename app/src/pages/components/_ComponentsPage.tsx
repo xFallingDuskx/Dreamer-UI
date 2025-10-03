@@ -265,7 +265,8 @@ export const ComponentsPage = () => {
 		markdown += `### Providers\n\n`;
 		markdown += `Import providers from \`@moondreamsdev/dreamer-ui/providers\`:\n\n`;
 		markdown += `- **ToastProvider**: Required for \`useToast\` hook. Wrap your app to enable toast notifications.\n`;
-		markdown += `- **ActionModalProvider**: Required for \`useActionModal\` hook. Wrap your app to enable action modals.\n\n`;
+		markdown += `- **ActionModalProvider**: Required for \`useActionModal\` hook. Wrap your app to enable action modals.\n`;
+		markdown += `- **DreamerUIProvider**: Combines \`ToastProvider\` and \`ActionModalProvider\`. Wrap your app with this provider for both functionalities.\n\n`;
 
 		markdown += `## Utilities\n\n`;
 		markdown += `- **join**: Import from \`@moondreamsdev/dreamer-ui/utils\` - Utility function for conditionally joining class names.\n`;
