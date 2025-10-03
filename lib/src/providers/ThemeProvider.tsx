@@ -56,6 +56,11 @@ export function ThemeProvider({
     [storageKey]
   );
 
+  const toggleTheme = useCallback(() => {
+    const newTheme = resolvedTheme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+  }, [resolvedTheme, setTheme]);
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -95,6 +100,7 @@ export function ThemeProvider({
     theme,
     setTheme,
     resolvedTheme,
+    toggleTheme,
   };
 
   return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
