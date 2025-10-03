@@ -2,10 +2,15 @@ import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { Theme, ThemeContext, ThemeContextValue } from '../hooks/useTheme';
 
 export interface ThemeProviderProps {
+  /** React children to be wrapped by the theme provider */
   children: ReactNode;
+  /** The default theme to use on first load. Defaults to 'system' */
   defaultTheme?: Theme;
+  /** Local storage key used to persist the theme selection. Defaults to 'dreamer-ui-theme' */
   storageKey?: string;
+  /** HTML attribute name to set on document root. Defaults to 'data-theme' */
   attribute?: string;
+  /** Whether to respect system theme when theme is set to 'system'. Defaults to true */
   respectSystem?: boolean;
 }
 

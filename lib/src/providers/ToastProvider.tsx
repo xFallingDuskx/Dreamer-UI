@@ -5,10 +5,15 @@ import { ToastContext } from '../hooks/useToast';
 import { join } from '../utils';
 
 export interface ToastProviderProps {
+  /** React children to be wrapped by the toast provider */
   children: ReactNode;
+  /** Custom toast types with their own styling and icons */
   customTypes?: Record<string, { className: string; icon?: ReactNode }>;
+  /** Custom toast component to replace the default Toast component */
   customComponent?: React.ComponentType<ToastData>;
+  /** Position where toasts should appear on screen */
   position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' | 'bottom-center';
+  /** Maximum number of toasts to display at once */
   maxToasts?: number;
 }
 

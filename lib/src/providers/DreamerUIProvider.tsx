@@ -4,8 +4,11 @@ import { ThemeProvider, ThemeProviderProps } from './ThemeProvider';
 import { ToastProvider, ToastProviderProps } from './ToastProvider';
 
 export interface DreamerUIProviderProps {
+	/** React children to be wrapped by all DreamerUI providers */
 	children: ReactNode;
+	/** Configuration options for the ThemeProvider */
 	theme?: Omit<ThemeProviderProps, 'children'>;
+	/** Configuration options for the ToastProvider */
 	toast?: Omit<ToastProviderProps, 'children'>;
 }
 
