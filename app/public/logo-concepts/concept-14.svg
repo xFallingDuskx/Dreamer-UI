@@ -1,0 +1,46 @@
+<!-- No-background version: Concept 14 - Nebula -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <radialGradient id="n-indigo">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4338ca;stop-opacity:0.7" />
+    </radialGradient>
+    <radialGradient id="n-teal">
+      <stop offset="0%" style="stop-color:#2dd4bf;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:0.65" />
+    </radialGradient>
+    <radialGradient id="n-violet">
+      <stop offset="0%" style="stop-color:#a78bfa;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+    </radialGradient>
+    <radialGradient id="n-slate">
+      <stop offset="0%" style="stop-color:#475569;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:0.4" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Base dark layer - scaled to 95% -->
+  <ellipse cx="64" cy="64" rx="60.8" ry="55.1" fill="url(#n-slate)"/>
+  
+  <!-- Large back blob - indigo -->
+  <ellipse cx="49.6" cy="70.4" rx="49.4" ry="45.6" fill="url(#n-indigo)"/>
+  
+  <!-- Right blob - teal accent -->
+  <ellipse cx="78.4" cy="59.6" rx="43.7" ry="49.4" fill="url(#n-teal)"/>
+  
+  <!-- Top blob - violet -->
+  <ellipse cx="64" cy="46.8" rx="38" ry="39.9" fill="url(#n-violet)"/>
+  
+  <!-- Small accent blobs -->
+  <ellipse cx="36.8" cy="64" rx="22.8" ry="26.6" fill="url(#n-teal)" opacity="0.8"/>
+  <ellipse cx="72.2" cy="81.6" rx="26.6" ry="22.8" fill="url(#n-indigo)" opacity="0.8"/>
+  
+  <!-- Crescent moon detail -->
+  <path d="M 55.8 57.6 Q 66.2 57.6 71.4 64 Q 75 70.4 71.4 76.8 Q 66.2 83.2 55.8 83.2 Q 62.6 79.6 66.2 76.8 Q 69.8 70.4 66.2 64 Q 62.6 60.4 55.8 57.6 Z" 
+        fill="#0f172a" opacity="0.5"/>
+  
+  <!-- Bright highlights -->
+  <circle cx="64" cy="46.8" r="3.8" fill="#f1f5f9" opacity="0.6"/>
+  <circle cx="78.4" cy="59.6" r="2.85" fill="#f1f5f9" opacity="0.5"/>
+  <circle cx="49.6" cy="67.6" r="2.85" fill="#f1f5f9" opacity="0.5"/>
+</svg>

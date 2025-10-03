@@ -519,9 +519,9 @@ const searchIndex: SearchResult[] = [
 		title: 'Panel Props',
 		path: '/components/panel',
 		section: 'Props',
-		description: 'Panel component properties including footer, title, and size options.',
+		description: 'Panel component properties including footer, title, and styling options.',
 		type: 'Props',
-		content: 'panel props properties title footer isOpen onClose size hideCloseButton disableCloseOnOverlayClick className overlayClassName',
+		content: 'panel props properties title footer isOpen onClose hideCloseButton disableCloseOnOverlayClick className overlayClassName',
 		rank: 8,
 	},
 

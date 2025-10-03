@@ -1,6 +1,6 @@
 # Dreamer UI
 
-A collection of beautifully designed, accessible React components built with Tailwind CSS.
+A collection of 35+ accessible React components built with Tailwind CSS.
 
 ## Installation
 
@@ -54,7 +54,7 @@ This configuration allows the Tailwind CSS extension to provide autocomplete and
 ## Usage
 
 ```tsx
-import { Button, Input, Textarea } from 'dreamer-ui';
+import { Button, Input, Textarea } from '@moondreamsdev/dreamer-ui/components';
 
 function App() {
   return (
@@ -71,15 +71,6 @@ function App() {
 
 - React 18+
 - Tailwind CSS 4+
-
-## Components
-
-- **Button** - Various button styles with loading states
-- **Input** - Text inputs with validation states
-- **Textarea** - Multi-line text inputs with auto-expand
-- **RadioGroup** - Accessible radio button groups
-- **Checkbox** - Customizable checkboxes
-- **Label** - Form labels with help text
 
 ## Contributing
 

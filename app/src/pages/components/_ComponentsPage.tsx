@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from '@moondreamsdev/dreamer-ui/components';
+import { Check, Copy } from '@moondreamsdev/dreamer-ui/symbols';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 import { ExampleSection } from '../../components/ui/ExampleSection';
 
@@ -236,11 +239,59 @@ const components = [
 const categories = Array.from(new Set(components.map((c) => c.category)));
 
 export const ComponentsPage = () => {
+	const [copied, setCopied] = useState(false);
+
+	const handleCopyOnePager = async () => {
+		// Generate one-pager markdown content
+		let markdown = `# Dreamer UI Components\n\n`;
+		markdown += `All components are imported from \`@moondreamsdev/dreamer-ui/components\`.\n\n`;
+		
+		markdown += `## Available Components\n\n`;
+		
+		// Group components by category
+		categories.forEach((category) => {
+			markdown += `### ${category} Components\n\n`;
+			const categoryComponents = components.filter((c) => c.category === category);
+			categoryComponents.forEach((component) => {
+				markdown += `- **${component.name}**: ${component.description}\n`;
+			});
+			markdown += '\n';
+		});
+
+		markdown += `## Exceptions\n\n`;
+		markdown += `Two hooks are exported from different paths:\n\n`;
+		markdown += `- **useToast**: Import from \`@moondreamsdev/dreamer-ui/hooks\` - Hook for displaying toast notifications. Requires \`ToastProvider\` to be wrapped around your app.\n`;
+		markdown += `- **useActionModal**: Import from \`@moondreamsdev/dreamer-ui/hooks\` - Hook for displaying action modals with confirmation dialogs. Requires \`ActionModalProvider\` to be wrapped around your app.\n\n`;
+		markdown += `### Providers\n\n`;
+		markdown += `Import providers from \`@moondreamsdev/dreamer-ui/providers\`:\n\n`;
+		markdown += `- **ToastProvider**: Required for \`useToast\` hook. Wrap your app to enable toast notifications.\n`;
+		markdown += `- **ActionModalProvider**: Required for \`useActionModal\` hook. Wrap your app to enable action modals.\n\n`;
+
+		markdown += `## Utilities\n\n`;
+		markdown += `- **join**: Import from \`@moondreamsdev/dreamer-ui/utils\` - Utility function for conditionally joining class names.\n`;
+
+		try {
+			await navigator.clipboard.writeText(markdown);
+			setCopied(true);
+			setTimeout(() => setCopied(false), 2000);
+		} catch (err) {
+			console.error('Failed to copy text: ', err);
+		}
+	};
+
 	return (
 		<ComponentPage
 			title='Components'
 			description='A comprehensive collection of React components built with Tailwind CSS for modern web applications.'
 		>
+			{/* Copy One-Pager Button */}
+			<div className='mb-8 flex justify-center'>
+				<Button size='md' onClick={handleCopyOnePager} className='inline-flex items-center gap-2'>
+					{copied ? <Check size={16} /> : <Copy size={16} />}
+					<span>{copied ? 'Copied!' : 'Copy one-pager'}</span>
+				</Button>
+			</div>
+
 			{categories.map((category) => (
 				<ExampleSection
 					key={category}

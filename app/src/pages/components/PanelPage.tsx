@@ -114,7 +114,7 @@ const panelExamples = [
   {
     id: 'different-sizes',
     title: 'Different Sizes',
-    description: 'Panels with various size options.',
+    description: 'Panels automatically take the width of their content, but can be constrained with to various widths using Tailwind CSS classes.',
     code: `function PanelSizesExample() {
   const [activePanel, setActivePanel] = useState(null);
 
@@ -137,7 +137,7 @@ const panelExamples = [
         isOpen={activePanel === 'small'} 
         onClose={() => setActivePanel(null)}
         title="Small Panel"
-        size="sm"
+        className="max-w-sm"
       >
         <p>This is a small panel, perfect for simple content or notifications.</p>
       </Panel>
@@ -146,7 +146,6 @@ const panelExamples = [
         isOpen={activePanel === 'medium'} 
         onClose={() => setActivePanel(null)}
         title="Medium Panel"
-        size="md"
       >
         <p>This is a medium panel (default size), suitable for most use cases.</p>
       </Panel>
@@ -155,7 +154,7 @@ const panelExamples = [
         isOpen={activePanel === 'large'} 
         onClose={() => setActivePanel(null)}
         title="Large Panel"
-        size="lg"
+        className="min-w-lg"
       >
         <div>
           <p className='mb-4'>This is a large panel with more horizontal space.</p>
@@ -176,7 +175,7 @@ const panelExamples = [
         isOpen={activePanel === 'xl'} 
         onClose={() => setActivePanel(null)}
         title="Extra Large Panel"
-        size="xl"
+        className="min-w-xl"
       >
         <div>
           <p className='mb-4'>Extra large panel for complex interfaces.</p>
@@ -355,7 +354,7 @@ function PanelSizesExample() {
         isOpen={activePanel === 'small'} 
         onClose={() => setActivePanel(null)}
         title="Small Panel"
-        size="sm"
+        className="max-w-sm"
       >
         <p>This is a small panel, perfect for simple content or notifications.</p>
       </Panel>
@@ -364,7 +363,6 @@ function PanelSizesExample() {
         isOpen={activePanel === 'medium'} 
         onClose={() => setActivePanel(null)}
         title="Medium Panel"
-        size="md"
       >
         <p>This is a medium panel (default size), suitable for most use cases.</p>
       </Panel>
@@ -373,7 +371,7 @@ function PanelSizesExample() {
         isOpen={activePanel === 'large'} 
         onClose={() => setActivePanel(null)}
         title="Large Panel"
-        size="lg"
+        className="min-w-lg"
       >
         <div>
           <p className='mb-4'>This is a large panel with more horizontal space.</p>
@@ -394,7 +392,7 @@ function PanelSizesExample() {
         isOpen={activePanel === 'xl'} 
         onClose={() => setActivePanel(null)}
         title="Extra Large Panel"
-        size="xl"
+        className="min-w-xl"
       >
         <div>
           <p className='mb-4'>Extra large panel for complex interfaces.</p>
@@ -483,12 +481,6 @@ const panelProps = [
     name: 'footer',
     type: 'React.ReactNode',
     description: 'Panel footer - can be a string or React node.',
-  },
-  {
-    name: 'size',
-    type: '"sm" | "md" | "lg" | "xl" | "2xl" | "full" | "screen"',
-    default: '"md"',
-    description: 'Panel size variant.',
   },
   {
     name: 'id',

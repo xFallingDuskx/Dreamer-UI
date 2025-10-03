@@ -29,3 +29,4 @@ lib/dist-ssr
 
 # Related to library packaging
 *.tgz
+app/package-build-stats.html
