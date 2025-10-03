@@ -1,4 +1,4 @@
-import { ActionModalProvider, ToastProvider } from '@moondreamsdev/dreamer-ui/providers';
+import { DreamerUIProvider } from '@moondreamsdev/dreamer-ui/providers';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // Layout
@@ -7,7 +7,6 @@ import { Layout } from './components/layout/Layout';
 // Only import pages that are needed immediately (like LandingPage for the index route)
 import { LandingPage } from './pages/LandingPage';
 
-import { Suspense } from 'react';
 import { SpaceBackground } from './components/ui/SpaceBackground';
 import { isLocalhost } from './utils/isLocalhost';
 
@@ -370,13 +369,9 @@ const router = createBrowserRouter([
 
 function App() {
 	return (
-		<ActionModalProvider>
-			<ToastProvider position='top-center'>
-				<Suspense fallback={<div>Loading...</div>}>
-					<RouterProvider router={router} />
-				</Suspense>
-			</ToastProvider>
-		</ActionModalProvider>
+		<DreamerUIProvider>
+			<RouterProvider router={router} />
+		</DreamerUIProvider>
 	);
 }
 
