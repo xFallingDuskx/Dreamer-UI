@@ -775,7 +775,7 @@ const searchIndex: SearchResult[] = [
 	// Hooks
 	{
 		title: 'useActionModal',
-		path: '/hooks/useActionModal',
+		path: '/components/actionmodal#hook-usage',
 		description: 'Hook for managing action modal state and interactions.',
 		type: 'Guide',
 		content: 'useActionModal hook modal action state management open close confirm cancel',
@@ -783,7 +783,7 @@ const searchIndex: SearchResult[] = [
 	},
 	{
 		title: 'useToast',
-		path: '/hooks/useToast',
+		path: '/components/toast#hook-usage',
 		description: 'Hook for showing toast notifications with different types.',
 		type: 'Guide',
 		content: 'useToast hook toast notification success error info warning show hide',
