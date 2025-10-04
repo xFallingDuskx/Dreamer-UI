@@ -293,7 +293,7 @@ export function Carousel({
                 onClick={() => goToSlide(index)}
                 className={join(
                   'w-2 h-2 rounded-full transition-colors',
-                  index === currentSlide ? 'bg-accent' : 'bg-muted hover:bg-muted-foreground/50',
+                  index === currentSlide ? 'bg-accent' : 'bg-muted-foreground/60 hover:bg-muted-foreground/100',
                   dotsClassName
                 )}
                 aria-label={`Go to slide ${index + 1}`}

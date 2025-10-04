@@ -24,15 +24,15 @@ export interface ToggleBackgroundClasses {
 
 export const variantStyles: Record<ToggleVariant, ToggleBackgroundClasses> = {
   default: {
-    unchecked: 'bg-muted',
+    unchecked: 'bg-muted-foreground',
     checked: 'bg-primary',
   },
   success: {
-    unchecked: 'bg-muted',
+    unchecked: 'bg-muted-foreground',
     checked: 'bg-success',
   },
   destructive: {
-    unchecked: 'bg-muted',
+    unchecked: 'bg-muted-foreground',
     checked: 'bg-destructive',
   },
 };

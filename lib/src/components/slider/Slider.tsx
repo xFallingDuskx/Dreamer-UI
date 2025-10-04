@@ -248,7 +248,7 @@ export function Slider({
       <div
         ref={trackRef}
         className={join(
-          'relative h-1.5 w-full rounded-full bg-muted cursor-pointer',
+          'relative h-1.5 w-full rounded-full bg-muted-foreground cursor-pointer',
           disabled && 'cursor-not-allowed',
           trackClassName
         )}

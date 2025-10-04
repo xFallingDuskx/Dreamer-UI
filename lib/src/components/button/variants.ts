@@ -3,7 +3,7 @@ export const buttonVariants = {
   primary: 'bg-primary text-primary-foreground hover:bg-primary/80 disabled:bg-muted disabled:text-muted-foreground',
   secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 disabled:bg-muted/80 disabled:text-muted-foreground/80',
   tertiary: 'text-primary hover:text-primary/80 disabled:text-muted-foreground',
-  outline: 'border border-primary text-primary hover:border-primary/80 hover:text-primary/80 disabled:border-muted disabled:text-muted',
+  outline: 'border border-primary text-primary hover:border-primary/80 hover:text-primary/80 disabled:border-muted-foreground disabled:text-muted-foreground',
   link: 'underline-offset-4 hover:underline disabled:underline disabled:text-muted-foreground',
   destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/80 disabled:bg-muted disabled:text-muted-foreground',
 } as const;
