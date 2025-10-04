@@ -63,7 +63,7 @@ export function Input({
   adjustedRound = adjustedRound || inputDefaults.rounded;
 
   const baseClasses =
-    'appearance-none w-full focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-muted/70 hide-number-input-arrows transition-all';
+    'appearance-none w-full focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-muted-foreground/70 hide-number-input-arrows transition-all';
   const fileClasses =
     'file:mr-2 file:border-0 file:rounded-md file:px-1.5 file:py-1 file:bg-primary hover:file:bg-primary/85 file:text-sm file:font-medium file:text-foreground file:transition-colors';
 

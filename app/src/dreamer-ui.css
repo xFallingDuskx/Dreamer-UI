@@ -14,6 +14,8 @@
 
 	--color-success: var(--color-emerald-600); /* More vibrant green that complements indigo */
 	--color-success-foreground: var(--color-white);
+	--color-warning: var(--color-yellow-500);
+	--color-warning-foreground: var(--color-black);
 	--color-destructive: var(--color-red-600); /* Slightly stronger red for better visibility */
 	--color-destructive-foreground: var(--color-white);
 

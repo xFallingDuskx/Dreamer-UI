@@ -8,7 +8,7 @@ export const BadgeUseAriaAttributes: Record<BadgeUse, object> = {
 };
 
 // -- Badge Variant
-export type BadgeVariant = 'base' | 'primary' | 'secondary' | 'accent' | 'destructive' | 'success' | 'muted';
+export type BadgeVariant = 'base' | 'primary' | 'secondary' | 'accent' | 'destructive' | 'success' | 'warning' | 'muted';
 
 export const BadgeVariants: Record<BadgeVariant, string> = {
 	base: '',
@@ -17,6 +17,7 @@ export const BadgeVariants: Record<BadgeVariant, string> = {
 	accent: 'bg-accent text-accent-foreground',
 	destructive: 'bg-destructive text-destructive-foreground',
 	success: 'bg-success text-success-foreground',
+	warning: 'bg-warning text-warning-foreground',
 	muted: 'bg-muted text-muted-foreground',
 };
 
@@ -27,6 +28,7 @@ export const BadgeVariantsOutline: Record<BadgeVariant, string> = {
 	accent: 'border border-accent bg-transparent text-accent',
 	destructive: 'border border-destructive bg-transparent text-destructive',
 	success: 'border border-success bg-transparent text-success',
+	warning: 'border border-warning bg-transparent text-warning',
 	muted: 'border border-muted-foreground bg-transparent text-muted-foreground',
 };
 

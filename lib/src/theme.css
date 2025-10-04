@@ -14,6 +14,8 @@
 
 	--color-success: var(--color-green-500);
 	--color-success-foreground: var(--color-white);
+	--color-warning: var(--color-yellow-500);
+	--color-warning-foreground: var(--color-black);
 	--color-destructive: var(--color-red-500);
 	--color-destructive-foreground: var(--color-white);
 

@@ -81,7 +81,7 @@ export function Textarea({
   }
 
   const baseClasses =
-    'appearance-none w-full focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-muted/70 hide-number-input-arrows transition-all';
+    'appearance-none w-full focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-muted-foreground/70 hide-number-input-arrows transition-all';
 
   const inputClasses = join(
     baseClasses,

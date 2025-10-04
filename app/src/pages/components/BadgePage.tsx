@@ -18,15 +18,19 @@ const badgeExamples = [
 		code: `<div className='flex flex-wrap gap-4'>
   <Badge variant='primary'>Primary</Badge>
   <Badge variant='secondary'>Secondary</Badge>
-  <Badge outline={true}>Outline</Badge>
+  <Badge variant='success'>Success</Badge>
+  <Badge variant='warning'>Warning</Badge>
   <Badge variant='destructive'>Destructive</Badge>
+  <Badge outline={true}>Outline</Badge>
 </div>`,
 		children: (
 			<div className='flex flex-wrap gap-4'>
 				<Badge variant='primary'>Primary</Badge>
 				<Badge variant='secondary'>Secondary</Badge>
-				<Badge outline={true}>Outline</Badge>
+				<Badge variant='success'>Success</Badge>
+				<Badge variant='warning'>Warning</Badge>
 				<Badge variant='destructive'>Destructive</Badge>
+				<Badge outline={true}>Outline</Badge>
 			</div>
 		),
 	},
@@ -54,6 +58,10 @@ const badgeExamples = [
     <div className='flex items-center gap-2'>
       <span>Messages</span>
       <Badge size='sm'>3</Badge>
+    </div>
+    <div className='flex items-center gap-2'>
+      <span>Warnings</span>
+      <Badge variant='warning' size='sm'>5</Badge>
     </div>
     <div className='flex items-center gap-2'>
       <span>Alerts</span>
@@ -94,6 +102,12 @@ const badgeExamples = [
 					<div className='flex items-center gap-2'>
 						<span>Messages</span>
 						<Badge size='sm'>3</Badge>
+					</div>
+					<div className='flex items-center gap-2'>
+						<span>Warnings</span>
+						<Badge variant='warning' size='sm'>
+							5
+						</Badge>
 					</div>
 					<div className='flex items-center gap-2'>
 						<span>Alerts</span>
@@ -141,7 +155,7 @@ const badgeExamples = [
 const badgeProps = [
 	{
 		name: 'variant',
-		type: '"base" | "primary" | "secondary" | "accent" | "destructive" | "success" | "muted"',
+		type: '"base" | "primary" | "secondary" | "accent" | "destructive" | "success" | "warning" | "muted"',
 		default: '"muted"',
 		description: 'The visual style variant of the badge.',
 	},

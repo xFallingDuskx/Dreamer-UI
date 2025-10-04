@@ -81,7 +81,7 @@ export function AccordionItem({
         <span>{title}</span>
         <span
           className={join(
-            'transform transition-transform duration-300 ease-linear',
+            'transform transition-transform ease-linear',
             isOpen ? 'rotate-180' : 'rotate-0'
           )}
           aria-hidden='true'
@@ -95,7 +95,7 @@ export function AccordionItem({
         role='region'
         aria-labelledby={headerId}
         className={join(
-          'transition-all duration-300 ease-linear px-4',
+          'transition-all ease-linear px-4',
           isOpen ? 'max-h-96 opacity-100 overflow-auto py-3' : 'max-h-0 opacity-0 overflow-hidden',
           bodyClassName
         )}

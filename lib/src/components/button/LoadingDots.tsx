@@ -27,7 +27,7 @@ export function LoadingDots() {
         <div
           key={index}
           className={join(
-            'rounded-full transition-all duration-500 ease-in-out size-[0.35em] bg-current',
+            'rounded-full transition-all ease-in-out size-[0.35em] bg-current',
             activeIndex === index && 'transform -translate-y-1'
           )}
         />

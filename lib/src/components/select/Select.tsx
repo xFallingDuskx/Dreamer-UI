@@ -250,7 +250,7 @@ export function Select({
             {selectedOption ? selectedOption.text : placeholder}
           </span>
           <div className='flex items-center ml-2'>
-            <ChevronDown size={16} className={join('transition-transform duration-200', isOpen && 'rotate-180')} />
+            <ChevronDown size={16} className={join('transition-transform', isOpen && 'rotate-180')} />
           </div>
         </button>
         {clearable && selectedOption && (
@@ -271,7 +271,7 @@ export function Select({
         <div
           ref={dropdownRef}
           className={join(
-            'absolute z-50 w-full mt-1 bg-popover text-popover-foreground border border-border rounded-md shadow-lg transition-all duration-150',
+            'absolute z-50 w-full mt-1 bg-popover text-popover-foreground border border-border rounded-md shadow-lg transition-all',
             show ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2',
             dropdownClassName
           )}

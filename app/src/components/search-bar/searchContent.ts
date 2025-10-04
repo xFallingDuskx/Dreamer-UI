@@ -86,7 +86,7 @@ const searchIndex: SearchResult[] = [
 		path: '/components/badge',
 		description: 'Small status indicators with multiple variant styles.',
 		type: 'Component',
-		content: 'badge label status indicator highlight notification count variant props',
+		content: 'badge label status indicator highlight notification count variant primary secondary accent destructive success warning muted props',
 		rank: 10,
 	},
 	{
@@ -95,7 +95,7 @@ const searchIndex: SearchResult[] = [
 		section: 'Props',
 		description: 'Badge component properties including variant, outline, size, and aspect options.',
 		type: 'Props',
-		content: 'badge props properties variant outline size aspect use className id children',
+		content: 'badge props properties variant outline size aspect use className id children primary secondary accent destructive success warning muted',
 		rank: 8,
 	},
 

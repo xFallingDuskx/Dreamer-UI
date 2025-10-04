@@ -144,7 +144,7 @@ export function Tooltip({
 
 	const getTooltipClasses = () => {
 		const baseClasses =
-			'absolute z-50 px-2 py-1 text-sm rounded shadow-lg bg-tooltip text-tooltip-foreground pointer-events-auto transition-all duration-150 ease-out w-max max-w-xs';
+			'absolute z-50 px-2 py-1 text-sm rounded shadow-lg bg-tooltip text-tooltip-foreground pointer-events-auto transition-all ease-out w-max max-w-xs';
 		const visibilityClasses = isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none';
 
 		const placementClasses = {

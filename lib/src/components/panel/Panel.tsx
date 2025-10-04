@@ -103,7 +103,7 @@ export function Panel({
         >
           <div
             className={join(
-              'fixed inset-0 bg-black/40 transition-opacity duration-300',
+              'fixed inset-0 bg-black/40 transition-opacity',
               show ? 'opacity-100' : 'opacity-0',
               overlayClassName
             )}
@@ -120,7 +120,7 @@ export function Panel({
               ref={ref}
               tabIndex={-1}
               className={join(
-                'relative h-full max-w-md transform shadow-xl bg-popover text-popover-foreground transition-transform duration-300 ease-in-out border-l border-border',
+                'relative h-full max-w-md transform shadow-xl bg-popover text-popover-foreground transition-transform ease-in-out border-l border-border',
                 show ? 'translate-x-0' : 'translate-x-full',
                 className
               )}
