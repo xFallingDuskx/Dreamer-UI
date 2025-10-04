@@ -258,7 +258,7 @@ export function Carousel({
         {/* Carousel Track */}
         <div
           ref={containerRef}
-          className='flex transition-transform duration-300 ease-in-out'
+          className='flex transition-transform ease-in-out'
           style={{
             transform: `translateX(${translateX}%)`,
             width: `${(totalItems / currentItemsToShow) * 100}%`,
@@ -292,7 +292,7 @@ export function Carousel({
                 type='button'
                 onClick={() => goToSlide(index)}
                 className={join(
-                  'w-2 h-2 rounded-full transition-colors duration-200',
+                  'w-2 h-2 rounded-full transition-colors',
                   index === currentSlide ? 'bg-accent' : 'bg-muted hover:bg-muted-foreground/50',
                   dotsClassName
                 )}

@@ -136,7 +136,7 @@ export function Drawer({
         >
           <div
             className={join(
-              'fixed inset-0 bg-black/40 transition-opacity duration-300',
+              'fixed inset-0 bg-black/40 transition-opacity',
               show ? 'opacity-100' : 'opacity-0',
               overlayClassName
             )}
@@ -153,7 +153,7 @@ export function Drawer({
               ref={ref}
               tabIndex={-1}
               className={join(
-                'relative w-screen transform shadow-xl bg-popover text-popover-foreground transition-transform duration-300 ease-in-out border-t border-border rounded-t-lg',
+                'relative w-screen transform shadow-xl bg-popover text-popover-foreground transition-transform ease-in-out border-t border-border rounded-t-lg',
                 show ? 'translate-y-0' : 'translate-y-full',
                 className
               )}

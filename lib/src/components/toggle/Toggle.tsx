@@ -94,7 +94,7 @@ export function Toggle({
 
   const toggleClasses = join(
     // Base styles
-    'relative inline-flex items-center rounded-full transition-all duration-200 ease-in-out',
+    'relative inline-flex items-center rounded-full transition-all ease-in-out',
     'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
     // Size
     sizeConfig.container,
@@ -110,7 +110,7 @@ export function Toggle({
 
   const thumbClasses = join(
     // Base thumb styles
-    'absolute left-0.5 top-1/2 -translate-y-1/2 rounded-full bg-white shadow-sm transition-transform duration-200 ease-in-out',
+    'absolute left-0.5 top-1/2 -translate-y-1/2 rounded-full bg-white shadow-sm transition-transform ease-in-out',
     // Size
     sizeConfig.thumb,
     // Position based on state

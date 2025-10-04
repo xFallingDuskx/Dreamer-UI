@@ -83,7 +83,7 @@ export function ScrollArea({
       {scrollbarVisible.vertical && (isScrolling || isFadingOut) && (
         <div
           className={join(
-            'touch-none select-none transition-all duration-300',
+            'touch-none select-none transition-all',
             'p-[1px]',
             'absolute right-0 top-0',
             isFadingOut ? 'opacity-0' : 'opacity-100',
@@ -111,7 +111,7 @@ export function ScrollArea({
       {scrollbarVisible.horizontal && (isScrolling || isFadingOut) && (
         <div
           className={join(
-            'touch-none select-none transition-all duration-300',
+            'touch-none select-none transition-all',
             'p-[1px]',
             'absolute bottom-0 left-0',
             isFadingOut ? 'opacity-0' : 'opacity-100',

@@ -274,7 +274,7 @@ export function DynamicList<T extends object>({
 								id={item.id}
 								title={truncateText ? item.content : undefined}
 								className={join(
-									'flex items-center group relative transition-all duration-150',
+									'flex items-center group relative transition-all',
 									isDraggedItem && 'opacity-30',
 									// Drag feedback styling
 									draggedItem && draggedOverIndex === visualIndex && !isDraggedItem ? 'border-t-2 border-primary' : ''
