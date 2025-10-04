@@ -1,11 +1,11 @@
 export const buttonVariants = {
   base: '',
-  primary: 'bg-primary text-primary-foreground hover:bg-primary/85 disabled:bg-muted disabled:text-muted-foreground',
-  secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/85 disabled:bg-muted/80 disabled:text-muted-foreground/80',
-  tertiary: 'text-primary hover:text-primary-foreground disabled:text-muted-foreground',
-  outline: 'border border-primary text-primary hover:border-primary-foreground hover:text-primary-foreground disabled:border-muted disabled:text-muted',
+  primary: 'bg-primary text-primary-foreground hover:bg-primary/80 disabled:bg-muted disabled:text-muted-foreground',
+  secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 disabled:bg-muted/80 disabled:text-muted-foreground/80',
+  tertiary: 'text-primary hover:text-primary/80 disabled:text-muted-foreground',
+  outline: 'border border-primary text-primary hover:border-primary/80 hover:text-primary/80 disabled:border-muted disabled:text-muted',
   link: 'underline-offset-4 hover:underline disabled:underline disabled:text-muted-foreground',
-  destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/85 disabled:bg-muted disabled:text-muted-foreground',
+  destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/80 disabled:bg-muted disabled:text-muted-foreground',
 } as const;
 export type ButtonVariant = keyof typeof buttonVariants;
 
