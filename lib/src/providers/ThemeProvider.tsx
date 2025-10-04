@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useLayoutEffect, useState } from 'react';
 import { Theme, ThemeContext, ThemeContextValue } from '../hooks/useTheme';
 
 export interface ThemeProviderProps {
@@ -61,7 +61,7 @@ export function ThemeProvider({
     setTheme(newTheme);
   }, [resolvedTheme, setTheme]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (typeof window === 'undefined') return;
 
     const updateResolvedTheme = () => {
@@ -82,7 +82,7 @@ export function ThemeProvider({
     }
   }, [theme, respectSystem]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (typeof window === 'undefined') return;
 
     const root = document.documentElement;
