@@ -25,29 +25,31 @@ function getMenuItem(dropdownId: string, level: number, index: number): HTMLElem
  * 
  * @example
  * ```tsx
+ * // Use DropdownMenuFactories for type-safe menu creation (see factories.ts)
+ * import { DropdownMenuFactories } from './factories';
+ * const { option, group, separator, custom } = DropdownMenuFactories;
+ * 
  * // Basic dropdown menu
  * <DropdownMenu
  *   trigger={<Button>Options</Button>}
  *   items={[
- *     { type: 'item', label: 'Edit', value: 'edit' },
- *     { type: 'item', label: 'Delete', value: 'delete' },
- *     { type: 'separator' }
+ *     option({ label: 'Edit', value: 'edit' }),
+ *     option({ label: 'Delete', value: 'delete' }),
+ *     separator()
  *   ]}
  *   onItemSelect={(value) => handleAction(value)}
  * />
  * 
- * // With nested submenus
+ * // With groups and nested submenus
  * <DropdownMenu
  *   trigger={<Button>More Actions</Button>}
  *   items={[
- *     { 
- *       type: 'submenu', 
- *       label: 'Export',
- *       items: [
- *         { type: 'item', label: 'PDF', value: 'pdf' },
- *         { type: 'item', label: 'CSV', value: 'csv' }
- *       ]
- *     }
+ *     group([
+ *       option({ label: 'PDF', value: 'pdf' }),
+ *       option({ label: 'CSV', value: 'csv' })
+ *     ], 'Export Options'),
+ *     separator(),
+ *     custom(() => <div className="px-2 py-1 text-xs">Custom content</div>)
  *   ]}
  *   placement="bottom-end"
  * />

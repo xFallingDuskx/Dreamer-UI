@@ -27,12 +27,16 @@ export interface FormComponentProps<T extends FormData = FormData> extends FormP
  * 
  * @example
  * ```tsx
+ * // Use FormFactories for type-safe field creation (see factories.ts)
+ * import { FormFactories } from '@moondreamsdev/dreamer-ui/components';
+ * const { input, textarea, select, checkbox, radio } = FormFactories;
+ * 
  * // Define form fields - should be stable (memoized or declared outside component)
  * const userForm = [
- *   { __type: 'input', name: 'name', label: 'Full Name', required: true },
- *   { __type: 'input', name: 'email', type: 'email', label: 'Email', required: true },
- *   { __type: 'textarea', name: 'bio', label: 'Bio', rows: 4 },
- *   { __type: 'checkbox', name: 'subscribe', text: 'Subscribe to newsletter' }
+ *   input({ name: 'name', label: 'Full Name', required: true }),
+ *   input({ name: 'email', type: 'email', label: 'Email', required: true }),
+ *   textarea({ name: 'bio', label: 'Bio', rows: 4 }),
+ *   checkbox({ name: 'subscribe', text: 'Subscribe to newsletter' })
  * ];
  * 
  * // Usage
