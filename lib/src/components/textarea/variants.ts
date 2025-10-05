@@ -1,9 +1,9 @@
 export const textareaVariants = {
   base: '',
   'left-line':
-    'border-l border-border focus:border-primary-foreground disabled:border-muted/30 not-disabled:data-error:border-destructive not-disabled:data-success:border-success',
+    'border-l border-border focus:border-current/60 disabled:border-muted/30 not-disabled:data-error:border-destructive not-disabled:data-success:border-success',
   outline:
-    'border border-border focus:border-primary-foreground disabled:border-muted/30 not-disabled:data-error:border-destructive not-disabled:data-success:border-success',
+    'border border-border focus:border-current/60 disabled:border-muted/30 not-disabled:data-error:border-destructive not-disabled:data-success:border-success',
 } as const;
 export type TextareaVariant = keyof typeof textareaVariants;
 

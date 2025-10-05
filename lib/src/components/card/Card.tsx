@@ -77,7 +77,7 @@ export function Card({
 			data-padding={padding}
 			className={join(
 				// Base styles
-				'border border-border rounded-lg shadow-sm overflow-hidden',
+				'border border-border rounded-lg shadow-sm',
 				// Responsive design
 				'w-full max-w-full',
 				// Size-specific styles

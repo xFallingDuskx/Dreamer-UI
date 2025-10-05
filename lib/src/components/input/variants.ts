@@ -1,11 +1,11 @@
 export const inputVariants = {
   base: '',
   default:
-    'ring ring-transparent focus:ring-primary-foreground not-disabled:data-error:ring-destructive not-disabled:data-success:ring-success',
+    'ring ring-transparent focus:ring-primary-foreground/60 not-disabled:data-error:ring-destructive not-disabled:data-success:ring-success',
   underline:
-    'border-b border-border focus:border-primary-foreground disabled:border-muted/30 not-disabled:data-error:border-destructive not-disabled:data-success:border-success',
+    'border-b border-border focus:border-current/60 disabled:border-muted/30 not-disabled:data-error:border-destructive not-disabled:data-success:border-success',
   outline:
-    'border border-border focus:border-primary-foreground disabled:border-muted/30 not-disabled:data-error:border-destructive not-disabled:data-success:border-success',
+    'border border-border focus:border-current/60 disabled:border-muted/30 not-disabled:data-error:border-destructive not-disabled:data-success:border-success',
 } as const;
 export type InputVariant = keyof typeof inputVariants;
 
