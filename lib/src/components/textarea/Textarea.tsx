@@ -15,8 +15,8 @@ export interface TextareaProps extends Partial<TextareaVariants>, React.Textarea
   errorMessage?: string;
   /** Success message to display below the textarea. */
   successMessage?: string;
-  /** Whether to hide the resize handle (Webkit browsers only). */
-  hideResizeHandle?: boolean; // only works for Webkit browsers
+  /** Whether to show the resize handle (Webkit browsers only). Defaults to false. */
+  showResizeHandle?: boolean; // only works for Webkit browsers
   /** Whether the textarea should automatically expand based on content. */
   autoExpand?: boolean;
   /** Maximum number of characters allowed. Shows character count when > 0. */
@@ -59,7 +59,7 @@ export function Textarea({
   displayOnlyMode = false,
   errorMessage,
   successMessage,
-  hideResizeHandle = false,
+  showResizeHandle = false,
   autoExpand = false,
   characterLimit = 0,
   className,
@@ -75,11 +75,6 @@ export function Textarea({
   }
   adjustedRound = adjustedRound || textareaDefaults.rounded;
 
-  let adjustedHideResizeHandle = hideResizeHandle;
-  if (displayOnlyMode || (variant === 'left-line' && !hideResizeHandle)) {
-    adjustedHideResizeHandle = true;
-  }
-
   const baseClasses =
     'appearance-none w-full focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-muted-foreground/70 hide-number-input-arrows transition-all';
 
@@ -89,7 +84,7 @@ export function Textarea({
     !displayOnlyMode && roundedVariants[adjustedRound],
     !displayOnlyMode && 'px-2 py-1',
     displayOnlyMode && 'pointer-events-none',
-    adjustedHideResizeHandle && 'no-resize-handle',
+    !showResizeHandle && 'no-resize-handle',
 
     className
   );

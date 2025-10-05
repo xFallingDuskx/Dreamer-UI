@@ -380,10 +380,10 @@ const textareaProps = [
     description: 'Success message to display below the textarea.',
   },
   {
-    name: 'hideResizeHandle',
+    name: 'showResizeHandle',
     type: 'boolean',
     default: 'false',
-    description: 'Whether to hide the resize handle (Webkit browsers only).',
+    description: 'Whether to show the resize handle (Webkit browsers only).',
   },
   {
     name: 'autoExpand',

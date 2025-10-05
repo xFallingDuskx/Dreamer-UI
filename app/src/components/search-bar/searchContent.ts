@@ -720,7 +720,7 @@ const searchIndex: SearchResult[] = [
 		section: 'Props',
 		description: 'Textarea component properties including variant, autoExpand, characterLimit, and validation states.',
 		type: 'Props',
-		content: 'textarea props properties variant outline left-line solid base rounded displayOnlyMode errorMessage successMessage hideResizeHandle autoExpand characterLimit placeholder rows disabled value defaultValue onChange className',
+		content: 'textarea props properties variant outline left-line solid base rounded displayOnlyMode errorMessage successMessage showResizeHandle autoExpand characterLimit placeholder rows disabled value defaultValue onChange className',
 		rank: 8,
 	},
 
