@@ -10,6 +10,7 @@ const tableOfContents = [
   { id: 'field-layout', title: 'Field Layout', level: 2 },
   { id: 'validation', title: 'Validation', level: 2 },
   { id: 'form-variants', title: 'Form Variants', level: 2 },
+  { id: 'checkbox-group-select-all', title: 'Checkbox Group with Select All', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
 ];
 
@@ -545,6 +546,53 @@ export function FormPage() {
               className='max-w-sm'
             />
           </div>
+        </div>
+      ),
+    },
+    {
+      id: 'checkbox-group-select-all',
+      title: 'Checkbox Group with Select All',
+      description: 'Checkbox group with select all functionality to quickly select or deselect all options.',
+      code: `<div className='max-w-md'>
+  <Form
+    form={[
+      checkboxGroup({
+        name: 'features',
+        label: 'Available Features',
+        description: 'Choose the features you want to enable',
+        selectAll: true,
+        options: [
+          { value: 'notifications', label: 'Push Notifications' },
+          { value: 'analytics', label: 'Analytics Tracking' },
+          { value: 'darkmode', label: 'Dark Mode' },
+          { value: 'exports', label: 'Data Export' },
+          { value: 'integrations', label: 'Third-party Integrations' }
+        ]
+      })
+    ]}
+    spacing='normal'
+  />
+</div>`,
+      children: (
+        <div className='max-w-md'>
+          <Form
+            form={[
+              checkboxGroup({
+                name: 'features',
+                label: 'Available Features',
+                description: 'Choose the features you want to enable',
+                selectAll: true,
+                options: [
+                  { value: 'notifications', label: 'Push Notifications' },
+                  { value: 'analytics', label: 'Analytics Tracking' },
+                  { value: 'darkmode', label: 'Dark Mode' },
+                  { value: 'exports', label: 'Data Export' },
+                  { value: 'integrations', label: 'Third-party Integrations' }
+                ]
+              })
+            ]}
+            spacing='normal'
+          />
         </div>
       ),
     },

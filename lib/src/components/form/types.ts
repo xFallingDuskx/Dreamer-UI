@@ -65,6 +65,7 @@ export interface FormRadioField extends BaseFormField {
 export interface FormCheckboxGroupField extends BaseFormField {
 	__type: 'checkboxGroup';
 	options: Array<{ value: string; label: string; disabled?: boolean }>;
+	selectAll?: boolean;
 	isValid?: IsValidFunc<string[]>;
 }
 

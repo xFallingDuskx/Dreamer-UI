@@ -262,6 +262,10 @@ export function Form<T extends FormData = FormData>({
 					const checkboxGroupField = field as FormCheckboxGroupField;
 					const checkedValues: string[] = fieldValue || [];
 					const checkboxSize = 16;
+					const allValues = checkboxGroupField.options.map(option => option.value);
+					const areAllSelected = allValues.length > 0 && allValues.every(value => checkedValues.includes(value));
+					const areNoneSelected = checkedValues.length === 0;
+					const isIndeterminate = !areAllSelected && !areNoneSelected;
 
 					const handleCheckboxChange = (optionValue: string, checked: boolean) => {
 						let newValues: string[];
@@ -273,11 +277,42 @@ export function Form<T extends FormData = FormData>({
 						updateData(field.name, newValues);
 					};
 
+					const handleSelectAllChange = (checked: boolean) => {
+						if (checked) {
+							// Select all non-disabled options
+							const enabledValues = checkboxGroupField.options
+								.filter(option => !option.disabled)
+								.map(option => option.value);
+							updateData(field.name, enabledValues);
+						} else {
+							// Deselect all
+							updateData(field.name, []);
+						}
+					};
+
 					return (
 						<>
 							<Label required={field.required}>{field.label}</Label>
 							{field.description && <p className='text-sm opacity-80 mb-2'>{field.description}</p>}
 							<div data-field-name={field.name} data-field-type={field.__type}>
+								{checkboxGroupField.selectAll && (
+									<div className='flex items-start space-x-2'>
+										<Checkbox
+											id={`${fieldId}-select-all`}
+											checked={areAllSelected}
+											indeterminate={isIndeterminate}
+											onCheckedChange={(checked) => handleSelectAllChange(checked as boolean)}
+											disabled={field.disabled}
+											size={checkboxSize}
+											className='mt-1'
+										/>
+										<div className='inline-block' style={{ maxWidth: `calc(100% - ${checkboxSize + 10}px)` }}>
+											<Label htmlFor={`${fieldId}-select-all`} className='cursor-pointer font-medium'>
+												Select All
+											</Label>
+										</div>
+									</div>
+								)}
 								{checkboxGroupField.options.map((option, index) => {
 									const optionId = `${fieldId}-${index}`;
 									const isChecked = checkedValues.includes(option.value);
