@@ -7,8 +7,15 @@ export function useFormValidation(fields: FormField[], data: FormData) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const validateField = useCallback((field: FormField, value: any): string | null => {
     // Check required fields
-    if (field.required && (!value || (typeof value === 'string' && value.trim() === ''))) {
-      return `${field.label} is required`;
+    if (field.required) {
+      if (field.__type === 'checkboxGroup') {
+        // For checkbox groups, check if array has at least one selected value
+        if (!value || !Array.isArray(value) || value.length === 0) {
+          return `${field.label} is required`;
+        }
+      } else if (!value || (typeof value === 'string' && value.trim() === '')) {
+        return `${field.label} is required`;
+      }
     }
 
     // Run custom validation if provided
@@ -71,8 +78,15 @@ export function useFormValidation(fields: FormField[], data: FormData) {
       const value = data[field.name];
       
       // Check required fields
-      if (field.required && (!value || (typeof value === 'string' && value.trim() === ''))) {
-        return false;
+      if (field.required) {
+        if (field.__type === 'checkboxGroup') {
+          // For checkbox groups, check if array has at least one selected value
+          if (!value || !Array.isArray(value) || value.length === 0) {
+            return false;
+          }
+        } else if (!value || (typeof value === 'string' && value.trim() === '')) {
+          return false;
+        }
       }
       
       // Check custom validation

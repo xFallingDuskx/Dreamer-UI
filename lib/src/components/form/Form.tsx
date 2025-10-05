@@ -2,6 +2,7 @@ import React, { cloneElement, isValidElement, useCallback, useState } from 'reac
 import { useFormValidation } from './hooks';
 import {
 	FormCheckboxField,
+	FormCheckboxGroupField,
 	FormData,
 	FormField,
 	FormProps,
@@ -248,6 +249,58 @@ export function Form<T extends FormData = FormData>({
 								data-field-name={field.name}
 								data-field-type={field.__type}
 							/>
+							{fieldError && (
+								<p className='text-sm text-destructive mt-1' role='alert'>
+									{fieldError}
+								</p>
+							)}
+						</>
+					);
+				}
+
+				case 'checkboxGroup': {
+					const checkboxGroupField = field as FormCheckboxGroupField;
+					const checkedValues: string[] = fieldValue || [];
+					const checkboxSize = 16;
+
+					const handleCheckboxChange = (optionValue: string, checked: boolean) => {
+						let newValues: string[];
+						if (checked) {
+							newValues = [...checkedValues, optionValue];
+						} else {
+							newValues = checkedValues.filter((value) => value !== optionValue);
+						}
+						updateData(field.name, newValues);
+					};
+
+					return (
+						<>
+							<Label required={field.required}>{field.label}</Label>
+							{field.description && <p className='text-sm opacity-80 mb-2'>{field.description}</p>}
+							<div data-field-name={field.name} data-field-type={field.__type}>
+								{checkboxGroupField.options.map((option, index) => {
+									const optionId = `${fieldId}-${index}`;
+									const isChecked = checkedValues.includes(option.value);
+									
+									return (
+										<div key={option.value} className='flex items-start space-x-2'>
+											<Checkbox
+												id={optionId}
+												checked={isChecked}
+												onCheckedChange={(checked) => handleCheckboxChange(option.value, checked as boolean)}
+												disabled={field.disabled || option.disabled}
+												size={checkboxSize}
+												className='mt-1'
+											/>
+											<div className='inline-block' style={{ maxWidth: `calc(100% - ${checkboxSize + 10}px)` }}>
+												<Label htmlFor={optionId} className='cursor-pointer'>
+													{option.label}
+												</Label>
+											</div>
+										</div>
+									);
+								})}
+							</div>
 							{fieldError && (
 								<p className='text-sm text-destructive mt-1' role='alert'>
 									{fieldError}

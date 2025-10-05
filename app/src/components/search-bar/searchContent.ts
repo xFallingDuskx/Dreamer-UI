@@ -410,6 +410,24 @@ const searchIndex: SearchResult[] = [
 		content: 'form props properties form initialData onDataChange onSubmit submitButton spacing columns responsive className id',
 		rank: 8,
 	},
+	{
+		title: 'Form Factories',
+		path: '/components/form',
+		section: 'FormFactories',
+		description: 'Factory functions for creating form fields including input, textarea, select, checkbox, radio, and checkboxGroup.',
+		type: 'Section',
+		content: 'FormFactories input textarea select checkbox radio checkboxGroup field types factory validation required options',
+		rank: 9,
+	},
+	{
+		title: 'Checkbox Group Field',
+		path: '/components/form',
+		section: 'Field Types',
+		description: 'Multiple checkbox selection field created with checkboxGroup factory for form arrays.',
+		type: 'Example',
+		content: 'checkboxGroup multiple selection checkbox array options required validation skills interests preferences',
+		rank: 9,
+	},
 
 	// Help Icon Component
 	{
