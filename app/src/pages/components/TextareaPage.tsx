@@ -53,6 +53,15 @@ function VariantTextareas() {
         />
       </div>
       <div>
+        <Label htmlFor='solid'>Solid</Label>
+        <Textarea 
+          id='solid'
+          variant='solid' 
+          placeholder='Solid variant...' 
+          rows={3}
+        />
+      </div>
+      <div>
         <Label htmlFor='base'>Base</Label>
         <Textarea 
           id='base'
@@ -210,7 +219,7 @@ const textareaExamples = [
   {
     id: 'variants',
     title: 'Variants',
-    description: 'Different visual styles: outline (default), left-line, and base.',
+    description: 'Different visual styles: outline (default), left-line, solid, and base.',
     code: `// Outline variant (default)
 <Textarea 
   variant='outline' 
@@ -222,6 +231,13 @@ const textareaExamples = [
 <Textarea 
   variant='left-line' 
   placeholder='Left line variant...' 
+  rows={3}
+/>
+
+// Solid variant
+<Textarea 
+  variant='solid' 
+  placeholder='Solid variant...' 
   rows={3}
 />
 
@@ -338,7 +354,7 @@ const textareaExamples = [
 const textareaProps = [
   {
     name: 'variant',
-    type: '"base" | "left-line" | "outline"',
+    type: '"base" | "left-line" | "outline" | "solid"',
     default: '"outline"',
     description: 'Visual style variant of the textarea.',
   },

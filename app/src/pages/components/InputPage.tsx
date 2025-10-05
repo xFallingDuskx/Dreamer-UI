@@ -21,6 +21,7 @@ const inputExamples = [
   <Input placeholder="Default variant" />
   <Input variant="outline" placeholder="Outline variant" />
   <Input variant="underline" placeholder="Underline variant" />
+  <Input variant="solid" placeholder="Solid variant" />
   <Input variant="base" placeholder="Base variant" />
 </div>`,
     children: (
@@ -28,6 +29,7 @@ const inputExamples = [
         <Input placeholder="Default variant" />
         <Input variant="outline" placeholder="Outline variant" />
         <Input variant="underline" placeholder="Underline variant" />
+        <Input variant="solid" placeholder="Solid variant" />
         <Input variant="base" placeholder="Base variant" />
       </div>
     ),
@@ -125,7 +127,7 @@ const inputProps = [
   },
   {
     name: 'variant',
-    type: '"base" | "default" | "underline" | "outline"',
+    type: '"base" | "default" | "underline" | "outline" | "solid"',
     default: '"default"',
     description: 'The visual style variant of the input.',
   },

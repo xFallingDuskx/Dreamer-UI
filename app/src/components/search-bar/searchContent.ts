@@ -436,7 +436,7 @@ const searchIndex: SearchResult[] = [
 		path: '/components/input',
 		description: 'Text input component for forms with validation states.',
 		type: 'Component',
-		content: 'input text field form validation email password number tel url search file props',
+		content: 'input text field form validation email password number tel url search file props default outline underline solid base variant',
 		rank: 10,
 	},
 	{
@@ -445,7 +445,7 @@ const searchIndex: SearchResult[] = [
 		section: 'Props',
 		description: 'Input component properties and configuration options.',
 		type: 'Props',
-		content: 'input props properties type placeholder value onChange onBlur className validation variant',
+		content: 'input props properties type placeholder value onChange onBlur className validation variant default outline underline solid base',
 		rank: 8,
 	},
 
@@ -702,7 +702,7 @@ const searchIndex: SearchResult[] = [
 		path: '/components/textarea',
 		description: 'Multi-line text input with auto-expand and character limit features.',
 		type: 'Component',
-		content: 'textarea multiline text input expand character limit resize props',
+		content: 'textarea multiline text input expand character limit resize props outline left-line solid base variant',
 		rank: 10,
 	},
 	{
@@ -711,7 +711,7 @@ const searchIndex: SearchResult[] = [
 		section: 'Props',
 		description: 'Textarea component properties including variant, autoExpand, characterLimit, and validation states.',
 		type: 'Props',
-		content: 'textarea props properties variant rounded displayOnlyMode errorMessage successMessage hideResizeHandle autoExpand characterLimit placeholder rows disabled value defaultValue onChange className',
+		content: 'textarea props properties variant outline left-line solid base rounded displayOnlyMode errorMessage successMessage hideResizeHandle autoExpand characterLimit placeholder rows disabled value defaultValue onChange className',
 		rank: 8,
 	},
 
