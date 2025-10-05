@@ -59,7 +59,7 @@ export function Button({
 	}
 
 	const baseClasses =
-		'appearance-none focus:outline-none focus:ring not-disabled:hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-all';
+		'appearance-none not-disabled:hover:cursor-pointer outline outline-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all';
 
 	const buttonClasses = join(
 		baseClasses,
