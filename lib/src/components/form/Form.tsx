@@ -2,6 +2,7 @@ import React, { cloneElement, isValidElement, useCallback, useState } from 'reac
 import { useFormValidation } from './hooks';
 import {
 	FormCheckboxField,
+	FormCheckboxGroupField,
 	FormData,
 	FormField,
 	FormProps,
@@ -27,12 +28,16 @@ export interface FormComponentProps<T extends FormData = FormData> extends FormP
  * 
  * @example
  * ```tsx
+ * // Use FormFactories for type-safe field creation (see factories.ts)
+ * import { FormFactories } from '@moondreamsdev/dreamer-ui/components';
+ * const { input, textarea, select, checkbox, radio } = FormFactories;
+ * 
  * // Define form fields - should be stable (memoized or declared outside component)
  * const userForm = [
- *   { __type: 'input', name: 'name', label: 'Full Name', required: true },
- *   { __type: 'input', name: 'email', type: 'email', label: 'Email', required: true },
- *   { __type: 'textarea', name: 'bio', label: 'Bio', rows: 4 },
- *   { __type: 'checkbox', name: 'subscribe', text: 'Subscribe to newsletter' }
+ *   input({ name: 'name', label: 'Full Name', required: true }),
+ *   input({ name: 'email', type: 'email', label: 'Email', required: true }),
+ *   textarea({ name: 'bio', label: 'Bio', rows: 4 }),
+ *   checkbox({ name: 'subscribe', text: 'Subscribe to newsletter' })
  * ];
  * 
  * // Usage
@@ -244,6 +249,93 @@ export function Form<T extends FormData = FormData>({
 								data-field-name={field.name}
 								data-field-type={field.__type}
 							/>
+							{fieldError && (
+								<p className='text-sm text-destructive mt-1' role='alert'>
+									{fieldError}
+								</p>
+							)}
+						</>
+					);
+				}
+
+				case 'checkboxGroup': {
+					const checkboxGroupField = field as FormCheckboxGroupField;
+					const checkedValues: string[] = fieldValue || [];
+					const checkboxSize = 16;
+					const allValues = checkboxGroupField.options.map(option => option.value);
+					const areAllSelected = allValues.length > 0 && allValues.every(value => checkedValues.includes(value));
+					const areNoneSelected = checkedValues.length === 0;
+					const isIndeterminate = !areAllSelected && !areNoneSelected;
+
+					const handleCheckboxChange = (optionValue: string, checked: boolean) => {
+						let newValues: string[];
+						if (checked) {
+							newValues = [...checkedValues, optionValue];
+						} else {
+							newValues = checkedValues.filter((value) => value !== optionValue);
+						}
+						updateData(field.name, newValues);
+					};
+
+					const handleSelectAllChange = (checked: boolean) => {
+						if (checked) {
+							// Select all non-disabled options
+							const enabledValues = checkboxGroupField.options
+								.filter(option => !option.disabled)
+								.map(option => option.value);
+							updateData(field.name, enabledValues);
+						} else {
+							// Deselect all
+							updateData(field.name, []);
+						}
+					};
+
+					return (
+						<>
+							<Label required={field.required}>{field.label}</Label>
+							{field.description && <p className='text-sm opacity-80 mb-2'>{field.description}</p>}
+							<div data-field-name={field.name} data-field-type={field.__type}>
+								{checkboxGroupField.selectAll && (
+									<div className='flex items-start space-x-2'>
+										<Checkbox
+											id={`${fieldId}-select-all`}
+											checked={areAllSelected}
+											indeterminate={isIndeterminate}
+											onCheckedChange={(checked) => handleSelectAllChange(checked as boolean)}
+											disabled={field.disabled}
+											size={checkboxSize}
+											className='mt-1'
+										/>
+										<div className='inline-block' style={{ maxWidth: `calc(100% - ${checkboxSize + 10}px)` }}>
+											<Label htmlFor={`${fieldId}-select-all`} className='cursor-pointer font-medium'>
+												Select All
+											</Label>
+										</div>
+									</div>
+								)}
+								{checkboxGroupField.options.map((option, index) => {
+									const optionId = `${fieldId}-${index}`;
+									const isChecked = checkedValues.includes(option.value);
+									
+									return (
+										<div key={option.value} className='flex items-start space-x-2'>
+											<Checkbox
+												id={optionId}
+												checked={isChecked}
+												onCheckedChange={(checked) => handleCheckboxChange(option.value, checked as boolean)}
+												disabled={field.disabled || option.disabled}
+												size={checkboxSize}
+												className='mt-1'
+											/>
+											<div className='inline-block' style={{ maxWidth: `calc(100% - ${checkboxSize + 10}px)` }}>
+												<Label htmlFor={optionId} className='cursor-pointer'>
+													{option.label}
+												</Label>
+											</div>
+										</div>
+									);
+								})}
+							</div>
 							{fieldError && (
 								<p className='text-sm text-destructive mt-1' role='alert'>
 									{fieldError}

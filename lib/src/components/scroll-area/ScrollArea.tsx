@@ -1,6 +1,7 @@
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React from 'react';
 import { useScrollArea } from './hooks';
+import './index.css';
 
 export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Custom CSS classes for the root container. Use this to set width/height */
@@ -70,7 +71,7 @@ export function ScrollArea({
       <div
         ref={viewportRef}
         className={join(
-          'h-full w-full overflow-auto rounded-[inherit] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden',
+          'h-full w-full overflow-auto rounded-[inherit] hide-scroll-bars',
           viewportClassName
         )}
         onScroll={handleScroll}
@@ -83,7 +84,7 @@ export function ScrollArea({
       {scrollbarVisible.vertical && (isScrolling || isFadingOut) && (
         <div
           className={join(
-            'touch-none select-none transition-all duration-300',
+            'touch-none select-none transition-all',
             'p-[1px]',
             'absolute right-0 top-0',
             isFadingOut ? 'opacity-0' : 'opacity-100',
@@ -111,7 +112,7 @@ export function ScrollArea({
       {scrollbarVisible.horizontal && (isScrolling || isFadingOut) && (
         <div
           className={join(
-            'touch-none select-none transition-all duration-300',
+            'touch-none select-none transition-all',
             'p-[1px]',
             'absolute bottom-0 left-0',
             isFadingOut ? 'opacity-0' : 'opacity-100',

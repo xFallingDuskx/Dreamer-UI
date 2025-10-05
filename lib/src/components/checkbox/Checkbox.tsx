@@ -6,7 +6,7 @@ import { useFilledBackgroundColor } from './hooks';
 export interface CheckboxProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	/** Reference to the checkbox element. */
 	ref?: Ref<HTMLButtonElement>;
-	/** The size of the checkbox in pixels. */
+	/** The size of the checkbox in pixels. Defaults to 20. */
 	size?: number;
 	/** CSS color value or Tailwind class for the checkbox color. */
 	color?: string; // can be adjusted with tailwindcss by using `text-<color>`

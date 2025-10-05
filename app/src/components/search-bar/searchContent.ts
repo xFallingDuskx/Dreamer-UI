@@ -86,7 +86,7 @@ const searchIndex: SearchResult[] = [
 		path: '/components/badge',
 		description: 'Small status indicators with multiple variant styles.',
 		type: 'Component',
-		content: 'badge label status indicator highlight notification count variant props',
+		content: 'badge label status indicator highlight notification count variant primary secondary accent destructive success warning muted props',
 		rank: 10,
 	},
 	{
@@ -95,7 +95,7 @@ const searchIndex: SearchResult[] = [
 		section: 'Props',
 		description: 'Badge component properties including variant, outline, size, and aspect options.',
 		type: 'Props',
-		content: 'badge props properties variant outline size aspect use className id children',
+		content: 'badge props properties variant outline size aspect use className id children primary secondary accent destructive success warning muted',
 		rank: 8,
 	},
 
@@ -410,6 +410,33 @@ const searchIndex: SearchResult[] = [
 		content: 'form props properties form initialData onDataChange onSubmit submitButton spacing columns responsive className id',
 		rank: 8,
 	},
+	{
+		title: 'Form Factories',
+		path: '/components/form',
+		section: 'FormFactories',
+		description: 'Factory functions for creating form fields including input, textarea, select, checkbox, radio, and checkboxGroup with selectAll support.',
+		type: 'Section',
+		content: 'FormFactories input textarea select checkbox radio checkboxGroup selectAll field types factory validation required options',
+		rank: 9,
+	},
+	{
+		title: 'Checkbox Group Field',
+		path: '/components/form',
+		section: 'Field Types',
+		description: 'Multiple checkbox selection field created with checkboxGroup factory for form arrays.',
+		type: 'Example',
+		content: 'checkboxGroup multiple selection checkbox array options required validation skills interests preferences selectAll select all',
+		rank: 9,
+	},
+	{
+		title: 'Checkbox Group with Select All',
+		path: '/components/form',
+		section: 'Field Types',
+		description: 'Checkbox group with select all functionality to quickly select or deselect all options.',
+		type: 'Example',
+		content: 'checkboxGroup selectAll select all toggle indeterminate checkbox group bulk selection features options',
+		rank: 9,
+	},
 
 	// Help Icon Component
 	{
@@ -436,7 +463,7 @@ const searchIndex: SearchResult[] = [
 		path: '/components/input',
 		description: 'Text input component for forms with validation states.',
 		type: 'Component',
-		content: 'input text field form validation email password number tel url search file props',
+		content: 'input text field form validation email password number tel url search file props default outline underline solid base variant',
 		rank: 10,
 	},
 	{
@@ -445,7 +472,7 @@ const searchIndex: SearchResult[] = [
 		section: 'Props',
 		description: 'Input component properties and configuration options.',
 		type: 'Props',
-		content: 'input props properties type placeholder value onChange onBlur className validation variant',
+		content: 'input props properties type placeholder value onChange onBlur className validation variant default outline underline solid base',
 		rank: 8,
 	},
 
@@ -683,17 +710,26 @@ const searchIndex: SearchResult[] = [
 		path: '/components/tabs',
 		description: 'Tabbed interface component for organizing content into sections.',
 		type: 'Component',
-		content: 'tabs tabbed interface sections content organization navigation props',
+		content: 'tabs tabbed interface sections content organization navigation props tabsList automatic rendering',
 		rank: 10,
 	},
 	{
 		title: 'Tabs Props',
 		path: '/components/tabs',
 		section: 'Props',
-		description: 'Tabs component properties including value, variant, and styling options.',
+		description: 'Tabs component properties including value, variant, tabsList for automatic rendering, and styling options.',
 		type: 'Props',
-		content: 'tabs props properties value onValueChange variant tabsWidth triggersClassName contentClassName defaultValue',
+		content: 'tabs props properties value onValueChange variant tabsWidth tabsList automatic rendering TabItem label triggersClassName contentClassName defaultValue',
 		rank: 8,
+	},
+	{
+		title: 'Tabs tabsList Prop Example',
+		path: '/components/tabs',
+		section: 'Using tabsList Prop',
+		description: 'Automatically render tabs using the tabsList prop for cleaner code with string or React element labels.',
+		type: 'Example',
+		content: 'tabs tabsList prop automatic rendering TabItem value label string react element icon cleaner code TabsList TabsTrigger example',
+		rank: 7,
 	},
 
 	// Textarea Component
@@ -702,7 +738,7 @@ const searchIndex: SearchResult[] = [
 		path: '/components/textarea',
 		description: 'Multi-line text input with auto-expand and character limit features.',
 		type: 'Component',
-		content: 'textarea multiline text input expand character limit resize props',
+		content: 'textarea multiline text input expand character limit resize props outline left-line solid base variant',
 		rank: 10,
 	},
 	{
@@ -711,7 +747,7 @@ const searchIndex: SearchResult[] = [
 		section: 'Props',
 		description: 'Textarea component properties including variant, autoExpand, characterLimit, and validation states.',
 		type: 'Props',
-		content: 'textarea props properties variant rounded displayOnlyMode errorMessage successMessage hideResizeHandle autoExpand characterLimit placeholder rows disabled value defaultValue onChange className',
+		content: 'textarea props properties variant outline left-line solid base rounded displayOnlyMode errorMessage successMessage showResizeHandle autoExpand characterLimit placeholder rows disabled value defaultValue onChange className',
 		rank: 8,
 	},
 

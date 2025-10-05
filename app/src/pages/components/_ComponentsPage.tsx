@@ -262,11 +262,17 @@ export const ComponentsPage = () => {
 		markdown += `Two hooks are exported from different paths:\n\n`;
 		markdown += `- **useToast**: Import from \`@moondreamsdev/dreamer-ui/hooks\` - Hook for displaying toast notifications. Requires \`ToastProvider\` to be wrapped around your app.\n`;
 		markdown += `- **useActionModal**: Import from \`@moondreamsdev/dreamer-ui/hooks\` - Hook for displaying action modals with confirmation dialogs. Requires \`ActionModalProvider\` to be wrapped around your app.\n\n`;
+
 		markdown += `### Providers\n\n`;
 		markdown += `Import providers from \`@moondreamsdev/dreamer-ui/providers\`:\n\n`;
 		markdown += `- **ToastProvider**: Required for \`useToast\` hook. Wrap your app to enable toast notifications.\n`;
 		markdown += `- **ActionModalProvider**: Required for \`useActionModal\` hook. Wrap your app to enable action modals.\n`;
 		markdown += `- **DreamerUIProvider**: Combines \`ToastProvider\` and \`ActionModalProvider\`. Wrap your app with this provider for both functionalities.\n\n`;
+
+		markdown += `## Component Factories\n\n`;
+		markdown += `Some components use factory patterns for type-safe creation:\n\n`;
+		markdown += `- **FormFactories**: Import from \`@moondreamsdev/dreamer-ui/components\` - Provides factory functions (input, textarea, select, checkbox, radio) for creating form fields. See factories.ts for implementation details.\n`;
+		markdown += `- **DropdownMenuFactories**: Import from \`@moondreamsdev/dreamer-ui/components\` - Provides factory functions (option, group, separator, custom) for creating dropdown menu items. See factories.ts for implementation details.\n\n`;
 
 		markdown += `## Utilities\n\n`;
 		markdown += `- **join**: Import from \`@moondreamsdev/dreamer-ui/utils\` - Utility function for conditionally joining class names.\n`;

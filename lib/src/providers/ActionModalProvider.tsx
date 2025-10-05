@@ -116,7 +116,6 @@ export function ActionModalProvider({ children }: { children: ReactNode }) {
           confirmText={modalState.confirmText}
           destructive={modalState.destructive}
           onConfirm={handleConfirm}
-          className='bg-white dark:bg-gray-800 rounded-lg'
         />
       )}
       {modalState && modalState.type === 'confirm' && (
@@ -130,7 +129,6 @@ export function ActionModalProvider({ children }: { children: ReactNode }) {
           cancelText={modalState.cancelText}
           destructive={modalState.destructive}
           onConfirm={handleConfirm}
-          className='bg-white dark:bg-gray-800 rounded-lg'
         />
       )}
     </ActionModalContext.Provider>

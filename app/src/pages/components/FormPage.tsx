@@ -10,6 +10,7 @@ const tableOfContents = [
   { id: 'field-layout', title: 'Field Layout', level: 2 },
   { id: 'validation', title: 'Validation', level: 2 },
   { id: 'form-variants', title: 'Form Variants', level: 2 },
+  { id: 'checkbox-group-select-all', title: 'Checkbox Group with Select All', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
 ];
 
@@ -18,7 +19,7 @@ export function FormPage() {
   const [validationFormData, setValidationFormData] = useState<FormData>({});
   const [layoutFormData, setLayoutFormData] = useState<FormData>({});
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
-  const { input, textarea, select, checkbox, radio } = FormFactories;
+  const { input, textarea, select, checkbox, radio, checkboxGroup } = FormFactories;
 
   const basicForm = [
     input({
@@ -97,6 +98,17 @@ export function FormPage() {
         { value: 'medium', label: 'Medium' },
         { value: 'large', label: 'Large' }
       ]
+    }),
+    checkboxGroup({
+      name: 'skills',
+      label: 'Skills',
+      description: 'Select all that apply',
+      options: [
+        { value: 'javascript', label: 'JavaScript' },
+        { value: 'typescript', label: 'TypeScript' },
+        { value: 'react', label: 'React' },
+        { value: 'nodejs', label: 'Node.js' }
+      ]
     })
   ];
 
@@ -124,6 +136,23 @@ export function FormPage() {
         if (!value) return { valid: false, message: 'Email is required' };
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) return { valid: false, message: 'Please enter a valid email address' };
+        return { valid: true };
+      }
+    }),
+    checkboxGroup({
+      name: 'interests',
+      label: 'Areas of Interest',
+      description: 'Select at least 2 interests',
+      required: true,
+      options: [
+        { value: 'frontend', label: 'Frontend Development' },
+        { value: 'backend', label: 'Backend Development' },
+        { value: 'mobile', label: 'Mobile Development' },
+        { value: 'design', label: 'UI/UX Design' },
+        { value: 'devops', label: 'DevOps' }
+      ],
+      isValid: (value: string[] | undefined) => {
+        if (!value || value.length < 2) return { valid: false, message: 'Please select at least 2 areas of interest' };
         return { valid: true };
       }
     }),
@@ -241,7 +270,7 @@ export function FormPage() {
       id: 'field-types',
       title: 'Field Types',
       description: 'All available form field types created using FormFactories.',
-      code: `const { input, textarea, select, checkbox, radio } = FormFactories;
+      code: `const { input, textarea, select, checkbox, radio, checkboxGroup } = FormFactories;
 
 <div className='max-w-md'>
   <Form
@@ -288,6 +317,17 @@ export function FormPage() {
           { value: 'small', label: 'Small' },
           { value: 'medium', label: 'Medium' },
           { value: 'large', label: 'Large' }
+        ]
+      }),
+      checkboxGroup({
+        name: 'skills',
+        label: 'Skills',
+        description: 'Select all that apply',
+        options: [
+          { value: 'javascript', label: 'JavaScript' },
+          { value: 'typescript', label: 'TypeScript' },
+          { value: 'react', label: 'React' },
+          { value: 'nodejs', label: 'Node.js' }
         ]
       })
     ]}
@@ -404,6 +444,23 @@ export function FormPage() {
           if (!emailRegex.test(value)) return { valid: false, message: 'Please enter a valid email address' };
           return { valid: true };
         }
+      }),
+      checkboxGroup({
+        name: 'interests',
+        label: 'Areas of Interest',
+        description: 'Select at least 2 interests',
+        required: true,
+        options: [
+          { value: 'frontend', label: 'Frontend Development' },
+          { value: 'backend', label: 'Backend Development' },
+          { value: 'mobile', label: 'Mobile Development' },
+          { value: 'design', label: 'UI/UX Design' },
+          { value: 'devops', label: 'DevOps' }
+        ],
+        isValid: (value: string[] | undefined) => {
+          if (!value || value.length < 2) return { valid: false, message: 'Please select at least 2 areas of interest' };
+          return { valid: true };
+        }
       })
     ]}
     onSubmit={(data) => {
@@ -489,6 +546,53 @@ export function FormPage() {
               className='max-w-sm'
             />
           </div>
+        </div>
+      ),
+    },
+    {
+      id: 'checkbox-group-select-all',
+      title: 'Checkbox Group with Select All',
+      description: 'Checkbox group with select all functionality to quickly select or deselect all options.',
+      code: `<div className='max-w-md'>
+  <Form
+    form={[
+      checkboxGroup({
+        name: 'features',
+        label: 'Available Features',
+        description: 'Choose the features you want to enable',
+        selectAll: true,
+        options: [
+          { value: 'notifications', label: 'Push Notifications' },
+          { value: 'analytics', label: 'Analytics Tracking' },
+          { value: 'darkmode', label: 'Dark Mode' },
+          { value: 'exports', label: 'Data Export' },
+          { value: 'integrations', label: 'Third-party Integrations' }
+        ]
+      })
+    ]}
+    spacing='normal'
+  />
+</div>`,
+      children: (
+        <div className='max-w-md'>
+          <Form
+            form={[
+              checkboxGroup({
+                name: 'features',
+                label: 'Available Features',
+                description: 'Choose the features you want to enable',
+                selectAll: true,
+                options: [
+                  { value: 'notifications', label: 'Push Notifications' },
+                  { value: 'analytics', label: 'Analytics Tracking' },
+                  { value: 'darkmode', label: 'Dark Mode' },
+                  { value: 'exports', label: 'Data Export' },
+                  { value: 'integrations', label: 'Third-party Integrations' }
+                ]
+              })
+            ]}
+            spacing='normal'
+          />
         </div>
       ),
     },

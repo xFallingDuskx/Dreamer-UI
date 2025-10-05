@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type FormFieldType = 'input' | 'textarea' | 'select' | 'checkbox' | 'radio';
+export type FormFieldType = 'input' | 'textarea' | 'select' | 'checkbox' | 'radio' | 'checkboxGroup';
 
 interface ValidationResult {
 	valid: boolean;
@@ -62,7 +62,14 @@ export interface FormRadioField extends BaseFormField {
 	isValid?: IsValidFunc<string>;
 }
 
-export type FormField = FormInputField | FormTextareaField | FormSelectField | FormCheckboxField | FormRadioField;
+export interface FormCheckboxGroupField extends BaseFormField {
+	__type: 'checkboxGroup';
+	options: Array<{ value: string; label: string; disabled?: boolean }>;
+	selectAll?: boolean;
+	isValid?: IsValidFunc<string[]>;
+}
+
+export type FormField = FormInputField | FormTextareaField | FormSelectField | FormCheckboxField | FormRadioField | FormCheckboxGroupField;
 
 export interface FormData {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

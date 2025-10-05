@@ -1,8 +1,8 @@
 export const trackVariants = {
-  primary: 'bg-muted',
+  primary: 'bg-primary/30',
   secondary: 'bg-secondary/30',
   accent: 'bg-accent/30',
-  muted: 'bg-muted',
+  muted: 'bg-muted-foreground/30',
 } as const;
 export type TrackVariant = keyof typeof trackVariants;
 

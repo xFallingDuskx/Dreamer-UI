@@ -1,7 +1,14 @@
 import React from 'react';
 import { useTabs } from './hooks';
 import { TabsContext, TabsContextValue } from './TabsContext';
+import { TabsList } from './TabsList';
+import { TabsTrigger } from './TabsTrigger';
 import { TabsVariant, TabsWidth } from './variants';
+
+export interface TabItem {
+  value: string;
+  label: string | React.ReactElement;
+}
 
 export interface TabsProps {
   id?: string;
@@ -17,6 +24,8 @@ export interface TabsProps {
   variant?: TabsVariant;
   /** Additional CSS classes to apply to the tabs container */
   className?: string;
+  /** Array of tab items to render automatically. If provided, will render TabsList with TabsTrigger components */
+  tabsList?: TabItem[];
   /** The tab list and content elements */
   children?: React.ReactNode;
   /** Ref to the tabs container */
@@ -29,17 +38,20 @@ export interface TabsProps {
 
 /**
  * A tabs component for organizing content into switchable sections.
- * Works with TabsList, TabsTrigger, and TabsContent child components.
+ * Use the tabsList prop for automatic tab rendering, or manually compose with TabsList, TabsTrigger, and TabsContent.
  * 
  * @example
  * ```tsx
- * <Tabs defaultValue="tab1" variant="underline">
- *   <TabsList>
- *     <TabsTrigger value="tab1">Overview</TabsTrigger>
- *     <TabsTrigger value="tab2">Details</TabsTrigger>
- *     <TabsTrigger value="tab3">Settings</TabsTrigger>
- *   </TabsList>
- *   
+ * // Preferred: Using tabsList prop for automatic rendering
+ * <Tabs 
+ *   defaultValue="tab1" 
+ *   variant="underline"
+ *   tabsList={[
+ *     { value: "tab1", label: "Overview" },
+ *     { value: "tab2", label: "Details" },
+ *     { value: "tab3", label: "Settings" }
+ *   ]}
+ * >
  *   <TabsContent value="tab1">
  *     <h3>Overview Content</h3>
  *   </TabsContent>
@@ -50,6 +62,17 @@ export interface TabsProps {
  *     <h3>Settings Content</h3>
  *   </TabsContent>
  * </Tabs>
+ * 
+ * // Alternative: Manual composition with TabsList
+ * <Tabs defaultValue="tab1" variant="underline">
+ *   <TabsList>
+ *     <TabsTrigger value="tab1">Overview</TabsTrigger>
+ *     <TabsTrigger value="tab2">Details</TabsTrigger>
+ *     <TabsTrigger value="tab3">Settings</TabsTrigger>
+ *   </TabsList>
+ *   
+ *   // Tab content components go here
+ * </Tabs>
  * ```
  */
 export function Tabs({
@@ -59,6 +82,7 @@ export function Tabs({
   tabsWidth = 'fit',
   variant = 'underline',
   className,
+  tabsList,
   children,
   ref,
   id,
@@ -83,6 +107,15 @@ export function Tabs({
   return (
     <TabsContext.Provider value={contextValue}>
       <div id={id} ref={ref} className={className} data-tabs-width={tabsWidth} data-variant={variant}>
+        {tabsList && (
+          <TabsList>
+            {tabsList.map((tab) => (
+              <TabsTrigger key={tab.value} value={tab.value}>
+                {tab.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        )}
         {children}
       </div>
     </TabsContext.Provider>
