@@ -31,7 +31,7 @@ export function TabsTrigger({ value, disabled = false, className, children, onCl
 		button.scrollIntoView({
 			behavior: 'smooth',
 			block: 'nearest',
-			inline: 'nearest',
+			inline: 'center',
 		});
 	};
 
