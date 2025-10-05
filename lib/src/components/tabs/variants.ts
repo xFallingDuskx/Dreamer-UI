@@ -15,7 +15,7 @@ export const tabsListVariants = {
 
 export const tabTriggerVariants = {
   underline:
-    'border-b-2 border-transparent data-[state=active]:border-accent data-[state=active]:text-accent hover:text-accent-foreground',
+    'border-b-2 border-transparent data-[state=active]:border-accent data-[state=active]:text-accent hover:text-accent/80',
   pills: 'rounded-md data-[state=active]:bg-accent data-[state=active]:text-accent-foreground hover:bg-accent/30',
   bordered: 'rounded data-[state=active]:bg-accent data-[state=active]:text-accent-foreground hover:bg-accent/30',
 };

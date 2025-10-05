@@ -6,6 +6,7 @@ const tableOfContents = [
   { id: 'import', title: 'Import', level: 1 },
   { id: 'examples', title: 'Examples', level: 1 },
   { id: 'basic-usage', title: 'Basic Usage', level: 2 },
+  { id: 'tabs-list-prop', title: 'Using tabsList Prop', level: 2 },
   { id: 'variants', title: 'Variants', level: 2 },
   { id: 'tab-widths', title: 'Tab Widths', level: 2 },
   { id: 'controlled-tabs', title: 'Controlled Tabs', level: 2 },
@@ -239,6 +240,87 @@ function IconTabs() {
   );
 }
 
+function TabsListProp() {
+  return (
+    <div className='space-y-6'>
+      <div>
+        <h4 className='text-sm font-medium mb-2'>Simple tabsList</h4>
+        <Tabs 
+          defaultValue='details' 
+          variant='underline' 
+          className='w-full max-w-lg'
+          tabsList={[
+            { value: 'details', label: 'Details' },
+            { value: 'questions', label: 'Questions' },
+            { value: 'notes', label: 'Notes' },
+            { value: 'followups', label: 'Follow-ups' },
+          ]}
+        >
+          <TabsContent value='details' className='mt-4 p-4 bg-muted rounded-md'>
+            <p className='text-sm'>Details content rendered automatically with tabsList prop.</p>
+          </TabsContent>
+          <TabsContent value='questions' className='mt-4 p-4 bg-muted rounded-md'>
+            <p className='text-sm'>Questions content goes here.</p>
+          </TabsContent>
+          <TabsContent value='notes' className='mt-4 p-4 bg-muted rounded-md'>
+            <p className='text-sm'>Notes content goes here.</p>
+          </TabsContent>
+          <TabsContent value='followups' className='mt-4 p-4 bg-muted rounded-md'>
+            <p className='text-sm'>Follow-ups content goes here.</p>
+          </TabsContent>
+        </Tabs>
+      </div>
+      <div>
+        <h4 className='text-sm font-medium mb-2'>tabsList with React Elements</h4>
+        <Tabs 
+          defaultValue='overview' 
+          variant='pills' 
+          className='w-full max-w-lg'
+          tabsList={[
+            { 
+              value: 'overview', 
+              label: (
+                <div className='flex items-center gap-2'>
+                  <span>📊</span>
+                  Overview
+                </div>
+              )
+            },
+            { 
+              value: 'analytics', 
+              label: (
+                <div className='flex items-center gap-2'>
+                  <span>📈</span>
+                  Analytics
+                </div>
+              )
+            },
+            { 
+              value: 'settings', 
+              label: (
+                <div className='flex items-center gap-2'>
+                  <span>⚙️</span>
+                  Settings
+                </div>
+              )
+            },
+          ]}
+        >
+          <TabsContent value='overview' className='mt-4 p-4 bg-muted rounded-md'>
+            <p className='text-sm'>Overview with icon label rendered via tabsList prop.</p>
+          </TabsContent>
+          <TabsContent value='analytics' className='mt-4 p-4 bg-muted rounded-md'>
+            <p className='text-sm'>Analytics content goes here.</p>
+          </TabsContent>
+          <TabsContent value='settings' className='mt-4 p-4 bg-muted rounded-md'>
+            <p className='text-sm'>Settings content goes here.</p>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+}
+
 const tabsExamples = [
   {
     id: 'basic-usage',
@@ -272,6 +354,62 @@ const tabsExamples = [
 </Tabs>`,
     children: (
       <BasicTabs />
+    ),
+  },
+  {
+    id: 'tabs-list-prop',
+    title: 'Using tabsList Prop',
+    description: 'Automatically render tabs using the tabsList prop for cleaner code.',
+    code: `// Simple string labels
+<Tabs 
+  defaultValue='details' 
+  variant='underline'
+  tabsList={[
+    { value: 'details', label: 'Details' },
+    { value: 'questions', label: 'Questions' },
+    { value: 'notes', label: 'Notes' },
+    { value: 'followups', label: 'Follow-ups' },
+  ]}
+>
+  <TabsContent value='details'>
+    Details content rendered automatically
+  </TabsContent>
+  <TabsContent value='questions'>
+    Questions content goes here
+  </TabsContent>
+  {/* ... more TabsContent components */}
+</Tabs>
+
+// React elements as labels
+<Tabs 
+  defaultValue='overview' 
+  variant='pills'
+  tabsList={[
+    { 
+      value: 'overview', 
+      label: (
+        <div className='flex items-center gap-2'>
+          <span>📊</span>
+          Overview
+        </div>
+      )
+    },
+    { 
+      value: 'analytics', 
+      label: (
+        <div className='flex items-center gap-2'>
+          <span>📈</span>
+          Analytics
+        </div>
+      )
+    },
+  ]}
+>
+  <TabsContent value='overview'>Overview content</TabsContent>
+  <TabsContent value='analytics'>Analytics content</TabsContent>
+</Tabs>`,
+    children: (
+      <TabsListProp />
     ),
   },
   {
@@ -434,6 +572,11 @@ const tabsProps = [
     name: 'onValueChange',
     type: '(value: string) => void',
     description: 'Event handler called when the value changes.',
+  },
+  {
+    name: 'tabsList',
+    type: 'TabItem[]',
+    description: 'Array of tab items to render automatically. Each item has a value and label (string or React element). When provided, renders TabsList with TabsTrigger components.',
   },
   {
     name: 'tabsWidth',
