@@ -19,6 +19,7 @@ const components = [
 	{ name: 'Clickable', path: '/components/clickable' },
 	{ name: 'Code', path: '/components/code' },
 	{ name: 'Code Block', path: '/components/codeblock' },
+	{ name: 'Copy Button', path: '/components/copy-button' },
 	{ name: 'Disclosure', path: '/components/disclosure' },
 	{ name: 'Drawer', path: '/components/drawer' },
 	{ name: 'Dropdown Menu', path: '/components/dropdown-menu' },

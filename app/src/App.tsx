@@ -151,6 +151,14 @@ const router = createBrowserRouter([
 				},
 			},
 			{
+				path: 'components/copy-button',
+				HydrateFallback: SpaceBackground,
+				lazy: async () => {
+					const { CopyButtonPage } = await import('./pages/components/CopyButtonPage');
+					return { Component: CopyButtonPage };
+				},
+			},
+			{
 				path: 'components/disclosure',
 				HydrateFallback: SpaceBackground,
 				lazy: async () => {

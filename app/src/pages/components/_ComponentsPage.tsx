@@ -85,6 +85,12 @@ const components = [
 		category: 'Display',
 	},
 	{
+		name: 'Copy Button',
+		path: '/components/copy-button',
+		description: 'Button component that copies text to clipboard with visual feedback using Copy and Check symbols.',
+		category: 'Form',
+	},
+	{
 		name: 'Disclosure',
 		path: '/components/disclosure',
 		description: 'Collapsible content component with accessible expand/collapse functionality.',
