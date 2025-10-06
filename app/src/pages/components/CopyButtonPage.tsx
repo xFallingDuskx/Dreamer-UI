@@ -8,6 +8,7 @@ const tableOfContents = [
   { id: 'variants', title: 'Variants', level: 2 },
   { id: 'sizes', title: 'Sizes', level: 2 },
   { id: 'icon-only', title: 'Icon Only', level: 2 },
+  { id: 'icon-sizes', title: 'Icon Sizes', level: 2 },
   { id: 'custom-delay', title: 'Custom Delay', level: 2 },
   { id: 'usage-examples', title: 'Usage Examples', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
@@ -148,6 +149,25 @@ const copyButtonExamples = [
     ),
   },
   {
+    id: 'icon-sizes',
+    title: 'Icon Sizes',
+    description: 'Different icon sizes for the copy and check icons.',
+    code: `<div className='flex flex-wrap gap-4 items-center'>
+  <CopyButton textToCopy="Small icon" iconSize={12} />
+  <CopyButton textToCopy="Default icon" iconSize={16} />
+  <CopyButton textToCopy="Large icon" iconSize={20} />
+  <CopyButton textToCopy="Extra large icon" iconSize={24} />
+</div>`,
+    children: (
+      <div className='flex flex-wrap gap-4 items-center'>
+        <CopyButton textToCopy="Small icon" iconSize={12} />
+        <CopyButton textToCopy="Default icon" iconSize={16} />
+        <CopyButton textToCopy="Large icon" iconSize={20} />
+        <CopyButton textToCopy="Extra large icon" iconSize={24} />
+      </div>
+    ),
+  },
+  {
     id: 'custom-delay',
     title: 'Custom Delay',
     description: 'Control how long the copied state is shown before reverting to the copy icon.',
@@ -206,6 +226,7 @@ const copyButtonExamples = [
       <CopyButton 
         textToCopy="sk_live_4eC39HqLyjWDarjtT1zdp7dc"
         size="sm"
+        iconSize={12}
       />
     </div>
   </div>
@@ -254,6 +275,7 @@ const copyButtonExamples = [
             <CopyButton 
               textToCopy="sk_live_4eC39HqLyjWDarjtT1zdp7dc"
               size="sm"
+              iconSize={12}
             />
           </div>
         </div>
@@ -316,7 +338,14 @@ const copyButtonProps = [
     type: 'boolean',
     default: 'false',
     required: false,
-    description: 'Whether to show "Copy" and "Copied!" text (default: false).'
+    description: 'Whether to show "Copy" and "Copied!" text.'
+  },
+  {
+    name: 'iconSize',
+    type: 'number',
+    default: '16',
+    required: false,
+    description: 'Custom size for the icons.'
   },
   {
     name: 'variant',

@@ -301,18 +301,18 @@ const searchIndex: SearchResult[] = [
 	{
 		title: 'Copy Button',
 		path: '/components/copy-button',
-		description: 'Button component that copies text to clipboard with visual feedback using Copy and Check symbols.',
+		description: 'Button component that copies text to clipboard with visual feedback using Copy and Check symbols. Supports icon-only mode and custom icon sizes.',
 		type: 'Component',
-		content: 'copy button clipboard text feedback check symbol icon paste duplicate props',
+		content: 'copy button clipboard text feedback check symbol icon paste duplicate props iconSize showCopyText icon-only',
 		rank: 10,
 	},
 	{
 		title: 'Copy Button Props',
 		path: '/components/copy-button',
 		section: 'Props',
-		description: 'Copy Button component properties including textToCopy, delay, variant, size, and custom icons.',
+		description: 'Copy Button component properties including textToCopy, delay, showCopyText, iconSize, variant, size, and custom icons.',
 		type: 'Props',
-		content: 'copybutton props properties textToCopy delay children icon copiedIcon variant size rounded className id disabled onClick ref',
+		content: 'copybutton props properties textToCopy delay children icon copiedIcon showCopyText iconSize variant size rounded className id disabled onClick ref',
 		rank: 8,
 	},
 
