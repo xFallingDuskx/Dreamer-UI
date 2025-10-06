@@ -7,6 +7,7 @@ const tableOfContents = [
   { id: 'basic-usage', title: 'Basic Usage', level: 2 },
   { id: 'variants', title: 'Variants', level: 2 },
   { id: 'sizes', title: 'Sizes', level: 2 },
+  { id: 'icon-only', title: 'Icon Only', level: 2 },
   { id: 'custom-delay', title: 'Custom Delay', level: 2 },
   { id: 'usage-examples', title: 'Usage Examples', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
@@ -19,14 +20,14 @@ const copyButtonExamples = [
     title: 'Basic Usage',
     description: 'Simple copy buttons with default text and custom content.',
     code: `<div className='flex flex-wrap gap-4'>
-  <CopyButton textToCopy="Hello, World!" />
+  <CopyButton textToCopy="Hello, World!" showCopyText={true} />
   <CopyButton textToCopy="npm install @moondreamsdev/dreamer-ui">
     Copy Install Command
   </CopyButton>
 </div>`,
     children: (
       <div className='flex flex-wrap gap-4'>
-        <CopyButton textToCopy="Hello, World!" />
+        <CopyButton textToCopy="Hello, World!" showCopyText={true} />
         <CopyButton textToCopy="npm install @moondreamsdev/dreamer-ui">
           Copy Install Command
         </CopyButton>
@@ -106,6 +107,43 @@ const copyButtonExamples = [
         <CopyButton textToCopy="Large size" size="lg">
           Large
         </CopyButton>
+      </div>
+    ),
+  },
+  {
+    id: 'icon-only',
+    title: 'Icon Only',
+    description: 'Copy buttons that show only icons without any text (this is the default behavior).',
+    code: `<div className='flex flex-wrap gap-4 items-center'>
+  <CopyButton textToCopy="Icon only button" />
+  <CopyButton 
+    textToCopy="Icon only secondary" 
+    variant="secondary" 
+  />
+  <CopyButton 
+    textToCopy="Icon only outline" 
+    variant="outline" 
+  />
+  <CopyButton 
+    textToCopy="Icon only large" 
+    size="lg" 
+  />
+</div>`,
+    children: (
+      <div className='flex flex-wrap gap-4 items-center'>
+        <CopyButton textToCopy="Icon only button" />
+        <CopyButton 
+          textToCopy="Icon only secondary" 
+          variant="secondary" 
+        />
+        <CopyButton 
+          textToCopy="Icon only outline" 
+          variant="outline" 
+        />
+        <CopyButton 
+          textToCopy="Icon only large" 
+          size="lg" 
+        />
       </div>
     ),
   },
@@ -272,6 +310,13 @@ const copyButtonProps = [
     type: 'React.ReactNode',
     required: false,
     description: 'Custom icon to display instead of the default Check icon when copied.'
+  },
+  {
+    name: 'showCopyText',
+    type: 'boolean',
+    default: 'false',
+    required: false,
+    description: 'Whether to show "Copy" and "Copied!" text (default: false).'
   },
   {
     name: 'variant',

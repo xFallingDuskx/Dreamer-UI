@@ -15,6 +15,8 @@ export interface CopyButtonProps {
   icon?: React.ReactNode;
   /** Custom icon to display instead of the default Check icon when copied. */
   copiedIcon?: React.ReactNode;
+  /** Whether to show "Copy" and "Copied!" text (default: false). */
+  showCopyText?: boolean;
   /** Button variant style. */
   variant?: 'primary' | 'secondary' | 'tertiary' | 'destructive' | 'outline' | 'link' | 'base';
   /** Button size. */
@@ -39,8 +41,11 @@ export interface CopyButtonProps {
  * 
  * @example
  * ```tsx
- * // Simple copy button
+ * // Simple copy button (icon only)
  * <CopyButton textToCopy="Hello, World!" />
+ * 
+ * // Shows "Copy" and "Copied!" text
+ * <CopyButton textToCopy="Hello, World!" showCopyText={true} />
  * 
  * // With custom text
  * <CopyButton textToCopy="npm install dreamer-ui">
@@ -63,6 +68,7 @@ export function CopyButton({
   children,
   icon,
   copiedIcon,
+  showCopyText = false,
   className,
   onClick,
   variant,
@@ -81,6 +87,9 @@ export function CopyButton({
     }
   };
 
+  const hasText = children || showCopyText;
+  const iconClassName = hasText ? "inline mr-2" : "inline";
+
   return (
     <Button
       variant={variant}
@@ -96,13 +105,13 @@ export function CopyButton({
     >
       {copied ? (
         <>
-          {copiedIcon ?? <Check size={16} className="inline mr-2" />}
-          {children ? children : 'Copied!'}
+          {copiedIcon ?? <Check size={16} className={iconClassName} />}
+          {children || (showCopyText && 'Copied!')}
         </>
       ) : (
         <>
-          {icon ?? <Copy size={16} className="inline mr-2" />}
-          {children ? children : 'Copy'}
+          {icon ?? <Copy size={16} className={iconClassName} />}
+          {children || (showCopyText && 'Copy')}
         </>
       )}
     </Button>
