@@ -1,4 +1,4 @@
-import { CopyButton } from '../../copy-button';
+import { CopyButton } from '@moondreamsdev/dreamer-ui/components';
 import { ComponentPage } from '../../components/layout/ComponentPage';
 
 const tableOfContents = [
@@ -396,7 +396,7 @@ export function CopyButtonPage() {
       description='A button component that copies text to the clipboard and shows visual feedback. Built on top of the Button component with integrated copy functionality using the Copy and Check symbols.'
       tableOfContents={tableOfContents}
       usageInstructions='The CopyButton component provides an easy way to copy text to the clipboard with visual feedback. It automatically shows a check icon and "Copied!" text after successfully copying, then reverts back to the copy icon after a configurable delay. Perfect for copying code snippets, API keys, URLs, and other text content.'
-      importStatement="import { CopyButton } from '../../copy-button';"
+      importStatement="import { CopyButton } from '@moondreamsdev/dreamer-ui/components';"
       componentProps={copyButtonProps}
       keyboardShortcuts={keyboardShortcuts}
       examples={copyButtonExamples}

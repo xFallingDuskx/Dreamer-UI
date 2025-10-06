@@ -11,6 +11,7 @@ export * from './checkbox';
 export * from './clickable';
 export * from './code';
 export * from './code-block';
+export * from './copy-button';
 export * from './disclosure';
 export * from './drawer';
 export * from './dropdown-menu';
