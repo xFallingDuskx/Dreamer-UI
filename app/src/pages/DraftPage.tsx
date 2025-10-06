@@ -5,6 +5,7 @@ import {
 	Callout,
 	Card,
 	Code,
+	CopyButton,
 	Disclosure,
 	Drawer,
 	DropdownMenu,
@@ -18,7 +19,7 @@ import {
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
-import { CopyButton } from '../copy-button';
+import { AuthForm } from '../auth-form';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -445,6 +446,119 @@ const FormDemo = () => {
 	);
 };
 
+const AuthFormDemo = () => {
+	const [isLogin, setIsLogin] = useState(true);
+	const [authError, setAuthError] = useState<string>('');
+
+	const handleMethodClick = (method: string) => {
+		console.log(`${method} clicked`);
+		alert(`${method.charAt(0).toUpperCase() + method.slice(1)} authentication would be triggered here`);
+	};
+
+	const handleSubmit = async (data: { email: string; password: string; confirmPassword?: string }) => {
+		console.log('Form submitted:', data);
+		// Simulate an async authentication
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+		
+		// Simulate error for demo purposes
+		if (data.email === 'error@test.com') {
+			return { error: { message: 'Invalid credentials' } };
+		}
+
+		alert(`${isLogin ? 'Login' : 'Sign up'} successful!`);
+		return {};
+	};
+
+	const handleSuccess = () => {
+		console.log('Authentication successful');
+	};
+
+	return (
+		<div>
+			<h3 className='text-lg font-medium text-white mb-3'>AuthForm Component Testing</h3>
+			<div className='space-y-8'>
+				{/* Email Only */}
+				<div>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Email Authentication Only</h4>
+					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
+						<div className='mb-4'>
+							<button
+								type='button'
+								className='text-sm text-blue-500 hover:underline'
+								onClick={() => setIsLogin((v) => !v)}
+							>
+								{isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Log In'}
+							</button>
+						</div>
+						<AuthForm
+							methods={['email']}
+							isLogin={isLogin}
+							onSubmit={handleSubmit}
+							onSuccess={handleSuccess}
+							errorMessage={authError}
+						/>
+					</div>
+				</div>
+
+				{/* Email + Google */}
+				<div>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Email + Google Authentication</h4>
+					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
+						<AuthForm
+							methods={['google', 'email']}
+							isLogin={true}
+							onMethodClick={handleMethodClick}
+							onSubmit={handleSubmit}
+							onSuccess={handleSuccess}
+						/>
+					</div>
+				</div>
+
+				{/* Multiple OAuth Providers */}
+				<div>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>Multiple OAuth Providers</h4>
+					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
+						<AuthForm
+							methods={['google', 'github', 'facebook', 'apple', 'email']}
+							isLogin={false}
+							onMethodClick={handleMethodClick}
+							onSubmit={handleSubmit}
+							onSuccess={handleSuccess}
+						/>
+					</div>
+				</div>
+
+				{/* OAuth Only (No Email) */}
+				<div>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>OAuth Only (No Email)</h4>
+					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
+						<AuthForm
+							methods={['google', 'github']}
+							isLogin={true}
+							onMethodClick={handleMethodClick}
+							onSuccess={handleSuccess}
+						/>
+					</div>
+				</div>
+
+				{/* With Error Message */}
+				<div>
+					<h4 className='text-md font-medium text-gray-300 mb-4'>With Error Message</h4>
+					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
+						<AuthForm
+							methods={['email']}
+							isLogin={true}
+							onSubmit={handleSubmit}
+							onSuccess={handleSuccess}
+							errorMessage='Invalid email or password. Please try again.'
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
 export const DraftPage = () => {
 	const [drawerState, setDrawerState] = useState({
 		basic: false,
@@ -831,6 +945,9 @@ export const DraftPage = () => {
 
 						{/* Form Component Testing */}
 						<FormDemo />
+
+						{/* AuthForm Component Testing */}
+						<AuthFormDemo />
 
 						{/* Avatar Component Testing */}
 						<div>

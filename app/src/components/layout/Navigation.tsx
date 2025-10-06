@@ -8,6 +8,7 @@ import { SearchBar } from '../search-bar';
 const components = [
 	{ name: 'Accordion', path: '/components/accordion' },
 	{ name: 'Action Modal', path: '/components/actionmodal' },
+	{ name: 'AuthForm', path: '/components/authform' },
 	{ name: 'Avatar', path: '/components/avatar' },
 	{ name: 'Badge', path: '/components/badge' },
 	{ name: 'Button', path: '/components/button' },
