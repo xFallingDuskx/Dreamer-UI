@@ -300,7 +300,7 @@ export function AuthForm({
 					{/* Toggle between login/signup */}
 					{showToggle && (
 						<div className='text-center mt-3'>
-							<Button type='button' variant='link' className='text-sm' onClick={handleToggleMode} data-toggle-mode>
+							<Button type='button' variant='link' className='text-sm opacity-90' onClick={handleToggleMode} data-toggle-mode>
 								{isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Log In'}
 							</Button>
 						</div>
