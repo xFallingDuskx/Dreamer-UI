@@ -447,16 +447,15 @@ const FormDemo = () => {
 };
 
 const AuthFormDemo = () => {
-	const [isLogin, setIsLogin] = useState(true);
-	const [authError, setAuthError] = useState<string>('');
+	const [authError] = useState<string>('');
 
 	const handleMethodClick = (method: string) => {
 		console.log(`${method} clicked`);
 		alert(`${method.charAt(0).toUpperCase() + method.slice(1)} authentication would be triggered here`);
 	};
 
-	const handleSubmit = async (data: { email: string; password: string; confirmPassword?: string }) => {
-		console.log('Form submitted:', data);
+	const handleEmailSubmit = async ({ data, action }: { data: { email: string; password: string; confirmPassword?: string }; action: 'login' | 'sign up' }) => {
+		console.log('Form submitted:', { data, action });
 		// Simulate an async authentication
 		await new Promise((resolve) => setTimeout(resolve, 1000));
 		
@@ -465,12 +464,12 @@ const AuthFormDemo = () => {
 			return { error: { message: 'Invalid credentials' } };
 		}
 
-		alert(`${isLogin ? 'Login' : 'Sign up'} successful!`);
+		alert(`${action === 'login' ? 'Login' : 'Sign up'} successful!`);
 		return {};
 	};
 
-	const handleSuccess = () => {
-		console.log('Authentication successful');
+	const handleSuccess = (action: 'login' | 'sign up') => {
+		console.log('Authentication successful:', action);
 	};
 
 	return (
@@ -481,19 +480,10 @@ const AuthFormDemo = () => {
 				<div>
 					<h4 className='text-md font-medium text-gray-300 mb-4'>Email Authentication Only</h4>
 					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
-						<div className='mb-4'>
-							<button
-								type='button'
-								className='text-sm text-blue-500 hover:underline'
-								onClick={() => setIsLogin((v) => !v)}
-							>
-								{isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Log In'}
-							</button>
-						</div>
 						<AuthForm
 							methods={['email']}
-							isLogin={isLogin}
-							onSubmit={handleSubmit}
+							action='both'
+							onEmailSubmit={handleEmailSubmit}
 							onSuccess={handleSuccess}
 							errorMessage={authError}
 						/>
@@ -506,9 +496,9 @@ const AuthFormDemo = () => {
 					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
 						<AuthForm
 							methods={['google', 'email']}
-							isLogin={true}
+							action='login'
 							onMethodClick={handleMethodClick}
-							onSubmit={handleSubmit}
+							onEmailSubmit={handleEmailSubmit}
 							onSuccess={handleSuccess}
 						/>
 					</div>
@@ -520,9 +510,9 @@ const AuthFormDemo = () => {
 					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
 						<AuthForm
 							methods={['google', 'github', 'facebook', 'apple', 'email']}
-							isLogin={false}
+							action='sign up'
 							onMethodClick={handleMethodClick}
-							onSubmit={handleSubmit}
+							onEmailSubmit={handleEmailSubmit}
 							onSuccess={handleSuccess}
 						/>
 					</div>
@@ -534,7 +524,7 @@ const AuthFormDemo = () => {
 					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
 						<AuthForm
 							methods={['google', 'github']}
-							isLogin={true}
+							action='login'
 							onMethodClick={handleMethodClick}
 							onSuccess={handleSuccess}
 						/>
@@ -547,8 +537,8 @@ const AuthFormDemo = () => {
 					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
 						<AuthForm
 							methods={['email']}
-							isLogin={true}
-							onSubmit={handleSubmit}
+							action='login'
+							onEmailSubmit={handleEmailSubmit}
 							onSuccess={handleSuccess}
 							errorMessage='Invalid email or password. Please try again.'
 						/>

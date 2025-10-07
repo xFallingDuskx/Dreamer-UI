@@ -9,20 +9,20 @@ const tableOfContents = [
   { id: 'oauth-providers', title: 'OAuth Providers', level: 2 },
   { id: 'login-signup-toggle', title: 'Login/Signup Toggle', level: 2 },
   { id: 'error-handling', title: 'Error Handling', level: 2 },
+  { id: 'password-validation', title: 'Custom Password Validation', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
 ];
 
 export function AuthFormPage() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [authError, setAuthError] = useState<string>('');
+  const [authError] = useState<string>('');
 
   const handleMethodClick = (method: string) => {
     console.log(`${method} authentication initiated`);
     alert(`${method.charAt(0).toUpperCase() + method.slice(1)} authentication would be triggered here`);
   };
 
-  const handleSubmit = async (data: { email: string; password: string; confirmPassword?: string }) => {
-    console.log('Form submitted:', data);
+  const handleEmailSubmit = async ({ data, action }: { data: { email: string; password: string; confirmPassword?: string }; action: 'login' | 'sign up' }) => {
+    console.log('Form submitted:', { data, action });
     
     // Simulate async authentication
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -32,12 +32,12 @@ export function AuthFormPage() {
       return { error: { message: 'Invalid credentials. Please try again.' } };
     }
 
-    alert(`${isLogin ? 'Login' : 'Sign up'} successful!`);
+    alert(`${action === 'login' ? 'Login' : 'Sign up'} successful!`);
     return {};
   };
 
-  const handleSuccess = () => {
-    console.log('Authentication successful');
+  const handleSuccess = (action: 'login' | 'sign up') => {
+    console.log('Authentication successful:', action);
   };
 
   const authFormExamples = [
@@ -47,17 +47,17 @@ export function AuthFormPage() {
       description: 'Basic authentication form with email and password fields.',
       code: `<AuthForm
   methods={['email']}
-  isLogin={true}
-  onSubmit={async (data) => {
+  action='login'
+  onEmailSubmit={async ({ data, action }) => {
     // Handle email/password authentication
-    console.log('Login attempt:', data);
+    console.log('Login attempt:', { data, action });
     const result = await login(data.email, data.password);
     if (result.error) {
       return { error: result.error };
     }
   }}
-  onSuccess={() => {
-    console.log('Login successful');
+  onSuccess={(action) => {
+    console.log(\`\${action} successful\`);
     navigate('/dashboard');
   }}
 />`,
@@ -65,8 +65,8 @@ export function AuthFormPage() {
         <div className='max-w-md'>
           <AuthForm
             methods={['email']}
-            isLogin={true}
-            onSubmit={handleSubmit}
+            action='login'
+            onEmailSubmit={handleEmailSubmit}
             onSuccess={handleSuccess}
           />
         </div>
@@ -78,7 +78,7 @@ export function AuthFormPage() {
       description: 'Authentication form with multiple OAuth providers and email fallback.',
       code: `<AuthForm
   methods={['google', 'github', 'email']}
-  isLogin={true}
+  action='login'
   onMethodClick={(method) => {
     // Handle OAuth provider click
     if (method === 'google') {
@@ -87,19 +87,19 @@ export function AuthFormPage() {
       authWithGithub();
     }
   }}
-  onSubmit={async (data) => {
+  onEmailSubmit={async ({ data, action }) => {
     // Handle email/password authentication
     return await login(data.email, data.password);
   }}
-  onSuccess={() => navigate('/dashboard')}
+  onSuccess={(action) => navigate('/dashboard')}
 />`,
       children: (
         <div className='max-w-md'>
           <AuthForm
             methods={['google', 'github', 'email']}
-            isLogin={true}
+            action='login'
             onMethodClick={handleMethodClick}
-            onSubmit={handleSubmit}
+            onEmailSubmit={handleEmailSubmit}
             onSuccess={handleSuccess}
           />
         </div>
@@ -109,43 +109,28 @@ export function AuthFormPage() {
       id: 'login-signup-toggle',
       title: 'Login/Signup Toggle',
       description: 'Toggle between login and signup modes with appropriate field validation.',
-      code: `const [isLogin, setIsLogin] = useState(true);
-
-<div>
-  <AuthForm
-    methods={['email']}
-    isLogin={isLogin}
-    onSubmit={async (data) => {
-      if (isLogin) {
-        return await login(data.email, data.password);
-      } else {
-        return await signup(data.email, data.password);
-      }
-    }}
-    onSuccess={() => navigate('/dashboard')}
-  />
-  
-  <button onClick={() => setIsLogin(!isLogin)}>
-    {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Log In"}
-  </button>
-</div>`,
+      code: `<AuthForm
+  methods={['email']}
+  action='both'
+  onEmailSubmit={async ({ data, action }) => {
+    // The component automatically handles login/signup mode
+    // You can determine the current mode from the action parameter
+    if (action === 'login') {
+      return await login(data.email, data.password);
+    } else {
+      return await signup(data.email, data.password);
+    }
+  }}
+  onSuccess={(action) => navigate('/dashboard')}
+/>`,
       children: (
         <div className='max-w-md'>
           <AuthForm
             methods={['email']}
-            isLogin={isLogin}
-            onSubmit={handleSubmit}
+            action='both'
+            onEmailSubmit={handleEmailSubmit}
             onSuccess={handleSuccess}
           />
-          <div className='mt-4 text-center'>
-            <button
-              type='button'
-              className='text-sm text-blue-500 hover:underline'
-              onClick={() => setIsLogin((v) => !v)}
-            >
-              {isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Log In'}
-            </button>
-          </div>
         </div>
       ),
     },
@@ -157,8 +142,8 @@ export function AuthFormPage() {
 
 <AuthForm
   methods={['email']}
-  isLogin={true}
-  onSubmit={async (data) => {
+  action='login'
+  onEmailSubmit={async ({ data, action }) => {
     const result = await login(data.email, data.password);
     if (result.error) {
       setError(result.error.message);
@@ -167,7 +152,7 @@ export function AuthFormPage() {
     setError('');
   }}
   errorMessage={error}
-  onSuccess={() => navigate('/dashboard')}
+  onSuccess={(action) => navigate('/dashboard')}
 />`,
       children: (
         <div className='max-w-md'>
@@ -176,10 +161,53 @@ export function AuthFormPage() {
           </div>
           <AuthForm
             methods={['email']}
-            isLogin={true}
-            onSubmit={handleSubmit}
+            action='login'
+            onEmailSubmit={handleEmailSubmit}
             onSuccess={handleSuccess}
             errorMessage={authError}
+          />
+        </div>
+      ),
+    },
+    {
+      id: 'password-validation',
+      title: 'Custom Password Validation',
+      description: 'AuthForm with custom password validation function.',
+      code: `const validatePassword = (password: string) => {
+  if (password.length < 8) {
+    return 'Password must be at least 8 characters long';
+  }
+  if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)/.test(password)) {
+    return 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+  }
+  return undefined; // Valid password
+};
+
+<AuthForm
+  methods={['email']}
+  action='sign up'
+  validatePassword={validatePassword}
+  onEmailSubmit={async ({ data, action }) => {
+    return await signup(data.email, data.password);
+  }}
+  onSuccess={(action) => navigate('/dashboard')}
+/>`,
+      children: (
+        <div className='max-w-md'>
+          <AuthForm
+            methods={['email']}
+            action='sign up'
+            validatePassword={(password: string) => {
+              if (password.length < 8) {
+                return 'Password must be at least 8 characters long';
+              }
+              if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+                return 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+              }
+              return undefined;
+            }}
+            onEmailSubmit={handleEmailSubmit}
+            onSuccess={handleSuccess}
           />
         </div>
       ),
@@ -195,11 +223,11 @@ export function AuthFormPage() {
       description: 'Array of authentication methods to display. Includes OAuth providers and email/password.',
     },
     {
-      name: 'isLogin',
-      type: 'boolean',
+      name: 'action',
+      type: "'login' | 'sign up' | 'both'",
       required: false,
-      default: 'true',
-      description: 'Whether the form is in login mode (true) or signup mode (false). Affects password confirmation field visibility.',
+      default: "'login'",
+      description: 'Authentication action mode. Use "both" to allow toggling between login and signup modes.',
     },
     {
       name: 'onMethodClick',
@@ -208,22 +236,28 @@ export function AuthFormPage() {
       description: 'Callback function triggered when an OAuth provider button is clicked.',
     },
     {
-      name: 'onSubmit',
-      type: '(data: { email: string; password: string; confirmPassword?: string }) => Promise<{ error?: { message: string } }> | void',
+      name: 'onEmailSubmit',
+      type: '(params: { data: { email: string; password: string; confirmPassword?: string }; action: "login" | "sign up" }) => Promise<{ error?: { message: string } }> | void',
       required: false,
-      description: 'Callback function for handling email/password form submission. Should return an error object if authentication fails.',
+      description: 'Callback function for handling email/password form submission. Receives both form data and the current action mode. Should return an error object if authentication fails.',
     },
     {
       name: 'onSuccess',
-      type: '() => void',
+      type: '(action: "login" | "sign up") => void',
       required: false,
-      description: 'Callback function triggered when authentication is successful.',
+      description: 'Callback function triggered when authentication is successful. Receives the current action mode.',
     },
     {
       name: 'errorMessage',
       type: 'string',
       required: false,
       description: 'Custom error message to display below the form.',
+    },
+    {
+      name: 'validatePassword',
+      type: '(password: string) => string | undefined',
+      required: false,
+      description: 'Custom password validation function. Return an error message string if invalid, or undefined if valid.',
     },
     {
       name: 'className',
@@ -248,9 +282,9 @@ export function AuthFormPage() {
   return (
     <ComponentPage
       title='AuthForm'
-      description='A flexible authentication form component that supports multiple authentication methods including email/password and OAuth providers (Google, GitHub, Facebook, Apple). Handles both login and signup flows with built-in validation and error messaging.'
+      description='A flexible authentication form component that supports multiple authentication methods including email/password and OAuth providers (Google, GitHub, Facebook, Apple). Features toggleable login/signup modes, custom password validation, and uses Form component with FormFactories for robust form handling.'
       tableOfContents={tableOfContents}
-      usageInstructions='The AuthForm component provides a complete authentication interface with support for multiple providers. Use the methods prop to specify which authentication options to display. The component automatically handles form validation, error states, and provides callbacks for OAuth and email/password authentication flows.'
+      usageInstructions='The AuthForm component provides a complete authentication interface with support for multiple providers. Use the action prop to control the authentication mode: "login", "sign up", or "both" for a toggleable interface. The component uses Form and FormFactories internally for robust form handling and validation.'
       importStatement="import { AuthForm } from '../auth-form';"
       componentProps={authFormProps}
       examples={authFormExamples}
