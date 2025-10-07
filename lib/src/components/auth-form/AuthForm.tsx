@@ -26,6 +26,8 @@ export interface AuthFormProps {
 	onEmailSubmit?: AuthFormOnEmailSubmit
 	/** Callback when authentication is successful */
 	onSuccess?: (action: 'login' | 'sign up') => void;
+	/** Callback when the current action mode changes (only applies when action is 'both') */
+	onActionChange?: (action: 'login' | 'sign up') => void;
 	/** Custom error message to display */
 	errorMessage?: string;
 	/** Custom password validation function */
@@ -108,6 +110,10 @@ const providerConfig: Record<Exclude<AuthFormMethod, 'email'>, { label: string; 
  *       return 'Password must contain uppercase, lowercase, and number';
  *     }
  *   }}
+ *   onActionChange={(action) => {
+ *     console.log(`User switched to ${action} mode`);
+ *     // Update parent component state, analytics, etc.
+ *   }}
  *   onEmailSubmit={async ({ data, action }) => {
  *     if (action === 'login') {
  *       return await login(data.email, data.password);
@@ -160,6 +166,7 @@ export function AuthForm({
 	onMethodClick,
 	onEmailSubmit,
 	onSuccess,
+	onActionChange,
 	errorMessage,
 	validatePassword,
 	className,
@@ -244,7 +251,11 @@ export function AuthForm({
 	};
 
 	const handleToggleMode = () => {
-		setCurrentMode((prev) => (prev === 'login' ? 'sign up' : 'login'));
+		setCurrentMode((prev) => {
+			const newMode = prev === 'login' ? 'sign up' : 'login';
+			onActionChange?.(newMode);
+			return newMode;
+		});
 		setFormError('');
 	};
 

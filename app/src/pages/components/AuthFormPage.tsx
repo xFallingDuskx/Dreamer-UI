@@ -40,6 +40,10 @@ export function AuthFormPage() {
     console.log('Authentication successful:', action);
   };
 
+  const handleActionChange = (action: 'login' | 'sign up') => {
+    console.log('Action changed to:', action);
+  };
+
   const authFormExamples = [
     {
       id: 'email-only',
@@ -112,6 +116,10 @@ export function AuthFormPage() {
       code: `<AuthForm
   methods={['email']}
   action='both'
+  onActionChange={(action) => {
+    console.log(\`User switched to \${action} mode\`);
+    // Update parent state, analytics, conditional UI, etc.
+  }}
   onEmailSubmit={async ({ data, action }) => {
     // The component automatically handles login/signup mode
     // You can determine the current mode from the action parameter
@@ -128,6 +136,7 @@ export function AuthFormPage() {
           <AuthForm
             methods={['email']}
             action='both'
+            onActionChange={handleActionChange}
             onEmailSubmit={handleEmailSubmit}
             onSuccess={handleSuccess}
           />
@@ -246,6 +255,12 @@ export function AuthFormPage() {
       type: '(action: "login" | "sign up") => void',
       required: false,
       description: 'Callback function triggered when authentication is successful. Receives the current action mode.',
+    },
+    {
+      name: 'onActionChange',
+      type: '(action: "login" | "sign up") => void',
+      required: false,
+      description: 'Callback function triggered when the current action mode changes. Only applies when action prop is "both".',
     },
     {
       name: 'errorMessage',

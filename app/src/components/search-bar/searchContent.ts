@@ -943,7 +943,7 @@ const searchIndex: SearchResult[] = [
 		section: 'Props',
 		description: 'AuthForm component properties including methods, action, callbacks, and validation options.',
 		type: 'Props',
-		content: 'authform props properties methods action onMethodClick onEmailSubmit onSuccess errorMessage validatePassword className id ref login signup both providers email google github facebook apple',
+		content: 'authform props properties methods action onMethodClick onEmailSubmit onSuccess onActionChange errorMessage validatePassword className id ref login signup both providers email google github facebook apple action change callback toggle',
 		rank: 8,
 	},
 	{
@@ -980,6 +980,15 @@ const searchIndex: SearchResult[] = [
 		description: 'Display authentication errors and validation messages to users.',
 		type: 'Example',
 		content: 'authform error handling validation messages authentication failed login signup errorMessage example',
+		rank: 7,
+	},
+	{
+		title: 'AuthForm onActionChange Callback',
+		path: '/components/authform',
+		section: 'Props',
+		description: 'Callback triggered when user toggles between login and signup modes in toggleable forms.',
+		type: 'Props',
+		content: 'onActionChange action change callback toggle login signup both mode switch analytics tracking parent state example',
 		rank: 7,
 	},
 
