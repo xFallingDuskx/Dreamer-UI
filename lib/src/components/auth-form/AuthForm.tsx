@@ -6,23 +6,24 @@ import { Button } from '../button';
 
 export type AuthFormMethod = 'email' | 'google' | 'github' | 'facebook' | 'apple';
 export type AuthFormAction = 'login' | 'sign up' | 'both';
+export type AuthFormOnEmailSubmit = (params: {
+	data: {
+		email: string;
+		password: string;
+		confirmPassword?: string;
+	};
+	action: 'login' | 'sign up';
+}) => Promise<{ error?: { message: string } }> | void;
 
 export interface AuthFormProps {
 	/** Array of authentication methods to display (e.g., ['email', 'google', 'github']) */
 	methods?: AuthFormMethod[];
-	/** Authentication action mode: 'login', 'sign up', or 'both' for togglable mode */
+	/** Authentication action mode: 'login', 'sign up', or 'both' for toggleable mode */
 	action?: AuthFormAction;
 	/** Callback when a method button is clicked (for OAuth providers) */
 	onMethodClick?: (method: AuthFormMethod) => void;
 	/** Callback when email/password form is submitted successfully */
-	onEmailSubmit?: (params: {
-		data: {
-			email: string;
-			password: string;
-			confirmPassword?: string;
-		};
-		action: 'login' | 'sign up';
-	}) => Promise<{ error?: { message: string } }> | void;
+	onEmailSubmit?: AuthFormOnEmailSubmit
 	/** Callback when authentication is successful */
 	onSuccess?: (action: 'login' | 'sign up') => void;
 	/** Custom error message to display */
@@ -56,6 +57,103 @@ const providerConfig: Record<Exclude<AuthFormMethod, 'email'>, { label: string; 
 	},
 };
 
+/**
+ * A flexible authentication form component that supports multiple authentication methods
+ * including email/password and OAuth providers (Google, GitHub, Facebook, Apple).
+ * Features toggleable login/signup modes, custom password validation, and comprehensive
+ * error handling using Form and FormFactories internally.
+ * 
+ * @example
+ * ```tsx
+ * // Basic email-only login form
+ * <AuthForm
+ *   methods={['email']}
+ *   action="login"
+ *   onEmailSubmit={async ({ data, action }) => {
+ *     const result = await signIn(data.email, data.password);
+ *     if (result.error) {
+ *       return { error: { message: result.error.message } };
+ *     }
+ *   }}
+ *   onSuccess={(action) => navigate('/dashboard')}
+ * />
+ * ```
+ * 
+ * @example
+ * ```tsx
+ * // Multi-provider authentication with OAuth
+ * <AuthForm
+ *   methods={['google', 'github', 'email']}
+ *   action="login"
+ *   onMethodClick={(method) => {
+ *     if (method === 'google') signInWithGoogle();
+ *     if (method === 'github') signInWithGitHub();
+ *   }}
+ *   onEmailSubmit={async ({ data, action }) => {
+ *     return await authenticate(data.email, data.password);
+ *   }}
+ *   onSuccess={(action) => redirect('/app')}
+ * />
+ * ```
+ * 
+ * @example
+ * ```tsx
+ * // Toggleable login/signup with password validation
+ * <AuthForm
+ *   methods={['email']}
+ *   action="both"
+ *   validatePassword={(password) => {
+ *     if (password.length < 8) return 'Password must be at least 8 characters';
+ *     if (!/(?=.*[A-Z])(?=.*[a-z])(?=.*\d)/.test(password)) {
+ *       return 'Password must contain uppercase, lowercase, and number';
+ *     }
+ *   }}
+ *   onEmailSubmit={async ({ data, action }) => {
+ *     if (action === 'login') {
+ *       return await login(data.email, data.password);
+ *     } else {
+ *       return await register(data.email, data.password);
+ *     }
+ *   }}
+ *   onSuccess={(action) => {
+ *     toast.success(`${action === 'login' ? 'Welcome back!' : 'Account created!'}`);
+ *     navigate('/dashboard');
+ *   }}
+ * />
+ * ```
+ * 
+ * @example
+ * ```tsx
+ * // With error handling and custom styling
+ * const [authError, setAuthError] = useState('');
+ * 
+ * <AuthForm
+ *   methods={['google', 'email']}
+ *   action="login"
+ *   className="max-w-md mx-auto p-6 bg-card rounded-lg"
+ *   errorMessage={authError}
+ *   onMethodClick={async (method) => {
+ *     try {
+ *       await authenticateWithProvider(method);
+ *     } catch (error) {
+ *       setAuthError(error.message);
+ *     }
+ *   }}
+ *   onEmailSubmit={async ({ data, action }) => {
+ *     setAuthError('');
+ *     try {
+ *       await emailAuth(data.email, data.password, action);
+ *     } catch (error) {
+ *       return { error: { message: error.message } };
+ *     }
+ *   }}
+ *   onSuccess={() => {
+ *     setAuthError('');
+ *     window.location.href = '/dashboard';
+ *   }}
+ * />
+ * ```
+ */
 export function AuthForm({
 	methods = ['email'],
 	action = 'login',
@@ -68,9 +166,7 @@ export function AuthForm({
 	id,
 	ref,
 }: AuthFormProps) {
-	const [currentMode, setCurrentMode] = useState<'login' | 'sign up'>(
-		action === 'both' ? 'login' : action
-	);
+	const [currentMode, setCurrentMode] = useState<'login' | 'sign up'>(action === 'both' ? 'login' : action);
 	const [formError, setFormError] = useState<string>('');
 	const { input } = FormFactories;
 
@@ -153,12 +249,7 @@ export function AuthForm({
 	};
 
 	return (
-		<div
-			className={join('flex flex-col gap-3', className)}
-			id={id}
-			data-auth-mode={currentMode}
-			data-action={action}
-		>
+		<div className={join('flex flex-col gap-3', className)} id={id} data-auth-mode={currentMode} data-action={action}>
 			{/* OAuth Provider Buttons */}
 			{otherMethods.map((method) => {
 				const config = providerConfig[method];
@@ -179,9 +270,9 @@ export function AuthForm({
 			{/* Divider if we have both OAuth and email */}
 			{otherMethods.length > 0 && showEmail && (
 				<div className='flex items-center gap-2 pt-2'>
-					<div className='h-px flex-1 bg-gray-200 dark:bg-gray-700' />
-					<span className='text-xs text-gray-400'>or</span>
-					<div className='h-px flex-1 bg-gray-200 dark:bg-gray-700' />
+					<div className='h-px flex-1 bg-border' />
+					<span className='text-xs text-border'>or</span>
+					<div className='h-px flex-1 bg-border' />
 				</div>
 			)}
 
@@ -201,7 +292,7 @@ export function AuthForm({
 					/>
 
 					{displayedError && (
-						<small className='block text-center text-red-500 mt-2' role='alert'>
+						<small className='block text-center text-destructive mt-2' role='alert'>
 							{displayedError}
 						</small>
 					)}
@@ -209,16 +300,9 @@ export function AuthForm({
 					{/* Toggle between login/signup */}
 					{showToggle && (
 						<div className='text-center mt-3'>
-							<button
-								type='button'
-								className='text-sm text-blue-500 hover:underline'
-								onClick={handleToggleMode}
-								data-toggle-mode
-							>
-								{isLogin
-									? "Don't have an account? Sign Up"
-									: 'Already have an account? Log In'}
-							</button>
+							<Button type='button' variant='link' className='text-sm' onClick={handleToggleMode} data-toggle-mode>
+								{isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Log In'}
+							</Button>
 						</div>
 					)}
 				</>

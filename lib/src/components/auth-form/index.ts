@@ -1,1 +1,7 @@
-export { AuthForm, type AuthFormMethod, type AuthFormAction, type AuthFormProps } from './AuthForm';
+export {
+	AuthForm,
+	type AuthFormAction,
+	type AuthFormMethod,
+	type AuthFormOnEmailSubmit,
+	type AuthFormProps,
+} from './AuthForm';
