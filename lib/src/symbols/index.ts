@@ -1,3 +1,4 @@
+export { Apple } from './Apple';
 export { CaretCollapse } from './CaretCollapse';
 export { CaretExpand } from './CaretExpand';
 export { Check } from './Check';
@@ -18,6 +19,9 @@ export { ExclamationTriangle } from './ExclamationTriangle';
 export { ExternalLink } from './ExternalLink';
 export { EyeClosed } from './EyeClosed';
 export { EyeOpened } from './EyeOpened';
+export { Facebook } from './Facebook';
+export { GitHub } from './GitHub';
+export { Google } from './Google';
 export { GripVertical } from './GripVertical';
 export { InfoCircled } from './InfoCircled';
 export { InfoCircledFilled } from './InfoCircledFilled';

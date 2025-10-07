@@ -63,6 +63,14 @@ const router = createBrowserRouter([
 				},
 			},
 			{
+				path: 'components/authform',
+				HydrateFallback: SpaceBackground,
+				lazy: async () => {
+					const { AuthFormPage } = await import('./pages/components/AuthFormPage');
+					return { Component: AuthFormPage };
+				},
+			},
+			{
 				path: 'components/avatar',
 				HydrateFallback: SpaceBackground,
 				lazy: async () => {

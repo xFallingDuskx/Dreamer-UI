@@ -19,6 +19,12 @@ const components = [
 		category: 'Overlay',
 	},
 	{
+		name: 'AuthForm',
+		path: '/components/authform',
+		description: 'Flexible authentication form supporting email/password and OAuth providers (Google, GitHub, Facebook, Apple).',
+		category: 'Form',
+	},
+	{
 		name: 'Avatar',
 		path: '/components/avatar',
 		description: 'Display user profile pictures with 12 pre-defined cartoon-like avatars inspired by Moon Dreams Dev.',

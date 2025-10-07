@@ -16,21 +16,7 @@ You should create a React component that meets the following requirements:
 - If there is a lot of logic, extract it into hook(s) in a separate `hooks.ts` file
 - Use `data-*` attributes to store key prop values for testing and accessibility
 
-6. **Documentation:** Add comprehensive JSDoc documentation:
-- Add JSDoc strings to the component with examples showing different use cases
-- Add JSDoc strings to all props with clear descriptions
-- Use the same JSDoc descriptions consistently across component and documentation
-
-7. **Component Documentation Page:** Create a dedicated component page in `app/pages/components/` that:
-- Uses the same JSDoc strings from the component for prop descriptions
-- Shows interactive examples of all variants and states
-- Demonstrates accessibility features and keyboard navigation
-
-8. **Search Integration:** Update the search content to include the new component so it can be discovered via search
-
-9. **Visual Confirmation:** Render the component with its various variants/states in the `app/pages/DraftPage.tsx` file.
-
-10. **Icons:** Use icons from the `@moondreamsdev/dreamer-ui/symbols` if available. If not, create them in a `app/<component-name>/icons.tsx` file.
+6. **Icons:** Use icons from the `@moondreamsdev/dreamer-ui/symbols` if available. If not, create them in a `app/<component-name>/icons.tsx` file.
 
 **IMPORTANT:** Do not make any changes to `lib/`.
 
