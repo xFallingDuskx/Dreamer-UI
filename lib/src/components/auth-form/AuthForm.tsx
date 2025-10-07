@@ -1,7 +1,8 @@
 import { useState, Ref } from 'react';
-import { Button, Form, FormFactories } from '@moondreamsdev/dreamer-ui/components';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
-import { GoogleIcon, GitHubIcon, FacebookIcon, AppleIcon } from './icons';
+import { Apple, Facebook, GitHub, Google } from '../../symbols';
+import { Form, FormFactories } from '../form';
+import { join } from '../../utils';
+import { Button } from '../button';
 
 export type AuthFormMethod = 'email' | 'google' | 'github' | 'facebook' | 'apple';
 export type AuthFormAction = 'login' | 'sign up' | 'both';
@@ -39,19 +40,19 @@ export interface AuthFormProps {
 const providerConfig: Record<Exclude<AuthFormMethod, 'email'>, { label: string; icon: React.ReactNode }> = {
 	google: {
 		label: 'Continue with Google',
-		icon: <GoogleIcon size={20} />,
+		icon: <Google size={15} />,
 	},
 	github: {
 		label: 'Continue with GitHub',
-		icon: <GitHubIcon size={20} />,
+		icon: <GitHub size={15} />,
 	},
 	facebook: {
 		label: 'Continue with Facebook',
-		icon: <FacebookIcon size={20} />,
+		icon: <Facebook size={15} />,
 	},
 	apple: {
 		label: 'Continue with Apple',
-		icon: <AppleIcon size={20} />,
+		icon: <Apple size={15} />,
 	},
 };
 

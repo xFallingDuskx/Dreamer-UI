@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ComponentPage } from '../../components/layout/ComponentPage';
-import { AuthForm } from '../../auth-form';
+import { AuthForm } from '@moondreamsdev/dreamer-ui/components';
 
 const tableOfContents = [
   { id: 'import', title: 'Import', level: 1 },

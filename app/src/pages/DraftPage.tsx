@@ -19,7 +19,6 @@ import {
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
-import { AuthForm } from '../auth-form';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -446,108 +445,6 @@ const FormDemo = () => {
 	);
 };
 
-const AuthFormDemo = () => {
-	const [authError] = useState<string>('');
-
-	const handleMethodClick = (method: string) => {
-		console.log(`${method} clicked`);
-		alert(`${method.charAt(0).toUpperCase() + method.slice(1)} authentication would be triggered here`);
-	};
-
-	const handleEmailSubmit = async ({ data, action }: { data: { email: string; password: string; confirmPassword?: string }; action: 'login' | 'sign up' }) => {
-		console.log('Form submitted:', { data, action });
-		// Simulate an async authentication
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-		
-		// Simulate error for demo purposes
-		if (data.email === 'error@test.com') {
-			return { error: { message: 'Invalid credentials' } };
-		}
-
-		alert(`${action === 'login' ? 'Login' : 'Sign up'} successful!`);
-		return {};
-	};
-
-	const handleSuccess = (action: 'login' | 'sign up') => {
-		console.log('Authentication successful:', action);
-	};
-
-	return (
-		<div>
-			<h3 className='text-lg font-medium text-white mb-3'>AuthForm Component Testing</h3>
-			<div className='space-y-8'>
-				{/* Email Only */}
-				<div>
-					<h4 className='text-md font-medium text-gray-300 mb-4'>Email Authentication Only</h4>
-					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
-						<AuthForm
-							methods={['email']}
-							action='both'
-							onEmailSubmit={handleEmailSubmit}
-							onSuccess={handleSuccess}
-							errorMessage={authError}
-						/>
-					</div>
-				</div>
-
-				{/* Email + Google */}
-				<div>
-					<h4 className='text-md font-medium text-gray-300 mb-4'>Email + Google Authentication</h4>
-					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
-						<AuthForm
-							methods={['google', 'email']}
-							action='login'
-							onMethodClick={handleMethodClick}
-							onEmailSubmit={handleEmailSubmit}
-							onSuccess={handleSuccess}
-						/>
-					</div>
-				</div>
-
-				{/* Multiple OAuth Providers */}
-				<div>
-					<h4 className='text-md font-medium text-gray-300 mb-4'>Multiple OAuth Providers</h4>
-					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
-						<AuthForm
-							methods={['google', 'github', 'facebook', 'apple', 'email']}
-							action='sign up'
-							onMethodClick={handleMethodClick}
-							onEmailSubmit={handleEmailSubmit}
-							onSuccess={handleSuccess}
-						/>
-					</div>
-				</div>
-
-				{/* OAuth Only (No Email) */}
-				<div>
-					<h4 className='text-md font-medium text-gray-300 mb-4'>OAuth Only (No Email)</h4>
-					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
-						<AuthForm
-							methods={['google', 'github']}
-							action='login'
-							onMethodClick={handleMethodClick}
-							onSuccess={handleSuccess}
-						/>
-					</div>
-				</div>
-
-				{/* With Error Message */}
-				<div>
-					<h4 className='text-md font-medium text-gray-300 mb-4'>With Error Message</h4>
-					<div className='bg-gray-800/50 p-6 rounded-lg max-w-md'>
-						<AuthForm
-							methods={['email']}
-							action='login'
-							onEmailSubmit={handleEmailSubmit}
-							onSuccess={handleSuccess}
-							errorMessage='Invalid email or password. Please try again.'
-						/>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
-};
 
 export const DraftPage = () => {
 	const [drawerState, setDrawerState] = useState({
@@ -935,9 +832,6 @@ export const DraftPage = () => {
 
 						{/* Form Component Testing */}
 						<FormDemo />
-
-						{/* AuthForm Component Testing */}
-						<AuthFormDemo />
 
 						{/* Avatar Component Testing */}
 						<div>
