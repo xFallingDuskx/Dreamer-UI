@@ -17,9 +17,7 @@ You should create a React component that meets the following requirements:
 - Use `data-*` attributes to store key prop values for testing and accessibility
 - Only add docstring comments to explain unclear props
 
-6. **Visual Confirmation:** Render the component with its various variants/states in the `app/pages/DraftPage.tsx` file.
-
-7. **Icons:** Use icons from the `@moondreamsdev/dreamer-ui/symbols` if available. If not, create them in a `app/<component-name>/icons.tsx` file.
+6. **Icons:** Use icons from the `@moondreamsdev/dreamer-ui/symbols` if available. If not, create them in a `app/<component-name>/icons.tsx` file.
 
 **IMPORTANT:** Do not make any changes to `lib/`.
 
