@@ -5,6 +5,7 @@ import {
 	Callout,
 	Card,
 	Code,
+	CopyButton,
 	Disclosure,
 	Drawer,
 	DropdownMenu,
@@ -18,7 +19,6 @@ import {
 import { ChevronDoubleLeft, ChevronDown } from '@moondreamsdev/dreamer-ui/symbols';
 import { useState } from 'react';
 import { ComponentPage } from '../components/layout/ComponentPage';
-import { CopyButton } from '../copy-button';
 
 const DropdownDemo = () => {
 	const [selectedValue, setSelectedValue] = useState<string>('');
@@ -444,6 +444,7 @@ const FormDemo = () => {
 		</div>
 	);
 };
+
 
 export const DraftPage = () => {
 	const [drawerState, setDrawerState] = useState({
