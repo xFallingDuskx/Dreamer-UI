@@ -15,7 +15,6 @@ You should create a React component that meets the following requirements:
 - Define variants in a separate `variants.ts` file: variants should only hold styles for adjustable properties (i.e. `size`). it should not hold base styles.
 - If there is a lot of logic, extract it into hook(s) in a separate `hooks.ts` file
 - Use `data-*` attributes to store key prop values for testing and accessibility
-- Only add docstring comments to explain unclear props
 
 6. **Icons:** Use icons from the `@moondreamsdev/dreamer-ui/symbols` if available. If not, create them in a `app/<component-name>/icons.tsx` file.
 
