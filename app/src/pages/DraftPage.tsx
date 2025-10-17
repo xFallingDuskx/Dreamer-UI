@@ -569,67 +569,6 @@ export const DraftPage = () => {
 							</div>
 						</div>
 
-						{/* CopyButton Component Testing */}
-						<div className='mb-6'>
-							<h3 className='text-lg font-medium text-white mb-3'>CopyButton Component Testing</h3>
-							<div className='space-y-4'>
-								{/* Default CopyButton */}
-								<div>
-									<h4 className='text-md font-medium text-gray-300 mb-2'>Default CopyButton</h4>
-									<CopyButton textToCopy="Hello, World!" />
-								</div>
-
-								{/* With Custom Text */}
-								<div>
-									<h4 className='text-md font-medium text-gray-300 mb-2'>With Custom Text</h4>
-									<CopyButton textToCopy="npm install @moondreamsdev/dreamer-ui">
-										Copy Install Command
-									</CopyButton>
-								</div>
-
-								{/* Different Variants */}
-								<div>
-									<h4 className='text-md font-medium text-gray-300 mb-2'>Different Variants</h4>
-									<div className='flex flex-wrap gap-3'>
-										<CopyButton textToCopy="Primary variant" variant="primary">Copy Primary</CopyButton>
-										<CopyButton textToCopy="Secondary variant" variant="secondary">Copy Secondary</CopyButton>
-										<CopyButton textToCopy="Tertiary variant" variant="tertiary">Copy Tertiary</CopyButton>
-										<CopyButton textToCopy="Destructive variant" variant="destructive">Copy Destructive</CopyButton>
-									</div>
-								</div>
-
-								{/* Different Sizes */}
-								<div>
-									<h4 className='text-md font-medium text-gray-300 mb-2'>Different Sizes</h4>
-									<div className='flex flex-wrap gap-3 items-center'>
-										<CopyButton textToCopy="Small size" size="sm">Small</CopyButton>
-										<CopyButton textToCopy="Medium size" size="md">Medium</CopyButton>
-										<CopyButton textToCopy="Large size" size="lg">Large</CopyButton>
-									</div>
-								</div>
-
-								{/* Custom Delay */}
-								<div>
-									<h4 className='text-md font-medium text-gray-300 mb-2'>Custom Delay (5 seconds)</h4>
-									<CopyButton textToCopy="This will show copied state for 5 seconds" delay={5000}>
-										Copy with Long Delay
-									</CopyButton>
-								</div>
-
-								{/* Code Snippet Copy */}
-								<div>
-									<h4 className='text-md font-medium text-gray-300 mb-2'>Copy Code Snippet</h4>
-									<CopyButton 
-										textToCopy="const greeting = 'Hello, Dreamer UI!';" 
-										variant="secondary"
-										size="sm"
-									>
-										Copy Code
-									</CopyButton>
-								</div>
-							</div>
-						</div>
-
 						{/* Code Component Testing */}
 						<div className='mb-6'>
 							<h3 className='text-lg font-medium text-white mb-3'>Code Component Testing</h3>

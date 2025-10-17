@@ -501,7 +501,7 @@ export function ComponentPage({
 									{
 										key: 'description',
 										header: 'Description',
-										cell: (prop) => <span className='text-gray-300'>{prop.description}</span>,
+										cell: (prop) => <span className='text-gray-300 whitespace-pre-wrap'>{prop.description}</span>,
 									},
 								]}
 								size='sm'
