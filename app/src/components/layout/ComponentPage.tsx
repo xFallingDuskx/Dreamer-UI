@@ -290,50 +290,50 @@ export function ComponentPage({
 		);
 	};
 
+	const componentActions = (
+		<>
+			{/* Copy Page Button */}
+			<Button size='sm' onClick={handleCopyMarkdown} className='inline-flex items-center gap-2 px-2.5'>
+				{copied ? <Check size={14} /> : <Copy size={14} />}
+				<span>{copied ? 'Copied!' : 'Copy page'}</span>
+			</Button>
+
+			{/* Previous Component Button */}
+			<Button
+				size='fitted'
+				disabled={!previousComponent}
+				onClick={() => {
+					if (previousComponent) {
+						navigate(previousComponent.path);
+					}
+				}}
+				className='p-1.5'
+				title={previousComponent ? `Previous: ${previousComponent.name}` : undefined}
+			>
+				<ChevronLeft size={16} />
+			</Button>
+
+			{/* Next Component Button */}
+			<Button
+				size='fitted'
+				onClick={() => {
+					if (nextComponent) {
+						navigate(nextComponent.path);
+					}
+				}}
+				className='p-1.5'
+				title={nextComponent ? `Next: ${nextComponent.name}` : undefined}
+			>
+				<ChevronRight size={16} />
+			</Button>
+		</>
+	);
+
 	return (
 		<div className='min-h-screen pb-24'>
 			<div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
 				{/* Header */}
 				<div className='text-center mb-12'>
-					{/* Component action buttons - above title on mobile, next to title on desktop */}
-					{currentComponentIndex !== -1 && (
-						<div className='flex md:hidden justify-center items-center gap-2 mb-4'>
-							{/* Copy Page Button */}
-							<Button size='sm' onClick={handleCopyMarkdown} className='inline-flex items-center gap-2 px-2.5'>
-								{copied ? <Check size={14} /> : <Copy size={14} />}
-								<span>{copied ? 'Copied!' : 'Copy page'}</span>
-							</Button>
-
-							{/* Previous Component Button */}
-							<Button
-								size='fitted'
-								disabled={!previousComponent}
-								onClick={() => {
-									if (previousComponent) {
-										navigate(previousComponent.path);
-									}
-								}}
-								className='p-1.5'
-								title={previousComponent ? `Previous: ${previousComponent.name}` : undefined}
-							>
-								<ChevronLeft size={16} />
-							</Button>
-
-							{/* Next Component Button */}
-							<Button
-								size='fitted'
-								onClick={() => {
-									if (nextComponent) {
-										navigate(nextComponent.path);
-									}
-								}}
-								className='p-1.5'
-								title={nextComponent ? `Next: ${nextComponent.name}` : undefined}
-							>
-								<ChevronRight size={16} />
-							</Button>
-						</div>
-					)}
 					<div className='flex justify-center items-center mb-3 relative'>
 						<h1 className='text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent pb-1'>
 							{title}
@@ -341,43 +341,16 @@ export function ComponentPage({
 						{/* Component action buttons - desktop only */}
 						{currentComponentIndex !== -1 && (
 							<div className='hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 items-center gap-2'>
-								{/* Copy Page Button */}
-								<Button size='sm' onClick={handleCopyMarkdown} className='inline-flex items-center gap-2 px-2.5'>
-									{copied ? <Check size={14} /> : <Copy size={14} />}
-									<span>{copied ? 'Copied!' : 'Copy page'}</span>
-								</Button>
-
-								{/* Previous Component Button */}
-								<Button
-									size='fitted'
-									disabled={!previousComponent}
-									onClick={() => {
-										if (previousComponent) {
-											navigate(previousComponent.path);
-										}
-									}}
-									className='p-1.5'
-									title={previousComponent ? `Previous: ${previousComponent.name}` : undefined}
-								>
-									<ChevronLeft size={16} />
-								</Button>
-
-								{/* Next Component Button */}
-								<Button
-									size='fitted'
-									onClick={() => {
-										if (nextComponent) {
-											navigate(nextComponent.path);
-										}
-									}}
-									className='p-1.5'
-									title={nextComponent ? `Next: ${nextComponent.name}` : undefined}
-								>
-									<ChevronRight size={16} />
-								</Button>
+								{componentActions}
 							</div>
 						)}
 					</div>
+
+					{/* Component action buttons - above title on mobile, next to title on desktop */}
+					{currentComponentIndex !== -1 && (
+						<div className='flex md:hidden justify-center items-center gap-2 mb-4'>{componentActions}</div>
+					)}
+
 					<p className='text-base md:text-xl text-gray-300 max-w-2xl mx-auto'>{description}</p>
 				</div>
 
