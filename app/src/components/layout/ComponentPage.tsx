@@ -351,7 +351,7 @@ export function ComponentPage({
 						<div className='flex md:hidden justify-center items-center gap-2 mb-4'>{componentActions}</div>
 					)}
 
-					<p className='text-base md:text-xl text-gray-300 max-w-2xl mx-auto'>{description}</p>
+					<p className='lg:text-xl text-gray-300 max-w-2xl mx-auto'>{description}</p>
 				</div>
 
 				{/* Usage Instructions */}
