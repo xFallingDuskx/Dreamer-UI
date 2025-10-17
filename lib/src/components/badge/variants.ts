@@ -1,14 +1,23 @@
 // -- Badge Use
-export type BadgeUse = 'decorative' | 'status' | 'alert';
+export type BadgeUse = 'decorative' | 'status' | 'alert' | 'interactive';
 
 export const BadgeUseAriaAttributes: Record<BadgeUse, object> = {
 	decorative: { 'aria-hidden': true },
 	status: { role: 'status' },
 	alert: { role: 'alert' },
+	interactive: {},
 };
 
 // -- Badge Variant
-export type BadgeVariant = 'base' | 'primary' | 'secondary' | 'accent' | 'destructive' | 'success' | 'warning' | 'muted';
+export type BadgeVariant =
+	| 'base'
+	| 'primary'
+	| 'secondary'
+	| 'accent'
+	| 'destructive'
+	| 'success'
+	| 'warning'
+	| 'muted';
 
 export const BadgeVariants: Record<BadgeVariant, string> = {
 	base: '',

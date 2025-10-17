@@ -179,9 +179,10 @@ const badgeProps = [
 	},
 	{
 		name: 'use',
-		type: '"decorative" | "status" | "alert"',
+		type: '"decorative" | "status" | "alert" | "interactive"',
 		default: '"decorative"',
-		description: 'The semantic use of the badge for accessibility purposes.',
+		description:
+			'The semantic use of the badge for accessibility purposes.\n-decorative: hidden from assistive technologies\n-status: convey non-critical information\n-alert: indicate important information\n-interactive: an interactive element',
 	},
 	{
 		name: 'className',
