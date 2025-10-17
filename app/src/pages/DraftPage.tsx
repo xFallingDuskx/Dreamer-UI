@@ -5,7 +5,6 @@ import {
 	Callout,
 	Card,
 	Code,
-	CopyButton,
 	Disclosure,
 	Drawer,
 	DropdownMenu,
