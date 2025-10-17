@@ -7,6 +7,9 @@ const tableOfContents = [
   { id: 'basic-usage', title: 'Basic Usage', level: 2 },
   { id: 'with-form-controls', title: 'With Form Controls', level: 2 },
   { id: 'required-labels', title: 'Required Labels', level: 2 },
+  { id: 'with-help-messages', title: 'With Help Messages', level: 2 },
+  { id: 'with-descriptions', title: 'With Descriptions', level: 2 },
+  { id: 'display-options', title: 'Display Options', level: 2 },
   { id: 'props', title: 'Props', level: 1 },
 ];
 
@@ -132,13 +135,228 @@ const labelExamples = [
       </div>
     ),
   },
+  {
+    id: 'with-help-messages',
+    title: 'With Help Messages',
+    description: 'Labels with help icons that display tooltips when hovered or focused.',
+    code: `<div className='space-y-4 max-w-md'>
+  <div>
+    <Label htmlFor='username-help' helpMessage='This username will be visible to other users'>
+      Username
+    </Label>
+    <Input id='username-help' placeholder='Enter your username' variant='outline' />
+  </div>
+  <div>
+    <Label 
+      htmlFor='password-help' 
+      required 
+      helpMessage='Password must be at least 8 characters with one uppercase letter and one number'
+    >
+      Password
+    </Label>
+    <Input id='password-help' type='password' placeholder='Enter your password' variant='outline' required />
+  </div>
+  <div>
+    <Label 
+      htmlFor='api-key-help'
+      helpMessage='You can find your API key in your account settings under the Developer tab'
+    >
+      API Key
+    </Label>
+    <Input id='api-key-help' type='password' placeholder='Enter your API key' variant='outline' />
+  </div>
+</div>`,
+    children: (
+      <div className='space-y-4 max-w-md'>
+        <div>
+          <Label htmlFor='username-help' helpMessage='This username will be visible to other users'>
+            Username
+          </Label>
+          <Input id='username-help' placeholder='Enter your username' variant='outline' />
+        </div>
+        <div>
+          <Label 
+            htmlFor='password-help' 
+            required 
+            helpMessage='Password must be at least 8 characters with one uppercase letter and one number'
+          >
+            Password
+          </Label>
+          <Input id='password-help' type='password' placeholder='Enter your password' variant='outline' required />
+        </div>
+        <div>
+          <Label 
+            htmlFor='api-key-help'
+            helpMessage='You can find your API key in your account settings under the Developer tab'
+          >
+            API Key
+          </Label>
+          <Input id='api-key-help' type='password' placeholder='Enter your API key' variant='outline' />
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'with-descriptions',
+    title: 'With Descriptions',
+    description: 'Labels with description text displayed below the label for additional context.',
+    code: `<div className='space-y-4 max-w-md'>
+  <div>
+    <Label 
+      htmlFor='bio-desc' 
+      description='Tell others about yourself in a few sentences'
+    >
+      Bio
+    </Label>
+    <Textarea id='bio-desc' placeholder='Write your bio here...' variant='outline' rows={3} />
+  </div>
+  <div>
+    <Label 
+      htmlFor='website-desc'
+      description='Include http:// or https:// for external links'
+    >
+      Website URL
+    </Label>
+    <Input id='website-desc' type='url' placeholder='https://example.com' variant='outline' />
+  </div>
+  <div>
+    <Label 
+      htmlFor='tags-desc'
+      description='Separate multiple tags with commas'
+      helpMessage='Tags help categorize your content and make it discoverable'
+    >
+      Tags
+    </Label>
+    <Input id='tags-desc' placeholder='react, typescript, ui' variant='outline' />
+  </div>
+</div>`,
+    children: (
+      <div className='space-y-4 max-w-md'>
+        <div>
+          <Label 
+            htmlFor='bio-desc' 
+            description='Tell others about yourself in a few sentences'
+          >
+            Bio
+          </Label>
+          <Textarea id='bio-desc' placeholder='Write your bio here...' variant='outline' rows={3} />
+        </div>
+        <div>
+          <Label 
+            htmlFor='website-desc'
+            description='Include http:// or https:// for external links'
+          >
+            Website URL
+          </Label>
+          <Input id='website-desc' type='url' placeholder='https://example.com' variant='outline' />
+        </div>
+        <div>
+          <Label 
+            htmlFor='tags-desc'
+            description='Separate multiple tags with commas'
+            helpMessage='Tags help categorize your content and make it discoverable'
+          >
+            Tags
+          </Label>
+          <Input id='tags-desc' placeholder='react, typescript, ui' variant='outline' />
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'display-options',
+    title: 'Display Options',
+    description: 'Different display modes and width configurations for labels.',
+    code: `<div className='space-y-6'>
+  <div>
+    <h4 className='text-sm font-medium mb-3'>Block Display (Full Width)</h4>
+    <div className='space-y-3'>
+      <Label htmlFor='block-1' display='block' width='100%'>
+        Full Width Label
+      </Label>
+      <Input id='block-1' placeholder='This label takes full width' variant='outline' />
+    </div>
+  </div>
+  
+  <div>
+    <h4 className='text-sm font-medium mb-3'>Inline Display (Fit Content)</h4>
+    <div className='flex items-center gap-4'>
+      <Label htmlFor='inline-1' display='inline'>
+        Compact Label:
+      </Label>
+      <Input id='inline-1' placeholder='Inline input' variant='outline' className='flex-1' />
+    </div>
+  </div>
+  
+  <div>
+    <h4 className='text-sm font-medium mb-3'>Custom Width</h4>
+    <div className='flex items-center gap-4'>
+      <Label htmlFor='custom-width-1' width='150px'>
+        Fixed Width (150px):
+      </Label>
+      <Input id='custom-width-1' placeholder='Custom width input' variant='outline' className='flex-1' />
+    </div>
+  </div>
+</div>`,
+    children: (
+      <div className='space-y-6'>
+        <div>
+          <h4 className='text-sm font-medium mb-3'>Block Display (Full Width)</h4>
+          <div className='space-y-3'>
+            <Label htmlFor='block-1' display='block' width='100%'>
+              Full Width Label
+            </Label>
+            <Input id='block-1' placeholder='This label takes full width' variant='outline' />
+          </div>
+        </div>
+        
+        <div>
+          <h4 className='text-sm font-medium mb-3'>Inline Display (Fit Content)</h4>
+          <div className='flex items-center gap-4'>
+            <Label htmlFor='inline-1' display='inline'>
+              Compact Label:
+            </Label>
+            <Input id='inline-1' placeholder='Inline input' variant='outline' className='flex-1' />
+          </div>
+        </div>
+        
+        <div>
+          <h4 className='text-sm font-medium mb-3'>Custom Width</h4>
+          <div className='flex items-center gap-4'>
+            <Label htmlFor='custom-width-1' width='150px'>
+              Fixed Width (150px):
+            </Label>
+            <Input id='custom-width-1' placeholder='Custom width input' variant='outline' className='flex-1' />
+          </div>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 const labelProps = [
   {
+    name: 'children',
+    type: 'React.ReactNode',
+    description: 'The label text content.',
+    required: true,
+  },
+  {
     name: 'htmlFor',
     type: 'string',
     description: 'The ID of the form element this label is associated with.',
+  },
+  {
+    name: 'display',
+    type: "'block' | 'inline'",
+    default: "'inline'",
+    description: 'The display type of the label.',
+  },
+  {
+    name: 'width',
+    type: "React.CSSProperties['width']",
+    default: "'fit-content'",
+    description: 'The width of the label element.',
   },
   {
     name: 'required',
@@ -147,15 +365,24 @@ const labelProps = [
     description: 'Whether to show a required indicator (*) next to the label.',
   },
   {
-    name: 'className',
+    name: 'helpMessage',
     type: 'string',
-    description: 'Additional CSS classes to apply to the label.',
+    description: 'Help text to display in a tooltip next to the label using HelpIcon.',
   },
   {
-    name: 'children',
+    name: 'suffix',
     type: 'React.ReactNode',
-    description: 'The label text content.',
-    required: true,
+    description: 'Additional content to display after the label text.',
+  },
+  {
+    name: 'description',
+    type: 'string',
+    description: 'Description text to display below the label.',
+  },
+  {
+    name: 'className',
+    type: 'string',
+    description: 'Additional CSS classes to apply to the label container.',
   },
 ];
 
@@ -163,9 +390,9 @@ export function LabelPage() {
   return (
     <ComponentPage
       title='Label'
-      description='Form label component with proper accessibility attributes and required indicators.'
+      description='Form label component with support for required indicators, help tooltips, description text, and flexible display options.'
       tableOfContents={tableOfContents}
-      usageInstructions='The Label component provides accessible labels for form elements. Always associate labels with their corresponding form controls using the htmlFor prop. Use the required prop to indicate mandatory fields.'
+      usageInstructions='The Label component provides accessible labels for form elements with enhanced features. Always associate labels with their corresponding form controls using the htmlFor prop. Use the required prop to indicate mandatory fields, helpMessage for contextual help tooltips, and description for additional explanatory text below the label.'
       importStatement="import { Label } from '@moondreamsdev/dreamer-ui/components';"
       componentProps={labelProps}
       examples={labelExamples}
