@@ -415,9 +415,9 @@ const searchIndex: SearchResult[] = [
 	{
 		title: 'Form',
 		path: '/components/form',
-		description: 'Form container with validation and submission handling.',
+		description: 'Form container with validation and submission handling, supporting custom field components.',
 		type: 'Component',
-		content: 'form validation submission handling fields inputs controls props',
+		content: 'form validation submission handling fields inputs controls custom components props',
 		rank: 10,
 	},
 	{
@@ -433,9 +433,18 @@ const searchIndex: SearchResult[] = [
 		title: 'Form Factories',
 		path: '/components/form',
 		section: 'FormFactories',
-		description: 'Factory functions for creating form fields including input, textarea, select, checkbox, radio, and checkboxGroup with selectAll support.',
+		description: 'Factory functions for creating form fields including input, textarea, select, checkbox, radio, checkboxGroup, and custom fields with renderComponent function.',
 		type: 'Section',
-		content: 'FormFactories input textarea select checkbox radio checkboxGroup selectAll field types factory validation required options',
+		content: 'FormFactories input textarea select checkbox radio checkboxGroup custom renderComponent field types factory validation required options',
+		rank: 9,
+	},
+	{
+		title: 'Custom Form Fields',
+		path: '/components/form',
+		section: 'Custom Fields',
+		description: 'Create custom field components using renderComponent function for specialized inputs like date pickers, color selectors, and more.',
+		type: 'Section',
+		content: 'custom fields renderComponent FormCustomFieldProps date picker color selector specialized inputs components value onValueChange validation',
 		rank: 9,
 	},
 	{
@@ -455,6 +464,24 @@ const searchIndex: SearchResult[] = [
 		type: 'Example',
 		content: 'checkboxGroup selectAll select all toggle indeterminate checkbox group bulk selection features options',
 		rank: 9,
+	},
+	{
+		title: 'Date Picker Custom Field',
+		path: '/components/form',
+		section: 'Custom Fields',
+		description: 'Custom date input field using HTML5 date picker with validation for event scheduling and forms.',
+		type: 'Example',
+		content: 'date picker custom field renderComponent dateTime calendar event scheduling birthday appointment validation past future',
+		rank: 8,
+	},
+	{
+		title: 'Color Picker Custom Field',
+		path: '/components/form',
+		section: 'Custom Fields',
+		description: 'Custom color selection field with visual picker and hex input for theme colors and styling.',
+		type: 'Example',
+		content: 'color picker custom field renderComponent hex rgb theme styling brand colors visual picker palette',
+		rank: 8,
 	},
 
 	// Help Icon Component

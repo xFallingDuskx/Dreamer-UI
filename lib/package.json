@@ -1,6 +1,6 @@
 {
   "name": "@moondreamsdev/dreamer-ui",
-  "version": "1.7.21-test.58",
+  "version": "1.7.21-test.62",
   "homepage": "https://ui.moondreams.dev",
   "publishConfig": {
     "access": "public"
@@ -72,7 +72,7 @@
     "postbuild": "chmod +x dist/init.js && npm run build:types",
     "lint": "eslint .",
     "preview": "vite preview",
-    "publish:test": "npm run build && npm version prerelease --preid=test && npm publish --tag test"
+    "publish:test": "npm version prerelease --preid=test && npm publish --tag test"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

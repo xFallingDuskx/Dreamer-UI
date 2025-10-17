@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { ComponentPage } from '../../components/layout/ComponentPage';
-import { Form, FormFactories, FormData } from '@moondreamsdev/dreamer-ui/components'
+import { Form, FormFactories, FormData, FormCustomFieldProps } from '@moondreamsdev/dreamer-ui/components'
 
 const tableOfContents = [
   { id: 'import', title: 'Import', level: 1 },
   { id: 'examples', title: 'Examples', level: 1 },
   { id: 'basic-usage', title: 'Basic Usage', level: 2 },
   { id: 'field-types', title: 'Field Types', level: 2 },
+  { id: 'custom-fields', title: 'Custom Fields', level: 2 },
   { id: 'field-layout', title: 'Field Layout', level: 2 },
   { id: 'validation', title: 'Validation', level: 2 },
   { id: 'form-variants', title: 'Form Variants', level: 2 },
@@ -19,7 +20,43 @@ export function FormPage() {
   const [validationFormData, setValidationFormData] = useState<FormData>({});
   const [layoutFormData, setLayoutFormData] = useState<FormData>({});
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
-  const { input, textarea, select, checkbox, radio, checkboxGroup } = FormFactories;
+  const { input, textarea, select, checkbox, radio, checkboxGroup, custom } = FormFactories;
+
+  // Custom field component for date picker
+  const DatePickerField = ({ value, onValueChange, disabled, error }: FormCustomFieldProps) => (
+    <div>
+      <input
+        type="date"
+        value={value as string || ''}
+        onChange={(e) => onValueChange(e.target.value)}
+        disabled={disabled}
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+      />
+      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+    </div>
+  );
+
+  // Custom field component for color picker
+  const ColorPickerField = ({ value, onValueChange, disabled, error }: FormCustomFieldProps) => (
+    <div className="flex items-center space-x-3">
+      <input
+        type="color"
+        value={value as string || '#000000'}
+        onChange={(e) => onValueChange(e.target.value)}
+        disabled={disabled}
+        className="w-12 h-10 border border-gray-300 rounded cursor-pointer disabled:cursor-not-allowed"
+      />
+      <input
+        type="text"
+        value={value as string || ''}
+        onChange={(e) => onValueChange(e.target.value)}
+        placeholder="#000000"
+        disabled={disabled}
+        className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+      />
+      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+    </div>
+  );
 
   const basicForm = [
     input({
@@ -220,6 +257,50 @@ export function FormPage() {
     })
   ];
 
+  const customFieldsForm = [
+    input({
+      name: 'eventName',
+      label: 'Event Name',
+      placeholder: 'Enter event name',
+      variant: 'outline',
+      required: true
+    }),
+    custom({
+      name: 'eventDate',
+      label: 'Event Date',
+      description: 'Select the date for your event',
+      required: true,
+      renderComponent: DatePickerField,
+      isValid: (value: unknown) => {
+        if (!value) return { valid: false, message: 'Event date is required' };
+        const selectedDate = new Date(value as string);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (selectedDate < today) return { valid: false, message: 'Event date cannot be in the past' };
+        return { valid: true };
+      }
+    }),
+    custom({
+      name: 'themeColor',
+      label: 'Theme Color',
+      description: 'Choose a color theme for your event',
+      renderComponent: ColorPickerField,
+      isValid: (value: unknown) => {
+        if (!value) return { valid: true }; // Optional field
+        const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+        if (!colorRegex.test(value as string)) return { valid: false, message: 'Please enter a valid hex color' };
+        return { valid: true };
+      }
+    }),
+    textarea({
+      name: 'description',
+      label: 'Event Description',
+      placeholder: 'Describe your event...',
+      variant: 'outline',
+      rows: 3
+    })
+  ];
+
   const formExamples = [
     {
       id: 'basic-usage',
@@ -338,6 +419,98 @@ export function FormPage() {
         <div className='max-w-md'>
           <Form
             form={fieldTypesForm}
+            spacing='normal'
+          />
+        </div>
+      ),
+    },
+    {
+      id: 'custom-fields',
+      title: 'Custom Fields',
+      description: 'Create custom field components using the renderComponent function for specialized inputs like date pickers, color selectors, and more.',
+      code: `const { input, textarea, custom } = FormFactories;
+
+// Custom date picker component
+const DatePickerField = ({ value, onValueChange, disabled, error }: FormCustomFieldProps) => (
+  <div>
+    <input
+      type="date"
+      value={value as string || ''}
+      onChange={(e) => onValueChange(e.target.value)}
+      disabled={disabled}
+      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+    />
+    {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+  </div>
+);
+
+// Custom color picker component
+const ColorPickerField = ({ value, onValueChange, disabled, error }: FormCustomFieldProps) => (
+  <div className="flex items-center space-x-3">
+    <input
+      type="color"
+      value={value as string || '#000000'}
+      onChange={(e) => onValueChange(e.target.value)}
+      disabled={disabled}
+      className="w-12 h-10 border border-gray-300 rounded cursor-pointer disabled:cursor-not-allowed"
+    />
+    <input
+      type="text"
+      value={value as string || ''}
+      onChange={(e) => onValueChange(e.target.value)}
+      placeholder="#000000"
+      disabled={disabled}
+      className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+    />
+    {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+  </div>
+);
+
+<div className='max-w-md'>
+  <Form
+    form={[
+      input({
+        name: 'eventName',
+        label: 'Event Name',
+        placeholder: 'Enter event name',
+        variant: 'outline',
+        required: true
+      }),
+      custom({
+        name: 'eventDate',
+        label: 'Event Date',
+        description: 'Select the date for your event',
+        required: true,
+        renderComponent: DatePickerField,
+        isValid: (value: unknown) => {
+          if (!value) return { valid: false, message: 'Event date is required' };
+          const selectedDate = new Date(value as string);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          if (selectedDate < today) return { valid: false, message: 'Event date cannot be in the past' };
+          return { valid: true };
+        }
+      }),
+      custom({
+        name: 'themeColor',
+        label: 'Theme Color',
+        description: 'Choose a color theme for your event',
+        renderComponent: ColorPickerField,
+        isValid: (value: unknown) => {
+          if (!value) return { valid: true }; // Optional field
+          const colorRegex = new RegExp('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
+          if (!colorRegex.test(value as string)) return { valid: false, message: 'Please enter a valid hex color' };
+          return { valid: true };
+        }
+      })
+    ]}
+    spacing='normal'
+  />
+</div>`,
+      children: (
+        <div className='max-w-md'>
+          <Form
+            form={customFieldsForm}
             spacing='normal'
           />
         </div>

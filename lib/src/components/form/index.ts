@@ -3,6 +3,8 @@ export { Form, type FormComponentProps } from './Form';
 export type {
 	FormCheckboxField,
 	FormCheckboxGroupField,
+	FormCustomField,
+	FormCustomFieldProps,
 	FormData,
 	FormErrors,
 	FormField,
