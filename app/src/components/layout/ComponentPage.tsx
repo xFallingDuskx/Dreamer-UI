@@ -293,7 +293,7 @@ export function ComponentPage({
 	const componentActions = (
 		<>
 			{/* Copy Page Button */}
-			<Button size='sm' onClick={handleCopyMarkdown} className='inline-flex items-center gap-2 px-2.5'>
+			<Button size='sm' onClick={handleCopyMarkdown} className='gap-2 px-2.5'>
 				{copied ? <Check size={14} /> : <Copy size={14} />}
 				<span>{copied ? 'Copied!' : 'Copy page'}</span>
 			</Button>
