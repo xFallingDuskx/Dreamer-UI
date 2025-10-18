@@ -1,0 +1,41 @@
+name: Deploy PR to Firebase Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: app  # install from app folder if your package.json is there
+
+      - name: Build project
+        run: npm run build
+        working-directory: app  # build inside app folder
+
+      - name: Deploy to Firebase preview channel
+        if: github.event.action != 'closed'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          channelId: pr-${{ github.event.pull_request.number }}
+          projectId: ${{ vars.FIREBASE_PROJECT_ID }} 
+          entryPoint: app                              # tells the action to look for firebase.json in ./app
+
+      - name: Delete preview channel on PR close
+        if: github.event.action == 'closed'
+        run: firebase hosting:channel:delete pr-${{ github.event.pull_request.number }} \
+             --project ${{ vars.FIREBASE_PROJECT_ID }} --force
