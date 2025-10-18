@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "scripts", "../lib/src/components/disclosure"]
+  "include": ["src", "scripts"]
 }
