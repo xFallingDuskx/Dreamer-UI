@@ -20,10 +20,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-
-    /* for GitHub actions */
-    "types": ["react", "react-dom"]
+    "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "scripts", "../lib/src/components/disclosure"]
+  "include": ["src", "scripts"]
 }
