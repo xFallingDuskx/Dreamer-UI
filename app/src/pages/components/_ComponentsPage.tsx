@@ -305,7 +305,7 @@ export const ComponentsPage = () => {
 		>
 			{/* Copy One-Pager Button */}
 			<div className='mb-8 flex justify-center'>
-				<Button size='md' onClick={handleCopyOnePager} className='inline-flex items-center gap-2'>
+				<Button size='md' onClick={handleCopyOnePager} className='gap-2'>
 					{copied ? <Check size={16} /> : <Copy size={16} />}
 					<span>{copied ? 'Copied!' : 'Copy one-pager'}</span>
 				</Button>

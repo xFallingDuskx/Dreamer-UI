@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type FormFieldType = 'input' | 'textarea' | 'select' | 'checkbox' | 'radio' | 'checkboxGroup';
+export type FormFieldType = 'input' | 'textarea' | 'select' | 'checkbox' | 'radio' | 'checkboxGroup' | 'custom';
 
 interface ValidationResult {
 	valid: boolean;
@@ -69,7 +69,28 @@ export interface FormCheckboxGroupField extends BaseFormField {
 	isValid?: IsValidFunc<string[]>;
 }
 
-export type FormField = FormInputField | FormTextareaField | FormSelectField | FormCheckboxField | FormRadioField | FormCheckboxGroupField;
+export interface FormCustomFieldProps<T = unknown> {
+	/** The current value of the field */
+	value: T;
+	/** Callback to update the field value */
+	onValueChange: (value: T) => void;
+	/** Whether the field is disabled */
+	disabled?: boolean;
+	/** Any error message for the field */
+	error?: string;
+	/** The field name */
+	name: string;
+}
+
+export interface FormCustomField<T = unknown> extends BaseFormField {
+	__type: 'custom';
+	/** Function that renders the custom field component */
+	renderComponent: (props: FormCustomFieldProps<T>) => React.ReactNode;
+	/** Optional validation function for the custom field */
+	isValid?: IsValidFunc<T>;
+}
+
+export type FormField = FormInputField | FormTextareaField | FormSelectField | FormCheckboxField | FormRadioField | FormCheckboxGroupField | FormCustomField;
 
 export interface FormData {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

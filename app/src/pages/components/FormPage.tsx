@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { ComponentPage } from '../../components/layout/ComponentPage';
-import { Form, FormFactories, FormData } from '@moondreamsdev/dreamer-ui/components'
+import { Form, FormFactories, FormData, FormCustomFieldProps, Select, Button, Input } from '@moondreamsdev/dreamer-ui/components'
 
 const tableOfContents = [
   { id: 'import', title: 'Import', level: 1 },
   { id: 'examples', title: 'Examples', level: 1 },
   { id: 'basic-usage', title: 'Basic Usage', level: 2 },
   { id: 'field-types', title: 'Field Types', level: 2 },
+  { id: 'custom-fields', title: 'Custom Fields', level: 2 },
   { id: 'field-layout', title: 'Field Layout', level: 2 },
   { id: 'validation', title: 'Validation', level: 2 },
   { id: 'form-variants', title: 'Form Variants', level: 2 },
@@ -19,7 +20,112 @@ export function FormPage() {
   const [validationFormData, setValidationFormData] = useState<FormData>({});
   const [layoutFormData, setLayoutFormData] = useState<FormData>({});
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
-  const { input, textarea, select, checkbox, radio, checkboxGroup } = FormFactories;
+  const { input, textarea, select, checkbox, radio, checkboxGroup, custom } = FormFactories;
+
+  // Custom field component for date picker
+  const DatePickerField = ({ value, onValueChange, disabled, error }: FormCustomFieldProps<string>) => (
+    <div>
+      <Input
+        type="date"
+        value={value || ''}
+        onChange={(e) => onValueChange(e.target.value)}
+        disabled={disabled}
+        errorMessage={error}
+        variant="outline"
+      />
+    </div>
+  );
+
+  // Custom field component for select with add functionality
+  const SelectWithAddField = ({ value, onValueChange, disabled, error }: FormCustomFieldProps<string>) => {
+    const [options, setOptions] = useState([
+      { text: 'Frontend Developer', value: 'frontend' },
+      { text: 'Backend Developer', value: 'backend' },
+      { text: 'Full Stack Developer', value: 'fullstack' },
+      { text: 'DevOps Engineer', value: 'devops' }
+    ]);
+    const [showAddInput, setShowAddInput] = useState(false);
+    const [newOption, setNewOption] = useState('');
+
+    const handleAddOption = () => {
+      if (newOption.trim()) {
+        const newValue = newOption.toLowerCase().replace(/\s+/g, '-');
+        const newOptionObj = { text: newOption.trim(), value: newValue };
+        setOptions(prev => [...prev, newOptionObj]);
+        setNewOption('');
+        setShowAddInput(false);
+        // Optionally auto-select the new option
+        onValueChange(newValue);
+      }
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleAddOption();
+      } else if (e.key === 'Escape') {
+        setShowAddInput(false);
+        setNewOption('');
+      }
+    };
+
+    return (
+      <div>
+        <div className="flex gap-2">
+          <div className="flex-1">
+            <Select
+              options={options}
+              value={value as string || ''}
+              onChange={onValueChange}
+              placeholder="Select a role..."
+              disabled={disabled}
+            />
+          </div>
+          {!showAddInput && (
+            <Button
+              onClick={() => setShowAddInput(true)}
+              disabled={disabled}
+              variant="primary"
+            >
+              Add
+            </Button>
+          )}
+        </div>
+        
+        {showAddInput && (
+          <div className="flex gap-2 mt-2">
+            <Input
+              type="text"
+              value={newOption}
+              onChange={(e) => setNewOption(e.target.value)}
+              onKeyDown={handleKeyPress}
+              placeholder="Enter new role..."
+              variant="outline"
+              className="flex-1 h-10"
+            />
+            <Button
+              onClick={handleAddOption}
+              disabled={!newOption.trim()}
+              variant="primary"
+            >
+              Save
+            </Button>
+            <Button
+              onClick={() => {
+                setShowAddInput(false);
+                setNewOption('');
+              }}
+              variant="secondary"
+            >
+              Cancel
+            </Button>
+          </div>
+        )}
+        
+        {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+      </div>
+    );
+  };
 
   const basicForm = [
     input({
@@ -220,6 +326,48 @@ export function FormPage() {
     })
   ];
 
+  const customFieldsForm = [
+    input({
+      name: 'eventName',
+      label: 'Event Name',
+      placeholder: 'Enter event name',
+      variant: 'outline',
+      required: true
+    }),
+    custom({
+      name: 'eventDate',
+      label: 'Event Date',
+      description: 'Select the date for your event',
+      required: true,
+      renderComponent: DatePickerField as unknown as (props: FormCustomFieldProps) => React.ReactNode,
+      isValid: (value: unknown) => {
+        if (!value) return { valid: false, message: 'Event date is required' };
+        const selectedDate = new Date(value as string);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (selectedDate < today) return { valid: false, message: 'Event date cannot be in the past' };
+        return { valid: true };
+      }
+    }),
+    custom({
+      name: 'role',
+      label: 'Job Role',
+      description: 'Select your job role or add a new one',
+      renderComponent: SelectWithAddField as unknown as (props: FormCustomFieldProps) => React.ReactNode,
+      isValid: (value: unknown) => {
+        if (!value) return { valid: true }; // Optional field
+        return { valid: true };
+      }
+    }),
+    textarea({
+      name: 'description',
+      label: 'Event Description',
+      placeholder: 'Describe your event...',
+      variant: 'outline',
+      rows: 3
+    })
+  ];
+
   const formExamples = [
     {
       id: 'basic-usage',
@@ -260,7 +408,10 @@ export function FormPage() {
           <Form
             form={basicForm}
             initialData={basicFormData}
-            onDataChange={setBasicFormData}
+            onDataChange={(data) => {
+              console.log('Basic form data changed:', data);
+              setBasicFormData(data);
+            }}
             spacing='normal'
           />
         </div>
@@ -338,7 +489,138 @@ export function FormPage() {
         <div className='max-w-md'>
           <Form
             form={fieldTypesForm}
+            onDataChange={(data) => console.log('Field types form data changed:', data)}
             spacing='normal'
+          />
+        </div>
+      ),
+    },
+    {
+      id: 'custom-fields',
+      title: 'Custom Fields',
+      description: 'Create custom field components using the renderComponent function for specialized inputs like date pickers, dynamic select fields with add functionality, and more.',
+      code: `const { input, textarea, custom } = FormFactories;
+
+// Custom date picker component
+const DatePickerField = ({ value, onValueChange, disabled, error }: FormCustomFieldProps<string>) => (
+  <div>
+    <Input
+      type="date"
+      value={value as string || ''}
+      onChange={(e) => onValueChange(e.target.value)}
+      disabled={disabled}
+      errorMessage={error}
+      variant="outline"
+    />
+  </div>
+);
+
+// Custom select with add functionality
+const SelectWithAddField = ({ value, onValueChange, disabled, error }: FormCustomFieldProps<string>) => {
+  const [options, setOptions] = useState([
+    { text: 'Frontend Developer', value: 'frontend' },
+    { text: 'Backend Developer', value: 'backend' },
+    { text: 'Full Stack Developer', value: 'fullstack' },
+    { text: 'DevOps Engineer', value: 'devops' }
+  ]);
+  const [showAddInput, setShowAddInput] = useState(false);
+  const [newOption, setNewOption] = useState('');
+
+  const handleAddOption = () => {
+    if (newOption.trim()) {
+      const newValue = newOption.toLowerCase().replace(/\\s+/g, '-');
+      const newOptionObj = { text: newOption.trim(), value: newValue };
+      setOptions(prev => [...prev, newOptionObj]);
+      setNewOption('');
+      setShowAddInput(false);
+      onValueChange(newValue);
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex gap-2">
+        <div className="flex-1">
+          <Select
+            options={options}
+            value={value as string || ''}
+            onChange={onValueChange}
+            placeholder="Select a role..."
+            disabled={disabled}
+          />
+        </div>
+        {!showAddInput && (
+          <Button onClick={() => setShowAddInput(true)} disabled={disabled} variant="primary">
+            Add
+          </Button>
+        )}
+      </div>
+      
+      {showAddInput && (
+        <div className="flex gap-2 mt-2">
+          <Input
+            type="text"
+            value={newOption}
+            onChange={(e) => setNewOption(e.target.value)}
+            placeholder="Enter new role..."
+            variant="outline"
+            className="flex-1"
+          />
+          <Button onClick={handleAddOption} disabled={!newOption.trim()} variant="primary">
+            Save
+          </Button>
+          <Button onClick={() => { setShowAddInput(false); setNewOption(''); }} variant="secondary">
+            Cancel
+          </Button>
+        </div>
+      )}
+      
+      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+    </div>
+  );
+};
+
+<div className='max-w-md'>
+  <Form
+    form={[
+      input({
+        name: 'eventName',
+        label: 'Event Name',
+        placeholder: 'Enter event name',
+        variant: 'outline',
+        required: true
+      }),
+      custom({
+        name: 'eventDate',
+        label: 'Event Date',
+        description: 'Select the date for your event',
+        required: true,
+        renderComponent: DatePickerField,
+        isValid: (value: unknown) => {
+          if (!value) return { valid: false, message: 'Event date is required' };
+          const selectedDate = new Date(value as string);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          if (selectedDate < today) return { valid: false, message: 'Event date cannot be in the past' };
+          return { valid: true };
+        }
+      }),
+      custom({
+        name: 'role',
+        label: 'Job Role',
+        description: 'Select your job role or add a new one',
+        renderComponent: SelectWithAddField
+      })
+    ]}
+    spacing='normal'
+  />
+</div>`,
+      children: (
+        <div className='max-w-md'>
+          <Form
+            form={customFieldsForm}
+            spacing='normal'
+            onDataChange={(data) => console.log('Custom fields form data changed:', data)}
           />
         </div>
       ),
@@ -384,7 +666,10 @@ export function FormPage() {
             <Form
               form={multiColumnForm}
               initialData={layoutFormData}
-              onDataChange={setLayoutFormData}
+              onDataChange={(data) => {
+                console.log('Multi-column form data changed:', data);
+                setLayoutFormData(data);
+              }}
               columns={2}
               spacing='normal'
             />
@@ -405,6 +690,7 @@ export function FormPage() {
                   colSpan: 'full'
                 })
               ]}
+              onDataChange={(data) => console.log('Three-column form data changed:', data)}
               columns={3}
               spacing='normal'
             />
@@ -479,7 +765,10 @@ export function FormPage() {
           <Form
             form={validationForm}
             initialData={validationFormData}
-            onDataChange={setValidationFormData}
+            onDataChange={(data) => {
+              console.log('Validation form data changed:', data);
+              setValidationFormData(data);
+            }}
             onSubmit={(data) => {
               setSubmittedData(data);
               console.log('Form submitted:', data);
@@ -534,6 +823,7 @@ export function FormPage() {
             <h4 className='font-medium mb-4'>Normal Spacing</h4>
             <Form
               form={basicForm}
+              onDataChange={(data) => console.log('Form variants (normal) data changed:', data)}
               spacing='normal'
               className='max-w-sm'
             />
@@ -542,6 +832,7 @@ export function FormPage() {
             <h4 className='font-medium mb-4'>Tight Spacing</h4>
             <Form
               form={basicForm.slice(0, 2)}
+              onDataChange={(data) => console.log('Form variants (tight) data changed:', data)}
               spacing='tight'
               className='max-w-sm'
             />
@@ -591,6 +882,7 @@ export function FormPage() {
                 ]
               })
             ]}
+            onDataChange={(data) => console.log('Checkbox group select all form data changed:', data)}
             spacing='normal'
           />
         </div>
@@ -660,7 +952,7 @@ export function FormPage() {
       title='Form'
       description='A flexible form component that uses a factory pattern to create different field types with built-in validation and state management. Supports multi-column layouts and responsive design.'
       tableOfContents={tableOfContents}
-      usageInstructions='The Form component uses FormFactories to create structured forms with validation. Import FormFactories and destructure the field types you need (input, textarea, select, checkbox, radio). Each factory function returns a field configuration object that defines the field behavior and validation. The Form component handles state management, validation, and layout automatically.'
+      usageInstructions='The Form component uses FormFactories to create structured forms with validation. Import FormFactories and destructure the field types you need (input, textarea, select, checkbox, radio, and even custom). Each factory function returns a field configuration object that defines the field behavior and validation. The Form component handles state management, validation, and layout automatically.'
       importStatement="import { Form, FormFactories, FormData } from '@moondreamsdev/dreamer-ui/components';"
       componentProps={formProps}
       examples={formExamples}

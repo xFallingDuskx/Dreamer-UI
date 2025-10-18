@@ -4,7 +4,8 @@ import {
   FormSelectField,
   FormCheckboxField,
   FormRadioField,
-  FormCheckboxGroupField
+  FormCheckboxGroupField,
+  FormCustomField
 } from './types';
 
 const input = (field: Omit<FormInputField, '__type'>): FormInputField => ({
@@ -37,6 +38,11 @@ const checkboxGroup = (field: Omit<FormCheckboxGroupField, '__type'>): FormCheck
   ...field,
 });
 
+const custom = (field: Omit<FormCustomField, '__type'>): FormCustomField => ({
+  __type: 'custom',
+  ...field,
+});
+
 export const FormFactories = {
   input,
   textarea,
@@ -44,4 +50,5 @@ export const FormFactories = {
   checkbox,
   radio,
   checkboxGroup,
+  custom,
 };

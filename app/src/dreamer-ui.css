@@ -20,7 +20,7 @@
 	--color-destructive-foreground: var(--color-white);
 
 	--color-border: var(--color-slate-500); /* Neutral border for modern look */
-	--color-popover: var(--color-gray-950); /* Dark gray popover background */
+	--color-popover: var(--color-slate-900); /* Dark gray popover background */
 	--color-popover-foreground: var(--color-slate-100); /* Light text for readability */
 
 	--color-tooltip: var(--color-slate-200); /* Light tooltip background */

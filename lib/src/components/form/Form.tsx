@@ -3,6 +3,7 @@ import { useFormValidation } from './hooks';
 import {
 	FormCheckboxField,
 	FormCheckboxGroupField,
+	FormCustomField,
 	FormData,
 	FormField,
 	FormProps,
@@ -29,14 +30,33 @@ export interface FormComponentProps<T extends FormData = FormData> extends FormP
  * @example
  * ```tsx
  * // Use FormFactories for type-safe field creation (see factories.ts)
- * import { FormFactories } from '@moondreamsdev/dreamer-ui/components';
- * const { input, textarea, select, checkbox, radio } = FormFactories;
+ * import { FormFactories, FormCustomFieldProps } from '@moondreamsdev/dreamer-ui/components';
+ * const { input, textarea, select, checkbox, radio, custom } = FormFactories;
+ * 
+ * // Custom date picker component
+ * const DatePickerField = ({ value, onValueChange, disabled, error }: FormCustomFieldProps) => (
+ *   <>
+ *     <input
+ *       type="date"
+ *       value={value as string || ''}
+ *       onChange={(e) => onValueChange(e.target.value)}
+ *       disabled={disabled}
+ *       className="w-full px-3 py-2 border rounded"
+ *     />
+ *     {error && <p className="text-sm text-destructive mt-1">{error}</p>}
+ *   </>
+ * );
  * 
  * // Define form fields - should be stable (memoized or declared outside component)
  * const userForm = [
  *   input({ name: 'name', label: 'Full Name', required: true }),
  *   input({ name: 'email', type: 'email', label: 'Email', required: true }),
  *   textarea({ name: 'bio', label: 'Bio', rows: 4 }),
+ *   custom({ 
+ *     name: 'birthdate', 
+ *     label: 'Birth Date',
+ *     renderComponent: DatePickerField
+ *   }),
  *   checkbox({ name: 'subscribe', text: 'Subscribe to newsletter' })
  * ];
  * 
@@ -341,6 +361,29 @@ export function Form<T extends FormData = FormData>({
 									{fieldError}
 								</p>
 							)}
+						</>
+					);
+				}
+
+				case 'custom': {
+					const customField = field as FormCustomField;
+
+					return (
+						<>
+							{field.label && (
+								<Label required={field.required} description={field.description}>
+									{field.label}
+								</Label>
+							)}
+							<div data-field-name={field.name} data-field-type={field.__type}>
+								{customField.renderComponent({
+									value: fieldValue,
+									onValueChange: (value) => updateData(field.name, value),
+									disabled: field.disabled,
+									error: fieldError,
+									name: field.name,
+								})}
+							</div>
 						</>
 					);
 				}

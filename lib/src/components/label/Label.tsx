@@ -1,6 +1,6 @@
 import React, { useId } from 'react';
-import { QuestionMarkCircled } from '../../symbols';
 import { join } from '../../utils';
+import { HelpIcon } from '../help-icon';
 
 export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   /** The display type of the label. */
@@ -59,7 +59,6 @@ export function Label({
   const id = useId();
   const showHelp = (helpMessage?.trim()?.length || 0) > 0;
   const showDescription = (description?.trim()?.length || 0) > 0;
-  const helpId = showHelp ? `${htmlFor ?? id}-help` : undefined;
   const descriptionId = showDescription ? `${htmlFor ?? id}-description` : undefined;
 
   return (
@@ -77,19 +76,12 @@ export function Label({
           )}
         </label>
         {showHelp && (
-          <span
-            className='text-gray-500 ml-1 size-fit -translate-y-1/3'
-            aria-describedby={helpId}
-            aria-label='Help information'
-            title={helpMessage}
-          >
-            <QuestionMarkCircled />
-          </span>
-        )}
-        {showHelp && (
-          <div id={helpId} className='sr-only'>
-            {helpMessage}
-          </div>
+          <HelpIcon
+            message={helpMessage}
+            className='ml-1'
+            design='outlined'
+            iconSize={14}
+          />
         )}
         {suffix && <span className='ml-1'>{suffix}</span>}
       </div>
