@@ -69,11 +69,11 @@ export interface FormCheckboxGroupField extends BaseFormField {
 	isValid?: IsValidFunc<string[]>;
 }
 
-export interface FormCustomFieldProps {
+export interface FormCustomFieldProps<T = unknown> {
 	/** The current value of the field */
-	value: unknown;
+	value: T;
 	/** Callback to update the field value */
-	onValueChange: (value: unknown) => void;
+	onValueChange: (value: T) => void;
 	/** Whether the field is disabled */
 	disabled?: boolean;
 	/** Any error message for the field */
@@ -82,12 +82,12 @@ export interface FormCustomFieldProps {
 	name: string;
 }
 
-export interface FormCustomField extends BaseFormField {
+export interface FormCustomField<T = unknown> extends BaseFormField {
 	__type: 'custom';
 	/** Function that renders the custom field component */
-	renderComponent: (props: FormCustomFieldProps) => React.ReactNode;
+	renderComponent: (props: FormCustomFieldProps<T>) => React.ReactNode;
 	/** Optional validation function for the custom field */
-	isValid?: IsValidFunc<unknown>;
+	isValid?: IsValidFunc<T>;
 }
 
 export type FormField = FormInputField | FormTextareaField | FormSelectField | FormCheckboxField | FormRadioField | FormCheckboxGroupField | FormCustomField;

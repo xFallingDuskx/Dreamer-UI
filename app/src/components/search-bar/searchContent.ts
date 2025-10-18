@@ -442,9 +442,9 @@ const searchIndex: SearchResult[] = [
 		title: 'Custom Form Fields',
 		path: '/components/form',
 		section: 'Custom Fields',
-		description: 'Create custom field components using renderComponent function for specialized inputs like date pickers, color selectors, and more.',
+		description: 'Create custom field components using renderComponent function for specialized inputs like date pickers, dynamic select fields, and more.',
 		type: 'Section',
-		content: 'custom fields renderComponent FormCustomFieldProps date picker color selector specialized inputs components value onValueChange validation',
+		content: 'custom fields renderComponent FormCustomFieldProps date picker select add dynamic inputs components value onValueChange validation',
 		rank: 9,
 	},
 	{
@@ -481,6 +481,15 @@ const searchIndex: SearchResult[] = [
 		description: 'Custom color selection field with visual picker and hex input for theme colors and styling.',
 		type: 'Example',
 		content: 'color picker custom field renderComponent hex rgb theme styling brand colors visual picker palette',
+		rank: 8,
+	},
+	{
+		title: 'Select with Add Custom Field',
+		path: '/components/form',
+		section: 'Custom Fields',
+		description: 'Custom select field with add functionality to dynamically create new options and expand selections.',
+		type: 'Example',
+		content: 'select add custom field renderComponent dynamic options create new expand dropdown job role categories tags',
 		rank: 8,
 	},
 
