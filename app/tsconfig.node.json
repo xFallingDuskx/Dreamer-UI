@@ -18,7 +18,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* for GitHub actions */
+    "jsx": "react-jsx",
+    "types": ["react", "react-dom"]
   },
   "include": ["vite.config.ts"]
 }
