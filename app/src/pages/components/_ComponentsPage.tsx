@@ -266,7 +266,7 @@ export const ComponentsPage = () => {
 			
 			// Add important note for Form components
 			if (category === 'Form') {
-				markdown += `> **IMPORTANT**: Input and Textarea components always use full available width. For width constraints or layout changes, wrap these components in a container element with the desired width or flex properties.\n\n`;
+				markdown += `> **IMPORTANT**: Input and Textarea components always use full available width with optimized DOM structure. For width constraints or layout changes, wrap these components in a container element with the desired width or flex properties. Note: These components automatically optimize their DOM structure - wrapper divs are only rendered when needed (for validation messages, character counting, password toggles, etc.), resulting in cleaner markup for basic usage.\n\n`;
 			}
 			
 			const categoryComponents = components.filter((c) => c.category === category);

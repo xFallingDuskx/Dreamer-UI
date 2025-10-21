@@ -104,14 +104,37 @@ export function Textarea({
     !displayOnlyMode && textareaVariants[variant],
     !displayOnlyMode && roundedVariants[adjustedRound],
     !displayOnlyMode && 'px-2 py-1',
-    displayOnlyMode && 'pointer-events-none',
+    displayOnlyMode && 'pointer-events-none cursor-text',
     !showResizeHandle && 'no-resize-handle',
 
     className
   );
 
+  // Check if we need wrapper div
+  const hasCharacterCount = characterLimit > 0;
+  const hasStatusMessages = !displayOnlyMode && (errorMessage || successMessage);
+  const needsWrapper = hasCharacterCount || hasStatusMessages;
+
+  // If no wrapper needed, return just the textarea
+  if (!needsWrapper) {
+    return (
+      <textarea
+        {...rest}
+        id={id}
+        aria-disabled={rest.disabled}
+        readOnly={displayOnlyMode}
+        aria-readonly={displayOnlyMode || rest['aria-readonly']}
+        style={{
+          resize: autoExpand ? 'none' : undefined,
+        }}
+        className={inputClasses}
+      />
+    );
+  }
+
+  // Full wrapper structure needed
   return (
-    <div className={join('w-full -space-y-1.5', displayOnlyMode && 'cursor-text')}>
+    <div className="w-full -space-y-1.5">
       <textarea
         {...rest}
         id={id}
@@ -124,8 +147,8 @@ export function Textarea({
         className={inputClasses}
       />
       {characterLimit > 0 && <CharacterCount elementId={id} maxLength={characterLimit} />}
-      {!displayOnlyMode && <StatusHelpMessage elementId={id} type='error' message={errorMessage} />}
-      {!displayOnlyMode && <StatusHelpMessage elementId={id} type='success' message={successMessage} />}
+      <StatusHelpMessage elementId={id} type='error' message={errorMessage} />
+      <StatusHelpMessage elementId={id} type='success' message={successMessage} />
     </div>
   );
 }

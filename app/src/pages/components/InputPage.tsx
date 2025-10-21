@@ -94,7 +94,7 @@ const inputExamples = [
   {
     id: 'advanced-usage',
     title: 'Layout & Container Usage',
-    description: 'Input components always use full width. Use containers for width constraints and layout control.',
+    description: 'Input components always use full width. Use containers for width constraints and layout control. Note: Basic inputs render without wrapper divs for optimal DOM structure.',
     code: `<div className='space-y-4'>
   {/* Full width (default) */}
   <Input placeholder="Full width input" />
@@ -224,9 +224,9 @@ export function InputPage() {
   return (
     <ComponentPage
       title='Input'
-      description='Flexible input component with validation states and different types for collecting user data. Always uses full available width.'
+      description='Flexible input component with validation states and different types for collecting user data. Always uses full available width with optimized DOM structure.'
       tableOfContents={tableOfContents}
-      usageInstructions='The Input component provides a flexible way to collect user input with various types, validation states, and styling options. The input always uses full available width by default. For width constraints or layout changes, wrap the component in a container element with the desired width or flex properties.'
+      usageInstructions='The Input component provides a flexible way to collect user input with various types, validation states, and styling options. The input always uses full available width by default. For width constraints or layout changes, wrap the component in a container element with the desired width or flex properties. Note: The component automatically optimizes its DOM structure - wrapper divs are only rendered when needed (for validation messages, password toggles, etc.), resulting in cleaner markup for basic inputs.'
       importStatement="import { Input } from '@moondreamsdev/dreamer-ui/components';"
       componentProps={inputProps}
       examples={inputExamples}

@@ -92,12 +92,64 @@ export function Input({
 		!displayOnlyMode && roundedVariants[adjustedRound],
 		type === 'password' && 'pr-10',
 		!displayOnlyMode && 'px-2 py-1',
-		displayOnlyMode && 'pointer-events-none',
+		displayOnlyMode && 'pointer-events-none cursor-text',
 		className
 	);
 
+	// Check if we need wrapper divs
+	const hasStatusMessages = !displayOnlyMode && (errorMessage || successMessage);
+	const needsPasswordWrapper = type === 'password';
+	const needsOuterWrapper = hasStatusMessages;
+
+	// If no wrapper needed, return just the input
+	if (!needsOuterWrapper && !needsPasswordWrapper) {
+		return (
+			<input
+				{...rest}
+				id={id}
+				name={rest.name || id}
+				type={type}
+				aria-disabled={rest.disabled}
+				readOnly={displayOnlyMode}
+				aria-readonly={displayOnlyMode || rest['aria-readonly']}
+				data-error={errorMessage ? true : undefined}
+				data-success={successMessage ? true : undefined}
+				className={inputClasses}
+			/>
+		);
+	}
+
+	// If password wrapper needed but no outer wrapper
+	if (!needsOuterWrapper && needsPasswordWrapper) {
+		return (
+			<div className="relative">
+				<input
+					{...rest}
+					id={id}
+					name={rest.name || id}
+					type={type === 'password' && showPassword ? 'text' : type}
+					aria-disabled={rest.disabled}
+					readOnly={displayOnlyMode}
+					aria-readonly={displayOnlyMode || rest['aria-readonly']}
+					data-error={errorMessage ? true : undefined}
+					data-success={successMessage ? true : undefined}
+					className={inputClasses}
+				/>
+				<button
+					onClick={() => setShowPassword(!showPassword)}
+					className='absolute inset-y-0 right-0 px-2 hover:cursor-pointer'
+					aria-label='Toggle password visibility'
+					data-state={showPassword ? 'visible' : 'hidden'}
+				>
+					{showPassword ? <EyeOpened size={20} /> : <EyeClosed size={20} />}
+				</button>
+			</div>
+		);
+	}
+
+	// Full wrapper structure needed
 	return (
-		<div className={join('w-full', displayOnlyMode && 'cursor-text')}>
+		<div className="w-full">
 			<div className={join(type === 'password' && 'relative')}>
 				<input
 					{...rest}
@@ -122,8 +174,8 @@ export function Input({
 					</button>
 				)}
 			</div>
-			{!displayOnlyMode && <StatusHelpMessage elementId={id} type='error' message={errorMessage} />}
-			{!displayOnlyMode && <StatusHelpMessage elementId={id} type='success' message={successMessage} />}
+			<StatusHelpMessage elementId={id} type='error' message={errorMessage} />
+			<StatusHelpMessage elementId={id} type='success' message={successMessage} />
 		</div>
 	);
 }

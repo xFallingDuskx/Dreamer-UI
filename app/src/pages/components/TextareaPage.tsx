@@ -302,7 +302,7 @@ const textareaExamples = [
   {
     id: 'layout-usage',
     title: 'Layout & Container Usage',
-    description: 'Textarea components always use full width. Use containers for width constraints and layout control.',
+    description: 'Textarea components always use full width. Use containers for width constraints and layout control. Note: Basic textareas render without wrapper divs for optimal DOM structure.',
     code: `// Full width (default)
 <Textarea 
   placeholder='This textarea uses full available width by default'
@@ -518,9 +518,9 @@ export function TextareaPage() {
   return (
     <ComponentPage
       title='Textarea'
-      description='Multi-line text input component with auto-expand, character limits, and validation states. Always uses full available width.'
+      description='Multi-line text input component with auto-expand, character limits, and validation states. Always uses full available width with optimized DOM structure.'
       tableOfContents={tableOfContents}
-      usageInstructions='The Textarea component is perfect for collecting longer text input from users. It supports multiple variants, auto-expand functionality, character limits with counters, validation states, and display-only mode. The textarea always uses full available width by default. For width constraints or layout changes, wrap the component in a container element with the desired width or flex properties.'
+      usageInstructions='The Textarea component is perfect for collecting longer text input from users. It supports multiple variants, auto-expand functionality, character limits with counters, validation states, and display-only mode. The textarea always uses full available width by default. For width constraints or layout changes, wrap the component in a container element with the desired width or flex properties. Note: The component automatically optimizes its DOM structure - wrapper divs are only rendered when needed (for character counting, validation messages, etc.), resulting in cleaner markup for basic textareas.'
       importStatement="import { Textarea } from '@moondreamsdev/dreamer-ui/components';"
       componentProps={textareaProps}
       examples={textareaExamples}
