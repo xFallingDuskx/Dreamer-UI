@@ -27,9 +27,12 @@ export interface TextareaProps extends Partial<TextareaVariants>, React.Textarea
  * A versatile textarea component with auto-expand, character counting, and validation states.
  * Supports both interactive and display-only modes with various styling options.
  * 
+ * The textarea always uses full available width. For width constraints or layout changes,
+ * wrap the component in a container element.
+ * 
  * @example
  * ```tsx
- * // Basic textarea
+ * // Basic textarea (full width)
  * <Textarea 
  *   placeholder="Enter your message..."
  *   rows={4}
@@ -45,6 +48,24 @@ export interface TextareaProps extends Partial<TextareaVariants>, React.Textarea
  *   errorMessage={bioError}
  *   variant="outline"
  * />
+ * 
+ * // Width constrained with container
+ * <div className="max-w-md">
+ *   <Textarea 
+ *     placeholder="Constrained width textarea"
+ *     rows={4}
+ *   />
+ * </div>
+ * 
+ * // In flex layout
+ * <div className="flex gap-4">
+ *   <div className="flex-1">
+ *     <Textarea placeholder="Flexible width" rows={3} />
+ *   </div>
+ *   <div className="w-64">
+ *     <Textarea placeholder="Fixed width" rows={3} />
+ *   </div>
+ * </div>
  * 
  * // Display-only mode
  * <Textarea 
@@ -90,7 +111,7 @@ export function Textarea({
   );
 
   return (
-    <div className={join('-space-y-1.5', displayOnlyMode && 'cursor-text')}>
+    <div className={join('w-full -space-y-1.5', displayOnlyMode && 'cursor-text')}>
       <textarea
         {...rest}
         id={id}

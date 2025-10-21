@@ -25,7 +25,7 @@ export interface FormInputField extends BaseFormField {
 	__type: 'input';
 	type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
 	placeholder?: string;
-	variant?: 'base' | 'default' | 'underline' | 'outline';
+	variant?: 'base' | 'transparent' | 'underline' | 'outline';
 	rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
 	isValid?: IsValidFunc<string>;
 }

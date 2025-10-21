@@ -20,9 +20,12 @@ export interface InputProps extends Partial<InputVariants>, React.InputHTMLAttri
  * A versatile input component with support for various types, validation states,
  * and password visibility toggle. Includes error/success message display.
  *
+ * The input always uses full available width. For width constraints or layout changes,
+ * wrap the component in a container element.
+ *
  * @example
  * ```tsx
- * // Basic input
+ * // Basic input (full width)
  * <Input
  *   placeholder="Enter your name"
  *   value={name}
@@ -37,6 +40,21 @@ export interface InputProps extends Partial<InputVariants>, React.InputHTMLAttri
  *   variant="outline"
  *   rounded="lg"
  * />
+ *
+ * // Width constrained with container
+ * <div className="max-w-xs">
+ *   <Input placeholder="Constrained width" />
+ * </div>
+ *
+ * // In flex layout
+ * <div className="flex gap-4">
+ *   <div className="flex-1">
+ *     <Input placeholder="Flexible width" />
+ *   </div>
+ *   <div className="w-32">
+ *     <Input placeholder="Fixed width" />
+ *   </div>
+ * </div>
  *
  * // Read-only display mode
  * <Input value="John Doe" displayOnlyMode />
@@ -79,7 +97,7 @@ export function Input({
 	);
 
 	return (
-		<div className={join(displayOnlyMode && 'cursor-text')} style={{ height: rest.height, width: rest.width }}>
+		<div className={join('w-full', displayOnlyMode && 'cursor-text')}>
 			<div className={join(type === 'password' && 'relative')}>
 				<input
 					{...rest}

@@ -263,6 +263,12 @@ export const ComponentsPage = () => {
 		// Group components by category
 		categories.forEach((category) => {
 			markdown += `### ${category} Components\n\n`;
+			
+			// Add important note for Form components
+			if (category === 'Form') {
+				markdown += `> **IMPORTANT**: Input and Textarea components always use full available width. For width constraints or layout changes, wrap these components in a container element with the desired width or flex properties.\n\n`;
+			}
+			
 			const categoryComponents = components.filter((c) => c.category === category);
 			categoryComponents.forEach((component) => {
 				markdown += `- **${component.name}**: ${component.description}\n`;

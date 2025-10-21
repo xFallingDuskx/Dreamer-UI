@@ -518,7 +518,7 @@ const searchIndex: SearchResult[] = [
 		path: '/components/input',
 		description: 'Text input component for forms with validation states.',
 		type: 'Component',
-		content: 'input text field form validation email password number tel url search file props default outline underline solid base variant',
+		content: 'input text field form validation email password number tel url search file props transparent outline underline solid base variant',
 		rank: 10,
 	},
 	{

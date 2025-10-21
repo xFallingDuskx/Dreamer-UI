@@ -7,6 +7,7 @@ const tableOfContents = [
   { id: 'examples', title: 'Examples', level: 1 },
   { id: 'basic-usage', title: 'Basic Usage', level: 2 },
   { id: 'variants', title: 'Variants', level: 2 },
+  { id: 'layout-usage', title: 'Layout & Container Usage', level: 2 },
   { id: 'auto-expand', title: 'Auto Expand', level: 2 },
   { id: 'character-limit', title: 'Character Limit', level: 2 },
   { id: 'validation-states', title: 'Validation States', level: 2 },
@@ -163,6 +164,53 @@ function DisplayModeTextarea() {
   );
 }
 
+function LayoutUsageTextarea() {
+  return (
+    <div className='space-y-6'>
+      {/* Full width (default) */}
+      <div>
+        <Label htmlFor='full-width'>Full Width (default)</Label>
+        <Textarea 
+          id='full-width'
+          placeholder='This textarea uses full available width by default'
+          rows={3}
+        />
+      </div>
+      
+      {/* Width constrained with container */}
+      <div>
+        <Label htmlFor='constrained'>Width Constrained with Container</Label>
+        <div className="max-w-md">
+          <Textarea 
+            id='constrained'
+            placeholder='This textarea is constrained by its container'
+            rows={3}
+          />
+        </div>
+      </div>
+      
+      {/* Flex layout */}
+      <div>
+        <Label>Flex Layout with Containers</Label>
+        <div className="flex gap-4">
+          <div className="flex-1">
+            <Textarea 
+              placeholder='Flexible width textarea'
+              rows={3}
+            />
+          </div>
+          <div className="w-64">
+            <Textarea 
+              placeholder='Fixed width textarea'
+              rows={3}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ControlledTextarea() {
   const [value, setValue] = useState('This is controlled text content.');
   
@@ -249,6 +297,37 @@ const textareaExamples = [
 />`,
     children: (
       <VariantTextareas />
+    ),
+  },
+  {
+    id: 'layout-usage',
+    title: 'Layout & Container Usage',
+    description: 'Textarea components always use full width. Use containers for width constraints and layout control.',
+    code: `// Full width (default)
+<Textarea 
+  placeholder='This textarea uses full available width by default'
+  rows={3}
+/>
+
+// Width constrained with container
+<div className="max-w-md">
+  <Textarea 
+    placeholder='This textarea is constrained by its container'
+    rows={3}
+  />
+</div>
+
+// Flex layout with containers
+<div className="flex gap-4">
+  <div className="flex-1">
+    <Textarea placeholder='Flexible width' rows={3} />
+  </div>
+  <div className="w-64">
+    <Textarea placeholder='Fixed width' rows={3} />
+  </div>
+</div>`,
+    children: (
+      <LayoutUsageTextarea />
     ),
   },
   {
@@ -431,7 +510,7 @@ const textareaProps = [
   {
     name: 'className',
     type: 'string',
-    description: 'Additional CSS classes to apply to the textarea.',
+    description: 'Additional CSS classes to apply to the textarea. For width constraints, wrap the textarea in a container instead.',
   },
 ];
 
@@ -439,9 +518,9 @@ export function TextareaPage() {
   return (
     <ComponentPage
       title='Textarea'
-      description='Multi-line text input component with auto-expand, character limits, and validation states.'
+      description='Multi-line text input component with auto-expand, character limits, and validation states. Always uses full available width.'
       tableOfContents={tableOfContents}
-      usageInstructions='The Textarea component is perfect for collecting longer text input from users. It supports multiple variants, auto-expand functionality, character limits with counters, validation states, and display-only mode. Use it for comments, descriptions, messages, feedback forms, and other multi-line text input scenarios.'
+      usageInstructions='The Textarea component is perfect for collecting longer text input from users. It supports multiple variants, auto-expand functionality, character limits with counters, validation states, and display-only mode. The textarea always uses full available width by default. For width constraints or layout changes, wrap the component in a container element with the desired width or flex properties.'
       importStatement="import { Textarea } from '@moondreamsdev/dreamer-ui/components';"
       componentProps={textareaProps}
       examples={textareaExamples}
