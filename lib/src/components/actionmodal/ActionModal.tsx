@@ -1,5 +1,5 @@
-import { Modal, ModalProps } from '@moondreamsdev/dreamer-ui/components';
 import React, { useMemo } from 'react';
+import { Modal, ModalProps } from '../modal';
 
 interface BaseActionModalProps extends Omit<ModalProps, 'children' | 'actions'> {
   /** The main content/message to display in the modal. */

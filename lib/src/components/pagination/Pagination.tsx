@@ -1,7 +1,7 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useCallback } from 'react';
 import { ChevronDoubleLeft, ChevronDoubleRight, ChevronLeft, ChevronRight } from '../../symbols';
 import { PaginationSize, paginationSizes, PaginationVariant, paginationVariants } from './variants';
+import { join } from '../../utils';
 
 export interface PaginationProps extends React.HTMLAttributes<HTMLDivElement> {
   /** The current active page (1-indexed) */
