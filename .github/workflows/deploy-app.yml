@@ -18,6 +18,8 @@ jobs:
           node-version: 20
           registry-url: 'https://registry.npmjs.org/'
 
+      - name: Wait for npm publish to propagate (1min)
+        run: sleep 60
       - name: Install latest dreamer-ui library
         run: |
           cd app
