@@ -61,13 +61,18 @@ jobs:
             fi
           done
 
+      - name: Get new version
+        id: get_version
+        working-directory: lib
+        run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
+
       - name: Create Pull Request for version bump
         uses: peter-evans/create-pull-request@v5
         with:
-          commit-message: "chore(lib): bump version [skip ci]"
-          branch: bump-lib-version
-          title: "chore(lib): bump version"
-          body: "Automated version bump after publish."
+          commit-message: "chore(lib): bump version to v${{ steps.get_version.outputs.version }} [skip ci]"
+          branch: bump-lib-version-v${{ steps.get_version.outputs.version }}
+          title: "chore(lib): bump version to v${{ steps.get_version.outputs.version }}"
+          body: "Automated version bump to v${{ steps.get_version.outputs.version }} after publish."
           add-paths: |
             lib/package.json
             lib/package-lock.json
