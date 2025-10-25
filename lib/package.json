@@ -100,8 +100,5 @@
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0",
     "vite-plugin-dts": "^3.9.1"
-  },
-  "dependencies": {
-    "@moondreamsdev/dreamer-ui": "^1.7.10-test.171"
   }
 }
