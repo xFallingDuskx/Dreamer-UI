@@ -8,6 +8,21 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+set_terminal_title() {
+    # This works in VS Code's integrated terminal
+    echo -ne "\033]0;$1\007"
+    # Also set it as a variable that can be used in prompt
+    export TERMINAL_TITLE="$1"
+}
+
+# For VS Code, also update the tab name via prompt
+update_vscode_title() {
+    print -Pn "\e]0;$1\a"
+}
+
+set_terminal_title "dev 🌙"
+update_vscode_title "dev 🌙"
+
 echo "${BLUE}→ Initial build and pack...${NC}"
 
 # Build lib
