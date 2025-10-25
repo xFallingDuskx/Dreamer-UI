@@ -11,6 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org/'
+
       - name: Install and Build Library
         working-directory: lib
         run: |
@@ -21,7 +27,7 @@ jobs:
         working-directory: app
         run: |
           npm install ../lib/*.tgz
-          npm ci --omit=optional
+          npm ci
       - name: Build App
         working-directory: app
         run: npm run build
