@@ -1,7 +1,7 @@
 export const inputVariants = {
   base: '',
-  default:
-    'ring ring-transparent focus:ring-primary-foreground/60 not-disabled:data-error:ring-destructive not-disabled:data-success:ring-success',
+  transparent:
+    'border border-transparent focus:border-current/60 not-disabled:data-error:border-destructive not-disabled:data-success:border-success',
   underline:
     'border-b border-border focus:border-current/60 disabled:border-muted/30 not-disabled:data-error:border-destructive not-disabled:data-success:border-success',
   outline:
@@ -20,13 +20,13 @@ export const roundedVariants = {
 export type InputRounded = keyof typeof roundedVariants;
 
 export interface InputVariants {
-  /** The visual style variant of the input. */
+  /** The visual style variant of the input. Default is outline. */
   variant: InputVariant;
   /** The border radius of the input. */
   rounded: InputRounded;
 }
 
 export const inputDefaults: InputVariants = {
-  variant: 'default',
+  variant: 'outline',
   rounded: 'none',
 } as const;

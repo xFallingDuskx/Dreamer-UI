@@ -18,7 +18,7 @@ export const roundedVariants = {
 export type TextareaRounded = keyof typeof roundedVariants;
 
 export interface TextareaVariants {
-  /** Visual style variant of the textarea. */
+  /** Visual style variant of the textarea. Default is outline. */
   variant: TextareaVariant;
   /** Border radius of the textarea. */
   rounded: TextareaRounded;

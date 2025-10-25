@@ -1,4 +1,10 @@
-import { Button, Code, CodeBlock, Disclosure, Table } from '@moondreamsdev/dreamer-ui/components';
+import {
+	Button,
+	Code,
+	CodeBlock,
+	Disclosure,
+	Table
+} from '@moondreamsdev/dreamer-ui/components';
 import { Check, ChevronLeft, ChevronRight, Copy } from '@moondreamsdev/dreamer-ui/symbols';
 import { join } from '@moondreamsdev/dreamer-ui/utils';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
@@ -162,49 +168,6 @@ export function ComponentPage({
 			? COMPONENTS_ORDER[0]
 			: COMPONENTS_ORDER[currentComponentIndex + 1];
 
-	const handleCopyMarkdown = async () => {
-		// Generate markdown content
-		let markdown = `# ${title}\n\n${description}\n\n`;
-
-		if (usageInstructions) {
-			markdown += `## Usage Instructions\n\n${usageInstructions}\n\n`;
-		}
-
-		if (importStatement) {
-			markdown += `## Import\n\n\`\`\`typescript\n${importStatement}\n\`\`\`\n\n`;
-		}
-
-		if (componentProps && componentProps.length > 0) {
-			markdown += `## Props\n\n`;
-			markdown += `| Name | Type | Default | Required | Description |\n`;
-			markdown += `|------|------|---------|----------|-------------|\n`;
-			componentProps.forEach((prop) => {
-				markdown += `| \`${prop.name}\` | \`${prop.type}\` | ${prop.default || '-'} | ${
-					prop.required ? 'Yes' : 'No'
-				} | ${prop.description} |\n`;
-			});
-			markdown += '\n';
-		}
-
-		if (keyboardShortcuts && keyboardShortcuts.length > 0) {
-			markdown += `## Keyboard Shortcuts\n\n`;
-			markdown += `| Keys | Description |\n`;
-			markdown += `|------|-------------|\n`;
-			keyboardShortcuts.forEach((shortcut) => {
-				markdown += `| \`${shortcut.keys}\` | ${shortcut.description} |\n`;
-			});
-			markdown += '\n';
-		}
-
-		try {
-			await navigator.clipboard.writeText(markdown);
-			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
-		} catch (err) {
-			console.error('Failed to copy text: ', err);
-		}
-	};
-
 	const handleScrollIntoView = useCallback((el: HTMLElement) => {
 		if (isScrollingRef.current) return;
 		isScrollingRef.current = true;
@@ -290,10 +253,64 @@ export function ComponentPage({
 		);
 	};
 
+	const handleCopyWithExamples = async () => {
+		// Generate markdown content with examples
+		let markdown = `# ${title}\n\n${description}\n\n`;
+
+		if (usageInstructions) {
+			markdown += `## Usage Instructions\n\n${usageInstructions}\n\n`;
+		}
+
+		if (importStatement) {
+			markdown += `## Import\n\n\`\`\`typescript\n${importStatement}\n\`\`\`\n\n`;
+		}
+
+		if (examples && examples.length > 0) {
+			markdown += `## Examples\n\n`;
+			examples.forEach((example) => {
+				markdown += `### ${example.title}\n\n`;
+				if (example.description) {
+					markdown += `${example.description}\n\n`;
+				}
+				markdown += `\`\`\`tsx\n${example.code}\n\`\`\`\n\n`;
+			});
+		}
+
+		if (componentProps && componentProps.length > 0) {
+			markdown += `## Props\n\n`;
+			markdown += `| Name | Type | Default | Required | Description |\n`;
+			markdown += `|------|------|---------|----------|-------------|\n`;
+			componentProps.forEach((prop) => {
+				markdown += `| \`${prop.name}\` | \`${prop.type}\` | ${prop.default || '-'} | ${
+					prop.required ? 'Yes' : 'No'
+				} | ${prop.description} |\n`;
+			});
+			markdown += '\n';
+		}
+
+		if (keyboardShortcuts && keyboardShortcuts.length > 0) {
+			markdown += `## Keyboard Shortcuts\n\n`;
+			markdown += `| Keys | Description |\n`;
+			markdown += `|------|-------------|\n`;
+			keyboardShortcuts.forEach((shortcut) => {
+				markdown += `| \`${shortcut.keys}\` | ${shortcut.description} |\n`;
+			});
+			markdown += '\n';
+		}
+
+		try {
+			await navigator.clipboard.writeText(markdown);
+			setCopied(true);
+			setTimeout(() => setCopied(false), 2000);
+		} catch (err) {
+			console.error('Failed to copy text: ', err);
+		}
+	};
+
 	const componentActions = (
 		<>
 			{/* Copy Page Button */}
-			<Button size='sm' onClick={handleCopyMarkdown} className='inline-flex items-center gap-2 px-2.5'>
+			<Button size='sm' onClick={handleCopyWithExamples} className='gap-2 px-2.5'>
 				{copied ? <Check size={14} /> : <Copy size={14} />}
 				<span>{copied ? 'Copied!' : 'Copy page'}</span>
 			</Button>

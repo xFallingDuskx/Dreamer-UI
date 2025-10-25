@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { join } from '@moondreamsdev/dreamer-ui/utils';
+import { join } from '../../utils';
 
 export interface SliderProps {
   id?: string;

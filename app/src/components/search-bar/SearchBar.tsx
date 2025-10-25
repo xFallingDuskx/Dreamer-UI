@@ -162,7 +162,6 @@ export function SearchBar({ id, className }: SearchBarProps) {
 						placeholder='Search components, examples, and documentation...'
 						className='text-lg'
 						autoComplete='off'
-						width={'100%'}
 					/>
 					<button
 						onClick={handleClose}

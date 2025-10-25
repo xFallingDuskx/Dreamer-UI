@@ -1,0 +1,60 @@
+name: Publish Library
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'lib/**'
+      - '.github/workflows/publish-lib.yml'
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install dependencies
+        working-directory: lib
+        run: npm ci
+
+      - name: Build library
+        working-directory: lib
+        run: |
+          npm run build
+          tsc --project tsconfig.lib.json
+
+      # Increment version for every merge to master
+      - name: Bump version (patch)
+        working-directory: lib
+        run: npm version patch --no-git-tag-version
+
+      # Pack the library (optional but recommended — ensures clean build)
+      - name: Pack library
+        working-directory: lib
+        run: npm pack
+
+      - name: Publish to npm
+        working-directory: lib
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public
+
+      - name: Commit updated version number
+        working-directory: lib
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add package.json package-lock.json
+          git commit -m "chore(lib): bump version [skip ci]" || echo "No changes to commit"
+          git push

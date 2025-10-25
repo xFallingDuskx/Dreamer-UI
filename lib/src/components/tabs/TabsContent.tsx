@@ -11,6 +11,7 @@ export interface TabsContentProps {
   children?: React.ReactNode;
 }
 
+// FUTURE: use Activity component from react (introduced in React 19.2)
 export function TabsContent({ value, className, children, ref }: TabsContentProps) {
   const { selectedValue, contentClassName } = useTabsContext();
   const isActive = selectedValue === value;

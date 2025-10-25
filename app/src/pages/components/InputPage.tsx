@@ -18,17 +18,15 @@ const inputExamples = [
     title: 'Variants',
     description: 'Different input styles for various design contexts.',
     code: `<div className='space-y-4'>
-  <Input placeholder="Default variant" />
-  <Input variant="outline" placeholder="Outline variant" />
-  <Input variant="underline" placeholder="Underline variant" />
+  <Input placeholder="Default (outline) variant" />
+  <Input variant="transparent" placeholder="Transparent variant" />
   <Input variant="solid" placeholder="Solid variant" />
   <Input variant="base" placeholder="Base variant" />
 </div>`,
     children: (
       <div className='space-y-4'>
-        <Input placeholder="Default variant" />
-        <Input variant="outline" placeholder="Outline variant" />
-        <Input variant="underline" placeholder="Underline variant" />
+        <Input placeholder="Default (outline) variant" />
+        <Input variant="transparent" placeholder="Transparent variant" />
         <Input variant="solid" placeholder="Solid variant" />
         <Input variant="base" placeholder="Base variant" />
       </div>
@@ -95,24 +93,54 @@ const inputExamples = [
   },
   {
     id: 'advanced-usage',
-    title: 'Advanced Usage',
-    description: 'Advanced input configurations including file inputs and custom styling.',
+    title: 'Layout & Container Usage',
+    description: 'Input components always use full width. Use containers for width constraints and layout control. Note: Basic inputs render without wrapper divs for optimal DOM structure.',
     code: `<div className='space-y-4'>
-  <Input type="file" />
-  <Input type="password" placeholder="Password with toggle visibility" />
-  <div className="flex gap-4">
-    <Input type="number" placeholder="Width constrained" className="max-w-[100px]" />
-    <Input placeholder="Flexible width input" />
+  {/* Full width (default) */}
+  <Input placeholder="Full width input" />
+  
+  {/* Width constrained with container */}
+  <div className="max-w-xs">
+    <Input placeholder="Constrained width" />
   </div>
+  
+  {/* Flex layout with containers */}
+  <div className="flex gap-4">
+    <div className="flex-1">
+      <Input placeholder="Flexible width" />
+    </div>
+    <div className="w-32">
+      <Input type="number" placeholder="Fixed" />
+    </div>
+  </div>
+  
+  {/* File input and password */}
+  <Input type="file" />
+  <Input type="password" placeholder="Password with toggle" />
 </div>`,
     children: (
       <div className='space-y-4'>
-        <Input type="file" />
-        <Input type="password" placeholder="Password with toggle visibility" />
-        <div className="flex gap-4">
-          <Input type="number" placeholder="Width constrained" className="max-w-[100px]" />
-          <Input placeholder="Flexible width input" />
+        {/* Full width (default) */}
+        <Input placeholder="Full width input" />
+        
+        {/* Width constrained with container */}
+        <div className="max-w-xs">
+          <Input placeholder="Constrained width" />
         </div>
+        
+        {/* Flex layout with containers */}
+        <div className="flex gap-4">
+          <div className="flex-1">
+            <Input placeholder="Flexible width" />
+          </div>
+          <div className="w-32">
+            <Input type="number" placeholder="Fixed" />
+          </div>
+        </div>
+        
+        {/* File input and password */}
+        <Input type="file" />
+        <Input type="password" placeholder="Password with toggle" />
       </div>
     ),
   },
@@ -127,8 +155,8 @@ const inputProps = [
   },
   {
     name: 'variant',
-    type: '"base" | "default" | "underline" | "outline" | "solid"',
-    default: '"default"',
+    type: '"base" | "transparent" | "underline" | "outline" | "solid"',
+    default: '"outline"',
     description: 'The visual style variant of the input.',
   },
   {
@@ -188,7 +216,7 @@ const inputProps = [
   {
     name: 'className',
     type: 'string',
-    description: 'Additional CSS classes to apply to the input.',
+    description: 'Additional CSS classes to apply to the input. For width constraints, wrap the input in a container instead.',
   },
 ];
 
@@ -196,9 +224,9 @@ export function InputPage() {
   return (
     <ComponentPage
       title='Input'
-      description='Flexible input component with validation states and different types for collecting user data.'
+      description='Flexible input component with validation states and different types for collecting user data. Always uses full available width with optimized DOM structure.'
       tableOfContents={tableOfContents}
-      usageInstructions='The Input component provides a flexible way to collect user input with various types, validation states, and styling options. Use it for forms, search fields, and any text-based data entry.'
+      usageInstructions='The Input component provides a flexible way to collect user input with various types, validation states, and styling options. The input always uses full available width by default. For width constraints or layout changes, wrap the component in a container element with the desired width or flex properties. Note: The component automatically optimizes its DOM structure - wrapper divs are only rendered when needed (for validation messages, password toggles, etc.), resulting in cleaner markup for basic inputs.'
       importStatement="import { Input } from '@moondreamsdev/dreamer-ui/components';"
       componentProps={inputProps}
       examples={inputExamples}

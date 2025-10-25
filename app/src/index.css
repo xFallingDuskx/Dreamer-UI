@@ -31,3 +31,6 @@
 }
 
 @source "../node_modules/@moondreamsdev/dreamer-ui/dist/**/*.{js,jsx,ts,tsx}";
+
+/* Watch lib source for Tailwind classes */
+@source "../lib/src/**/*.{js,jsx,ts,tsx}";

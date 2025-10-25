@@ -263,6 +263,12 @@ export const ComponentsPage = () => {
 		// Group components by category
 		categories.forEach((category) => {
 			markdown += `### ${category} Components\n\n`;
+			
+			// Add important note for Form components
+			if (category === 'Form') {
+				markdown += `> **IMPORTANT**: Input and Textarea components always use full available width with optimized DOM structure. For width constraints or layout changes, wrap these components in a container element with the desired width or flex properties. Note: These components automatically optimize their DOM structure - wrapper divs are only rendered when needed (for validation messages, character counting, password toggles, etc.), resulting in cleaner markup for basic usage.\n\n`;
+			}
+			
 			const categoryComponents = components.filter((c) => c.category === category);
 			categoryComponents.forEach((component) => {
 				markdown += `- **${component.name}**: ${component.description}\n`;
@@ -305,7 +311,7 @@ export const ComponentsPage = () => {
 		>
 			{/* Copy One-Pager Button */}
 			<div className='mb-8 flex justify-center'>
-				<Button size='md' onClick={handleCopyOnePager} className='inline-flex items-center gap-2'>
+				<Button size='md' onClick={handleCopyOnePager} className='gap-2'>
 					{copied ? <Check size={16} /> : <Copy size={16} />}
 					<span>{copied ? 'Copied!' : 'Copy one-pager'}</span>
 				</Button>

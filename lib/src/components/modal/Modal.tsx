@@ -1,9 +1,9 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React, { useId } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from '../../symbols';
 import { Button, ButtonProps } from '../button';
 import { useAnimationOpenClose, useDocumentChanges, useHandleFocus } from './hooks';
+import { join } from '../../utils';
 
 interface ModalAction extends Omit<ButtonProps, 'children'> {
 	/** The text label for the action button. */

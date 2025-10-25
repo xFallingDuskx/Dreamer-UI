@@ -1,7 +1,7 @@
-import { join } from '@moondreamsdev/dreamer-ui/utils';
 import React from 'react';
 import { useScrollArea } from './hooks';
 import './index.css';
+import { join } from '../../utils';
 
 export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Custom CSS classes for the root container. Use this to set width/height */

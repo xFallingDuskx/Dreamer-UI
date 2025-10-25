@@ -27,9 +27,12 @@ export interface TextareaProps extends Partial<TextareaVariants>, React.Textarea
  * A versatile textarea component with auto-expand, character counting, and validation states.
  * Supports both interactive and display-only modes with various styling options.
  * 
+ * The textarea always uses full available width. For width constraints or layout changes,
+ * wrap the component in a container element.
+ * 
  * @example
  * ```tsx
- * // Basic textarea
+ * // Basic textarea (full width)
  * <Textarea 
  *   placeholder="Enter your message..."
  *   rows={4}
@@ -45,6 +48,24 @@ export interface TextareaProps extends Partial<TextareaVariants>, React.Textarea
  *   errorMessage={bioError}
  *   variant="outline"
  * />
+ * 
+ * // Width constrained with container
+ * <div className="max-w-md">
+ *   <Textarea 
+ *     placeholder="Constrained width textarea"
+ *     rows={4}
+ *   />
+ * </div>
+ * 
+ * // In flex layout
+ * <div className="flex gap-4">
+ *   <div className="flex-1">
+ *     <Textarea placeholder="Flexible width" rows={3} />
+ *   </div>
+ *   <div className="w-64">
+ *     <Textarea placeholder="Fixed width" rows={3} />
+ *   </div>
+ * </div>
  * 
  * // Display-only mode
  * <Textarea 
@@ -83,14 +104,37 @@ export function Textarea({
     !displayOnlyMode && textareaVariants[variant],
     !displayOnlyMode && roundedVariants[adjustedRound],
     !displayOnlyMode && 'px-2 py-1',
-    displayOnlyMode && 'pointer-events-none',
+    displayOnlyMode && 'pointer-events-none cursor-text',
     !showResizeHandle && 'no-resize-handle',
 
     className
   );
 
+  // Check if we need wrapper div
+  const hasCharacterCount = characterLimit > 0;
+  const hasStatusMessages = !displayOnlyMode && (errorMessage || successMessage);
+  const needsWrapper = hasCharacterCount || hasStatusMessages;
+
+  // If no wrapper needed, return just the textarea
+  if (!needsWrapper) {
+    return (
+      <textarea
+        {...rest}
+        id={id}
+        aria-disabled={rest.disabled}
+        readOnly={displayOnlyMode}
+        aria-readonly={displayOnlyMode || rest['aria-readonly']}
+        style={{
+          resize: autoExpand ? 'none' : undefined,
+        }}
+        className={inputClasses}
+      />
+    );
+  }
+
+  // Full wrapper structure needed
   return (
-    <div className={join('-space-y-1.5', displayOnlyMode && 'cursor-text')}>
+    <div className="w-full -space-y-1.5">
       <textarea
         {...rest}
         id={id}
@@ -103,8 +147,8 @@ export function Textarea({
         className={inputClasses}
       />
       {characterLimit > 0 && <CharacterCount elementId={id} maxLength={characterLimit} />}
-      {!displayOnlyMode && <StatusHelpMessage elementId={id} type='error' message={errorMessage} />}
-      {!displayOnlyMode && <StatusHelpMessage elementId={id} type='success' message={successMessage} />}
+      <StatusHelpMessage elementId={id} type='error' message={errorMessage} />
+      <StatusHelpMessage elementId={id} type='success' message={successMessage} />
     </div>
   );
 }
