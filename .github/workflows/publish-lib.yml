@@ -50,11 +50,13 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --access public
 
-      - name: Commit updated version number
-        working-directory: lib
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add package.json package-lock.json
-          git commit -m "chore(lib): bump version [skip ci]" || echo "No changes to commit"
-          git push
+      - name: Create Pull Request for version bump
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore(lib): bump version [skip ci]"
+          branch: bump-lib-version
+          title: "chore(lib): bump version"
+          body: "Automated version bump after publish."
+          add-paths: |
+            lib/package.json
+            lib/package-lock.json
