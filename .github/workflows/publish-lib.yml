@@ -14,7 +14,7 @@ jobs:
     permissions:
       contents: write
       packages: write
-      pull-requests: write
+      pull-requests: write      # must also be enabled in repo settings: Actions > General > Workflow permissions
 
     steps:
       - uses: actions/checkout@v4
@@ -69,6 +69,7 @@ jobs:
 
       - name: Create Pull Request for version bump
         uses: peter-evans/create-pull-request@v5
+        id: cpr
         with:
           commit-message: "chore(lib): bump version to v${{ steps.get_version.outputs.version }} [skip ci]"
           branch: bump-lib-version-v${{ steps.get_version.outputs.version }}
@@ -77,3 +78,10 @@ jobs:
           add-paths: |
             lib/package.json
             lib/package-lock.json
+
+      - name: Merge PR using GitHub CLI
+        if: ${{ steps.cpr.outputs.pull-request-number }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge ${{ steps.cpr.outputs.pull-request-number }} --squash --auto
