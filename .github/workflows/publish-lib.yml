@@ -44,11 +44,22 @@ jobs:
         working-directory: lib
         run: npm pack
 
-      - name: Publish to npm
+      - name: Publish to npm with retry on version error
         working-directory: lib
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --access public
+        run: |
+          set -e
+          for i in {1..5}; do
+            npm publish --access public && break
+            if grep -q "previously published versions" <<< "$(npm publish --access public 2>&1)"; then
+              echo "Version already published, bumping patch version and retrying..."
+              npm version patch --no-git-tag-version
+            else
+              echo "Publish failed for another reason."
+              exit 1
+            fi
+          done
 
       - name: Create Pull Request for version bump
         uses: peter-evans/create-pull-request@v5
