@@ -15,7 +15,8 @@ export default defineConfig({
         utils: 'src/utils/index.ts',
       },
       name: 'DreamerUI',
-      fileName: (format, entryName) => `${entryName}.${format === 'es' ? 'esm' : format}.js`,
+      fileName: (format, entryName) =>
+        format === 'es' ? `${entryName}.esm.js` : `${entryName}.cjs`,
       formats: ['es', 'cjs'],
     },
     rollupOptions: {

@@ -10,8 +10,8 @@ export function useScrollArea(scrollbarThickness: number) {
     vertical: false,
     horizontal: false,
   });
-  const scrollTimeout = useRef<number | null>(null);
-  const fadeTimeout = useRef<number | null>(null);
+  const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const fadeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Check if content overflows and update scrollbar visibility
   const checkOverflow = useCallback(() => {

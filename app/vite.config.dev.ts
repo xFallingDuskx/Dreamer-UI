@@ -21,11 +21,11 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),
-			// CSS from dist (build artifact) - more specific aliases go first!
-			'@moondreamsdev/dreamer-ui/styles': path.resolve(__dirname, '../lib/dist/styles.css'),
-			// Components from source for HMR
+			// Source aliases keep component and stylesheet changes on the same HMR path.
+			'@moondreamsdev/dreamer-ui/styles': path.resolve(__dirname, '../lib/src/styles.css'),
 			'@moondreamsdev/dreamer-ui': path.resolve(__dirname, '../lib/src'),
 		},
+		dedupe: ['react', 'react-dom'],
 	},
 	optimizeDeps: {
 		exclude: ['@moondreamsdev/dreamer-ui'],
