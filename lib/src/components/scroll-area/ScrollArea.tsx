@@ -1,6 +1,6 @@
 import React from 'react';
 import { useScrollArea } from './hooks';
-import './index.css';
+import './styles.css';
 import { join } from '../../utils';
 
 export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {

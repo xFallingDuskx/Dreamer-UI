@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "dev:local": "vite --host --config vite.config.dev.ts",
+    "dev": "vite --host --config vite.config.dev.ts",
+    "dev:local": "npm run dev",
+    "dev:package": "vite --host",
     "build": "tsc -b && vite build",
-    "build:local": "vite build --config vite.config.dev.ts && tsc -p tsconfig.dev.json",
+    "build:local": "tsc -p tsconfig.dev.json && vite build --config vite.config.dev.ts",
     "predeploy": "npm run build && npm run preview",
     "predeploy:local": "npm run build:local && npm run preview",
     "fbdeploy": "npm run build && firebase deploy",
@@ -15,7 +16,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@moondreamsdev/dreamer-ui": "file:../lib/moondreamsdev-dreamer-ui-1.7.24.tgz",
+    "@moondreamsdev/dreamer-ui": "^1.7.26",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.8.2"

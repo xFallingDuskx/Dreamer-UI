@@ -1,0 +1,19 @@
+---
+description: Require dated human and AI documentation for implementation issues
+alwaysApply: true
+---
+
+# Issue documentation
+
+For every implementation issue:
+
+1. Create `docs/YYYY/MM/DD/issue-name/` using the work-start date and a
+   kebab-case issue name.
+2. Add `human.md` with a plain-language outcome, change walkthrough, review
+   steps, test steps, and risks.
+3. Add `ai.md` with root cause, architecture, changed-file responsibilities,
+   invariants, failure handling, verification commands, and deferred work.
+4. Keep both files current as implementation decisions change.
+5. Do not include credentials, secret values, or unfiltered transient logs.
+
+Follow the full template guidance in `docs/README.md`.

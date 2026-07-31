@@ -1,15 +1,15 @@
 {
   "name": "@moondreamsdev/dreamer-ui",
-  "version": "1.7.24",
+  "version": "0.0.0-development",
   "homepage": "https://ui.moondreams.dev",
   "publishConfig": {
     "access": "public"
   },
   "type": "module",
   "description": "A collection of Tailwind CSS components for React",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/src/index.d.ts",
   "files": [
     "dist"
   ],
@@ -18,34 +18,34 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/src/index.d.ts",
       "import": "./dist/index.esm.js",
-      "require": "./dist/index.js"
+      "require": "./dist/index.cjs"
     },
     "./components": {
-      "types": "./dist/components.d.ts",
+      "types": "./dist/src/components/index.d.ts",
       "import": "./dist/components.esm.js",
-      "require": "./dist/components.js"
+      "require": "./dist/components.cjs"
     },
     "./hooks": {
-      "types": "./dist/hooks.d.ts",
+      "types": "./dist/src/hooks/index.d.ts",
       "import": "./dist/hooks.esm.js",
-      "require": "./dist/hooks.js"
+      "require": "./dist/hooks.cjs"
     },
     "./providers": {
-      "types": "./dist/providers.d.ts",
+      "types": "./dist/src/providers/index.d.ts",
       "import": "./dist/providers.esm.js",
-      "require": "./dist/providers.js"
+      "require": "./dist/providers.cjs"
     },
     "./symbols": {
-      "types": "./dist/symbols.d.ts",
+      "types": "./dist/src/symbols/index.d.ts",
       "import": "./dist/symbols.esm.js",
-      "require": "./dist/symbols.js"
+      "require": "./dist/symbols.cjs"
     },
     "./utils": {
-      "types": "./dist/utils.d.ts",
+      "types": "./dist/src/utils/index.d.ts",
       "import": "./dist/utils.esm.js",
-      "require": "./dist/utils.js"
+      "require": "./dist/utils.cjs"
     },
     "./styles": "./dist/styles.css"
   },
@@ -64,12 +64,11 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:lib && npm run build:setup && npm run build:types",
+    "build": "npm run build:lib && npm run build:setup && npm run build:types && chmod +x dist/init.js",
     "build:lib": "vite build --config vite.config.lib.mts",
-    "build:types": "tsc --project tsconfig.lib.json",
+    "build:types": "tsc --build tsconfig.lib.json --force",
     "build:demo": "tsc -b && vite build",
     "build:setup": "cp scripts/init.js dist/init.js && node scripts/add-theme.js",
-    "postbuild": "chmod +x dist/init.js && npm run build:types",
     "lint": "eslint .",
     "preview": "vite preview",
     "publish:test": "npm version prerelease --preid=test && npm publish --tag test"

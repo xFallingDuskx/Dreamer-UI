@@ -17,21 +17,31 @@ jobs:
           node-version: 20
           registry-url: 'https://registry.npmjs.org/'
 
-      - name: Install and Build Library
+      - name: Install library dependencies
+        working-directory: lib
+        run: npm ci
+
+      - name: Build library
+        working-directory: lib
+        run: npm run build
+
+      - name: Pack library
+        id: pack
         working-directory: lib
         run: |
-          npm ci
-          npm run build
-          tsc --project tsconfig.lib.json
-          npm pack
-      - name: Install App Dependencies with Local Lib
+          tarball=$(npm pack --pack-destination "$RUNNER_TEMP" --silent)
+          echo "path=$RUNNER_TEMP/$tarball" >> "$GITHUB_OUTPUT"
+
+      - name: Install app dependencies
         working-directory: app
         run: |
           npm ci
-          npm install ../lib/*.tgz
-      - name: Build App
+          npm install --no-save "${{ steps.pack.outputs.path }}"
+
+      - name: Build app
         working-directory: app
-        run: npm run build:local
+        run: npm run build
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}

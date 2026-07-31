@@ -1,14 +1,17 @@
 {
-	"extends": "./tsconfig.app.json",
-	"compilerOptions": {
-		/* Path mapping */
-		"baseUrl": ".",
-		"paths": {
-			"@moondreamsdev/dreamer-ui/*": ["../lib/src/*"],
-			"@moondreamsdev/dreamer-ui/styles": ["../lib/dist/styles.css"],
-			      "react": ["./node_modules/react"],
-      "react-dom": ["./node_modules/react-dom"]
-		},
-	},
-	"exclude": ["node_modules", "../lib/node_modules", "../@moondreamsdev/node_modules"]
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@moondreamsdev/dreamer-ui": ["../lib/src/index.ts"],
+      "@moondreamsdev/dreamer-ui/styles": ["../lib/src/styles.css"],
+      "@moondreamsdev/dreamer-ui/*": ["../lib/src/*"],
+      "react": ["./node_modules/@types/react/index.d.ts"],
+      "react/jsx-runtime": ["./node_modules/@types/react/jsx-runtime.d.ts"],
+      "react/jsx-dev-runtime": ["./node_modules/@types/react/jsx-dev-runtime.d.ts"],
+      "react-dom": ["./node_modules/@types/react-dom/index.d.ts"],
+      "react-dom/*": ["./node_modules/@types/react-dom/*"]
+    }
+  },
+  "exclude": ["node_modules", "../lib/node_modules"]
 }
